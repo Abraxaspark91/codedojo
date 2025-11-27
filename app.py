@@ -9,7 +9,7 @@ import gradio as gr
 import requests
 from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem
 
-NOTE_PATH = Path(".ignore/data/wrong_notes.md")
+NOTE_PATH = Path("data/wrong_notes.md")
 NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 LM_STUDIO_ENDPOINT = (

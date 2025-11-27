@@ -2,4 +2,4 @@
 data/
 
 # pycache에 계속 생기는 임시파일
-__pycache__/
+*.pyc

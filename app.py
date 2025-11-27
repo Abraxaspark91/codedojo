@@ -15,7 +15,7 @@ NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
 LM_STUDIO_ENDPOINT = (
     Path(".env").read_text().split("LM_STUDIO_ENDPOINT=")[-1].strip()
     if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
-    else "http://localhost:1234/v1/chat/completions"
+    else "http://127.0.0.1:1234/v1/chat/completions"
 )
 
 

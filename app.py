@@ -9,7 +9,7 @@ import gradio as gr
 import requests
 from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem
 
-NOTE_PATH = Path("data/wrong_notes.md")
+NOTE_PATH = Path(".ignore/data/wrong_notes.md")
 NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 LM_STUDIO_ENDPOINT = (
@@ -17,7 +17,6 @@ LM_STUDIO_ENDPOINT = (
     if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
     else "http://127.0.0.1:1234/v1/chat/completions"
 )
-
 
 @dataclass
 class Attempt:
@@ -112,7 +111,7 @@ def call_llm(system_prompt: str, user_prompt: str) -> str:
         "temperature": 0.2,
     }
     try:
-        response = requests.post(LM_STUDIO_ENDPOINT, json=payload, timeout=15)
+        response = requests.post(LM_STUDIO_ENDPOINT, json=payload, timeout=120)
         response.raise_for_status()
         content = response.json()
         return content["choices"][0]["message"]["content"]
@@ -143,8 +142,8 @@ def evaluate_submission(problem: Problem, code: str) -> Tuple[int, str]:
 
 def build_feedback(problem: Problem, code: str, score: int, run_detail: str) -> Tuple[str, str, str]:
     system_prompt = (
-        "당신은 SQL과 PySpark 채점을 돕는 조교입니다. 코드 실행 결과를 반영해 짧게 평가하세요. "
-        "정답 여부, 놓친 부분, 효율 개선, 작성자의 의도 추정을 포함합니다."
+        "당신은 SQL, PySpark, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. 코드 실행 결과를 반영해 짧게 평가하세요. "
+        "정답 여부, 놓친 부분, 효율/논리 개선, 작성자의 의도 추정을 포함합니다."
     )
     user_prompt = (
         f"문제: {problem.body}\n코드:```{problem.kind}\n{code}\n```\n"
@@ -210,13 +209,17 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str,
     if not state or "problem" not in state:
         return "문제가 선택되지 않았습니다.", "", "", ""
     problem: Problem = state["problem"]
-    with progress.tqdm(total=3, desc="채점 중") as pbar:
-        pbar.update(1)
-        score, run_detail = evaluate_submission(problem, code)
-        pbar.update(1)
-        feedback, improvement, reasoning = build_feedback(problem, code, score, run_detail)
-        pbar.update(1)
+    
+    progress(0, desc="채점 중")
+    score, run_detail = evaluate_submission(problem, code)
+    progress(0.33, desc="채점 중")
+    
+    feedback, improvement, reasoning = build_feedback(problem, code, score, run_detail)
+    progress(0.66, desc="채점 중")
+    
     append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)
+    progress(1.0, desc="채점 완료")
+    
     header = f"점수: {score}점 ({'통과' if score >= 80 else '재도전'})"
     return header, run_detail, feedback, improvement
 
@@ -257,7 +260,8 @@ def build_interface() -> gr.Blocks:
 
         def refresh_notes():
             labels, values = refresh_note_choices()
-            return gr.Dropdown.update(choices=values, label="재도전 문제 선택", value=None), "재도전할 문제를 선택하세요."
+            choices = list(zip(labels, values))
+            return gr.update(choices=choices, value=None), "재도전할 문제를 선택하세요."
 
         refresh_btn.click(refresh_notes, outputs=[note_choices, feedback_md])
 

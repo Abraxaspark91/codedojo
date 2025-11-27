@@ -1,0 +1,2 @@
+# data에 있는 오답노트는 개인차 있으므로 gitignore처리
+data/

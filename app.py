@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple
 
 import gradio as gr
 import requests
+from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem
 
 NOTE_PATH = Path("data/wrong_notes.md")
 NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -16,67 +17,6 @@ LM_STUDIO_ENDPOINT = (
     if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
     else "http://localhost:1234/v1/chat/completions"
 )
-
-
-@dataclass
-class Problem:
-    pid: str
-    title: str
-    body: str
-    difficulty: str
-    kind: str  # "sql" or "pyspark"
-    expected: List[str]
-    hint: str
-
-
-PROBLEM_BANK: List[Problem] = [
-    Problem(
-        pid="sql_aggregation",
-        title="월별 매출 합계 구하기",
-        body=(
-            "sales 테이블에서 월별 총 매출액을 계산하세요. 컬럼은 month, total_sales 로 하고 "
-            "결과는 월 오름차순으로 정렬하세요."
-        ),
-        difficulty="입문",
-        kind="sql",
-        expected=["GROUP BY", "SUM", "ORDER BY"],
-        hint="GROUP BY와 DATE_TRUNC 또는 MONTH 함수를 활용해 월 단위로 묶으세요.",
-    ),
-    Problem(
-        pid="sql_window",
-        title="카테고리별 최고 판매 상품 찾기",
-        body=(
-            "products(id, category, price) 테이블에서 카테고리별로 가장 비싼 상품의 id와 price를 구하세요."
-        ),
-        difficulty="중급",
-        kind="sql",
-        expected=["ROW_NUMBER", "PARTITION BY", "ORDER BY"],
-        hint="윈도우 함수 ROW_NUMBER() OVER(PARTITION BY category ORDER BY price DESC) 를 사용하세요.",
-    ),
-    Problem(
-        pid="pyspark_join",
-        title="고객 주문 통계 만들기",
-        body=(
-            "customers와 orders DataFrame이 주어졌을 때, 고객별 주문 건수와 총 금액을 계산하는 DataFrame을 만들고 "
-            "order_count, total_amount 컬럼을 추가하세요."
-        ),
-        difficulty="입문",
-        kind="pyspark",
-        expected=["join", "groupBy", "agg"],
-        hint="join 후 groupBy로 집계하고 count, sum 집계함수를 사용하세요.",
-    ),
-    Problem(
-        pid="pyspark_window",
-        title="이동 평균 계산",
-        body=(
-            "time, value 컬럼을 가진 DataFrame에서 최근 3개 행의 이동 평균 rolling_avg 컬럼을 추가하세요."
-        ),
-        difficulty="고급",
-        kind="pyspark",
-        expected=["Window", "rowsBetween", "avg"],
-        hint="Window.orderBy('time').rowsBetween(-2, 0) 범위로 avg를 계산하세요.",
-    ),
-]
 
 
 @dataclass
@@ -291,7 +231,7 @@ def show_hint(state: Dict) -> str:
 def build_interface() -> gr.Blocks:
     with gr.Blocks(title="SQL & PySpark 연습") as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
-        difficulty = gr.Dropdown(["입문", "중급", "고급"], value="입문", label="난이도")
+        difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
         question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
         code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
         state = gr.State({})

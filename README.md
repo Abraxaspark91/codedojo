@@ -15,7 +15,7 @@ Gradio 기반으로 SQL/PySpark 문제를 풀고, 로컬 LLM(LM Studio)로 피�
 
 ## 실행 방법
 1. LM Studio 서버를 켜고 Chat Completion 엔드포인트를 엽니다. 기본 주소는 `http://localhost:1234/v1/chat/completions`입니다. 다른 주소를 쓰려면 `.env` 파일에 `LM_STUDIO_ENDPOINT=<엔드포인트>`를 적어주세요.
-2. 필요한 패키지를 설치합니다. (Python 3.12 이상에서는 `audioop-lts`가 `pyaudioop` 모듈을 제공해 Gradio의 오디오 의존성 문제를 방지합니다.)
+2. 필요한 패키지를 설치합니다.
    ```bash
    pip install -r requirements.txt
    ```

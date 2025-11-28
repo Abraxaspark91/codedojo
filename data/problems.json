@@ -87,7 +87,7 @@
       "3 | true | 2024-01-12"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "pyspark",
+    "kind": "python",
     "expected": ["filter", "select"],
     "hint": "filter로 조건을 연결하고 select로 필요한 컬럼만 남깁니다."
   },
@@ -104,7 +104,7 @@
       "orders: 12 | 2 | 10000.0"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "pyspark",
+    "kind": "python",
     "expected": ["join", "groupBy", "agg"],
     "hint": "join 후 groupBy로 집계하고 count, sum 집계함수를 사용하세요."
   },
@@ -120,7 +120,7 @@
       "2024-03-01 10:15 | 16.0"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "pyspark",
+    "kind": "python",
     "expected": ["Window", "rowsBetween", "avg"],
     "hint": "Window.orderBy('time').rowsBetween(-2, 0) 범위로 avg를 계산하세요."
   },
@@ -136,7 +136,7 @@
       "2024-01-10 | success"
     ],
     "difficulty": "Lv4 고급",
-    "kind": "pyspark",
+    "kind": "python",
     "expected": ["groupBy", "pivot", "count", "date_trunc"],
     "hint": "week 컬럼을 date_trunc('week', timestamp)로 만든 뒤 pivot(status) 후 count 합니다."
   },
@@ -152,7 +152,7 @@
       "2 | 2024-01-03 09:00"
     ],
     "difficulty": "Lv5 심화",
-    "kind": "pyspark",
+    "kind": "python",
     "expected": ["Window", "lag", "when", "sum", "over"],
     "hint": "user_id 파티션에서 lag(ts)로 이전 시각과 차이를 구하고, when으로 세션 리셋 플래그를 만든 뒤 sum를 over 으로 누적합니다."
   }

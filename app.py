@@ -399,7 +399,7 @@ def refresh_note_choices() -> Tuple[List[str], List[str]]:
     return labels, values
 
 
-def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
+def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.update, str, str]:
     entries = failed_attempts(load_attempts())
     for entry in entries:
         if entry.pid == selected_pid:
@@ -423,7 +423,7 @@ def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
     return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "재도전 문제를 선택하세요."
 
 
-def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
+def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str]:
     problem = next((p for p in PROBLEM_BANK if p.pid == pid), None)
     if problem:
         filters = normalize_filters(None, None, None)
@@ -444,7 +444,7 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
     return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
 
 
-def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.Update, str, str]:
+def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.update, str, str]:
     filters = normalize_filters(difficulty, language, problem_type)
     problem, rechallenge, hint, applied_filters = pick_problem(difficulty, language, problem_type)
     question = render_question(problem, rechallenge, hint, filters, applied_filters)
@@ -517,7 +517,7 @@ def show_hint(state: Dict) -> str:
     return f"문법 힌트: {problem.hint}"
 
 
-def toggle_favorite(state: Dict) -> Tuple[gr.Update, str, gr.Update]:
+def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
     if not state or "problem" not in state:
         labels, values = refresh_favorite_choices()
         return gr.update(), "문제가 선택되지 않았습니다.", gr.update(choices=list(zip(labels, values)), value=None)
@@ -556,12 +556,13 @@ def build_interface() -> gr.Blocks:
     problem_type_options = ["전체"] + unique_preserve_order(
         [infer_problem_type(p) for p in PROBLEM_BANK]
     )
+    # Create Blocks with a fallback for gradio versions that don't accept `theme`/`css` kwargs.
+    try:
+        demo = gr.Blocks(title="SQL & PySpark 연습", theme=CUSTOM_THEME, css=CUSTOM_CSS)
+    except TypeError:
+        demo = gr.Blocks(title="SQL & PySpark 연습")
 
-    with gr.Blocks(
-        title="SQL & PySpark 연습",
-        theme=CUSTOM_THEME,
-        css=CUSTOM_CSS,
-    ) as demo:
+    with demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
         with gr.Row():
             difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")

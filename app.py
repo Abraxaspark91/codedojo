@@ -107,17 +107,15 @@ class Attempt:
 
 
 def ensure_state(state: Optional[Dict]) -> Dict:
-    base = {
-        "in_progress": False,
-        "last_run_detail": "",
-        "last_feedback": "",
-        "last_improvement": "",
-        "filters": normalize_filters(None, None, None),
-    }
-    if not state:
-        return base
-    base.update(state)
-    return base
+    if state is None:
+        state = {}
+
+    state.setdefault("in_progress", False)
+    state.setdefault("last_run_detail", "")
+    state.setdefault("last_feedback", "")
+    state.setdefault("last_improvement", "")
+    state.setdefault("filters", normalize_filters(None, None, None))
+    return state
 
 
 def unique_preserve_order(items: List[str]) -> List[str]:

@@ -1,0 +1,9 @@
+# Data artifacts and personal notes
+data/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Local environment configuration
+.env

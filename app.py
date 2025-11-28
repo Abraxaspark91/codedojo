@@ -3,7 +3,7 @@ import random
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, Generator, List, Tuple
 
 import gradio as gr
 import requests
@@ -202,26 +202,64 @@ def load_from_notes(selected_pid: str) -> Tuple[str, Dict]:
 def on_new_problem(difficulty: str) -> Tuple[str, Dict, str]:
     problem, rechallenge, hint = pick_problem(difficulty)
     question = render_question(problem, rechallenge, hint)
-    return question, {"problem": problem, "rechallenge": rechallenge, "hint": hint}, problem.kind
+    return (
+        question,
+        {"problem": problem, "rechallenge": rechallenge, "hint": hint, "in_progress": False},
+        problem.kind,
+    )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str, str, str]:
+def ensure_state(state: Dict) -> Dict:
+    return state or {"in_progress": False}
+
+
+def on_submit(
+    state: Dict, code: str, progress=gr.Progress()
+) -> Generator[Tuple[str, str, str, str, Dict, gr.Update], None, None]:
+    state = ensure_state(state)
+
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다.", "", "", ""
+        state["in_progress"] = False
+        yield "문제가 선택되지 않았습니다.", "", "", "", state, gr.update(interactive=True)
+        return
+
+    if state.get("in_progress"):
+        message = "채점이 진행 중입니다. 잠시만 기다려주세요."
+        yield (
+            message,
+            state.get("last_run_detail", ""),
+            state.get("last_feedback", ""),
+            state.get("last_improvement", ""),
+            state,
+            gr.update(interactive=False),
+        )
+        return
+
+    state["in_progress"] = True
     problem: Problem = state["problem"]
-    
+
+    yield "채점 중입니다...", "", "", "", state, gr.update(interactive=False)
+
     progress(0, desc="채점 중")
     score, run_detail = evaluate_submission(problem, code)
     progress(0.33, desc="채점 중")
-    
+
     feedback, improvement, reasoning = build_feedback(problem, code, score, run_detail)
     progress(0.66, desc="채점 중")
-    
+
     append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)
     progress(1.0, desc="채점 완료")
-    
+
     header = f"점수: {score}점 ({'통과' if score >= 80 else '재도전'})"
-    return header, run_detail, feedback, improvement
+    state.update(
+        {
+            "in_progress": False,
+            "last_run_detail": run_detail,
+            "last_feedback": feedback,
+            "last_improvement": improvement,
+        }
+    )
+    yield header, run_detail, feedback, improvement, state, gr.update(interactive=True)
 
 
 def show_hint(state: Dict) -> str:
@@ -255,7 +293,11 @@ def build_interface() -> gr.Blocks:
             load_note_btn = gr.Button("선택 문제 다시 풀기")
 
         new_btn.click(on_new_problem, inputs=difficulty, outputs=[question_md, state, code_box])
-        submit_btn.click(on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md])
+        submit_btn.click(
+            on_submit,
+            inputs=[state, code_box],
+            outputs=[score_md, exec_result, feedback_md, improvement_md, state, submit_btn],
+        )
         hint_btn.click(show_hint, inputs=state, outputs=feedback_md)
 
         def refresh_notes():
@@ -270,6 +312,8 @@ def build_interface() -> gr.Blocks:
                 return gr.update(), {}, ""
             question, new_state = load_from_notes(pid)
             language = new_state.get("problem").kind if new_state else "sql"
+            if new_state is not None:
+                new_state["in_progress"] = False
             return question, new_state, language
 
         load_note_btn.click(load_selected, inputs=note_choices, outputs=[question_md, state, code_box])

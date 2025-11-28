@@ -199,10 +199,20 @@ def load_from_notes(selected_pid: str) -> Tuple[str, Dict]:
     return "선택한 문제가 없습니다.", {}
 
 
-def on_new_problem(difficulty: str) -> Tuple[str, Dict, str]:
-    problem, rechallenge, hint = pick_problem(difficulty)
+def reset_outputs(problem: Problem, rechallenge: bool, hint: str) -> Tuple[str, Dict, gr.Update, str, str, str, str]:
     question = render_question(problem, rechallenge, hint)
-    return question, {"problem": problem, "rechallenge": rechallenge, "hint": hint}, problem.kind
+    state = {"problem": problem, "rechallenge": rechallenge, "hint": hint}
+    code_box = gr.update(language=problem.kind, value="")
+    score_md = "점수가 여기 표시됩니다."
+    exec_result = ""
+    feedback_md = f"재도전 힌트: {hint}" if hint else "코드를 작성해 제출해 주세요."
+    improvement_md = ""
+    return question, state, code_box, score_md, exec_result, feedback_md, improvement_md
+
+
+def on_new_problem(difficulty: str) -> Tuple[str, Dict, gr.Update, str, str, str, str]:
+    problem, rechallenge, hint = pick_problem(difficulty)
+    return reset_outputs(problem, rechallenge, hint)
 
 
 def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str, str, str]:
@@ -254,7 +264,11 @@ def build_interface() -> gr.Blocks:
             note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
             load_note_btn = gr.Button("선택 문제 다시 풀기")
 
-        new_btn.click(on_new_problem, inputs=difficulty, outputs=[question_md, state, code_box])
+        new_btn.click(
+            on_new_problem,
+            inputs=difficulty,
+            outputs=[question_md, state, code_box, score_md, exec_result, feedback_md, improvement_md],
+        )
         submit_btn.click(on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md])
         hint_btn.click(show_hint, inputs=state, outputs=feedback_md)
 
@@ -267,12 +281,18 @@ def build_interface() -> gr.Blocks:
 
         def load_selected(pid):
             if not pid:
-                return gr.update(), {}, ""
+                return gr.update(), {}, gr.update(), "", "", "", ""
             question, new_state = load_from_notes(pid)
-            language = new_state.get("problem").kind if new_state else "sql"
-            return question, new_state, language
+            problem = new_state.get("problem") if new_state else None
+            if problem:
+                return reset_outputs(problem, True, new_state.get("hint", ""))
+            return question, new_state, gr.update(), "", "", "", ""
 
-        load_note_btn.click(load_selected, inputs=note_choices, outputs=[question_md, state, code_box])
+        load_note_btn.click(
+            load_selected,
+            inputs=note_choices,
+            outputs=[question_md, state, code_box, score_md, exec_result, feedback_md, improvement_md],
+        )
 
     return demo
 

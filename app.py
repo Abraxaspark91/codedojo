@@ -69,6 +69,24 @@ body[data-user-theme="light"] {
 
 @dataclass
 class Attempt:
+    """오답노트에 저장되는 단일 채점 시도 레코드입니다.
+    
+    Attributes:
+        pid: 문제 ID (problem_bank에서의 고유 식별자)
+        title: 문제 제목
+        difficulty: 난이도 (Lv1 입문 등)
+        score: 채점 점수 (0-100)
+        status: 상태 (통과/재도전)
+        submitted: 제출된 코드
+        feedback: LLM 또는 휴리스틱 피드백
+        improvement: 보완 포인트
+        reasoning: 해설/의도 추측
+        question: 문제 내용
+        code: 제출 코드
+        kind: 프로그래밍 언어 (sql/python)
+        timestamp: ISO 형식의 제출 시간
+        rechallenge_hint: 재도전 시 참고할 힌트
+    """
     pid: str
     title: str
     difficulty: str
@@ -125,7 +143,24 @@ def ensure_note_file() -> None:
 
 
 def serialize_attempt(attempt: Attempt) -> str:
-    meta = json.dumps(asdict(attempt), ensure_ascii=False, indent=2)
+    """Attempt를 마크다운 형식으로 변환합니다.
+    
+    JSON을 명시적으로 이스케이프하고 검증하여 저장합니다.
+    """
+    # JSON 직렬화 시 모든 문자를 명시적으로 처리
+    meta = json.dumps(
+        asdict(attempt), 
+        ensure_ascii=False,  # 한글 유지
+        indent=2,
+        separators=(',', ': ')  # 표준 JSON 포맷
+    )
+    
+    # JSON이 유효한지 검증
+    try:
+        json.loads(meta)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"JSON 직렬화 오류: {e}\n{meta[:200]}...")
+    
     return (
         f"\n## 문제 ID: {attempt.pid}\n"
         f"```meta\n{meta}\n```\n"
@@ -139,20 +174,51 @@ def serialize_attempt(attempt: Attempt) -> str:
 
 
 def load_attempts() -> List[Attempt]:
+    """오답노트 파일에서 모든 Attempt를 로드합니다.
+    
+    파싱 실패한 항목은 무시하고 로그를 남깁니다.
+    """
     ensure_note_file()
     text = NOTE_PATH.read_text(encoding="utf-8")
     entries: List[Attempt] = []
-    for block in text.split("```meta"):
+    
+    # ```meta 블록을 분리
+    blocks = text.split("```meta")
+    
+    for block_idx, block in enumerate(blocks):
+        # ``` 마크가 없으면 스킵 (첫 번째 헤더 블록)
         if "```" not in block:
             continue
+        
+        # ``` 사이의 JSON 추출
         meta_str = block.split("```", 1)[0].strip()
+        
         if not meta_str:
             continue
+        
         try:
+            # JSON 파싱
             data = json.loads(meta_str)
-            entries.append(Attempt(**data))
-        except json.JSONDecodeError:
+            
+            # Attempt 객체 생성
+            entry = Attempt(**data)
+            entries.append(entry)
+            
+        except json.JSONDecodeError as e:
+            # JSON 파싱 오류: 해당 블록 무시, 계속 진행
+            print(f"[경고] 블록 {block_idx}의 JSON 파싱 실패: {str(e)[:100]}", file=__import__('sys').stderr)
             continue
+            
+        except TypeError as e:
+            # Attempt 필드 부족: 해당 블록 무시, 계속 진행
+            print(f"[경고] 블록 {block_idx}의 Attempt 생성 실패: {str(e)[:100]}", file=__import__('sys').stderr)
+            continue
+            
+        except Exception as e:
+            # 예상 외의 오류
+            print(f"[경고] 블록 {block_idx}의 처리 오류: {str(e)[:100]}", file=__import__('sys').stderr)
+            continue
+    
     return entries
 
 
@@ -335,11 +401,17 @@ def call_llm(system_prompt: str, user_prompt: str, endpoint: str = LM_STUDIO_END
 def heuristics_score(code: str, expected: List[str]) -> Tuple[int, str]:
     upper = code.upper()
     matched = sum(1 for key in expected if key.upper() in upper)
-    score = int(60 + (40 * matched / max(len(expected), 1)))
-    run_result = (
-        "핵심 키워드를 모두 포함했습니다." if matched == len(expected) else "일부 키워드가 누락되었습니다."
-    )
-    return score, run_result
+    # 모든 키워드를 포함할 때만 80점 이상
+    if matched == len(expected):
+        score = 100
+        run_result = "핵심 키워드를 모두 포함했습니다."
+    elif matched >= len(expected) * 0.5:
+        score = 70 + matched * 5
+        run_result = f"일부 키워드가 누락되었습니다. ({matched}/{len(expected)}개 포함)"
+    else:
+        score = 40 + matched * 10
+        run_result = f"대부분의 키워드가 누락되었습니다. ({matched}/{len(expected)}개 포함)"
+    return min(score, 100), run_result
 
 
 def evaluate_submission(problem: Problem, code: str) -> Tuple[int, str]:
@@ -372,6 +444,10 @@ def build_feedback(
 
 
 def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_detail: str, improvement: str, reasoning: str) -> None:
+    """채점 결과를 오답노트에 추가합니다.
+    
+    JSON 검증을 통해 손상된 데이터 저장을 방지합니다.
+    """
     ensure_note_file()
     attempt = Attempt(
         pid=problem.pid,
@@ -379,7 +455,7 @@ def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_d
         difficulty=problem.difficulty,
         score=score,
         status="통과" if score >= 80 else "재도전",
-        submitted=run_detail,
+        submitted=code,
         feedback=feedback,
         improvement=improvement,
         reasoning=reasoning,
@@ -389,7 +465,14 @@ def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_d
         timestamp=datetime.now().isoformat(timespec="seconds"),
         rechallenge_hint=run_detail,
     )
-    NOTE_PATH.write_text(NOTE_PATH.read_text(encoding="utf-8") + serialize_attempt(attempt), encoding="utf-8")
+    
+    try:
+        serialized = serialize_attempt(attempt)
+        NOTE_PATH.write_text(NOTE_PATH.read_text(encoding="utf-8") + serialized, encoding="utf-8")
+    except ValueError as e:
+        # JSON 직렬화 실패 시 에러 로그만 남기고 계속
+        print(f"[오류] Attempt 저장 실패: {e}", file=__import__('sys').stderr)
+        raise
 
 
 def refresh_note_choices() -> Tuple[List[str], List[str]]:
@@ -444,7 +527,7 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str]:
     return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
 
 
-def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.update, str, str]:
+def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.update, str, str, str]:
     filters = normalize_filters(difficulty, language, problem_type)
     problem, rechallenge, hint, applied_filters = pick_problem(difficulty, language, problem_type)
     question = render_question(problem, rechallenge, hint, filters, applied_filters)
@@ -467,47 +550,43 @@ def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[s
         gr.update(value="", language=problem.kind),
         favorite_button_label(problem.pid),
         favorite_status_text(problem.pid),
+        "",  # exec_result 초기화
     )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str, str, str]:
+def on_submit(state: Dict, code: str, progress=gr.Progress()) -> str:
     state = ensure_state(state)
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다.", "", "", ""
+        return "문제가 선택되지 않았습니다."
 
     if state.get("in_progress"):
-        return (
-            "채점이 진행 중입니다. 잠시만 기다려주세요.",
-            state.get("last_run_detail", ""),
-            state.get("last_feedback", ""),
-            state.get("last_improvement", ""),
-        )
+        return "채점이 진행 중입니다. 잠시만 기다려주세요."
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
 
-    progress(0, desc="채점 중")
+    progress(0.3, desc="코드 평가 중")
     score, run_detail = evaluate_submission(problem, code)
-    progress(0.33, desc="채점 중")
 
+    progress(0.7, desc="LLM 피드백 생성 중")
     feedback, improvement, reasoning = build_feedback(
         problem, code, score, run_detail, LM_STUDIO_ENDPOINT
     )
-    progress(0.66, desc="채점 중")
 
+    progress(1.0, desc="결과 저장 중")
     append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)
-    progress(1.0, desc="채점 완료")
 
     header = f"점수: {score}점 ({'통과' if score >= 80 else '재도전'})"
-    state.update(
-        {
-            "in_progress": False,
-            "last_run_detail": run_detail,
-            "last_feedback": feedback,
-            "last_improvement": improvement,
-        }
+    state.update({"in_progress": False})
+    
+    # 통합 결과를 마크다운으로 반환
+    combined = (
+        f"{header}\n\n"
+        f"### 실행 결과\n{run_detail}\n\n"
+        f"### LLM 피드백\n{feedback}\n\n"
+        f"### 보완점\n{improvement}"
     )
-    return header, run_detail, feedback, improvement
+    return combined
 
 
 def show_hint(state: Dict) -> str:
@@ -580,32 +659,53 @@ def build_interface() -> gr.Blocks:
             hint_btn = gr.Button("문법 힌트")
             favorite_btn = gr.Button("☆ 즐겨찾기 추가")
 
-        exec_result = gr.Markdown(label="실행 결과")
-        feedback_md = gr.Markdown(label="LLM 피드백")
-        improvement_md = gr.Markdown(label="보완점")
+        exec_result = gr.Markdown(label="채점 결과")
         score_md = gr.Markdown(label="점수")
 
         with gr.Accordion("즐겨찾기", open=False):
             fav_refresh_btn = gr.Button("즐겨찾기 불러오기")
-            favorite_choices = gr.Dropdown(choices=[], label="즐겨찾기 문제 선택")
+            # 초기값 설정
+            fav_labels, fav_values = refresh_favorite_choices()
+            fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
+            favorite_choices = gr.Dropdown(choices=fav_choices, label="즐겨찾기 문제 선택")
             load_fav_btn = gr.Button("선택 문제 열기")
 
         with gr.Accordion("오답노트", open=False):
             refresh_btn = gr.Button("오답노트 불러오기")
-            note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
+            # 초기값 설정
+            note_labels, note_values = refresh_note_choices()
+            note_choice = list(zip(note_labels, note_values)) if note_labels else []
+            note_choices = gr.Dropdown(choices=note_choice, label="재도전 문제 선택")
             load_note_btn = gr.Button("선택 문제 다시 풀기")
 
         new_btn.click(
             on_new_problem,
             inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+        )
+        # Dropdown change 이벤트 추가: 필터 변경 시 자동으로 새 문제 로드
+        difficulty.change(
+            on_new_problem,
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+        )
+        language.change(
+            on_new_problem,
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+        )
+        problem_type.change(
+            on_new_problem,
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
         )
         submit_btn.click(
             on_submit,
             inputs=[state, code_box],
-            outputs=[score_md, exec_result, feedback_md, improvement_md],
+            outputs=[exec_result],
+            show_progress="minimal",
         )
-        hint_btn.click(show_hint, inputs=state, outputs=feedback_md)
+        hint_btn.click(show_hint, inputs=state, outputs=exec_result)
         favorite_btn.click(
             toggle_favorite,
             inputs=state,
@@ -615,13 +715,13 @@ def build_interface() -> gr.Blocks:
         def refresh_notes():
             labels, values = refresh_note_choices()
             choices = list(zip(labels, values))
-            return gr.update(choices=choices, value=None), "재도전할 문제를 선택하세요."
+            return gr.update(choices=choices, value=None), ""
 
-        refresh_btn.click(refresh_notes, outputs=[note_choices, feedback_md])
+        refresh_btn.click(refresh_notes, outputs=[note_choices, exec_result])
 
         def load_selected(pid):
             if not pid:
-                return gr.update(), {}, gr.update(), favorite_button_label(""), "재도전 문제를 선택하세요."
+                return gr.update(), {}, gr.update(), favorite_button_label(""), ""
             return load_from_notes(pid)
 
         load_note_btn.click(
@@ -638,7 +738,7 @@ def build_interface() -> gr.Blocks:
 
         def load_favorite_selection(pid):
             if not pid:
-                return gr.update(), {}, gr.update(), favorite_button_label(""), "즐겨찾기에서 문제를 선택하세요."
+                return gr.update(), {}, gr.update(), favorite_button_label(""), ""
             return load_favorite_problem(pid)
 
         load_fav_btn.click(

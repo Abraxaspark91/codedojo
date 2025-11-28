@@ -24,34 +24,179 @@ LM_STUDIO_ENDPOINT = (
 
 CUSTOM_THEME = gr.themes.Default(primary_hue="emerald", neutral_hue="slate")
 CUSTOM_CSS = """
+/* ===== 전체 레이아웃 설정 ===== */
+html, body, .gradio-container {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.gradio-container {
+    max-width: 100%;
+    padding: 0;
+}
+
+/* ===== TOP 구간 고정 (위 10%) ===== */
+.top-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10vh;
+    z-index: 1000;
+    padding: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+/* ===== MIDDLE 구간 스크롤 가능 (위 10% ~ 아래 20%) ===== */
+.middle-section {
+    position: fixed;
+    top: 10vh;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    z-index: 100;
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* ===== BOTTOM 구간 고정 (아래 20%) ===== */
+.bottom-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20vh;
+    z-index: 1000;
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-top: 2px solid var(--border-color);
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+/* ===== MIDDLE-LEFT (40%) ===== */
+.middle-left {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+.middle-left-upper {
+    flex: 4;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+}
+
+.middle-left-lower {
+    flex: 6;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+}
+
+/* ===== MIDDLE-RIGHT (60%) ===== */
+.middle-right {
+    flex: 0 0 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+}
+
+.code-editor {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.button-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+/* ===== BOTTOM 그룹 ===== */
+.bottom-group {
+    flex: 1;
+    min-width: 0;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: var(--bg-secondary);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.bottom-group h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+/* ===== 테마 색상 변수 ===== */
+:root[data-user-theme="dark"],
 body[data-user-theme="dark"] {
-    background: #0f172a;
-    color: #e2e8f0;
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --border-color: #475569;
+    --text-color: #e2e8f0;
+    --text-secondary: #cbd5e1;
 }
 
+:root[data-user-theme="light"],
 body[data-user-theme="light"] {
-    background: #ffffff;
-    color: #0f172a;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --border-color: #cbd5e1;
+    --text-color: #0f172a;
+    --text-secondary: #475569;
 }
 
-:root[data-user-theme="dark"] {
-    color-scheme: dark;
-    --shadow-drop: 0 10px 30px rgba(15, 23, 42, 0.5);
-    --background-fill-primary: #0f172a;
-    --background-fill-secondary: #1e293b;
-    --background-fill-tertiary: #111827;
-    --color-text: #e2e8f0;
-}
-
+/* ===== 다크 테마 적용 ===== */
 [data-user-theme="dark"] .gradio-container,
 [data-user-theme="dark"] .gr-box,
-[data-user-theme="dark"] .gr-panel,
-[data-user-theme="dark"] textarea,
-[data-user-theme="dark"] pre,
-[data-user-theme="dark"] code,
-[data-user-theme="dark"] .prose {
+[data-user-theme="dark"] .gr-panel {
     background-color: #0f172a !important;
     color: #e2e8f0 !important;
+}
+
+[data-user-theme="dark"] .top-section,
+[data-user-theme="dark"] .bottom-section {
+    background: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+[data-user-theme="dark"] .middle-left-upper,
+[data-user-theme="dark"] .middle-left-lower,
+[data-user-theme="dark"] .middle-right,
+[data-user-theme="dark"] .bottom-group {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
 }
 
 [data-user-theme="dark"] .gr-button-primary {
@@ -62,8 +207,107 @@ body[data-user-theme="light"] {
 [data-user-theme="dark"] .gr-button-secondary,
 [data-user-theme="dark"] .gr-button-lg,
 [data-user-theme="dark"] .gr-button-sm {
-    background: #1e293b !important;
+    background: #334155 !important;
     color: #e2e8f0 !important;
+}
+
+[data-user-theme="dark"] textarea,
+[data-user-theme="dark"] pre,
+[data-user-theme="dark"] code {
+    background-color: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+/* ===== 라이트 테마 적용 ===== */
+[data-user-theme="light"] .top-section,
+[data-user-theme="light"] .bottom-section {
+    background: #ffffff !important;
+    color: #0f172a !important;
+}
+
+[data-user-theme="light"] .middle-left-upper,
+[data-user-theme="light"] .middle-left-lower,
+[data-user-theme="light"] .middle-right,
+[data-user-theme="light"] .bottom-group {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+
+[data-user-theme="light"] textarea,
+[data-user-theme="light"] pre,
+[data-user-theme="light"] code {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+/* ===== 스크롤바 스타일 ===== */
+.middle-section::-webkit-scrollbar,
+.middle-left-upper::-webkit-scrollbar,
+.middle-left-lower::-webkit-scrollbar,
+.code-editor::-webkit-scrollbar,
+.bottom-group::-webkit-scrollbar {
+    width: 8px;
+}
+
+[data-user-theme="dark"] .middle-section::-webkit-scrollbar-track,
+[data-user-theme="dark"] .middle-left-upper::-webkit-scrollbar-track,
+[data-user-theme="dark"] .middle-left-lower::-webkit-scrollbar-track,
+[data-user-theme="dark"] .code-editor::-webkit-scrollbar-track,
+[data-user-theme="dark"] .bottom-group::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+[data-user-theme="dark"] .middle-section::-webkit-scrollbar-thumb,
+[data-user-theme="dark"] .middle-left-upper::-webkit-scrollbar-thumb,
+[data-user-theme="dark"] .middle-left-lower::-webkit-scrollbar-thumb,
+[data-user-theme="dark"] .code-editor::-webkit-scrollbar-thumb,
+[data-user-theme="dark"] .bottom-group::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+[data-user-theme="dark"] .middle-section::-webkit-scrollbar-thumb:hover,
+[data-user-theme="dark"] .middle-left-upper::-webkit-scrollbar-thumb:hover,
+[data-user-theme="dark"] .middle-left-lower::-webkit-scrollbar-thumb:hover,
+[data-user-theme="dark"] .code-editor::-webkit-scrollbar-thumb:hover,
+[data-user-theme="dark"] .bottom-group::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ===== 모바일 반응형 ===== */
+@media (max-width: 1024px) {
+    .middle-section {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .middle-left, .middle-right {
+        flex: none;
+        width: 100%;
+    }
+    
+    .bottom-section {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .bottom-group {
+        width: 100%;
+    }
+}
+
+/* ===== Markdown 헤더 스타일 ===== */
+.gr-markdown h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.gr-markdown h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 """
 
@@ -138,21 +382,26 @@ def infer_problem_type(problem: Problem) -> str:
 
 
 def ensure_note_file() -> None:
+    """오답노트 파일을 초기화합니다.
+    
+    JSON Lines 형식: 각 라인이 독립적인 JSON 객체
+    """
     if not NOTE_PATH.exists():
-        NOTE_PATH.write_text("# 오답노트 기록\n\n")
+        NOTE_PATH.write_text("")  # 빈 파일로 시작 (헤더 없음)
 
 
 def serialize_attempt(attempt: Attempt) -> str:
-    """Attempt를 마크다운 형식으로 변환합니다.
+    """Attempt를 JSON Lines 형식으로 직렬화합니다.
     
-    JSON을 명시적으로 이스케이프하고 검증하여 저장합니다.
+    각 Attempt는 한 줄의 JSON으로 저장되어 강건한 파싱이 가능합니다.
+    - 멀티라인 텍스트는 JSON이 자동으로 이스케이프
+    - 마크다운 syntax 충돌 없음
+    - 손상된 한 줄만 무시, 나머지는 안전
     """
-    # JSON 직렬화 시 모든 문자를 명시적으로 처리
     meta = json.dumps(
         asdict(attempt), 
         ensure_ascii=False,  # 한글 유지
-        indent=2,
-        separators=(',', ': ')  # 표준 JSON 포맷
+        separators=(',', ':')  # 공백 제거해서 한 줄 유지
     )
     
     # JSON이 유효한지 검증
@@ -161,62 +410,53 @@ def serialize_attempt(attempt: Attempt) -> str:
     except json.JSONDecodeError as e:
         raise ValueError(f"JSON 직렬화 오류: {e}\n{meta[:200]}...")
     
-    return (
-        f"\n## 문제 ID: {attempt.pid}\n"
-        f"```meta\n{meta}\n```\n"
-        f"### 문제\n{attempt.question}\n\n"
-        f"### 제출 코드\n```{attempt.kind}\n{attempt.code}\n```\n\n"
-        f"### 피드백\n{attempt.feedback}\n\n"
-        f"### 보완점\n{attempt.improvement}\n\n"
-        f"### 해설\n{attempt.reasoning}\n\n"
-        "---\n"
-    )
+    return meta  # 순수 JSON 한 줄만 반환
 
 
 def load_attempts() -> List[Attempt]:
     """오답노트 파일에서 모든 Attempt를 로드합니다.
     
-    파싱 실패한 항목은 무시하고 로그를 남깁니다.
+    JSON Lines 형식: 각 라인이 하나의 JSON 객체
+    - 손상된 라인은 무시하고 나머지 계속 파싱
+    - 라인 단위 오류 로깅으로 문제 진단 용이
     """
     ensure_note_file()
     text = NOTE_PATH.read_text(encoding="utf-8")
     entries: List[Attempt] = []
     
-    # ```meta 블록을 분리
-    blocks = text.split("```meta")
+    # 빈 파일 처리
+    if not text.strip():
+        return entries
     
-    for block_idx, block in enumerate(blocks):
-        # ``` 마크가 없으면 스킵 (첫 번째 헤더 블록)
-        if "```" not in block:
-            continue
+    # 각 라인을 독립적으로 파싱
+    for line_idx, line in enumerate(text.split("\n"), 1):
+        line = line.strip()
         
-        # ``` 사이의 JSON 추출
-        meta_str = block.split("```", 1)[0].strip()
-        
-        if not meta_str:
+        # 빈 라인 무시
+        if not line:
             continue
         
         try:
             # JSON 파싱
-            data = json.loads(meta_str)
+            data = json.loads(line)
             
             # Attempt 객체 생성
             entry = Attempt(**data)
             entries.append(entry)
             
         except json.JSONDecodeError as e:
-            # JSON 파싱 오류: 해당 블록 무시, 계속 진행
-            print(f"[경고] 블록 {block_idx}의 JSON 파싱 실패: {str(e)[:100]}", file=__import__('sys').stderr)
+            # JSON 파싱 오류: 해당 라인 무시, 계속 진행
+            print(f"[경고] 라인 {line_idx}의 JSON 파싱 실패: {str(e)[:80]}", file=__import__('sys').stderr)
             continue
             
         except TypeError as e:
-            # Attempt 필드 부족: 해당 블록 무시, 계속 진행
-            print(f"[경고] 블록 {block_idx}의 Attempt 생성 실패: {str(e)[:100]}", file=__import__('sys').stderr)
+            # Attempt 필드 부족: 해당 라인 무시, 계속 진행
+            print(f"[경고] 라인 {line_idx}의 Attempt 생성 실패: {str(e)[:80]}", file=__import__('sys').stderr)
             continue
             
         except Exception as e:
             # 예상 외의 오류
-            print(f"[경고] 블록 {block_idx}의 처리 오류: {str(e)[:100]}", file=__import__('sys').stderr)
+            print(f"[경고] 라인 {line_idx}의 처리 오류: {str(e)[:80]}", file=__import__('sys').stderr)
             continue
     
     return entries
@@ -446,7 +686,9 @@ def build_feedback(
 def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_detail: str, improvement: str, reasoning: str) -> None:
     """채점 결과를 오답노트에 추가합니다.
     
-    JSON 검증을 통해 손상된 데이터 저장을 방지합니다.
+    JSON Lines 형식: 각 라인이 하나의 완전한 JSON
+    - 한 줄씩 append되므로 파일 손상 위험 최소화
+    - JSON 검증을 통해 손상된 데이터 저장 방지
     """
     ensure_note_file()
     attempt = Attempt(
@@ -468,7 +710,12 @@ def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_d
     
     try:
         serialized = serialize_attempt(attempt)
-        NOTE_PATH.write_text(NOTE_PATH.read_text(encoding="utf-8") + serialized, encoding="utf-8")
+        # JSON Lines: 기존 내용에 새 라인을 추가
+        current_content = NOTE_PATH.read_text(encoding="utf-8")
+        # 마지막 줄이 개행으로 끝나지 않으면 추가
+        if current_content and not current_content.endswith("\n"):
+            current_content += "\n"
+        NOTE_PATH.write_text(current_content + serialized + "\n", encoding="utf-8")
     except ValueError as e:
         # JSON 직렬화 실패 시 에러 로그만 남기고 계속
         print(f"[오류] Attempt 저장 실패: {e}", file=__import__('sys').stderr)
@@ -527,7 +774,7 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str]:
     return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
 
 
-def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.update, str, str, str]:
+def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.update, str, str, str, gr.update]:
     filters = normalize_filters(difficulty, language, problem_type)
     problem, rechallenge, hint, applied_filters = pick_problem(difficulty, language, problem_type)
     question = render_question(problem, rechallenge, hint, filters, applied_filters)
@@ -544,6 +791,10 @@ def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[s
             "last_improvement": "",
         }
     )
+    # 오답노트 목록 자동 업데이트
+    labels, values = refresh_note_choices()
+    note_choices = list(zip(labels, values)) if labels else []
+    
     return (
         question,
         state,
@@ -551,16 +802,17 @@ def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[s
         favorite_button_label(problem.pid),
         favorite_status_text(problem.pid),
         "",  # exec_result 초기화
+        gr.update(choices=note_choices, value=None),  # note_choices 업데이트
     )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()) -> str:
+def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, gr.update]:
     state = ensure_state(state)
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다."
+        return "문제가 선택되지 않았습니다.", gr.update()
 
     if state.get("in_progress"):
-        return "채점이 진행 중입니다. 잠시만 기다려주세요."
+        return "채점이 진행 중입니다. 잠시만 기다려주세요.", gr.update()
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
@@ -586,7 +838,12 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()) -> str:
         f"### LLM 피드백\n{feedback}\n\n"
         f"### 보완점\n{improvement}"
     )
-    return combined
+    
+    # 오답노트 목록 자동 업데이트
+    labels, values = refresh_note_choices()
+    note_choices = list(zip(labels, values)) if labels else []
+    
+    return combined, gr.update(choices=note_choices, value=None)
 
 
 def show_hint(state: Dict) -> str:
@@ -642,67 +899,96 @@ def build_interface() -> gr.Blocks:
         demo = gr.Blocks(title="SQL & PySpark 연습")
 
     with demo:
-        gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
-        with gr.Row():
-            difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
-            language = gr.Dropdown(language_options, value=language_options[0], label="언어")
-            problem_type = gr.Dropdown(problem_type_options, value=problem_type_options[0], label="문제 유형")
-
-        question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
-        favorite_status_md = gr.Markdown("즐겨찾기 상태를 여기에서 확인하세요.")
-        code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
         state = gr.State({})
+        
+        # ===== TOP 구간 =====
+        with gr.Group(elem_classes="top-section"):
+            with gr.Row():
+                with gr.Column(scale=9):
+                    gr.Markdown("# SQL & PySpark 연습 스테이션")
+                with gr.Column(scale=1):
+                    theme_selector = gr.Dropdown(
+                        choices=["auto", "dark", "light"],
+                        value="auto",
+                        label="🎨 테마",
+                        scale=1
+                    )
+            with gr.Row():
+                difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도", scale=1)
+                language = gr.Dropdown(language_options, value=language_options[0], label="언어", scale=1)
+                problem_type = gr.Dropdown(problem_type_options, value=problem_type_options[0], label="문제 유형", scale=1)
+        
+        # ===== MIDDLE 구간 =====
+        with gr.Row(elem_classes="middle-section"):
+            # ===== MIDDLE-LEFT (40%) =====
+            with gr.Column(scale=4, elem_classes="middle-left"):
+                # Middle-Left-Upper (4 비율)
+                with gr.Column(scale=4, elem_classes="middle-left-upper"):
+                    gr.Markdown("### 📋 문제")
+                    question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
+                    new_btn = gr.Button("🔄 새 문제 출제", size="lg", scale=1)
+                
+                # Middle-Left-Lower (6 비율)
+                with gr.Column(scale=6, elem_classes="middle-left-lower"):
+                    gr.Markdown("### 💬 LLM 피드백")
+                    exec_result = gr.Markdown(value="")
+                    with gr.Row():
+                        favorite_btn = gr.Button("⭐ 즐겨찾기", scale=1)
+                        favorite_status_md = gr.Markdown("")
+            
+            # ===== MIDDLE-RIGHT (60%) =====
+            with gr.Column(scale=6, elem_classes="middle-right"):
+                gr.Markdown("### 💻 코드 에디터")
+                code_box = gr.Code(language="sql", show_label=False, elem_classes="code-editor")
+                with gr.Row(elem_classes="button-row"):
+                    submit_btn = gr.Button("✅ 제출", variant="primary", size="lg", scale=2)
+                    hint_btn = gr.Button("💡 힌트", size="lg", scale=1)
+        
+        # ===== BOTTOM 구간 =====
+        with gr.Row(elem_classes="bottom-section"):
+            # 즐겨찾기 섹션
+            with gr.Group(elem_classes="bottom-group"):
+                gr.Markdown("### ⭐ 즐겨찾기")
+                fav_refresh_btn = gr.Button("새로고침", size="sm", scale=1)
+                fav_labels, fav_values = refresh_favorite_choices()
+                fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
+                favorite_choices = gr.Dropdown(choices=fav_choices, label="문제 선택", scale=1)
+                load_fav_btn = gr.Button("열기", size="sm", scale=1)
+            
+            # 오답노트 섹션
+            with gr.Group(elem_classes="bottom-group"):
+                gr.Markdown("### 📝 오답노트")
+                refresh_btn = gr.Button("새로고침", size="sm", scale=1)
+                note_labels, note_values = refresh_note_choices()
+                note_choice = list(zip(note_labels, note_values)) if note_labels else []
+                note_choices = gr.Dropdown(choices=note_choice, label="문제 선택", scale=1)
+                load_note_btn = gr.Button("풀기", size="sm", scale=1)
 
-        with gr.Row():
-            new_btn = gr.Button("새 문제 출제")
-            submit_btn = gr.Button("제출", variant="primary")
-            hint_btn = gr.Button("문법 힌트")
-            favorite_btn = gr.Button("☆ 즐겨찾기 추가")
-
-        exec_result = gr.Markdown(label="채점 결과")
-        score_md = gr.Markdown(label="점수")
-
-        with gr.Accordion("즐겨찾기", open=False):
-            fav_refresh_btn = gr.Button("즐겨찾기 불러오기")
-            # 초기값 설정
-            fav_labels, fav_values = refresh_favorite_choices()
-            fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
-            favorite_choices = gr.Dropdown(choices=fav_choices, label="즐겨찾기 문제 선택")
-            load_fav_btn = gr.Button("선택 문제 열기")
-
-        with gr.Accordion("오답노트", open=False):
-            refresh_btn = gr.Button("오답노트 불러오기")
-            # 초기값 설정
-            note_labels, note_values = refresh_note_choices()
-            note_choice = list(zip(note_labels, note_values)) if note_labels else []
-            note_choices = gr.Dropdown(choices=note_choice, label="재도전 문제 선택")
-            load_note_btn = gr.Button("선택 문제 다시 풀기")
-
+        # ===== 이벤트 핸들러 =====
         new_btn.click(
             on_new_problem,
             inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
-        # Dropdown change 이벤트 추가: 필터 변경 시 자동으로 새 문제 로드
         difficulty.change(
             on_new_problem,
             inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
         language.change(
             on_new_problem,
             inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
         problem_type.change(
             on_new_problem,
             inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
         submit_btn.click(
             on_submit,
             inputs=[state, code_box],
-            outputs=[exec_result],
+            outputs=[exec_result, note_choices],
             show_progress="minimal",
         )
         hint_btn.click(show_hint, inputs=state, outputs=exec_result)
@@ -746,6 +1032,8 @@ def build_interface() -> gr.Blocks:
             inputs=favorite_choices,
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
         )
+        
+        # 테마 변경 이벤트 (테마 드롭다운은 Gradio 기본 기능이므로 별도 이벤트 처리 불필요)
 
     return demo
 

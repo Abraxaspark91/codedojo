@@ -470,52 +470,36 @@ def build_interface() -> gr.Blocks:
     ) as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
         state = gr.State({})
-        settings_state = gr.State(DEFAULT_SETTINGS.copy())
-        theme_state = gr.State("light")
 
-        with gr.Row():
-            difficulty = gr.Dropdown(
-                DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도"
-            )
-            theme_toggle = gr.Radio(
-                ["light", "dark"], value="light", label="테마", elem_id="theme-toggle"
-            )
-
-        question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
-        code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
-
-        with gr.Row():
-            new_btn = gr.Button("새 문제 출제")
-            submit_btn = gr.Button("제출", variant="primary")
-            hint_btn = gr.Button("문법 힌트")
-
-        exec_result = gr.Markdown(label="실행 결과")
-        feedback_md = gr.Markdown(label="LLM 피드백")
-        improvement_md = gr.Markdown(label="보완점")
-        score_md = gr.Markdown(label="점수")
-
-        with gr.Accordion("환경 설정/도움말", open=False):
-            gr.Markdown(
-                """
-                - **share**: Gradio 공유 링크를 활성화/비활성화합니다.
-                - **auth**: "user:pass" 형식으로 입력하면 기본 인증을 요구합니다.
-                - **LLM 엔드포인트**: LM Studio 또는 프록시 주소를 설정합니다.
-                설정은 현재 세션 상태에 저장되며 필요한 경우 새로고침 후 다시 적용할 수 있습니다.
-                """
-            )
-            with gr.Row():
-                share_ckb = gr.Checkbox(label="공유 링크 사용 (share)")
-                auth_box = gr.Textbox(label="기본 인증(auth)")
-                endpoint_box = gr.Textbox(
-                    label="LLM 엔드포인트", value=LM_STUDIO_ENDPOINT, lines=1
+        with gr.Row(equal_height=False):
+            with gr.Column(scale=1, min_width=360):
+                difficulty = gr.Dropdown(
+                    DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도"
                 )
-            apply_btn = gr.Button("설정 적용", variant="secondary")
-            settings_summary = gr.Markdown(summarize_settings(DEFAULT_SETTINGS))
+                question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
+                with gr.Row():
+                    new_btn = gr.Button("새 문제 출제")
+                    hint_btn = gr.Button("문법 힌트")
 
-        with gr.Accordion("오답노트", open=False):
-            refresh_btn = gr.Button("오답노트 불러오기")
-            note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
-            load_note_btn = gr.Button("선택 문제 다시 풀기")
+                with gr.Accordion("오답노트", open=False):
+                    refresh_btn = gr.Button("오답노트 불러오기")
+                    note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
+                    load_note_btn = gr.Button("선택 문제 다시 풀기")
+
+            with gr.Column(scale=1, min_width=420):
+                code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
+                with gr.Row():
+                    submit_btn = gr.Button("제출", variant="primary")
+
+                with gr.Tabs():
+                    with gr.Tab("점수"):
+                        score_md = gr.Markdown(label="점수")
+                    with gr.Tab("실행 결과"):
+                        exec_result = gr.Markdown(label="실행 결과")
+                    with gr.Tab("LLM 피드백"):
+                        feedback_md = gr.Markdown(label="LLM 피드백")
+                    with gr.Tab("보완점"):
+                        improvement_md = gr.Markdown(label="보완점")
 
         new_btn.click(on_new_problem, inputs=difficulty, outputs=[question_md, state, code_box])
         submit_btn.click(

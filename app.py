@@ -14,9 +14,11 @@ NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
 FAVORITES_PATH = Path("data/favorites.json")
 FAVORITES_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+_env_path = Path(".env")
+_env_text = _env_path.read_text(encoding="utf-8") if _env_path.exists() else ""
 LM_STUDIO_ENDPOINT = (
-    Path(".env").read_text().split("LM_STUDIO_ENDPOINT=")[-1].strip()
-    if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
+    _env_text.split("LM_STUDIO_ENDPOINT=", maxsplit=1)[-1].splitlines()[0].strip()
+    if "LM_STUDIO_ENDPOINT=" in _env_text
     else "http://127.0.0.1:1234/v1/chat/completions"
 )
 

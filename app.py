@@ -234,25 +234,37 @@ def show_hint(state: Dict) -> str:
 def build_interface() -> gr.Blocks:
     with gr.Blocks(title="SQL & PySpark 연습") as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
-        difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
-        question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
-        code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
         state = gr.State({})
 
-        with gr.Row():
-            new_btn = gr.Button("새 문제 출제")
-            submit_btn = gr.Button("제출", variant="primary")
-            hint_btn = gr.Button("문법 힌트")
+        with gr.Row(equal_height=False):
+            with gr.Column(scale=1, min_width=360):
+                difficulty = gr.Dropdown(
+                    DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도"
+                )
+                question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
+                with gr.Row():
+                    new_btn = gr.Button("새 문제 출제")
+                    hint_btn = gr.Button("문법 힌트")
 
-        exec_result = gr.Markdown(label="실행 결과")
-        feedback_md = gr.Markdown(label="LLM 피드백")
-        improvement_md = gr.Markdown(label="보완점")
-        score_md = gr.Markdown(label="점수")
+                with gr.Accordion("오답노트", open=False):
+                    refresh_btn = gr.Button("오답노트 불러오기")
+                    note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
+                    load_note_btn = gr.Button("선택 문제 다시 풀기")
 
-        with gr.Accordion("오답노트", open=False):
-            refresh_btn = gr.Button("오답노트 불러오기")
-            note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
-            load_note_btn = gr.Button("선택 문제 다시 풀기")
+            with gr.Column(scale=1, min_width=420):
+                code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
+                with gr.Row():
+                    submit_btn = gr.Button("제출", variant="primary")
+
+                with gr.Tabs():
+                    with gr.Tab("점수"):
+                        score_md = gr.Markdown(label="점수")
+                    with gr.Tab("실행 결과"):
+                        exec_result = gr.Markdown(label="실행 결과")
+                    with gr.Tab("LLM 피드백"):
+                        feedback_md = gr.Markdown(label="LLM 피드백")
+                    with gr.Tab("보완점"):
+                        improvement_md = gr.Markdown(label="보완점")
 
         new_btn.click(on_new_problem, inputs=difficulty, outputs=[question_md, state, code_box])
         submit_btn.click(on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md])

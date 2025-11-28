@@ -3,7 +3,7 @@ import random
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, Generator, List, Optional, Tuple
 
 import gradio as gr
 import requests
@@ -19,6 +19,74 @@ LM_STUDIO_ENDPOINT = (
     if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
     else "http://127.0.0.1:1234/v1/chat/completions"
 )
+
+THEME_STORAGE_KEY = "codedojo-theme-preference"
+THEME_INIT_JS = f"""
+() => {{
+    const stored = window.localStorage.getItem('{THEME_STORAGE_KEY}') || 'light';
+    const root = document.documentElement;
+    root.dataset.userTheme = stored;
+    document.body.dataset.userTheme = stored;
+    return stored;
+}}
+"""
+
+THEME_APPLY_JS = f"""
+(mode) => {{
+    const root = document.documentElement;
+    root.dataset.userTheme = mode;
+    document.body.dataset.userTheme = mode;
+    window.localStorage.setItem('{THEME_STORAGE_KEY}', mode);
+    return mode;
+}}
+"""
+
+CUSTOM_THEME = gr.themes.Default(primary_hue="emerald", neutral_hue="slate")
+CUSTOM_CSS = """
+body[data-user-theme="dark"] {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+body[data-user-theme="light"] {
+    background: #ffffff;
+    color: #0f172a;
+}
+
+:root[data-user-theme="dark"] {
+    color-scheme: dark;
+    --shadow-drop: 0 10px 30px rgba(15, 23, 42, 0.5);
+    --background-fill-primary: #0f172a;
+    --background-fill-secondary: #1e293b;
+    --background-fill-tertiary: #111827;
+    --color-text: #e2e8f0;
+}
+
+[data-user-theme="dark"] .gradio-container,
+[data-user-theme="dark"] .gr-box,
+[data-user-theme="dark"] .gr-panel,
+[data-user-theme="dark"] textarea,
+[data-user-theme="dark"] pre,
+[data-user-theme="dark"] code,
+[data-user-theme="dark"] .prose {
+    background-color: #0f172a !important;
+    color: #e2e8f0 !important;
+}
+
+[data-user-theme="dark"] .gr-button-primary {
+    background: #22c55e !important;
+    color: #0f172a !important;
+}
+
+[data-user-theme="dark"] .gr-button-secondary,
+[data-user-theme="dark"] .gr-button-lg,
+[data-user-theme="dark"] .gr-button-sm {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+"""
+
+DEFAULT_SETTINGS = {"share": False, "auth": "", "lm_endpoint": LM_STUDIO_ENDPOINT}
 
 @dataclass
 class Attempt:
@@ -79,27 +147,102 @@ def failed_attempts(entries: List[Attempt]) -> List[Attempt]:
     return [a for a in entries if a.score < 80]
 
 
-def pick_problem(difficulty: str) -> Tuple[Problem, bool, str]:
+def matches_filters(problem: Problem, difficulty: Optional[str], language: Optional[str], problem_type: Optional[str]) -> bool:
+    language_match = (not language or language == "전체") or problem.kind.lower() == language.lower()
+    difficulty_match = (not difficulty or difficulty == "전체") or problem.difficulty == difficulty
+    inferred_type = infer_problem_type(problem)
+    type_match = (not problem_type or problem_type == "전체") or inferred_type == problem_type
+    return difficulty_match and language_match and type_match
+
+
+def normalize_filters(
+    difficulty: Optional[str], language: Optional[str], problem_type: Optional[str]
+) -> Dict[str, str]:
+    return {
+        "difficulty": difficulty or "전체",
+        "language": language or "전체",
+        "problem_type": problem_type or "전체",
+    }
+
+
+def pick_problem(
+    difficulty: str, language: str, problem_type: str
+) -> Tuple[Problem, bool, str, Dict[str, str]]:
     entries = load_attempts()
     failed = failed_attempts(entries)
     rechallenge = False
     hint = ""
-    if failed and random.random() < 0.3:
-        target = random.choice(failed)
-        problem = next((p for p in PROBLEM_BANK if p.pid == target.pid), None)
+    target_filters = normalize_filters(difficulty, language, problem_type)
+    filter_priority = [
+        (difficulty, language, problem_type),
+        (difficulty, language, None),
+        (difficulty, None, problem_type),
+        (difficulty, None, None),
+        (None, language, problem_type),
+        (None, language, None),
+        (None, None, problem_type),
+        (None, None, None),
+    ]
+
+    def choose_candidate(pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict[str, str]]:
+        for diff_opt, lang_opt, type_opt in filter_priority:
+            candidates = [
+                (prob, attempt_hint)
+                for prob, attempt_hint in pool
+                if matches_filters(prob, diff_opt, lang_opt, type_opt)
+            ]
+            if candidates:
+                prob, attempt_hint = random.choice(candidates)
+                return prob, normalize_filters(diff_opt, lang_opt, type_opt) | {"hint": attempt_hint}
+        prob, attempt_hint = random.choice(pool)
+        return prob, normalize_filters(None, None, None) | {"hint": attempt_hint}
+
+    failed_pool: List[Tuple[Problem, str]] = []
+    for entry in failed:
+        problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
         if problem:
-            rechallenge = True
-            hint = target.rechallenge_hint or "지난 시도에서 놓친 부분을 점검해 보세요."
-            return problem, rechallenge, hint
-    candidates = [p for p in PROBLEM_BANK if p.difficulty == difficulty]
-    problem = random.choice(candidates) if candidates else random.choice(PROBLEM_BANK)
-    return problem, rechallenge, hint
+            failed_pool.append((problem, entry.rechallenge_hint))
+
+    applied_filters = target_filters
+    if failed_pool and random.random() < 0.3:
+        rechallenge = True
+        problem, applied_filters = choose_candidate(failed_pool)
+        hint = applied_filters.pop("hint", "지난 시도에서 놓친 부분을 점검해 보세요.")
+        return problem, rechallenge, hint, applied_filters
+
+    full_pool = [(p, "") for p in PROBLEM_BANK]
+    problem, applied_filters = choose_candidate(full_pool)
+    hint = applied_filters.pop("hint", "")
+    return problem, rechallenge, hint, applied_filters
 
 
-def render_question(problem: Problem, rechallenge: bool, rechallenge_hint: str) -> str:
+def render_question(
+    problem: Problem,
+    rechallenge: bool,
+    rechallenge_hint: str,
+    requested_filters: Dict[str, str],
+    applied_filters: Optional[Dict[str, str]] = None,
+) -> str:
     banner = "재도전" if rechallenge else "신규 문제"
     hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
-    return f"### [{banner}] {problem.title}\n- 난이도: {problem.difficulty}\n- 유형: {problem.kind}\n\n{problem.body}{hint_line}"
+    selection_line = (
+        f"- 선택 필터: 난이도 {requested_filters.get('difficulty', '전체')}, "
+        f"언어 {requested_filters.get('language', '전체')}, "
+        f"유형 {requested_filters.get('problem_type', '전체')}"
+    )
+    applied = applied_filters or requested_filters
+    applied_line = ""
+    if applied != requested_filters:
+        applied_line = (
+            f"\n- 적용 필터: 난이도 {applied.get('difficulty', '전체')}, "
+            f"언어 {applied.get('language', '전체')}, "
+            f"유형 {applied.get('problem_type', '전체')}"
+        )
+    return (
+        f"### [{banner}] {problem.title}\n"
+        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n- 문제 유형: {infer_problem_type(problem)}\n"
+        f"{selection_line}{applied_line}\n\n{problem.body}{hint_line}"
+    )
 
 
 def ensure_favorites_file() -> None:
@@ -164,14 +307,14 @@ def call_llm(system_prompt: str, user_prompt: str) -> str:
         "temperature": 0.2,
     }
     try:
-        response = requests.post(LM_STUDIO_ENDPOINT, json=payload, timeout=120)
+        response = requests.post(endpoint, json=payload, timeout=120)
         response.raise_for_status()
         content = response.json()
         return content["choices"][0]["message"]["content"]
     except Exception as exc:  # noqa: BLE001
         return (
             "LLM 서버에 연결하지 못했습니다.\n"
-            f"로컬 엔드포인트({LM_STUDIO_ENDPOINT})를 확인하세요.\n"
+            f"로컬 엔드포인트({endpoint})를 확인하세요.\n"
             f"대신 휴리스틱 피드백을 제공합니다. ({exc})"
         )
 
@@ -193,7 +336,9 @@ def evaluate_submission(problem: Problem, code: str) -> Tuple[int, str]:
     return score, detail
 
 
-def build_feedback(problem: Problem, code: str, score: int, run_detail: str) -> Tuple[str, str, str]:
+def build_feedback(
+    problem: Problem, code: str, score: int, run_detail: str, endpoint: str
+) -> Tuple[str, str, str]:
     system_prompt = (
         "당신은 SQL, PySpark, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. 코드 실행 결과를 반영해 짧게 평가하세요. "
         "정답 여부, 놓친 부분, 효율/논리 개선, 작성자의 의도 추정을 포함합니다."
@@ -203,7 +348,7 @@ def build_feedback(problem: Problem, code: str, score: int, run_detail: str) -> 
         f"실행 결과 요약: {run_detail}\n"
         "- 1) 정오 판단과 점수 보정 제안\n- 2) 보완 포인트\n- 3) 더 효율적이거나 간결한 방법\n- 4) 작성자의 의도 추측"
     )
-    llm_reply = call_llm(system_prompt, user_prompt)
+    llm_reply = call_llm(system_prompt, user_prompt, endpoint)
     if "휴리스틱" in llm_reply:
         improvement = problem.hint
         reasoning = "문제에서 요구한 키워드 기반으로 자동 피드백을 생성했습니다."
@@ -284,23 +429,59 @@ def on_new_problem(difficulty: str) -> Tuple[str, Dict, gr.Update, str, str]:
     )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str, str, str]:
+def on_submit(
+    state: Dict, code: str, progress=gr.Progress()
+) -> Generator[Tuple[str, str, str, str, Dict, gr.Update], None, None]:
+    state = ensure_state(state)
+
+def on_submit(
+    state: Dict, code: str, settings: Dict, progress=gr.Progress()
+) -> Tuple[str, str, str, str]:
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다.", "", "", ""
+        state["in_progress"] = False
+        yield "문제가 선택되지 않았습니다.", "", "", "", state, gr.update(interactive=True)
+        return
+
+    if state.get("in_progress"):
+        message = "채점이 진행 중입니다. 잠시만 기다려주세요."
+        yield (
+            message,
+            state.get("last_run_detail", ""),
+            state.get("last_feedback", ""),
+            state.get("last_improvement", ""),
+            state,
+            gr.update(interactive=False),
+        )
+        return
+
+    state["in_progress"] = True
     problem: Problem = state["problem"]
-    
+
+    yield "채점 중입니다...", "", "", "", state, gr.update(interactive=False)
+
     progress(0, desc="채점 중")
     score, run_detail = evaluate_submission(problem, code)
     progress(0.33, desc="채점 중")
     
-    feedback, improvement, reasoning = build_feedback(problem, code, score, run_detail)
+    endpoint = settings.get("lm_endpoint", LM_STUDIO_ENDPOINT) if settings else LM_STUDIO_ENDPOINT
+    feedback, improvement, reasoning = build_feedback(
+        problem, code, score, run_detail, endpoint
+    )
     progress(0.66, desc="채점 중")
-    
+
     append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)
     progress(1.0, desc="채점 완료")
-    
+
     header = f"점수: {score}점 ({'통과' if score >= 80 else '재도전'})"
-    return header, run_detail, feedback, improvement
+    state.update(
+        {
+            "in_progress": False,
+            "last_run_detail": run_detail,
+            "last_feedback": feedback,
+            "last_improvement": improvement,
+        }
+    )
+    yield header, run_detail, feedback, improvement, state, gr.update(interactive=True)
 
 
 def show_hint(state: Dict) -> str:
@@ -345,7 +526,11 @@ def toggle_favorite(state: Dict) -> Tuple[gr.Update, str, gr.Update]:
 
 
 def build_interface() -> gr.Blocks:
-    with gr.Blocks(title="SQL & PySpark 연습") as demo:
+    with gr.Blocks(
+        title="SQL & PySpark 연습",
+        theme=CUSTOM_THEME,
+        css=CUSTOM_CSS,
+    ) as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
         difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
         question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
@@ -387,6 +572,12 @@ def build_interface() -> gr.Blocks:
             outputs=[favorite_btn, favorite_status_md, favorite_choices],
         )
 
+        def sync_filters(diff: str, lang: str, ptype: str):
+            return normalize_filters(diff, lang, ptype)
+
+        for dropdown in (difficulty, language, problem_type):
+            dropdown.change(sync_filters, inputs=[difficulty, language, problem_type], outputs=filter_state)
+
         def refresh_notes():
             labels, values = refresh_note_choices()
             choices = list(zip(labels, values))
@@ -394,7 +585,7 @@ def build_interface() -> gr.Blocks:
 
         refresh_btn.click(refresh_notes, outputs=[note_choices, feedback_md])
 
-        def load_selected(pid):
+        def load_selected(pid, current_filters):
             if not pid:
                 return gr.update(), {}, gr.update(), favorite_button_label(""), "재도전 문제를 선택하세요."
             return load_from_notes(pid)

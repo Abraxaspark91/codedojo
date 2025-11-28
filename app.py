@@ -3,7 +3,7 @@ import random
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Generator, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import gradio as gr
 import requests
@@ -19,27 +19,6 @@ LM_STUDIO_ENDPOINT = (
     if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
     else "http://127.0.0.1:1234/v1/chat/completions"
 )
-
-THEME_STORAGE_KEY = "codedojo-theme-preference"
-THEME_INIT_JS = f"""
-() => {{
-    const stored = window.localStorage.getItem('{THEME_STORAGE_KEY}') || 'light';
-    const root = document.documentElement;
-    root.dataset.userTheme = stored;
-    document.body.dataset.userTheme = stored;
-    return stored;
-}}
-"""
-
-THEME_APPLY_JS = f"""
-(mode) => {{
-    const root = document.documentElement;
-    root.dataset.userTheme = mode;
-    document.body.dataset.userTheme = mode;
-    window.localStorage.setItem('{THEME_STORAGE_KEY}', mode);
-    return mode;
-}}
-"""
 
 CUSTOM_THEME = gr.themes.Default(primary_hue="emerald", neutral_hue="slate")
 CUSTOM_CSS = """
@@ -85,8 +64,6 @@ body[data-user-theme="light"] {
     color: #e2e8f0 !important;
 }
 """
-
-DEFAULT_SETTINGS = {"share": False, "auth": "", "lm_endpoint": LM_STUDIO_ENDPOINT}
 
 @dataclass
 class Attempt:
@@ -491,9 +468,7 @@ def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[s
     )
 
 
-def on_submit(
-    state: Dict, code: str, settings: Optional[Dict] = None, progress=gr.Progress()
-) -> Tuple[str, str, str, str]:
+def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str, str, str]:
     state = ensure_state(state)
     if not state or "problem" not in state:
         return "문제가 선택되지 않았습니다.", "", "", ""
@@ -513,8 +488,9 @@ def on_submit(
     score, run_detail = evaluate_submission(problem, code)
     progress(0.33, desc="채점 중")
 
-    endpoint = settings.get("lm_endpoint", LM_STUDIO_ENDPOINT) if settings else LM_STUDIO_ENDPOINT
-    feedback, improvement, reasoning = build_feedback(problem, code, score, run_detail, endpoint)
+    feedback, improvement, reasoning = build_feedback(
+        problem, code, score, run_detail, LM_STUDIO_ENDPOINT
+    )
     progress(0.66, desc="채점 중")
 
     append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)

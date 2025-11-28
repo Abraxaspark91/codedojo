@@ -106,6 +106,40 @@ class Attempt:
     rechallenge_hint: str = ""
 
 
+def ensure_state(state: Optional[Dict]) -> Dict:
+    if state is None:
+        state = {}
+
+    state.setdefault("in_progress", False)
+    state.setdefault("last_run_detail", "")
+    state.setdefault("last_feedback", "")
+    state.setdefault("last_improvement", "")
+    state.setdefault("filters", normalize_filters(None, None, None))
+    return state
+
+
+def unique_preserve_order(items: List[str]) -> List[str]:
+    seen = []
+    ordered: List[str] = []
+    for item in items:
+        if item in seen:
+            continue
+        seen.append(item)
+        ordered.append(item)
+    return ordered
+
+
+def infer_problem_type(problem: Problem) -> str:
+    lower_expected = [kw.lower() for kw in problem.expected]
+    if any(key in lower_expected for key in ["join", "union", "merge"]):
+        return "조인/조합"
+    if any(key in lower_expected for key in ["group by", "sum", "avg", "count", "having"]):
+        return "집계"
+    if any(key in lower_expected for key in ["over", "rank", "dense_rank", "window"]):
+        return "윈도우"
+    return "기본"
+
+
 def ensure_note_file() -> None:
     if not NOTE_PATH.exists():
         NOTE_PATH.write_text("# 오답노트 기록\n\n")
@@ -296,7 +330,7 @@ def favorite_status_text(pid: str) -> str:
     )
 
 
-def call_llm(system_prompt: str, user_prompt: str) -> str:
+def call_llm(system_prompt: str, user_prompt: str, endpoint: str = LM_STUDIO_ENDPOINT) -> str:
     payload = {
         "model": "lm-studio",
         "messages": [
@@ -392,10 +426,17 @@ def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
         if entry.pid == selected_pid:
             problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
             if problem:
-                question = render_question(problem, True, entry.rechallenge_hint)
+                filters = normalize_filters(None, None, None)
+                question = render_question(problem, True, entry.rechallenge_hint, filters)
                 return (
                     question,
-                    {"problem": problem, "rechallenge": True, "hint": entry.rechallenge_hint},
+                    {
+                        "problem": problem,
+                        "rechallenge": True,
+                        "hint": entry.rechallenge_hint,
+                        "filters": filters,
+                        "in_progress": False,
+                    },
                     gr.update(value="", language=problem.kind),
                     favorite_button_label(problem.pid),
                     favorite_status_text(problem.pid),
@@ -406,10 +447,17 @@ def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
 def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
     problem = next((p for p in PROBLEM_BANK if p.pid == pid), None)
     if problem:
-        question = render_question(problem, False, "")
+        filters = normalize_filters(None, None, None)
+        question = render_question(problem, False, "", filters)
         return (
             question,
-            {"problem": problem, "rechallenge": False, "hint": ""},
+            {
+                "problem": problem,
+                "rechallenge": False,
+                "hint": "",
+                "filters": filters,
+                "in_progress": False,
+            },
             gr.update(value="", language=problem.kind),
             favorite_button_label(problem.pid),
             favorite_status_text(problem.pid),
@@ -417,12 +465,26 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
     return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
 
 
-def on_new_problem(difficulty: str) -> Tuple[str, Dict, gr.Update, str, str]:
-    problem, rechallenge, hint = pick_problem(difficulty)
-    question = render_question(problem, rechallenge, hint)
+def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.Update, str, str]:
+    filters = normalize_filters(difficulty, language, problem_type)
+    problem, rechallenge, hint, applied_filters = pick_problem(difficulty, language, problem_type)
+    question = render_question(problem, rechallenge, hint, filters, applied_filters)
+    state = ensure_state({})
+    state.update(
+        {
+            "problem": problem,
+            "rechallenge": rechallenge,
+            "hint": hint,
+            "filters": filters,
+            "in_progress": False,
+            "last_run_detail": "",
+            "last_feedback": "",
+            "last_improvement": "",
+        }
+    )
     return (
         question,
-        {"problem": problem, "rechallenge": rechallenge, "hint": hint},
+        state,
         gr.update(value="", language=problem.kind),
         favorite_button_label(problem.pid),
         favorite_status_text(problem.pid),
@@ -430,43 +492,29 @@ def on_new_problem(difficulty: str) -> Tuple[str, Dict, gr.Update, str, str]:
 
 
 def on_submit(
-    state: Dict, code: str, progress=gr.Progress()
-) -> Generator[Tuple[str, str, str, str, Dict, gr.Update], None, None]:
-    state = ensure_state(state)
-
-def on_submit(
-    state: Dict, code: str, settings: Dict, progress=gr.Progress()
+    state: Dict, code: str, settings: Optional[Dict] = None, progress=gr.Progress()
 ) -> Tuple[str, str, str, str]:
+    state = ensure_state(state)
     if not state or "problem" not in state:
-        state["in_progress"] = False
-        yield "문제가 선택되지 않았습니다.", "", "", "", state, gr.update(interactive=True)
-        return
+        return "문제가 선택되지 않았습니다.", "", "", ""
 
     if state.get("in_progress"):
-        message = "채점이 진행 중입니다. 잠시만 기다려주세요."
-        yield (
-            message,
+        return (
+            "채점이 진행 중입니다. 잠시만 기다려주세요.",
             state.get("last_run_detail", ""),
             state.get("last_feedback", ""),
             state.get("last_improvement", ""),
-            state,
-            gr.update(interactive=False),
         )
-        return
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
 
-    yield "채점 중입니다...", "", "", "", state, gr.update(interactive=False)
-
     progress(0, desc="채점 중")
     score, run_detail = evaluate_submission(problem, code)
     progress(0.33, desc="채점 중")
-    
+
     endpoint = settings.get("lm_endpoint", LM_STUDIO_ENDPOINT) if settings else LM_STUDIO_ENDPOINT
-    feedback, improvement, reasoning = build_feedback(
-        problem, code, score, run_detail, endpoint
-    )
+    feedback, improvement, reasoning = build_feedback(problem, code, score, run_detail, endpoint)
     progress(0.66, desc="채점 중")
 
     append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)
@@ -481,7 +529,7 @@ def on_submit(
             "last_improvement": improvement,
         }
     )
-    yield header, run_detail, feedback, improvement, state, gr.update(interactive=True)
+    return header, run_detail, feedback, improvement
 
 
 def show_hint(state: Dict) -> str:
@@ -526,13 +574,22 @@ def toggle_favorite(state: Dict) -> Tuple[gr.Update, str, gr.Update]:
 
 
 def build_interface() -> gr.Blocks:
+    language_options = ["전체"] + unique_preserve_order([p.kind for p in PROBLEM_BANK])
+    problem_type_options = ["전체"] + unique_preserve_order(
+        [infer_problem_type(p) for p in PROBLEM_BANK]
+    )
+
     with gr.Blocks(
         title="SQL & PySpark 연습",
         theme=CUSTOM_THEME,
         css=CUSTOM_CSS,
     ) as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
-        difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
+        with gr.Row():
+            difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
+            language = gr.Dropdown(language_options, value=language_options[0], label="언어")
+            problem_type = gr.Dropdown(problem_type_options, value=problem_type_options[0], label="문제 유형")
+
         question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
         favorite_status_md = gr.Markdown("즐겨찾기 상태를 여기에서 확인하세요.")
         code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
@@ -561,22 +618,20 @@ def build_interface() -> gr.Blocks:
 
         new_btn.click(
             on_new_problem,
-            inputs=difficulty,
+            inputs=[difficulty, language, problem_type],
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
         )
-        submit_btn.click(on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md])
+        submit_btn.click(
+            on_submit,
+            inputs=[state, code_box],
+            outputs=[score_md, exec_result, feedback_md, improvement_md],
+        )
         hint_btn.click(show_hint, inputs=state, outputs=feedback_md)
         favorite_btn.click(
             toggle_favorite,
             inputs=state,
             outputs=[favorite_btn, favorite_status_md, favorite_choices],
         )
-
-        def sync_filters(diff: str, lang: str, ptype: str):
-            return normalize_filters(diff, lang, ptype)
-
-        for dropdown in (difficulty, language, problem_type):
-            dropdown.change(sync_filters, inputs=[difficulty, language, problem_type], outputs=filter_state)
 
         def refresh_notes():
             labels, values = refresh_note_choices()
@@ -585,7 +640,7 @@ def build_interface() -> gr.Blocks:
 
         refresh_btn.click(refresh_notes, outputs=[note_choices, feedback_md])
 
-        def load_selected(pid, current_filters):
+        def load_selected(pid):
             if not pid:
                 return gr.update(), {}, gr.update(), favorite_button_label(""), "재도전 문제를 선택하세요."
             return load_from_notes(pid)

@@ -11,6 +11,8 @@ from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem
 
 NOTE_PATH = Path("data/wrong_notes.md")
 NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
+FAVORITES_PATH = Path("data/favorites.json")
+FAVORITES_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 LM_STUDIO_ENDPOINT = (
     Path(".env").read_text().split("LM_STUDIO_ENDPOINT=")[-1].strip()
@@ -98,6 +100,57 @@ def render_question(problem: Problem, rechallenge: bool, rechallenge_hint: str) 
     banner = "재도전" if rechallenge else "신규 문제"
     hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
     return f"### [{banner}] {problem.title}\n- 난이도: {problem.difficulty}\n- 유형: {problem.kind}\n\n{problem.body}{hint_line}"
+
+
+def ensure_favorites_file() -> None:
+    if not FAVORITES_PATH.exists():
+        FAVORITES_PATH.write_text("[]", encoding="utf-8")
+
+
+def load_favorites() -> List[Dict]:
+    ensure_favorites_file()
+    try:
+        data = json.loads(FAVORITES_PATH.read_text(encoding="utf-8"))
+        if isinstance(data, list):
+            return data
+    except json.JSONDecodeError:
+        pass
+    return []
+
+
+def save_favorites(favorites: List[Dict]) -> None:
+    deduped = {}
+    for fav in favorites:
+        pid = fav.get("pid")
+        if pid:
+            deduped[pid] = {
+                "pid": pid,
+                "title": fav.get("title", ""),
+                "difficulty": fav.get("difficulty", ""),
+                "kind": fav.get("kind", ""),
+            }
+    FAVORITES_PATH.write_text(json.dumps(list(deduped.values()), ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def favorite_button_label(pid: str) -> str:
+    favorites = load_favorites()
+    return "⭐ 즐겨찾기 해제" if any(fav.get("pid") == pid for fav in favorites) else "☆ 즐겨찾기 추가"
+
+
+def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
+    favorites = load_favorites()
+    labels = [
+        f"{fav['pid']} | {fav.get('difficulty','')} | {fav.get('kind','')} | {fav.get('title','')}"
+        for fav in favorites
+    ]
+    values = [fav["pid"] for fav in favorites]
+    return labels, values
+
+
+def favorite_status_text(pid: str) -> str:
+    return (
+        "⭐ 즐겨찾기에 저장된 문제입니다." if favorite_button_label(pid).startswith("⭐") else "☆ 즐겨찾기에 추가할 수 있습니다."
+    )
 
 
 def call_llm(system_prompt: str, user_prompt: str) -> str:
@@ -188,21 +241,47 @@ def refresh_note_choices() -> Tuple[List[str], List[str]]:
     return labels, values
 
 
-def load_from_notes(selected_pid: str) -> Tuple[str, Dict]:
+def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
     entries = failed_attempts(load_attempts())
     for entry in entries:
         if entry.pid == selected_pid:
             problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
             if problem:
                 question = render_question(problem, True, entry.rechallenge_hint)
-                return question, {"problem": problem, "rechallenge": True, "hint": entry.rechallenge_hint}
-    return "선택한 문제가 없습니다.", {}
+                return (
+                    question,
+                    {"problem": problem, "rechallenge": True, "hint": entry.rechallenge_hint},
+                    gr.update(value="", language=problem.kind),
+                    favorite_button_label(problem.pid),
+                    favorite_status_text(problem.pid),
+                )
+    return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "재도전 문제를 선택하세요."
 
 
-def on_new_problem(difficulty: str) -> Tuple[str, Dict, str]:
+def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.Update, str, str]:
+    problem = next((p for p in PROBLEM_BANK if p.pid == pid), None)
+    if problem:
+        question = render_question(problem, False, "")
+        return (
+            question,
+            {"problem": problem, "rechallenge": False, "hint": ""},
+            gr.update(value="", language=problem.kind),
+            favorite_button_label(problem.pid),
+            favorite_status_text(problem.pid),
+        )
+    return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
+
+
+def on_new_problem(difficulty: str) -> Tuple[str, Dict, gr.Update, str, str]:
     problem, rechallenge, hint = pick_problem(difficulty)
     question = render_question(problem, rechallenge, hint)
-    return question, {"problem": problem, "rechallenge": rechallenge, "hint": hint}, problem.kind
+    return (
+        question,
+        {"problem": problem, "rechallenge": rechallenge, "hint": hint},
+        gr.update(value="", language=problem.kind),
+        favorite_button_label(problem.pid),
+        favorite_status_text(problem.pid),
+    )
 
 
 def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, str, str, str]:
@@ -231,11 +310,46 @@ def show_hint(state: Dict) -> str:
     return f"문법 힌트: {problem.hint}"
 
 
+def toggle_favorite(state: Dict) -> Tuple[gr.Update, str, gr.Update]:
+    if not state or "problem" not in state:
+        labels, values = refresh_favorite_choices()
+        return gr.update(), "문제가 선택되지 않았습니다.", gr.update(choices=list(zip(labels, values)), value=None)
+
+    problem: Problem = state["problem"]
+    favorites = load_favorites()
+    exists = any(fav.get("pid") == problem.pid for fav in favorites)
+
+    if exists:
+        favorites = [fav for fav in favorites if fav.get("pid") != problem.pid]
+        message = "즐겨찾기에서 제거했습니다."
+        new_value = None
+    else:
+        favorites.append(
+            {
+                "pid": problem.pid,
+                "title": problem.title,
+                "difficulty": problem.difficulty,
+                "kind": problem.kind,
+            }
+        )
+        message = "즐겨찾기에 추가했습니다."
+        new_value = problem.pid
+
+    save_favorites(favorites)
+    labels, values = refresh_favorite_choices()
+    return (
+        gr.update(value=favorite_button_label(problem.pid)),
+        message,
+        gr.update(choices=list(zip(labels, values)), value=new_value),
+    )
+
+
 def build_interface() -> gr.Blocks:
     with gr.Blocks(title="SQL & PySpark 연습") as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
         difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
         question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
+        favorite_status_md = gr.Markdown("즐겨찾기 상태를 여기에서 확인하세요.")
         code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
         state = gr.State({})
 
@@ -243,20 +357,35 @@ def build_interface() -> gr.Blocks:
             new_btn = gr.Button("새 문제 출제")
             submit_btn = gr.Button("제출", variant="primary")
             hint_btn = gr.Button("문법 힌트")
+            favorite_btn = gr.Button("☆ 즐겨찾기 추가")
 
         exec_result = gr.Markdown(label="실행 결과")
         feedback_md = gr.Markdown(label="LLM 피드백")
         improvement_md = gr.Markdown(label="보완점")
         score_md = gr.Markdown(label="점수")
 
+        with gr.Accordion("즐겨찾기", open=False):
+            fav_refresh_btn = gr.Button("즐겨찾기 불러오기")
+            favorite_choices = gr.Dropdown(choices=[], label="즐겨찾기 문제 선택")
+            load_fav_btn = gr.Button("선택 문제 열기")
+
         with gr.Accordion("오답노트", open=False):
             refresh_btn = gr.Button("오답노트 불러오기")
             note_choices = gr.Dropdown(choices=[], label="재도전 문제 선택")
             load_note_btn = gr.Button("선택 문제 다시 풀기")
 
-        new_btn.click(on_new_problem, inputs=difficulty, outputs=[question_md, state, code_box])
+        new_btn.click(
+            on_new_problem,
+            inputs=difficulty,
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+        )
         submit_btn.click(on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md])
         hint_btn.click(show_hint, inputs=state, outputs=feedback_md)
+        favorite_btn.click(
+            toggle_favorite,
+            inputs=state,
+            outputs=[favorite_btn, favorite_status_md, favorite_choices],
+        )
 
         def refresh_notes():
             labels, values = refresh_note_choices()
@@ -267,12 +396,31 @@ def build_interface() -> gr.Blocks:
 
         def load_selected(pid):
             if not pid:
-                return gr.update(), {}, ""
-            question, new_state = load_from_notes(pid)
-            language = new_state.get("problem").kind if new_state else "sql"
-            return question, new_state, language
+                return gr.update(), {}, gr.update(), favorite_button_label(""), "재도전 문제를 선택하세요."
+            return load_from_notes(pid)
 
-        load_note_btn.click(load_selected, inputs=note_choices, outputs=[question_md, state, code_box])
+        load_note_btn.click(
+            load_selected,
+            inputs=note_choices,
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+        )
+
+        def refresh_favorites():
+            labels, values = refresh_favorite_choices()
+            return gr.update(choices=list(zip(labels, values)), value=None)
+
+        fav_refresh_btn.click(refresh_favorites, outputs=favorite_choices)
+
+        def load_favorite_selection(pid):
+            if not pid:
+                return gr.update(), {}, gr.update(), favorite_button_label(""), "즐겨찾기에서 문제를 선택하세요."
+            return load_favorite_problem(pid)
+
+        load_fav_btn.click(
+            load_favorite_selection,
+            inputs=favorite_choices,
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+        )
 
     return demo
 

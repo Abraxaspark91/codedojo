@@ -97,7 +97,24 @@ def pick_problem(difficulty: str) -> Tuple[Problem, bool, str]:
 def render_question(problem: Problem, rechallenge: bool, rechallenge_hint: str) -> str:
     banner = "재도전" if rechallenge else "신규 문제"
     hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
-    return f"### [{banner}] {problem.title}\n- 난이도: {problem.difficulty}\n- 유형: {problem.kind}\n\n{problem.body}{hint_line}"
+    sections = [
+        f"### [{banner}] {problem.title}",
+        f"- 난이도: {problem.difficulty}",
+        f"- 유형: {problem.kind}",
+        "",
+        problem.body,
+    ]
+
+    if problem.schema:
+        sections.extend(["", "**스키마**", "```", problem.schema, "```"])
+
+    if problem.sample_rows:
+        sections.extend(["", "**샘플 데이터**", "```", *problem.sample_rows, "```"])
+
+    if hint_line:
+        sections.append(hint_line)
+
+    return "\n".join(sections)
 
 
 def call_llm(system_prompt: str, user_prompt: str) -> str:

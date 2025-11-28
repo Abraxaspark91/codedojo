@@ -3,7 +3,7 @@ import random
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Generator, List, Tuple
+from typing import Dict, Generator, List, Optional, Tuple
 
 import gradio as gr
 import requests
@@ -17,6 +17,30 @@ LM_STUDIO_ENDPOINT = (
     if Path(".env").exists() and "LM_STUDIO_ENDPOINT=" in Path(".env").read_text()
     else "http://127.0.0.1:1234/v1/chat/completions"
 )
+
+LANGUAGE_OPTIONS = ["전체", "SQL", "PySpark"]
+TYPE_KEYWORDS = {
+    "기본/필터": ["filter", "where", "기본"],
+    "조인": ["join", "조인"],
+    "집계": ["group by", "sum", "count", "agg", "average", "avg"],
+    "윈도우": ["window", "lag", "lead", "rank", "row_number", "over", "rolling"],
+    "피벗": ["pivot"],
+}
+
+
+def infer_problem_type(problem: Problem) -> str:
+    corpus = f"{problem.pid} {problem.title} {problem.body} {' '.join(problem.expected)}".lower()
+    for label, keywords in TYPE_KEYWORDS.items():
+        if any(key.lower() in corpus for key in keywords):
+            return label
+    return "일반"
+
+
+PROBLEM_TYPE_OPTIONS = ["전체", *sorted({infer_problem_type(p) for p in PROBLEM_BANK})]
+
+
+def display_language(kind: str) -> str:
+    return "PySpark" if kind.lower() == "pyspark" else "SQL"
 
 @dataclass
 class Attempt:
@@ -77,44 +101,102 @@ def failed_attempts(entries: List[Attempt]) -> List[Attempt]:
     return [a for a in entries if a.score < 80]
 
 
-def pick_problem(difficulty: str) -> Tuple[Problem, bool, str]:
+def matches_filters(problem: Problem, difficulty: Optional[str], language: Optional[str], problem_type: Optional[str]) -> bool:
+    language_match = (not language or language == "전체") or problem.kind.lower() == language.lower()
+    difficulty_match = (not difficulty or difficulty == "전체") or problem.difficulty == difficulty
+    inferred_type = infer_problem_type(problem)
+    type_match = (not problem_type or problem_type == "전체") or inferred_type == problem_type
+    return difficulty_match and language_match and type_match
+
+
+def normalize_filters(
+    difficulty: Optional[str], language: Optional[str], problem_type: Optional[str]
+) -> Dict[str, str]:
+    return {
+        "difficulty": difficulty or "전체",
+        "language": language or "전체",
+        "problem_type": problem_type or "전체",
+    }
+
+
+def pick_problem(
+    difficulty: str, language: str, problem_type: str
+) -> Tuple[Problem, bool, str, Dict[str, str]]:
     entries = load_attempts()
     failed = failed_attempts(entries)
     rechallenge = False
     hint = ""
-    if failed and random.random() < 0.3:
-        target = random.choice(failed)
-        problem = next((p for p in PROBLEM_BANK if p.pid == target.pid), None)
-        if problem:
-            rechallenge = True
-            hint = target.rechallenge_hint or "지난 시도에서 놓친 부분을 점검해 보세요."
-            return problem, rechallenge, hint
-    candidates = [p for p in PROBLEM_BANK if p.difficulty == difficulty]
-    problem = random.choice(candidates) if candidates else random.choice(PROBLEM_BANK)
-    return problem, rechallenge, hint
-
-
-def render_question(problem: Problem, rechallenge: bool, rechallenge_hint: str) -> str:
-    banner = "재도전" if rechallenge else "신규 문제"
-    hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
-    sections = [
-        f"### [{banner}] {problem.title}",
-        f"- 난이도: {problem.difficulty}",
-        f"- 유형: {problem.kind}",
-        "",
-        problem.body,
+    target_filters = normalize_filters(difficulty, language, problem_type)
+    filter_priority = [
+        (difficulty, language, problem_type),
+        (difficulty, language, None),
+        (difficulty, None, problem_type),
+        (difficulty, None, None),
+        (None, language, problem_type),
+        (None, language, None),
+        (None, None, problem_type),
+        (None, None, None),
     ]
 
-    if problem.schema:
-        sections.extend(["", "**스키마**", "```", problem.schema, "```"])
+    def choose_candidate(pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict[str, str]]:
+        for diff_opt, lang_opt, type_opt in filter_priority:
+            candidates = [
+                (prob, attempt_hint)
+                for prob, attempt_hint in pool
+                if matches_filters(prob, diff_opt, lang_opt, type_opt)
+            ]
+            if candidates:
+                prob, attempt_hint = random.choice(candidates)
+                return prob, normalize_filters(diff_opt, lang_opt, type_opt) | {"hint": attempt_hint}
+        prob, attempt_hint = random.choice(pool)
+        return prob, normalize_filters(None, None, None) | {"hint": attempt_hint}
 
-    if problem.sample_rows:
-        sections.extend(["", "**샘플 데이터**", "```", *problem.sample_rows, "```"])
+    failed_pool: List[Tuple[Problem, str]] = []
+    for entry in failed:
+        problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+        if problem:
+            failed_pool.append((problem, entry.rechallenge_hint))
 
-    if hint_line:
-        sections.append(hint_line)
+    applied_filters = target_filters
+    if failed_pool and random.random() < 0.3:
+        rechallenge = True
+        problem, applied_filters = choose_candidate(failed_pool)
+        hint = applied_filters.pop("hint", "지난 시도에서 놓친 부분을 점검해 보세요.")
+        return problem, rechallenge, hint, applied_filters
 
-    return "\n".join(sections)
+    full_pool = [(p, "") for p in PROBLEM_BANK]
+    problem, applied_filters = choose_candidate(full_pool)
+    hint = applied_filters.pop("hint", "")
+    return problem, rechallenge, hint, applied_filters
+
+
+def render_question(
+    problem: Problem,
+    rechallenge: bool,
+    rechallenge_hint: str,
+    requested_filters: Dict[str, str],
+    applied_filters: Optional[Dict[str, str]] = None,
+) -> str:
+    banner = "재도전" if rechallenge else "신규 문제"
+    hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
+    selection_line = (
+        f"- 선택 필터: 난이도 {requested_filters.get('difficulty', '전체')}, "
+        f"언어 {requested_filters.get('language', '전체')}, "
+        f"유형 {requested_filters.get('problem_type', '전체')}"
+    )
+    applied = applied_filters or requested_filters
+    applied_line = ""
+    if applied != requested_filters:
+        applied_line = (
+            f"\n- 적용 필터: 난이도 {applied.get('difficulty', '전체')}, "
+            f"언어 {applied.get('language', '전체')}, "
+            f"유형 {applied.get('problem_type', '전체')}"
+        )
+    return (
+        f"### [{banner}] {problem.title}\n"
+        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n- 문제 유형: {infer_problem_type(problem)}\n"
+        f"{selection_line}{applied_line}\n\n{problem.body}{hint_line}"
+    )
 
 
 def call_llm(system_prompt: str, user_prompt: str) -> str:
@@ -205,26 +287,42 @@ def refresh_note_choices() -> Tuple[List[str], List[str]]:
     return labels, values
 
 
-def load_from_notes(selected_pid: str) -> Tuple[str, Dict]:
+def load_from_notes(selected_pid: str) -> Tuple[str, Dict, Dict[str, str]]:
     entries = failed_attempts(load_attempts())
     for entry in entries:
         if entry.pid == selected_pid:
             problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
             if problem:
-                question = render_question(problem, True, entry.rechallenge_hint)
-                return question, {"problem": problem, "rechallenge": True, "hint": entry.rechallenge_hint}
-    return "선택한 문제가 없습니다.", {}
+                filters = normalize_filters(
+                    problem.difficulty, display_language(problem.kind), infer_problem_type(problem)
+                )
+                question = render_question(problem, True, entry.rechallenge_hint, filters)
+                return (
+                    question,
+                    {
+                        "problem": problem,
+                        "rechallenge": True,
+                        "hint": entry.rechallenge_hint,
+                        "filters": filters,
+                        "applied_filters": filters,
+                    },
+                    filters,
+                )
+    return "선택한 문제가 없습니다.", {}, normalize_filters(None, None, None)
 
 
-def reset_outputs(problem: Problem, rechallenge: bool, hint: str) -> Tuple[str, Dict, gr.Update, str, str, str, str]:
-    question = render_question(problem, rechallenge, hint)
-    state = {"problem": problem, "rechallenge": rechallenge, "hint": hint}
-    code_box = gr.update(language=problem.kind, value="")
-    score_md = "점수가 여기 표시됩니다."
-    exec_result = ""
-    feedback_md = f"재도전 힌트: {hint}" if hint else "코드를 작성해 제출해 주세요."
-    improvement_md = ""
-    return question, state, code_box, score_md, exec_result, feedback_md, improvement_md
+def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, str, Dict[str, str]]:
+    requested_filters = normalize_filters(difficulty, language, problem_type)
+    problem, rechallenge, hint, applied_filters = pick_problem(difficulty, language, problem_type)
+    question = render_question(problem, rechallenge, hint, requested_filters, applied_filters)
+    state = {
+        "problem": problem,
+        "rechallenge": rechallenge,
+        "hint": hint,
+        "filters": requested_filters,
+        "applied_filters": applied_filters,
+    }
+    return question, state, problem.kind, requested_filters
 
 
 def on_new_problem(difficulty: str) -> Tuple[str, Dict, gr.Update, str, str, str, str]:
@@ -291,10 +389,14 @@ def show_hint(state: Dict) -> str:
 def build_interface() -> gr.Blocks:
     with gr.Blocks(title="SQL & PySpark 연습") as demo:
         gr.Markdown("## SQL & PySpark 연습 스테이션 (LM Studio)")
-        difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
+        with gr.Row():
+            difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도")
+            language = gr.Dropdown(LANGUAGE_OPTIONS, value=LANGUAGE_OPTIONS[0], label="언어")
+            problem_type = gr.Dropdown(PROBLEM_TYPE_OPTIONS, value=PROBLEM_TYPE_OPTIONS[0], label="문제 유형")
         question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
         code_box = gr.Code(label="코드 에디터", language="sql", lines=16)
         state = gr.State({})
+        filter_state = gr.State(normalize_filters(DIFFICULTY_OPTIONS[0], LANGUAGE_OPTIONS[0], PROBLEM_TYPE_OPTIONS[0]))
 
         with gr.Row():
             new_btn = gr.Button("새 문제 출제")
@@ -313,11 +415,19 @@ def build_interface() -> gr.Blocks:
 
         new_btn.click(
             on_new_problem,
-            inputs=difficulty,
-            outputs=[question_md, state, code_box, score_md, exec_result, feedback_md, improvement_md],
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, filter_state],
         )
-        submit_btn.click(on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md])
+        submit_btn.click(
+            on_submit, inputs=[state, code_box], outputs=[score_md, exec_result, feedback_md, improvement_md]
+        )
         hint_btn.click(show_hint, inputs=state, outputs=feedback_md)
+
+        def sync_filters(diff: str, lang: str, ptype: str):
+            return normalize_filters(diff, lang, ptype)
+
+        for dropdown in (difficulty, language, problem_type):
+            dropdown.change(sync_filters, inputs=[difficulty, language, problem_type], outputs=filter_state)
 
         def refresh_notes():
             labels, values = refresh_note_choices()
@@ -326,19 +436,15 @@ def build_interface() -> gr.Blocks:
 
         refresh_btn.click(refresh_notes, outputs=[note_choices, feedback_md])
 
-        def load_selected(pid):
+        def load_selected(pid, current_filters):
             if not pid:
-                return gr.update(), {}, gr.update(), "", "", "", ""
-            question, new_state = load_from_notes(pid)
-            problem = new_state.get("problem") if new_state else None
-            if problem:
-                return reset_outputs(problem, True, new_state.get("hint", ""))
-            return question, new_state, gr.update(), "", "", "", ""
+                return gr.update(), {}, "", current_filters
+            question, new_state, filters = load_from_notes(pid)
+            language_choice = new_state.get("problem").kind if new_state else "sql"
+            return question, new_state, language_choice, filters
 
         load_note_btn.click(
-            load_selected,
-            inputs=note_choices,
-            outputs=[question_md, state, code_box, score_md, exec_result, feedback_md, improvement_md],
+            load_selected, inputs=[note_choices, filter_state], outputs=[question_md, state, code_box, filter_state]
         )
 
     return demo

@@ -22,292 +22,88 @@ LM_STUDIO_ENDPOINT = (
     else "http://127.0.0.1:1234/v1/chat/completions"
 )
 
-CUSTOM_THEME = gr.themes.Default(primary_hue="emerald", neutral_hue="slate")
+CUSTOM_THEME = gr.themes.Soft(
+    primary_hue="emerald",
+    neutral_hue="slate",
+).set(
+    body_background_fill="*neutral_950",
+    body_background_fill_dark="*neutral_950",
+)
+
 CUSTOM_CSS = """
-/* ===== 전체 레이아웃 설정 ===== */
-html, body, .gradio-container {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.gradio-container {
-    max-width: 100%;
-    padding: 0;
-}
-
-/* ===== TOP 구간 고정 (위 10%) ===== */
-.top-section {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 10vh;
-    z-index: 1000;
-    padding: 1rem;
-    border-bottom: 2px solid var(--border-color);
-    background: var(--bg-primary);
-    overflow: hidden;
-}
-
-/* ===== MIDDLE 구간 스크롤 가능 (위 10% ~ 아래 20%) ===== */
-.middle-section {
-    position: fixed;
-    top: 10vh;
-    left: 0;
-    right: 0;
-    height: 70vh;
-    z-index: 100;
-    display: flex;
-    gap: 1.5rem;
+/* ===== 영역 구분 스타일 ===== */
+.section-box {
     padding: 1.5rem;
-    overflow-y: auto;
-    overflow-x: hidden;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color-primary);
+    background: var(--background-fill-secondary);
+    margin-bottom: 1rem;
 }
 
-/* ===== BOTTOM 구간 고정 (아래 20%) ===== */
-.bottom-section {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 20vh;
-    z-index: 1000;
-    display: flex;
-    gap: 1.5rem;
-    padding: 1.5rem;
-    border-top: 2px solid var(--border-color);
-    background: var(--bg-primary);
-    overflow: hidden;
-}
-
-/* ===== MIDDLE-LEFT (40%) ===== */
-.middle-left {
-    flex: 0 0 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    min-width: 0;
-}
-
-.middle-left-upper {
-    flex: 4;
-    min-height: 0;
-    overflow-y: auto;
-    padding: 1.5rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
-    background: var(--bg-secondary);
-}
-
-.middle-left-lower {
-    flex: 6;
-    min-height: 0;
-    overflow-y: auto;
-    padding: 1.5rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
-    background: var(--bg-secondary);
-}
-
-/* ===== MIDDLE-RIGHT (60%) ===== */
-.middle-right {
-    flex: 0 0 60%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-width: 0;
-    padding: 1.5rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
-    background: var(--bg-secondary);
-}
-
-.code-editor {
-    flex: 1;
-    min-height: 0;
+.problem-box {
+    min-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
+.feedback-box {
+    min-height: 250px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.code-editor-box {
+    min-height: 500px;
+}
+
+/* ===== 버튼 그룹 ===== */
 .button-row {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    flex-shrink: 0;
-}
-
-/* ===== BOTTOM 그룹 ===== */
-.bottom-group {
-    flex: 1;
-    min-width: 0;
-    padding: 1rem;
-    border: 2px solid var(--border-color);
-    border-radius: 0.5rem;
-    background: var(--bg-secondary);
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
     gap: 0.75rem;
+    margin-top: 1rem;
 }
 
-.bottom-group h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
+/* ===== 하단 섹션 ===== */
+.bottom-panel {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color-primary);
+    background: var(--background-fill-secondary);
 }
 
-/* ===== 테마 색상 변수 ===== */
-:root[data-user-theme="dark"],
-body[data-user-theme="dark"] {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --border-color: #475569;
-    --text-color: #e2e8f0;
-    --text-secondary: #cbd5e1;
+/* ===== 스크롤바 커스터마이징 ===== */
+.problem-box::-webkit-scrollbar,
+.feedback-box::-webkit-scrollbar {
+    width: 6px;
 }
 
-:root[data-user-theme="light"],
-body[data-user-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --border-color: #cbd5e1;
-    --text-color: #0f172a;
-    --text-secondary: #475569;
+.problem-box::-webkit-scrollbar-track,
+.feedback-box::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-/* ===== 다크 테마 적용 ===== */
-[data-user-theme="dark"] .gradio-container,
-[data-user-theme="dark"] .gr-box,
-[data-user-theme="dark"] .gr-panel {
-    background-color: #0f172a !important;
-    color: #e2e8f0 !important;
+.problem-box::-webkit-scrollbar-thumb,
+.feedback-box::-webkit-scrollbar-thumb {
+    background: var(--border-color-primary);
+    border-radius: 3px;
 }
 
-[data-user-theme="dark"] .top-section,
-[data-user-theme="dark"] .bottom-section {
-    background: #0f172a !important;
-    color: #e2e8f0 !important;
-}
-
-[data-user-theme="dark"] .middle-left-upper,
-[data-user-theme="dark"] .middle-left-lower,
-[data-user-theme="dark"] .middle-right,
-[data-user-theme="dark"] .bottom-group {
-    background-color: #1e293b !important;
-    color: #e2e8f0 !important;
-    border-color: #475569 !important;
-}
-
-[data-user-theme="dark"] .gr-button-primary {
-    background: #22c55e !important;
-    color: #0f172a !important;
-}
-
-[data-user-theme="dark"] .gr-button-secondary,
-[data-user-theme="dark"] .gr-button-lg,
-[data-user-theme="dark"] .gr-button-sm {
-    background: #334155 !important;
-    color: #e2e8f0 !important;
-}
-
-[data-user-theme="dark"] textarea,
-[data-user-theme="dark"] pre,
-[data-user-theme="dark"] code {
-    background-color: #0f172a !important;
-    color: #e2e8f0 !important;
-}
-
-/* ===== 라이트 테마 적용 ===== */
-[data-user-theme="light"] .top-section,
-[data-user-theme="light"] .bottom-section {
-    background: #ffffff !important;
-    color: #0f172a !important;
-}
-
-[data-user-theme="light"] .middle-left-upper,
-[data-user-theme="light"] .middle-left-lower,
-[data-user-theme="light"] .middle-right,
-[data-user-theme="light"] .bottom-group {
-    background-color: #f8fafc !important;
-    color: #0f172a !important;
-    border-color: #cbd5e1 !important;
-}
-
-[data-user-theme="light"] textarea,
-[data-user-theme="light"] pre,
-[data-user-theme="light"] code {
-    background-color: #f1f5f9 !important;
-    color: #0f172a !important;
-}
-
-/* ===== 스크롤바 스타일 ===== */
-.middle-section::-webkit-scrollbar,
-.middle-left-upper::-webkit-scrollbar,
-.middle-left-lower::-webkit-scrollbar,
-.code-editor::-webkit-scrollbar,
-.bottom-group::-webkit-scrollbar {
-    width: 8px;
-}
-
-[data-user-theme="dark"] .middle-section::-webkit-scrollbar-track,
-[data-user-theme="dark"] .middle-left-upper::-webkit-scrollbar-track,
-[data-user-theme="dark"] .middle-left-lower::-webkit-scrollbar-track,
-[data-user-theme="dark"] .code-editor::-webkit-scrollbar-track,
-[data-user-theme="dark"] .bottom-group::-webkit-scrollbar-track {
-    background: #0f172a;
-}
-
-[data-user-theme="dark"] .middle-section::-webkit-scrollbar-thumb,
-[data-user-theme="dark"] .middle-left-upper::-webkit-scrollbar-thumb,
-[data-user-theme="dark"] .middle-left-lower::-webkit-scrollbar-thumb,
-[data-user-theme="dark"] .code-editor::-webkit-scrollbar-thumb,
-[data-user-theme="dark"] .bottom-group::-webkit-scrollbar-thumb {
-    background: #475569;
-    border-radius: 4px;
-}
-
-[data-user-theme="dark"] .middle-section::-webkit-scrollbar-thumb:hover,
-[data-user-theme="dark"] .middle-left-upper::-webkit-scrollbar-thumb:hover,
-[data-user-theme="dark"] .middle-left-lower::-webkit-scrollbar-thumb:hover,
-[data-user-theme="dark"] .code-editor::-webkit-scrollbar-thumb:hover,
-[data-user-theme="dark"] .bottom-group::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
+.problem-box::-webkit-scrollbar-thumb:hover,
+.feedback-box::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
 }
 
 /* ===== 모바일 반응형 ===== */
-@media (max-width: 1024px) {
-    .middle-section {
-        flex-direction: column;
-        height: auto;
+@media (max-width: 768px) {
+    .section-box {
+        padding: 1rem;
     }
 
-    .middle-left, .middle-right {
-        flex: none;
-        width: 100%;
+    .problem-box,
+    .feedback-box,
+    .code-editor-box {
+        min-height: 250px;
     }
-
-    .bottom-section {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .bottom-group {
-        width: 100%;
-    }
-}
-
-/* ===== Markdown 헤더 스타일 ===== */
-.gr-markdown h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.gr-markdown h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 700;
 }
 """
 
@@ -960,101 +756,128 @@ def build_interface() -> gr.Blocks:
     problem_type_options = ["전체"] + unique_preserve_order(
         [infer_problem_type(p) for p in PROBLEM_BANK]
     )
-    # Create Blocks with a fallback for gradio versions that don't accept
-    # `theme`/`css` kwargs.
+
+    # Create Blocks with dark theme by default
+    js_code = """
+    function() {
+        // Set dark mode by default
+        if (document.querySelector('.dark') === null) {
+            document.body.classList.add('dark');
+        }
+    }
+    """
+
     try:
         demo = gr.Blocks(
-            title="SQL & PySpark 연습",
+            title="SQL & Python 코딩 연습",
             theme=CUSTOM_THEME,
-            css=CUSTOM_CSS)
+            css=CUSTOM_CSS,
+            js=js_code
+        )
     except TypeError:
-        demo = gr.Blocks(title="SQL & PySpark 연습")
+        demo = gr.Blocks(title="SQL & Python 코딩 연습")
 
     with demo:
         state = gr.State({})
 
-        # ===== TOP 구간 =====
-        with gr.Group(elem_classes="top-section"):
-            with gr.Row():
-                with gr.Column(scale=9):
-                    gr.Markdown("# SQL & PySpark 연습 스테이션")
-                with gr.Column(scale=1):
-                    _ = gr.Dropdown(
-                        choices=["auto", "dark", "light"],
-                        value="auto",
-                        label="🎨 테마",
-                        scale=1
-                    )
-            with gr.Row():
-                difficulty = gr.Dropdown(
-                    DIFFICULTY_OPTIONS,
-                    value=DIFFICULTY_OPTIONS[0],
-                    label="난이도",
-                    scale=1)
-                language = gr.Dropdown(
-                    language_options,
-                    value=language_options[0],
-                    label="언어",
-                    scale=1)
-                problem_type = gr.Dropdown(
-                    problem_type_options,
-                    value=problem_type_options[0],
-                    label="문제 유형",
-                    scale=1)
+        # ===== 헤더 =====
+        gr.Markdown("# 🎯 SQL & Python 코딩 연습 스테이션")
 
-        # ===== MIDDLE 구간 =====
-        with gr.Row(elem_classes="middle-section"):
-            # ===== MIDDLE-LEFT (40%) =====
-            with gr.Column(scale=4, elem_classes="middle-left"):
-                # Middle-Left-Upper (4 비율)
-                with gr.Column(scale=4, elem_classes="middle-left-upper"):
+        # ===== 필터 섹션 =====
+        with gr.Row():
+            difficulty = gr.Dropdown(
+                DIFFICULTY_OPTIONS,
+                value=DIFFICULTY_OPTIONS[0],
+                label="📊 난이도",
+                scale=1
+            )
+            language = gr.Dropdown(
+                language_options,
+                value=language_options[0],
+                label="💻 언어",
+                scale=1
+            )
+            problem_type = gr.Dropdown(
+                problem_type_options,
+                value=problem_type_options[0],
+                label="🏷️ 문제 유형",
+                scale=1
+            )
+            new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="lg", scale=1)
+
+        # ===== 메인 콘텐츠 영역 =====
+        with gr.Row():
+            # 왼쪽: 문제 & 피드백
+            with gr.Column(scale=2):
+                # 문제 영역
+                with gr.Group(elem_classes="section-box"):
                     gr.Markdown("### 📋 문제")
-                    question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
-                    new_btn = gr.Button("🔄 새 문제 출제", size="lg", scale=1)
+                    question_md = gr.Markdown(
+                        "새 문제 버튼을 눌러 시작하세요.",
+                        elem_classes="problem-box"
+                    )
 
-                # Middle-Left-Lower (6 비율)
-                with gr.Column(scale=6, elem_classes="middle-left-lower"):
-                    gr.Markdown("### 💬 LLM 피드백")
-                    exec_result = gr.Markdown(value="")
+                # 피드백 영역
+                with gr.Group(elem_classes="section-box"):
+                    gr.Markdown("### 💬 실행 결과 & 피드백")
+                    exec_result = gr.Markdown(
+                        value="",
+                        elem_classes="feedback-box"
+                    )
                     with gr.Row():
-                        favorite_btn = gr.Button("⭐ 즐겨찾기", scale=1)
+                        favorite_btn = gr.Button("⭐ 즐겨찾기", size="sm")
                         favorite_status_md = gr.Markdown("")
 
-            # ===== MIDDLE-RIGHT (60%) =====
-            with gr.Column(scale=6, elem_classes="middle-right"):
-                gr.Markdown("### 💻 코드 에디터")
-                code_box = gr.Code(
-                    language="sql",
-                    show_label=False,
-                    elem_classes="code-editor")
-                with gr.Row(elem_classes="button-row"):
-                    submit_btn = gr.Button(
-                        "✅ 제출", variant="primary", size="lg", scale=2)
-                    hint_btn = gr.Button("💡 힌트", size="lg", scale=1)
+            # 오른쪽: 코드 에디터
+            with gr.Column(scale=3):
+                with gr.Group(elem_classes="section-box"):
+                    gr.Markdown("### 💻 코드 에디터")
+                    code_box = gr.Code(
+                        language="sql",
+                        show_label=False,
+                        elem_classes="code-editor-box",
+                        lines=20
+                    )
+                    with gr.Row(elem_classes="button-row"):
+                        submit_btn = gr.Button(
+                            "✅ 제출하기",
+                            variant="primary",
+                            size="lg",
+                            scale=3
+                        )
+                        hint_btn = gr.Button("💡 힌트 보기", size="lg", scale=1)
 
-        # ===== BOTTOM 구간 =====
-        with gr.Row(elem_classes="bottom-section"):
-            # 즐겨찾기 섹션
-            with gr.Group(elem_classes="bottom-group"):
-                gr.Markdown("### ⭐ 즐겨찾기")
-                fav_refresh_btn = gr.Button("새로고침", size="sm", scale=1)
-                fav_labels, fav_values = refresh_favorite_choices()
-                fav_choices = list(zip(fav_labels, fav_values)
-                                   ) if fav_labels else []
-                favorite_choices = gr.Dropdown(
-                    choices=fav_choices, label="문제 선택", scale=1)
-                load_fav_btn = gr.Button("열기", size="sm", scale=1)
+        # ===== 하단 패널 (즐겨찾기 & 오답노트) =====
+        with gr.Row():
+            # 즐겨찾기
+            with gr.Column(scale=1):
+                with gr.Group(elem_classes="bottom-panel"):
+                    gr.Markdown("### ⭐ 즐겨찾기")
+                    fav_labels, fav_values = refresh_favorite_choices()
+                    fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
+                    favorite_choices = gr.Dropdown(
+                        choices=fav_choices,
+                        label="문제 선택",
+                        scale=1
+                    )
+                    with gr.Row():
+                        fav_refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
+                        load_fav_btn = gr.Button("📖 열기", size="sm", scale=1)
 
-            # 오답노트 섹션
-            with gr.Group(elem_classes="bottom-group"):
-                gr.Markdown("### 📝 오답노트")
-                refresh_btn = gr.Button("새로고침", size="sm", scale=1)
-                note_labels, note_values = refresh_note_choices()
-                note_choice = list(
-                    zip(note_labels, note_values)) if note_labels else []
-                note_choices = gr.Dropdown(
-                    choices=note_choice, label="문제 선택", scale=1)
-                load_note_btn = gr.Button("풀기", size="sm", scale=1)
+            # 오답노트
+            with gr.Column(scale=1):
+                with gr.Group(elem_classes="bottom-panel"):
+                    gr.Markdown("### 📝 오답노트 (재도전)")
+                    note_labels, note_values = refresh_note_choices()
+                    note_choice = list(zip(note_labels, note_values)) if note_labels else []
+                    note_choices = gr.Dropdown(
+                        choices=note_choice,
+                        label="문제 선택",
+                        scale=1
+                    )
+                    with gr.Row():
+                        refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
+                        load_note_btn = gr.Button("🎯 재도전", size="sm", scale=1)
 
         # ===== 이벤트 핸들러 =====
         new_btn.click(
@@ -1174,8 +997,6 @@ def build_interface() -> gr.Blocks:
                 favorite_btn,
                 favorite_status_md],
         )
-
-        # 테마 변경 이벤트 (테마 드롭다운은 Gradio 기본 기능이므로 별도 이벤트 처리 불필요)
 
     return demo
 

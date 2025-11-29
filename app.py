@@ -383,8 +383,7 @@ def render_question(
         )
     return (
         f"### [{banner}] {problem.title}\n"
-        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n- 문제 유형: {infer_problem_type(problem)}\n"
-        f"{selection_line}{applied_line}\n\n{problem.body}{hint_line}")
+        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n- 문제 유형: {infer_problem_type(problem)}\n")
 
 
 def ensure_favorites_file() -> None:
@@ -781,29 +780,34 @@ def build_interface() -> gr.Blocks:
         state = gr.State({})
 
         # ===== 헤더 =====
-        gr.Markdown("# 🎯 SQL & Python 코딩 연습 스테이션")
+        with gr.Group():
+            with gr.Row():
+                gr.Markdown("# 🎯 SQL & Python 코딩 연습 스테이션", container=True)
 
         # ===== 필터 섹션 =====
-        with gr.Row():
-            difficulty = gr.Dropdown(
-                DIFFICULTY_OPTIONS,
-                value=DIFFICULTY_OPTIONS[0],
-                label="📊 난이도",
-                scale=1
-            )
-            language = gr.Dropdown(
-                language_options,
-                value=language_options[0],
-                label="💻 언어",
-                scale=1
-            )
-            problem_type = gr.Dropdown(
-                problem_type_options,
-                value=problem_type_options[0],
-                label="🏷️ 문제 유형",
-                scale=1
-            )
-            new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="lg", scale=1)
+        with gr.Group():
+            gr.Markdown("### 📋 출제 옵션")
+            with gr.Row():
+                difficulty = gr.Dropdown(
+                    DIFFICULTY_OPTIONS,
+                    value=DIFFICULTY_OPTIONS[0],
+                    label="📊 난이도",
+                    scale=1
+                )
+                language = gr.Dropdown(
+                    language_options,
+                    value=language_options[0],
+                    label="💻 언어",
+                    scale=1
+                )
+                problem_type = gr.Dropdown(
+                    problem_type_options,
+                    value=problem_type_options[0],
+                    label="🏷️ 문제 유형",
+                    scale=1
+                )
+            with gr.Row():
+                new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
 
         # ===== 메인 콘텐츠 영역 =====
         with gr.Row():
@@ -813,16 +817,17 @@ def build_interface() -> gr.Blocks:
                 with gr.Group(elem_classes="section-box"):
                     gr.Markdown("### 📋 문제")
                     question_md = gr.Markdown(
-                        "새 문제 버튼을 눌러 시작하세요.",
+                        "새 문제 버튼을 눌러 시작하세요.", 
+                        container=True,
                         elem_classes="problem-box"
                     )
 
                 # 피드백 영역
-                with gr.Group(elem_classes="section-box"):
                     gr.Markdown("### 💬 실행 결과 & 피드백")
                     exec_result = gr.Markdown(
                         value="",
-                        elem_classes="feedback-box"
+                        elem_classes="feedback-box",
+                        container=True
                     )
                     with gr.Row():
                         favorite_btn = gr.Button("⭐ 즐겨찾기", size="sm")
@@ -831,12 +836,14 @@ def build_interface() -> gr.Blocks:
             # 오른쪽: 코드 에디터
             with gr.Column(scale=3):
                 with gr.Group(elem_classes="section-box"):
-                    gr.Markdown("### 💻 코드 에디터")
+                    gr.Markdown("### 💻 답변 작성칸")
                     code_box = gr.Code(
-                        language="sql",
+                        value="",
+                        language="python",
                         show_label=False,
                         elem_classes="code-editor-box",
-                        lines=20
+                        lines=20,
+                        container=True
                     )
                     with gr.Row(elem_classes="button-row"):
                         submit_btn = gr.Button(

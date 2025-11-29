@@ -155,5 +155,529 @@
     "kind": "python",
     "expected": ["Window", "lag", "when", "sum", "over"],
     "hint": "user_id 파티션에서 lag(ts)로 이전 시각과 차이를 구하고, when으로 세션 리셋 플래그를 만든 뒤 sum를 over 으로 누적합니다."
+  },
+  {
+    "pid": "pyspark_window_rank",
+    "title": "전체 데이터 순위 매기기",
+    "body": "DataFrame을 score 내림차순으로 순위를 매기세요. rank 컬럼을 추가하고 결과를 출력하세요.",
+    "schema": "score INT",
+    "sample_rows": [
+      "95",
+      "87",
+      "92"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["Window", "orderBy", "row_number()", "withColumn"],
+    "hint": "Window.orderBy()로 정렬하고 row_number().over(window)를 사용하세요."
+  },
+  {
+    "pid": "pyspark_window_rank_dept",
+    "title": "부서별 급여 순위 및 1등 필터링",
+    "body": "DataFrame에서 department 기준으로 salary 내림차순으로 rank를 매기고, 각 부서의 1등만 추출하세요.",
+    "schema": "department STRING, salary INT",
+    "sample_rows": [
+      "Sales | 65000",
+      "Engineering | 80000",
+      "Sales | 70000",
+      "Engineering | 75000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["Window.partitionBy", "orderBy", "row_number()", "filter"],
+    "hint": "partitionBy('department')로 그룹을 나누고, rank == 1 조건으로 filter하세요."
+  },
+  {
+    "pid": "pyspark_select_columns",
+    "title": "특정 컬럼 선택하기",
+    "body": "name과 score 컬럼만 선택하여 출력하세요.",
+    "schema": "name STRING, age INT, score INT",
+    "sample_rows": [
+      "Alice | 25 | 90",
+      "Bob | 30 | 80"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["select", "'column'"],
+    "hint": "df.select('name', 'score')로 컬럼을 지정하세요."
+  },
+  {
+    "pid": "pyspark_select_filter_columns",
+    "title": "조건에 맞는 직원의 이름과 급여 선택하기",
+    "body": "dept가 Sales인 직원의 name과 salary만 선택하여 출력하세요.",
+    "schema": "name STRING, dept STRING, salary INT",
+    "sample_rows": [
+      "Alice | Sales | 60000",
+      "Bob | Marketing | 55000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["filter", "select"],
+    "hint": "filter()로 조건을 걸고, 그 후 select를 사용하세요."
+  },
+  {
+    "pid": "pyspark_upper_case",
+    "title": "이름을 대문자로 변환하기",
+    "body": "name 컬럼을 대문자로 변환한 name_upper 컬럼을 추가하고 출력하세요.",
+    "schema": "name STRING, salary INT",
+    "sample_rows": [
+      "alice | 60000",
+      "bob | 55000"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["withColumn", "F.upper"],
+    "hint": "F.upper('name')를 사용하여 대문자로 변환하세요."
+  },
+  {
+    "pid": "pyspark_concat_and_lower",
+    "title": "이름 전체 결합 및 소문자 처리하기",
+    "body": "first_name과 last_name을 공백으로 연결한 full_name 컬럼을 만들고, 소문자로 변환하세요.",
+    "schema": "first_name STRING, last_name STRING, salary INT",
+    "sample_rows": [
+      "John | Doe | 70000",
+      "Jane | Smith | 68000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["F.concat", "F.lit", "F.lower"],
+    "hint": "F.concat(first_name, F.lit(' '), last_name)로 결합하고, F.lower()로 소문자화하세요."
+  },
+  {
+    "pid": "pyspark_sql_register_view",
+    "title": "DataFrame을 SQL 뷰로 등록하고 쿼리하기",
+    "body": "DataFrame을 sales라는 이름의 임시 뷰로 등록하고, region별 총 amount를 계산하세요.",
+    "schema": "region STRING, amount DECIMAL",
+    "sample_rows": [
+      "North | 10000",
+      "South | 15000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["createOrReplaceTempView", "spark.sql", "GROUP BY", "SUM"],
+    "hint": "view 이름을 지정하고 spark.sql()로 SQL 쿼리를 실행하세요."
+  },
+  {
+    "pid": "pyspark_sql_window_rank_dept",
+    "title": "SQL에서 Window 함수로 부서별 최고 급여자 조회하기",
+    "body": "employees를 임시 뷰로 등록하고, 각 부서의 최고 급여자를 서브쿼리와 RANK() OVER를 사용해 조회하세요.",
+    "schema": "department STRING, salary DECIMAL",
+    "sample_rows": [
+      "Engineering | 80000",
+      "Sales | 75000",
+      "Engineering | 70000"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["createOrReplaceTempView", "RANK() OVER", "PARTITION BY", "ORDER BY", "WHERE"],
+    "hint": "서브쿼리 안에 RANK() 함수를 사용하고, rank = 1 조건으로 필터링하세요."
+  },
+  {
+    "pid": "pyspark_cast_price_int",
+    "title": "가격 컬럼을 정수형으로 변환하기",
+    "body": "price 컬럼을 정수형(int)으로 변환한 price_int 컬럼을 추가하고 출력하세요.",
+    "schema": "product STRING, price DOUBLE",
+    "sample_rows": [
+      "Laptop | 1299.99",
+      "Mouse | 25.5"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["withColumn", "F.col", ".cast('integer')"],
+    "hint": "'price'.cast('integer')로 타입 변환을 수행하세요."
+  },
+  {
+    "pid": "pyspark_fillna_null_handling",
+    "title": "NULL 값 대체하기",
+    "body": "salary가 NULL인 행은 0으로, department가 NULL인 행은 'Unknown'으로 채우세요.",
+    "schema": "name STRING, salary DOUBLE, department STRING",
+    "sample_rows": [
+      "Alice | null | Sales",
+      "Bob | 60000 | null"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["fillna", "{'col': value}"],
+    "hint": "fillna({'salary': 0, 'department': 'Unknown'})로 처리하세요."
+  },
+  {
+    "pid": "pyspark_distinct_remove_duplicates",
+    "title": "완전 중복 행 제거하기",
+    "body": "DataFrame에서 완전히 동일한 행을 제거하고 출력하세요.",
+    "schema": "name STRING, age INT, department STRING",
+    "sample_rows": [
+      "Alice | 25 | Sales",
+      "Alice | 25 | Sales"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["distinct()"],
+    "hint": ".distinct()로 전체 행의 중복을 제거하세요."
+  },
+  {
+    "pid": "pyspark_drop_duplicates_email",
+    "title": "이메일 기준 중복 제거 및 개수 비교하기",
+    "body": "email 컬럼 기준으로 중복된 행을 제거하고, 제거 전후의 행 수를 출력하세요.",
+    "schema": "name STRING, email STRING, score INT",
+    "sample_rows": [
+      "Alice | alice@email.com | 90",
+      "Bob | bob@email.com | 85",
+      "Alice | alice@email.com | 92"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["dropDuplicates", "count()"],
+    "hint": "dropDuplicates(['email'])로 중복 제거하고, count()로 개수 비교하세요."
+  },
+  {
+    "pid": "pyspark_orderby_price_asc",
+    "title": "가격 오름차순으로 정렬하기",
+    "body": "DataFrame을 price 컬럼 기준으로 오름차순으로 정렬하여 출력하세요.",
+    "schema": "product STRING, price DECIMAL",
+    "sample_rows": [
+      "Laptop | 1299.99",
+      "Mouse | 25.5"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["orderBy", "'price'"],
+    "hint": ".orderBy('price')로 오름차순 정렬하세요."
+  },
+  {
+    "pid": "pyspark_groupby_avg_salary_desc",
+    "title": "부서별 평균 급여 내림차순 정렬하기",
+    "body": "department 기준으로 그룹화하여 평균 salary를 계산하고, 결과를 평균 급여 내림차순으로 정렬하세요.",
+    "schema": "department STRING, salary DECIMAL",
+    "sample_rows": [
+      "Engineering | 80000",
+      "Sales | 65000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["groupBy", "agg", "F.avg", "orderBy", "F.desc"],
+    "hint": "F.avg('salary').alias('avg_salary')로 평균 계산 후 F.desc()로 정렬하세요."
+  },
+  {
+    "pid": "pyspark_union_combine_dataframes",
+    "title": "두 DataFrame을 union으로 결합하기",
+    "body": "df1과 df2를 union으로 결합하여 하나의 DataFrame으로 만드세요.",
+    "schema": "name STRING, value INT",
+    "sample_rows": [
+      "A | 1",
+      "B | 2"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["union"],
+    "hint": "df1.union(df2)로 결합하세요."
+  },
+  {
+    "pid": "pyspark_unionbyname_mismatched_columns",
+    "title": "컬럼 순서가 다른 DataFrame을 unionByName으로 결합하기",
+    "body": "df1과 df2의 컬럼 순서가 다를 때, unionByName로 결합하고 중복 행을 제거하세요.",
+    "schema": "name STRING, age INT (df1)\nage INT, name STRING (df2)",
+    "sample_rows": [
+      "Alice | 25",
+      "30 | Bob"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["unionByName", ".distinct()"],
+    "hint": "unionByName()로 컬럼명 기반 결합 후 distinct()로 중복 제거하세요."
+  },
+  {
+    "pid": "pyspark_when_otherwise_score_grade",
+    "title": "점수에 따라 합격 여부 판단하기",
+    "body": "score가 60 이상이면 'Pass', 미만이면 'Fail'인 result 컬럼을 추가하세요.",
+    "schema": "name STRING, score INT",
+    "sample_rows": [
+      "Alice | 85",
+      "Bob | 50"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["F.when", ".otherwise()"],
+    "hint": "F.when(df.score >= 60, 'Pass').otherwise('Fail')로 조건 부여하세요."
+  },
+  {
+    "pid": "pyspark_when_otherwise_price_level",
+    "title": "가격 기준으로 등급 분류하기",
+    "body": "price를 기준으로 10000 미만은 'Low', 50000 미만은 'Medium', 50000 이상은 'High'로 분류하세요.",
+    "schema": "product STRING, price DECIMAL",
+    "sample_rows": [
+      "Laptop | 8000",
+      "Desktop | 45000",
+      "Server | 120000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["F.when", ".when().otherwise()"],
+    "hint": "여러 조건을 .when()으로 체이닝하세요."
+  },
+  {
+    "pid": "pyspark_agg_count_avg_multiple",
+    "title": "전체 상품 수와 평균 가격 한 번에 조회하기",
+    "body": "DataFrame에서 전체 상품 개수(count)와 평균 가격(avg_price)을 한 번의 agg()로 계산하세요.",
+    "schema": "product STRING, price DECIMAL",
+    "sample_rows": [
+      "Laptop | 1299.99",
+      "Mouse | 25.5"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["agg", "F.count", "F.avg"],
+    "hint": "agg(F.count('*').alias('count'), F.avg('price').alias('avg_price'))로 수행하세요."
+  },
+  {
+    "pid": "pyspark_agg_groupby_dept_stats",
+    "title": "부서별 직원 수, 최소/최대/평균 급여 계산하기",
+    "body": "department 기준으로 그룹화하여 직원 수, 최저 급여, 최고 급여, 평균 급여를 모두 계산하세요.",
+    "schema": "name STRING, department STRING, salary DECIMAL",
+    "sample_rows": [
+      "Alice | Engineering | 80000",
+      "Bob | Sales | 65000"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["groupBy", "agg", "F.count", "F.min", "F.max", "F.avg"],
+    "hint": "F.count('*').alias('count'), F.min('salary') 등 여러 함수를 agg() 안에 넣으세요."
+  },
+  {
+    "pid": "pyspark_date_extract_year_month",
+    "title": "주문 날짜에서 연도와 월 추출하기",
+    "body": "order_date 컬럼에서 year과 month를 추출하여 새로운 컬럼으로 추가하세요.",
+    "schema": "name STRING, order_date DATE",
+    "sample_rows": [
+      "Alice | 2024-03-15",
+      "Bob | 2023-12-01"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["F.year", "F.month"],
+    "hint": "withColumn('year', F.year('order_date'))로 추출하세요."
+  },
+  {
+    "pid": "pyspark_date_days_ago_filter",
+    "title": "현재 날짜와 주문 날짜 차이 계산 후 필터링하기",
+    "body": "order_date와 현재 날짜의 차이를 days_ago 컬럼으로 추가하고, 30일 이상 지난 데이터만 필터링하세요.",
+    "schema": "product STRING, order_date DATE",
+    "sample_rows": [
+      "Laptop | 2024-01-15",
+      "Mouse | 2024-03-10"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["F.datediff", "F.current_date", "filter"],
+    "hint": "F.datediff(F.current_date(), 'order_date')로 날짜 차이 계산하세요."
+  },
+  {
+    "pid": "pyspark_coalesce_phone_display",
+    "title": "전화번호 NULL 처리: N/A로 대체하기",
+    "body": "phone 컬럼이 NULL인 경우 'N/A'로 대체한 phone_display 컬럼을 추가하세요.",
+    "schema": "name STRING, phone STRING",
+    "sample_rows": [
+      "Alice | null",
+      "Bob | 123-4567"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "python",
+    "expected": ["F.coalesce", "F.lit"],
+    "hint": "F.coalesce('phone', F.lit('N/A'))로 처리하세요."
+  },
+  {
+    "pid": "pyspark_fillna_salary_null",
+    "title": "NULL 값 채우기: salary는 0, department는 Unknown",
+    "body": "salary가 NULL인 행은 0으로, department가 NULL인 행은 'Unknown'으로 fillna로 채우세요.",
+    "schema": "name STRING, salary DOUBLE, department STRING",
+    "sample_rows": [
+      "Alice | null | Sales",
+      "Bob | 60000 | null"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["fillna", "{'col': value}"],
+    "hint": "fillna({'salary': 0, 'department': 'Unknown'})로 처리하세요."
+  },
+  {
+    "pid": "pyspark_cache_filter_count",
+    "title": "필터링 후 cache하여 성능 향상시키기",
+    "body": "DataFrame을 score가 80 이상인 행으로 필터링한 후, cache()를 적용하고 count()와 show()를 실행하세요.",
+    "schema": "name STRING, score INT",
+    "sample_rows": [
+      "Alice | 95",
+      "Bob | 70"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["filter", ".cache()", "count()", "show()"],
+    "hint": "필터링 후 .cache()로 메모리에 저장하세요."
+  },
+  {
+    "pid": "pyspark_cache_avg_dept_use_twice",
+    "title": "부서별 평균 급여를 cache하고 두 번 사용하기",
+    "body": "department 기준으로 평균 급여를 계산한 결과를 cache()로 저장하고, show()와 특정 조건(평균 60000 이상) 필터링을 두 번 실행하세요.",
+    "schema": "name STRING, department STRING, salary DECIMAL",
+    "sample_rows": [
+      "Alice | Engineering | 80000",
+      "Bob | Sales | 55000"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["groupBy", "agg", ".cache()", "show()", "filter"],
+    "hint": "cache() 후 여러 작업을 반복적으로 수행할 수 있습니다."
+  },
+  {
+    "pid": "pyspark_collect_high_score_students",
+    "title": "80점 이상 학생을 collect하여 이름 리스트 만들기",
+    "body": "score가 80 이상인 학생들을 collect()로 가져와, 이름만 담은 리스트를 만드세요.",
+    "schema": "name STRING, score INT",
+    "sample_rows": [
+      "Alice | 95",
+      "Bob | 75"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["filter", "collect()", "list comprehension"],
+    "hint": "for row in rows: name_list.append(row.name) 또는 리스트 컴프리헨션으로 처리하세요."
+  },
+  {
+    "pid": "pyspark_repartition_5_partitions",
+    "title": "DataFrame을 5개 파티션으로 재분할하기",
+    "body": "DataFrame을 5개의 파티션으로 repartition하고, 파티션 수를 출력하세요.",
+    "schema": "name STRING, value INT",
+    "sample_rows": [
+      "A | 1",
+      "B | 2"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["repartition", ".getNumPartitions()"],
+    "hint": "df.repartition(5)로 재분할하고, rdd.getNumPartitions()로 확인하세요."
+  },
+  {
+    "pid": "pyspark_repartition_coalesce",
+    "title": "파티션 수를 10개에서 1개로 줄이기",
+    "body": "DataFrame을 10개 파티션으로 repartition한 후, coalesce(1)로 1개 파티션으로 합쳐서 파티션 수를 확인하세요.",
+    "schema": "name STRING, value INT",
+    "sample_rows": [
+      "A | 1",
+      "B | 2"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["repartition", "coalesce", ".getNumPartitions()"],
+    "hint": "repartition 후 coalesce로 파티션 수를 줄이세요."
+  },
+  {
+    "pid": "pyspark_broadcast_join_large_small",
+    "title": "큰 DataFrame과 작은 DataFrame을 broadcast join하기",
+    "body": "df_large와 df_small을 customer_id 기준으로 broadcast join하세요.",
+    "schema": "customer_id INT, amount DECIMAL (large)\nregion STRING, category STRING (small)",
+    "sample_rows": [
+      "101 | 500",
+      "102 | 300"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["broadcast", "join"],
+    "hint": "broadcast(df_small)를 사용하여 작은 테이블을 브로드캐스트하세요."
+  },
+  {
+    "pid": "pyspark_broadcast_join_count_by_category",
+    "title": "브로드캐스트 조인 후 카테고리별 주문 수 세기",
+    "body": "orders(큰 테이블)와 categories(작은 테이블)를 broadcast join하고, 각 카테고리별 주문 개수를 계산하세요.",
+    "schema": "order_id INT, customer_id INT, category_id INT (orders)\ncategory_id INT, category_name STRING (categories)",
+    "sample_rows": [
+      "1 | 101 | 5",
+      "2 | 102 | 3"
+    ],
+    "difficulty": "Lv4 고급",
+    "kind": "python",
+    "expected": ["broadcast", "join", "groupBy", "count"],
+    "hint": "broadcast join 후 groupBy('category_name')로 집계하세요."
+  },
+  {
+    "pid": "pyspark_explode_array_to_rows",
+    "title": "배열 컬럼을 행으로 펼치기 (explode)",
+    "body": "items 배열 컬럼을 explode하여 각 요소를 별도의 행으로 만드세요.",
+    "schema": "name STRING, items ARRAY<STRING>",
+    "sample_rows": [
+      "Alice | [Apple, Banana]",
+      "Bob | [Orange]"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["F.explode", "withColumn"],
+    "hint": "df.withColumn('item', F.explode('items'))로 펼치세요."
+  },
+  {
+    "pid": "pyspark_explode_count_by_product",
+    "title": "고객 구매 상품 배열을 explode하고 카운트하기",
+    "body": "products 배열 컬럼을 explode하여 각 상품별 구매 횟수를 세세요.",
+    "schema": "customer_id INT, products ARRAY<STRING>",
+    "sample_rows": [
+      "1 | [Laptop, Mouse]",
+      "2 | [Mouse]"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["F.explode", "groupBy", "count"],
+    "hint": "explode 후 groupBy('product')로 집계하세요."
+  },
+  {
+    "pid": "pyspark_pivot_dept_avg_salary",
+    "title": "부서별 연도별 평균 급여 피벗 테이블 만들기",
+    "body": "department 기준으로 year을 피벗하여 각 부서의 연도별 평균 급여를 표시하세요.",
+    "schema": "department STRING, year INT, salary DECIMAL",
+    "sample_rows": [
+      "Engineering | 2023 | 75000",
+      "Sales | 2024 | 68000"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["groupBy", "pivot", "agg", "F.avg"],
+    "hint": "df.groupBy('department').pivot('year').agg(F.avg('salary'))로 피벗하세요."
+  },
+  {
+    "pid": "pyspark_pivot_region_category_sum",
+    "title": "지역-카테고리별 판매량 피벗하고 null은 0으로 채우기",
+    "body": "region과 category 기준으로 quantity의 합계를 피벗 테이블로 만들고, 결측치는 0으로 처리하세요.",
+    "schema": "region STRING, category STRING, quantity INT",
+    "sample_rows": [
+      "North | Electronics | 10",
+      "South | Furniture | 5"
+    ],
+    "difficulty": "Lv4 고급",
+    "kind": "python",
+    "expected": ["pivot", "fillna(0)"],
+    "hint": "pivot 후 fillna(0)로 null을 0으로 채우세요."
+  },
+  {
+    "pid": "pyspark_udf_string_length",
+    "title": "문자열 길이를 반환하는 UDF 만들기",
+    "body": "name 컬럼의 문자열 길이를 계산하여 name_length 컬럼으로 추가하세요.",
+    "schema": "name STRING, score INT",
+    "sample_rows": [
+      "Alice | 90",
+      "Bob | 85"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": ["udf", "StringType()", "len()"],
+    "hint": "def str_len(s): return len(s)로 함수 정의하고, udf(str_len, IntegerType())로 등록하세요."
+  },
+  {
+    "pid": "pyspark_udf_score_to_grade",
+    "title": "점수를 A/B/C 등급으로 변환하는 UDF 만들기",
+    "body": "score 컬럼을 기준으로 90 이상은 'A', 80 이상은 'B', 그 외는 'C'로 분류하는 UDF를 만들어 grade 컬럼에 적용하세요.",
+    "schema": "name STRING, score INT",
+    "sample_rows": [
+      "Alice | 95",
+      "Bob | 82"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": ["udf", "StringType()", "if-elif"],
+    "hint": "조건문을 포함한 함수 정의 후, udf로 등록하세요."
   }
 ]

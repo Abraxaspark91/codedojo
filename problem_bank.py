@@ -12,7 +12,7 @@ class Problem:
     title: str
     body: str
     difficulty: str
-    kind: str  # "sql" or "pyspark"
+    kind: str  # "sql" or "python"
     expected: List[str]
     hint: str
     schema: str = ""

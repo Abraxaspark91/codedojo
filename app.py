@@ -281,17 +281,17 @@ body[data-user-theme="light"] {
         flex-direction: column;
         height: auto;
     }
-    
+
     .middle-left, .middle-right {
         flex: none;
         width: 100%;
     }
-    
+
     .bottom-section {
         flex-direction: column;
         height: auto;
     }
-    
+
     .bottom-group {
         width: 100%;
     }
@@ -311,10 +311,11 @@ body[data-user-theme="light"] {
 }
 """
 
+
 @dataclass
 class Attempt:
     """오답노트에 저장되는 단일 채점 시도 레코드입니다.
-    
+
     Attributes:
         pid: 문제 ID (problem_bank에서의 고유 식별자)
         title: 문제 제목
@@ -327,7 +328,7 @@ class Attempt:
         reasoning: 해설/의도 추측
         question: 문제 내용
         code: 제출 코드
-        kind: 프로그래밍 언어 (sql/python)
+        kind: 프로그래밍 언어 (sql/python, Gradio Code 컴포넌트 지원 언어)
         timestamp: ISO 형식의 제출 시간
         rechallenge_hint: 재도전 시 참고할 힌트
     """
@@ -374,16 +375,27 @@ def infer_problem_type(problem: Problem) -> str:
     lower_expected = [kw.lower() for kw in problem.expected]
     if any(key in lower_expected for key in ["join", "union", "merge"]):
         return "조인/조합"
-    if any(key in lower_expected for key in ["group by", "sum", "avg", "count", "having"]):
+    if any(
+        key in lower_expected for key in [
+            "group by",
+            "sum",
+            "avg",
+            "count",
+            "having"]):
         return "집계"
-    if any(key in lower_expected for key in ["over", "rank", "dense_rank", "window"]):
+    if any(
+        key in lower_expected for key in [
+            "over",
+            "rank",
+            "dense_rank",
+            "window"]):
         return "윈도우"
     return "기본"
 
 
 def ensure_note_file() -> None:
     """오답노트 파일을 초기화합니다.
-    
+
     JSON Lines 형식: 각 라인이 독립적인 JSON 객체
     """
     if not NOTE_PATH.exists():
@@ -392,30 +404,30 @@ def ensure_note_file() -> None:
 
 def serialize_attempt(attempt: Attempt) -> str:
     """Attempt를 JSON Lines 형식으로 직렬화합니다.
-    
+
     각 Attempt는 한 줄의 JSON으로 저장되어 강건한 파싱이 가능합니다.
     - 멀티라인 텍스트는 JSON이 자동으로 이스케이프
     - 마크다운 syntax 충돌 없음
     - 손상된 한 줄만 무시, 나머지는 안전
     """
     meta = json.dumps(
-        asdict(attempt), 
+        asdict(attempt),
         ensure_ascii=False,  # 한글 유지
         separators=(',', ':')  # 공백 제거해서 한 줄 유지
     )
-    
+
     # JSON이 유효한지 검증
     try:
         json.loads(meta)
     except json.JSONDecodeError as e:
         raise ValueError(f"JSON 직렬화 오류: {e}\n{meta[:200]}...")
-    
+
     return meta  # 순수 JSON 한 줄만 반환
 
 
 def load_attempts() -> List[Attempt]:
     """오답노트 파일에서 모든 Attempt를 로드합니다.
-    
+
     JSON Lines 형식: 각 라인이 하나의 JSON 객체
     - 손상된 라인은 무시하고 나머지 계속 파싱
     - 라인 단위 오류 로깅으로 문제 진단 용이
@@ -423,42 +435,48 @@ def load_attempts() -> List[Attempt]:
     ensure_note_file()
     text = NOTE_PATH.read_text(encoding="utf-8")
     entries: List[Attempt] = []
-    
+
     # 빈 파일 처리
     if not text.strip():
         return entries
-    
+
     # 각 라인을 독립적으로 파싱
     for line_idx, line in enumerate(text.split("\n"), 1):
         line = line.strip()
-        
+
         # 빈 라인 무시
         if not line:
             continue
-        
+
         try:
             # JSON 파싱
             data = json.loads(line)
-            
+
             # Attempt 객체 생성
             entry = Attempt(**data)
             entries.append(entry)
-            
+
         except json.JSONDecodeError as e:
             # JSON 파싱 오류: 해당 라인 무시, 계속 진행
-            print(f"[경고] 라인 {line_idx}의 JSON 파싱 실패: {str(e)[:80]}", file=__import__('sys').stderr)
+            print(
+                f"[경고] 라인 {line_idx}의 JSON 파싱 실패: {str(e)[:80]}",
+                file=__import__('sys').stderr)
             continue
-            
+
         except TypeError as e:
             # Attempt 필드 부족: 해당 라인 무시, 계속 진행
-            print(f"[경고] 라인 {line_idx}의 Attempt 생성 실패: {str(e)[:80]}", file=__import__('sys').stderr)
+            print(
+                f"[경고] 라인 {line_idx}의 Attempt 생성 실패: {str(e)[:80]}",
+                file=__import__('sys').stderr)
             continue
-            
+
         except Exception as e:
             # 예상 외의 오류
-            print(f"[경고] 라인 {line_idx}의 처리 오류: {str(e)[:80]}", file=__import__('sys').stderr)
+            print(
+                f"[경고] 라인 {line_idx}의 처리 오류: {str(e)[:80]}",
+                file=__import__('sys').stderr)
             continue
-    
+
     return entries
 
 
@@ -466,11 +484,18 @@ def failed_attempts(entries: List[Attempt]) -> List[Attempt]:
     return [a for a in entries if a.score < 80]
 
 
-def matches_filters(problem: Problem, difficulty: Optional[str], language: Optional[str], problem_type: Optional[str]) -> bool:
-    language_match = (not language or language == "전체") or problem.kind.lower() == language.lower()
-    difficulty_match = (not difficulty or difficulty == "전체") or problem.difficulty == difficulty
+def matches_filters(
+        problem: Problem,
+        difficulty: Optional[str],
+        language: Optional[str],
+        problem_type: Optional[str]) -> bool:
+    language_match = (not language or language ==
+                      "전체") or problem.kind.lower() == language.lower()
+    difficulty_match = (not difficulty or difficulty ==
+                        "전체") or problem.difficulty == difficulty
     inferred_type = infer_problem_type(problem)
-    type_match = (not problem_type or problem_type == "전체") or inferred_type == problem_type
+    type_match = (not problem_type or problem_type ==
+                  "전체") or inferred_type == problem_type
     return difficulty_match and language_match and type_match
 
 
@@ -503,7 +528,8 @@ def pick_problem(
         (None, None, None),
     ]
 
-    def choose_candidate(pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict[str, str]]:
+    def choose_candidate(
+            pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict[str, str]]:
         for diff_opt, lang_opt, type_opt in filter_priority:
             candidates = [
                 (prob, attempt_hint)
@@ -512,9 +538,11 @@ def pick_problem(
             ]
             if candidates:
                 prob, attempt_hint = random.choice(candidates)
-                return prob, normalize_filters(diff_opt, lang_opt, type_opt) | {"hint": attempt_hint}
+                return prob, normalize_filters(diff_opt, lang_opt, type_opt) | {
+                    "hint": attempt_hint}
         prob, attempt_hint = random.choice(pool)
-        return prob, normalize_filters(None, None, None) | {"hint": attempt_hint}
+        return prob, normalize_filters(None, None, None) | {
+            "hint": attempt_hint}
 
     failed_pool: List[Tuple[Problem, str]] = []
     for entry in failed:
@@ -560,8 +588,7 @@ def render_question(
     return (
         f"### [{banner}] {problem.title}\n"
         f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n- 문제 유형: {infer_problem_type(problem)}\n"
-        f"{selection_line}{applied_line}\n\n{problem.body}{hint_line}"
-    )
+        f"{selection_line}{applied_line}\n\n{problem.body}{hint_line}")
 
 
 def ensure_favorites_file() -> None:
@@ -591,12 +618,19 @@ def save_favorites(favorites: List[Dict]) -> None:
                 "difficulty": fav.get("difficulty", ""),
                 "kind": fav.get("kind", ""),
             }
-    FAVORITES_PATH.write_text(json.dumps(list(deduped.values()), ensure_ascii=False, indent=2), encoding="utf-8")
+    FAVORITES_PATH.write_text(
+        json.dumps(
+            list(
+                deduped.values()),
+            ensure_ascii=False,
+            indent=2),
+        encoding="utf-8")
 
 
 def favorite_button_label(pid: str) -> str:
     favorites = load_favorites()
-    return "⭐ 즐겨찾기 해제" if any(fav.get("pid") == pid for fav in favorites) else "☆ 즐겨찾기 추가"
+    return "⭐ 즐겨찾기 해제" if any(
+        fav.get("pid") == pid for fav in favorites) else "☆ 즐겨찾기 추가"
 
 
 def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
@@ -610,12 +644,12 @@ def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
 
 
 def favorite_status_text(pid: str) -> str:
-    return (
-        "⭐ 즐겨찾기에 저장된 문제입니다." if favorite_button_label(pid).startswith("⭐") else "☆ 즐겨찾기에 추가할 수 있습니다."
-    )
+    return ("⭐ 즐겨찾기에 저장된 문제입니다." if favorite_button_label(
+        pid).startswith("⭐") else "☆ 즐겨찾기에 추가할 수 있습니다.")
 
 
-def call_llm(system_prompt: str, user_prompt: str, endpoint: str = LM_STUDIO_ENDPOINT) -> str:
+def call_llm(system_prompt: str, user_prompt: str,
+             endpoint: str = LM_STUDIO_ENDPOINT) -> str:
     payload = {
         "model": "lm-studio",
         "messages": [
@@ -630,7 +664,7 @@ def call_llm(system_prompt: str, user_prompt: str, endpoint: str = LM_STUDIO_END
         response.raise_for_status()
         content = response.json()
         return content["choices"][0]["message"]["content"]
-    except Exception as exc:  # noqa: BLE001
+    except (requests.RequestException, KeyError, ValueError, IndexError) as exc:
         return (
             "LLM 서버에 연결하지 못했습니다.\n"
             f"로컬 엔드포인트({endpoint})를 확인하세요.\n"
@@ -665,14 +699,12 @@ def build_feedback(
     problem: Problem, code: str, score: int, run_detail: str, endpoint: str
 ) -> Tuple[str, str, str]:
     system_prompt = (
-        "당신은 SQL, PySpark, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. 코드 실행 결과를 반영해 짧게 평가하세요. "
-        "정답 여부, 놓친 부분, 효율/논리 개선, 작성자의 의도 추정을 포함합니다."
-    )
+        "당신은 SQL, Python, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. 코드 실행 결과를 반영해 짧게 평가하세요. "
+        "정답 여부, 놓친 부분, 효율/논리 개선, 작성자의 의도 추정을 포함합니다.")
     user_prompt = (
         f"문제: {problem.body}\n코드:```{problem.kind}\n{code}\n```\n"
         f"실행 결과 요약: {run_detail}\n"
-        "- 1) 정오 판단과 점수 보정 제안\n- 2) 보완 포인트\n- 3) 더 효율적이거나 간결한 방법\n- 4) 작성자의 의도 추측"
-    )
+        "- 1) 정오 판단과 점수 보정 제안\n- 2) 보완 포인트\n- 3) 더 효율적이거나 간결한 방법\n- 4) 작성자의 의도 추측")
     llm_reply = call_llm(system_prompt, user_prompt, endpoint)
     if "휴리스틱" in llm_reply:
         improvement = problem.hint
@@ -683,9 +715,16 @@ def build_feedback(
     return llm_reply, improvement, reasoning
 
 
-def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_detail: str, improvement: str, reasoning: str) -> None:
+def append_attempt(
+        problem: Problem,
+        code: str,
+        score: int,
+        feedback: str,
+        run_detail: str,
+        improvement: str,
+        reasoning: str) -> None:
     """채점 결과를 오답노트에 추가합니다.
-    
+
     JSON Lines 형식: 각 라인이 하나의 완전한 JSON
     - 한 줄씩 append되므로 파일 손상 위험 최소화
     - JSON 검증을 통해 손상된 데이터 저장 방지
@@ -707,7 +746,7 @@ def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_d
         timestamp=datetime.now().isoformat(timespec="seconds"),
         rechallenge_hint=run_detail,
     )
-    
+
     try:
         serialized = serialize_attempt(attempt)
         # JSON Lines: 기존 내용에 새 라인을 추가
@@ -715,7 +754,9 @@ def append_attempt(problem: Problem, code: str, score: int, feedback: str, run_d
         # 마지막 줄이 개행으로 끝나지 않으면 추가
         if current_content and not current_content.endswith("\n"):
             current_content += "\n"
-        NOTE_PATH.write_text(current_content + serialized + "\n", encoding="utf-8")
+        NOTE_PATH.write_text(
+            current_content + serialized + "\n",
+            encoding="utf-8")
     except ValueError as e:
         # JSON 직렬화 실패 시 에러 로그만 남기고 계속
         print(f"[오류] Attempt 저장 실패: {e}", file=__import__('sys').stderr)
@@ -729,14 +770,17 @@ def refresh_note_choices() -> Tuple[List[str], List[str]]:
     return labels, values
 
 
-def load_from_notes(selected_pid: str) -> Tuple[str, Dict, gr.update, str, str]:
+def load_from_notes(
+        selected_pid: str) -> Tuple[str, Dict, gr.update, str, str]:
     entries = failed_attempts(load_attempts())
     for entry in entries:
         if entry.pid == selected_pid:
-            problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+            problem = next(
+                (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
             if problem:
                 filters = normalize_filters(None, None, None)
-                question = render_question(problem, True, entry.rechallenge_hint, filters)
+                question = render_question(
+                    problem, True, entry.rechallenge_hint, filters)
                 return (
                     question,
                     {
@@ -774,10 +818,24 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str]:
     return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
 
 
-def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[str, Dict, gr.update, str, str, str, gr.update]:
+def on_new_problem(difficulty: str,
+                   language: str,
+                   problem_type: str) -> Tuple[str,
+                                               Dict,
+                                               gr.update,
+                                               str,
+                                               str,
+                                               str,
+                                               gr.update]:
     filters = normalize_filters(difficulty, language, problem_type)
-    problem, rechallenge, hint, applied_filters = pick_problem(difficulty, language, problem_type)
-    question = render_question(problem, rechallenge, hint, filters, applied_filters)
+    problem, rechallenge, hint, applied_filters = pick_problem(
+        difficulty, language, problem_type)
+    question = render_question(
+        problem,
+        rechallenge,
+        hint,
+        filters,
+        applied_filters)
     state = ensure_state({})
     state.update(
         {
@@ -794,7 +852,7 @@ def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[s
     # 오답노트 목록 자동 업데이트
     labels, values = refresh_note_choices()
     note_choices = list(zip(labels, values)) if labels else []
-    
+
     return (
         question,
         state,
@@ -806,7 +864,8 @@ def on_new_problem(difficulty: str, language: str, problem_type: str) -> Tuple[s
     )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, gr.update]:
+def on_submit(state: Dict, code: str, progress=gr.Progress()
+              ) -> Tuple[str, gr.update]:
     state = ensure_state(state)
     if not state or "problem" not in state:
         return "문제가 선택되지 않았습니다.", gr.update()
@@ -826,11 +885,18 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, gr.u
     )
 
     progress(1.0, desc="결과 저장 중")
-    append_attempt(problem, code, score, feedback, run_detail, improvement, reasoning)
+    append_attempt(
+        problem,
+        code,
+        score,
+        feedback,
+        run_detail,
+        improvement,
+        reasoning)
 
     header = f"점수: {score}점 ({'통과' if score >= 80 else '재도전'})"
     state.update({"in_progress": False})
-    
+
     # 통합 결과를 마크다운으로 반환
     combined = (
         f"{header}\n\n"
@@ -838,11 +904,11 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()) -> Tuple[str, gr.u
         f"### LLM 피드백\n{feedback}\n\n"
         f"### 보완점\n{improvement}"
     )
-    
+
     # 오답노트 목록 자동 업데이트
     labels, values = refresh_note_choices()
     note_choices = list(zip(labels, values)) if labels else []
-    
+
     return combined, gr.update(choices=note_choices, value=None)
 
 
@@ -856,7 +922,8 @@ def show_hint(state: Dict) -> str:
 def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
     if not state or "problem" not in state:
         labels, values = refresh_favorite_choices()
-        return gr.update(), "문제가 선택되지 않았습니다.", gr.update(choices=list(zip(labels, values)), value=None)
+        return gr.update(), "문제가 선택되지 않았습니다.", gr.update(
+            choices=list(zip(labels, values)), value=None)
 
     problem: Problem = state["problem"]
     favorites = load_favorites()
@@ -888,36 +955,53 @@ def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
 
 
 def build_interface() -> gr.Blocks:
-    language_options = ["전체"] + unique_preserve_order([p.kind for p in PROBLEM_BANK])
+    language_options = ["전체"] + \
+        unique_preserve_order([p.kind for p in PROBLEM_BANK])
     problem_type_options = ["전체"] + unique_preserve_order(
         [infer_problem_type(p) for p in PROBLEM_BANK]
     )
-    # Create Blocks with a fallback for gradio versions that don't accept `theme`/`css` kwargs.
+    # Create Blocks with a fallback for gradio versions that don't accept
+    # `theme`/`css` kwargs.
     try:
-        demo = gr.Blocks(title="SQL & PySpark 연습", theme=CUSTOM_THEME, css=CUSTOM_CSS)
+        demo = gr.Blocks(
+            title="SQL & PySpark 연습",
+            theme=CUSTOM_THEME,
+            css=CUSTOM_CSS)
     except TypeError:
         demo = gr.Blocks(title="SQL & PySpark 연습")
 
     with demo:
         state = gr.State({})
-        
+
         # ===== TOP 구간 =====
         with gr.Group(elem_classes="top-section"):
             with gr.Row():
                 with gr.Column(scale=9):
                     gr.Markdown("# SQL & PySpark 연습 스테이션")
                 with gr.Column(scale=1):
-                    theme_selector = gr.Dropdown(
+                    _ = gr.Dropdown(
                         choices=["auto", "dark", "light"],
                         value="auto",
                         label="🎨 테마",
                         scale=1
                     )
             with gr.Row():
-                difficulty = gr.Dropdown(DIFFICULTY_OPTIONS, value=DIFFICULTY_OPTIONS[0], label="난이도", scale=1)
-                language = gr.Dropdown(language_options, value=language_options[0], label="언어", scale=1)
-                problem_type = gr.Dropdown(problem_type_options, value=problem_type_options[0], label="문제 유형", scale=1)
-        
+                difficulty = gr.Dropdown(
+                    DIFFICULTY_OPTIONS,
+                    value=DIFFICULTY_OPTIONS[0],
+                    label="난이도",
+                    scale=1)
+                language = gr.Dropdown(
+                    language_options,
+                    value=language_options[0],
+                    label="언어",
+                    scale=1)
+                problem_type = gr.Dropdown(
+                    problem_type_options,
+                    value=problem_type_options[0],
+                    label="문제 유형",
+                    scale=1)
+
         # ===== MIDDLE 구간 =====
         with gr.Row(elem_classes="middle-section"):
             # ===== MIDDLE-LEFT (40%) =====
@@ -927,7 +1011,7 @@ def build_interface() -> gr.Blocks:
                     gr.Markdown("### 📋 문제")
                     question_md = gr.Markdown("새 문제 버튼을 눌러 시작하세요.")
                     new_btn = gr.Button("🔄 새 문제 출제", size="lg", scale=1)
-                
+
                 # Middle-Left-Lower (6 비율)
                 with gr.Column(scale=6, elem_classes="middle-left-lower"):
                     gr.Markdown("### 💬 LLM 피드백")
@@ -935,15 +1019,19 @@ def build_interface() -> gr.Blocks:
                     with gr.Row():
                         favorite_btn = gr.Button("⭐ 즐겨찾기", scale=1)
                         favorite_status_md = gr.Markdown("")
-            
+
             # ===== MIDDLE-RIGHT (60%) =====
             with gr.Column(scale=6, elem_classes="middle-right"):
                 gr.Markdown("### 💻 코드 에디터")
-                code_box = gr.Code(language="sql", show_label=False, elem_classes="code-editor")
+                code_box = gr.Code(
+                    language="sql",
+                    show_label=False,
+                    elem_classes="code-editor")
                 with gr.Row(elem_classes="button-row"):
-                    submit_btn = gr.Button("✅ 제출", variant="primary", size="lg", scale=2)
+                    submit_btn = gr.Button(
+                        "✅ 제출", variant="primary", size="lg", scale=2)
                     hint_btn = gr.Button("💡 힌트", size="lg", scale=1)
-        
+
         # ===== BOTTOM 구간 =====
         with gr.Row(elem_classes="bottom-section"):
             # 즐겨찾기 섹션
@@ -951,39 +1039,83 @@ def build_interface() -> gr.Blocks:
                 gr.Markdown("### ⭐ 즐겨찾기")
                 fav_refresh_btn = gr.Button("새로고침", size="sm", scale=1)
                 fav_labels, fav_values = refresh_favorite_choices()
-                fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
-                favorite_choices = gr.Dropdown(choices=fav_choices, label="문제 선택", scale=1)
+                fav_choices = list(zip(fav_labels, fav_values)
+                                   ) if fav_labels else []
+                favorite_choices = gr.Dropdown(
+                    choices=fav_choices, label="문제 선택", scale=1)
                 load_fav_btn = gr.Button("열기", size="sm", scale=1)
-            
+
             # 오답노트 섹션
             with gr.Group(elem_classes="bottom-group"):
                 gr.Markdown("### 📝 오답노트")
                 refresh_btn = gr.Button("새로고침", size="sm", scale=1)
                 note_labels, note_values = refresh_note_choices()
-                note_choice = list(zip(note_labels, note_values)) if note_labels else []
-                note_choices = gr.Dropdown(choices=note_choice, label="문제 선택", scale=1)
+                note_choice = list(
+                    zip(note_labels, note_values)) if note_labels else []
+                note_choices = gr.Dropdown(
+                    choices=note_choice, label="문제 선택", scale=1)
                 load_note_btn = gr.Button("풀기", size="sm", scale=1)
 
         # ===== 이벤트 핸들러 =====
         new_btn.click(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            inputs=[
+                difficulty,
+                language,
+                problem_type],
+            outputs=[
+                question_md,
+                state,
+                code_box,
+                favorite_btn,
+                favorite_status_md,
+                exec_result,
+                note_choices],
         )
         difficulty.change(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            inputs=[
+                difficulty,
+                language,
+                problem_type],
+            outputs=[
+                question_md,
+                state,
+                code_box,
+                favorite_btn,
+                favorite_status_md,
+                exec_result,
+                note_choices],
         )
         language.change(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            inputs=[
+                difficulty,
+                language,
+                problem_type],
+            outputs=[
+                question_md,
+                state,
+                code_box,
+                favorite_btn,
+                favorite_status_md,
+                exec_result,
+                note_choices],
         )
         problem_type.change(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            inputs=[
+                difficulty,
+                language,
+                problem_type],
+            outputs=[
+                question_md,
+                state,
+                code_box,
+                favorite_btn,
+                favorite_status_md,
+                exec_result,
+                note_choices],
         )
         submit_btn.click(
             on_submit,
@@ -1007,13 +1139,18 @@ def build_interface() -> gr.Blocks:
 
         def load_selected(pid):
             if not pid:
-                return gr.update(), {}, gr.update(), favorite_button_label(""), ""
+                return gr.update(), {}, gr.update(), "☆ 즐겨찾기 추가", ""
             return load_from_notes(pid)
 
         load_note_btn.click(
             load_selected,
             inputs=note_choices,
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+            outputs=[
+                question_md,
+                state,
+                code_box,
+                favorite_btn,
+                favorite_status_md],
         )
 
         def refresh_favorites():
@@ -1024,15 +1161,20 @@ def build_interface() -> gr.Blocks:
 
         def load_favorite_selection(pid):
             if not pid:
-                return gr.update(), {}, gr.update(), favorite_button_label(""), ""
+                return gr.update(), {}, gr.update(), "☆ 즐겨찾기 추가", ""
             return load_favorite_problem(pid)
 
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+            outputs=[
+                question_md,
+                state,
+                code_box,
+                favorite_btn,
+                favorite_status_md],
         )
-        
+
         # 테마 변경 이벤트 (테마 드롭다운은 Gradio 기본 기능이므로 별도 이벤트 처리 불필요)
 
     return demo

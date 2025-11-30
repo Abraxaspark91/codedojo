@@ -266,59 +266,64 @@ def matches_filters(
         problem: Problem,
         difficulty: Optional[str],
         language: Optional[str],
-        problem_type: Optional[str]) -> bool:
+        problem_types: Optional[List[str]]) -> bool:
+    """문제가 필터 조건과 일치하는지 확인합니다."""
     language_match = (not language or language ==
                       "전체") or problem.kind.lower() == language.lower()
     difficulty_match = (not difficulty or difficulty ==
                         "전체") or problem.difficulty == difficulty
-    # problem_type matching will be updated in later PR
-    type_match = True
+    # problem_types가 리스트로 전달됨 (체크박스 선택값)
+    type_match = (not problem_types or len(problem_types) == 0) or problem.problem_type in problem_types
     return difficulty_match and language_match and type_match
 
 
 def normalize_filters(
-    difficulty: Optional[str], language: Optional[str], problem_type: Optional[str]
-) -> Dict[str, str]:
+    difficulty: Optional[str], language: Optional[str], problem_types: Optional[List[str]]
+) -> Dict:
+    """필터를 정규화합니다. problem_types는 리스트입니다."""
     return {
         "difficulty": difficulty or "전체",
         "language": language or "전체",
-        "problem_type": problem_type or "전체",
+        "problem_types": problem_types if problem_types else [],
     }
 
 
 def pick_problem(
-    difficulty: str, language: str, problem_type: str
-) -> Tuple[Problem, bool, str, Dict[str, str]]:
+    difficulty: str, language: str, problem_types: List[str]
+) -> Tuple[Problem, bool, str, Dict]:
+    """체크박스로 선택된 problem_types 중에서 문제를 선택합니다."""
     entries = load_attempts()
     failed = failed_attempts(entries)
     rechallenge = False
     hint = ""
-    target_filters = normalize_filters(difficulty, language, problem_type)
+    target_filters = normalize_filters(difficulty, language, problem_types)
+
+    # 필터 우선순위 (problem_types는 리스트로 유지)
     filter_priority = [
-        (difficulty, language, problem_type),
-        (difficulty, language, None),
-        (difficulty, None, problem_type),
-        (difficulty, None, None),
-        (None, language, problem_type),
-        (None, language, None),
-        (None, None, problem_type),
-        (None, None, None),
+        (difficulty, language, problem_types),
+        (difficulty, language, []),
+        (difficulty, None, problem_types),
+        (difficulty, None, []),
+        (None, language, problem_types),
+        (None, language, []),
+        (None, None, problem_types),
+        (None, None, []),
     ]
 
     def choose_candidate(
-            pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict[str, str]]:
-        for diff_opt, lang_opt, type_opt in filter_priority:
+            pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict]:
+        for diff_opt, lang_opt, types_opt in filter_priority:
             candidates = [
                 (prob, attempt_hint)
                 for prob, attempt_hint in pool
-                if matches_filters(prob, diff_opt, lang_opt, type_opt)
+                if matches_filters(prob, diff_opt, lang_opt, types_opt)
             ]
             if candidates:
                 prob, attempt_hint = random.choice(candidates)
-                return prob, normalize_filters(diff_opt, lang_opt, type_opt) | {
+                return prob, normalize_filters(diff_opt, lang_opt, types_opt) | {
                     "hint": attempt_hint}
         prob, attempt_hint = random.choice(pool)
-        return prob, normalize_filters(None, None, None) | {
+        return prob, normalize_filters(None, None, []) | {
             "hint": attempt_hint}
 
     failed_pool: List[Tuple[Problem, str]] = []
@@ -610,16 +615,17 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str]:
 
 def on_new_problem(difficulty: str,
                    language: str,
-                   problem_type: str) -> Tuple[str,
-                                               Dict,
-                                               gr.update,
-                                               str,
-                                               str,
-                                               str,
-                                               gr.update]:
-    filters = normalize_filters(difficulty, language, problem_type)
+                   problem_types: List[str]) -> Tuple[str,
+                                                      Dict,
+                                                      gr.update,
+                                                      str,
+                                                      str,
+                                                      str,
+                                                      gr.update]:
+    """새 문제를 출제합니다. problem_types는 체크박스로 선택된 리스트입니다."""
+    filters = normalize_filters(difficulty, language, problem_types)
     problem, rechallenge, hint, applied_filters = pick_problem(
-        difficulty, language, problem_type)
+        difficulty, language, problem_types)
     question = render_question(
         problem,
         rechallenge,
@@ -723,8 +729,8 @@ def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
 def build_interface() -> gr.Blocks:
     language_options = ["전체"] + \
         unique_preserve_order([p.kind for p in PROBLEM_BANK])
-    # problem_type_options will be updated in later PR
-    problem_type_options = ["전체"]
+    # 문제 유형 옵션 (체크박스용)
+    problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 
     # Create Blocks with dark theme by default
     js_code = """
@@ -774,10 +780,11 @@ def build_interface() -> gr.Blocks:
                             label="💻 언어",
                             scale=1
                         )
-                        problem_type = gr.Dropdown(
-                            problem_type_options,
-                            value=problem_type_options[0],
-                            label="🏷️ 문제 유형",
+                    with gr.Row():
+                        problem_types = gr.CheckboxGroup(
+                            choices=problem_type_options,
+                            value=problem_type_options,  # 기본적으로 모두 선택
+                            label="🏷️ 문제 유형 (체크된 유형만 출제)",
                             scale=1
                         )
                     with gr.Row():
@@ -915,25 +922,25 @@ def build_interface() -> gr.Blocks:
         # ===== 이벤트 핸들러 - 신규 문제 탭 =====
         new_btn.click(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
+            inputs=[difficulty, language, problem_types],
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
 
         difficulty.change(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
+            inputs=[difficulty, language, problem_types],
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
 
         language.change(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
+            inputs=[difficulty, language, problem_types],
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
 
-        problem_type.change(
+        problem_types.change(
             on_new_problem,
-            inputs=[difficulty, language, problem_type],
+            inputs=[difficulty, language, problem_types],
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
 

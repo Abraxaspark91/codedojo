@@ -17,6 +17,7 @@ class Problem:
     hint: str
     schema: str = ""
     sample_rows: List[str] = field(default_factory=list)
+    problem_type: str = "코딩"  # "코딩", "개념문제", "빈칸채우기"
 
 
 def _unique_preserve_order(items: Sequence[str]) -> List[str]:
@@ -49,6 +50,7 @@ def load_problem_bank(path: Path | str = Path("data/problems.json")) -> List[Pro
                 hint=item.get("hint", ""),
                 schema=item.get("schema", ""),
                 sample_rows=item.get("sample_rows", []),
+                problem_type=item.get("problem_type", "코딩"),
             )
         )
     return problems

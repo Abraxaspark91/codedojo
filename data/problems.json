@@ -11,8 +11,13 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "sql",
-    "expected": ["SELECT", "WHERE", "ORDER BY"],
-    "hint": "기본 SELECT와 WHERE 조건, ORDER BY로 정렬합니다."
+    "expected": [
+      "SELECT",
+      "WHERE",
+      "ORDER BY"
+    ],
+    "hint": "기본 SELECT와 WHERE 조건, ORDER BY로 정렬합니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "sql_aggregation_monthly",
@@ -26,8 +31,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "sql",
-    "expected": ["GROUP BY", "SUM", "ORDER BY"],
-    "hint": "GROUP BY와 DATE_TRUNC 또는 MONTH 함수를 활용해 월 단위로 묶으세요."
+    "expected": [
+      "GROUP BY",
+      "SUM",
+      "ORDER BY"
+    ],
+    "hint": "GROUP BY와 DATE_TRUNC 또는 MONTH 함수를 활용해 월 단위로 묶으세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "sql_join_customer_orders",
@@ -43,8 +53,14 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "sql",
-    "expected": ["JOIN", "GROUP BY", "SUM", "ORDER BY"],
-    "hint": "INNER JOIN으로 연결한 뒤 cust_id를 기준으로 SUM(amount)를 집계합니다."
+    "expected": [
+      "JOIN",
+      "GROUP BY",
+      "SUM",
+      "ORDER BY"
+    ],
+    "hint": "INNER JOIN으로 연결한 뒤 cust_id를 기준으로 SUM(amount)를 집계합니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "sql_window_rank",
@@ -58,8 +74,13 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "sql",
-    "expected": ["ROW_NUMBER", "PARTITION BY", "ORDER BY"],
-    "hint": "ROW_NUMBER() OVER(PARTITION BY category ORDER BY price DESC)로 1순위만 남기세요."
+    "expected": [
+      "ROW_NUMBER",
+      "PARTITION BY",
+      "ORDER BY"
+    ],
+    "hint": "ROW_NUMBER() OVER(PARTITION BY category ORDER BY price DESC)로 1순위만 남기세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "sql_running_total",
@@ -73,8 +94,14 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "sql",
-    "expected": ["SUM", "OVER", "ORDER BY", "PARTITION"],
-    "hint": "CTE로 월별 집계를 만든 뒤 SUM(amount) OVER(ORDER BY month)로 누적합을 계산합니다."
+    "expected": [
+      "SUM",
+      "OVER",
+      "ORDER BY",
+      "PARTITION"
+    ],
+    "hint": "CTE로 월별 집계를 만든 뒤 SUM(amount) OVER(ORDER BY month)로 누적합을 계산합니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_basic_filter",
@@ -88,8 +115,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["filter", "select"],
-    "hint": "filter로 조건을 연결하고 select로 필요한 컬럼만 남깁니다."
+    "expected": [
+      "filter",
+      "select"
+    ],
+    "hint": "filter로 조건을 연결하고 select로 필요한 컬럼만 남깁니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_join",
@@ -105,8 +136,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["join", "groupBy", "agg"],
-    "hint": "join 후 groupBy로 집계하고 count, sum 집계함수를 사용하세요."
+    "expected": [
+      "join",
+      "groupBy",
+      "agg"
+    ],
+    "hint": "join 후 groupBy로 집계하고 count, sum 집계함수를 사용하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_window",
@@ -121,8 +157,13 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["Window", "rowsBetween", "avg"],
-    "hint": "Window.orderBy('time').rowsBetween(-2, 0) 범위로 avg를 계산하세요."
+    "expected": [
+      "Window",
+      "rowsBetween",
+      "avg"
+    ],
+    "hint": "Window.orderBy('time').rowsBetween(-2, 0) 범위로 avg를 계산하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_pivot",
@@ -137,8 +178,14 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "python",
-    "expected": ["groupBy", "pivot", "count", "date_trunc"],
-    "hint": "week 컬럼을 date_trunc('week', timestamp)로 만든 뒤 pivot(status) 후 count 합니다."
+    "expected": [
+      "groupBy",
+      "pivot",
+      "count",
+      "date_trunc"
+    ],
+    "hint": "week 컬럼을 date_trunc('week', timestamp)로 만든 뒤 pivot(status) 후 count 합니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_sessionize",
@@ -153,8 +200,15 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "python",
-    "expected": ["Window", "lag", "when", "sum", "over"],
-    "hint": "user_id 파티션에서 lag(ts)로 이전 시각과 차이를 구하고, when으로 세션 리셋 플래그를 만든 뒤 sum를 over 으로 누적합니다."
+    "expected": [
+      "Window",
+      "lag",
+      "when",
+      "sum",
+      "over"
+    ],
+    "hint": "user_id 파티션에서 lag(ts)로 이전 시각과 차이를 구하고, when으로 세션 리셋 플래그를 만든 뒤 sum를 over 으로 누적합니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_window_rank",
@@ -168,8 +222,14 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["Window", "orderBy", "row_number()", "withColumn"],
-    "hint": "Window.orderBy()로 정렬하고 row_number().over(window)를 사용하세요."
+    "expected": [
+      "Window",
+      "orderBy",
+      "row_number()",
+      "withColumn"
+    ],
+    "hint": "Window.orderBy()로 정렬하고 row_number().over(window)를 사용하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_window_rank_dept",
@@ -184,8 +244,14 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["Window.partitionBy", "orderBy", "row_number()", "filter"],
-    "hint": "partitionBy('department')로 그룹을 나누고, rank == 1 조건으로 filter하세요."
+    "expected": [
+      "Window.partitionBy",
+      "orderBy",
+      "row_number()",
+      "filter"
+    ],
+    "hint": "partitionBy('department')로 그룹을 나누고, rank == 1 조건으로 filter하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_select_columns",
@@ -198,8 +264,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["select", "'column'"],
-    "hint": "df.select('name', 'score')로 컬럼을 지정하세요."
+    "expected": [
+      "select",
+      "'column'"
+    ],
+    "hint": "df.select('name', 'score')로 컬럼을 지정하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_select_filter_columns",
@@ -212,8 +282,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["filter", "select"],
-    "hint": "filter()로 조건을 걸고, 그 후 select를 사용하세요."
+    "expected": [
+      "filter",
+      "select"
+    ],
+    "hint": "filter()로 조건을 걸고, 그 후 select를 사용하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_upper_case",
@@ -226,8 +300,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["withColumn", "F.upper"],
-    "hint": "F.upper('name')를 사용하여 대문자로 변환하세요."
+    "expected": [
+      "withColumn",
+      "F.upper"
+    ],
+    "hint": "F.upper('name')를 사용하여 대문자로 변환하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_concat_and_lower",
@@ -240,8 +318,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["F.concat", "F.lit", "F.lower"],
-    "hint": "F.concat(first_name, F.lit(' '), last_name)로 결합하고, F.lower()로 소문자화하세요."
+    "expected": [
+      "F.concat",
+      "F.lit",
+      "F.lower"
+    ],
+    "hint": "F.concat(first_name, F.lit(' '), last_name)로 결합하고, F.lower()로 소문자화하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_sql_register_view",
@@ -254,8 +337,14 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["createOrReplaceTempView", "spark.sql", "GROUP BY", "SUM"],
-    "hint": "view 이름을 지정하고 spark.sql()로 SQL 쿼리를 실행하세요."
+    "expected": [
+      "createOrReplaceTempView",
+      "spark.sql",
+      "GROUP BY",
+      "SUM"
+    ],
+    "hint": "view 이름을 지정하고 spark.sql()로 SQL 쿼리를 실행하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_sql_window_rank_dept",
@@ -269,8 +358,15 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["createOrReplaceTempView", "RANK() OVER", "PARTITION BY", "ORDER BY", "WHERE"],
-    "hint": "서브쿼리 안에 RANK() 함수를 사용하고, rank = 1 조건으로 필터링하세요."
+    "expected": [
+      "createOrReplaceTempView",
+      "RANK() OVER",
+      "PARTITION BY",
+      "ORDER BY",
+      "WHERE"
+    ],
+    "hint": "서브쿼리 안에 RANK() 함수를 사용하고, rank = 1 조건으로 필터링하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_cast_price_int",
@@ -283,8 +379,13 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["withColumn", "F.col", ".cast('integer')"],
-    "hint": "'price'.cast('integer')로 타입 변환을 수행하세요."
+    "expected": [
+      "withColumn",
+      "F.col",
+      ".cast('integer')"
+    ],
+    "hint": "'price'.cast('integer')로 타입 변환을 수행하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_fillna_null_handling",
@@ -297,8 +398,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["fillna", "{'col': value}"],
-    "hint": "fillna({'salary': 0, 'department': 'Unknown'})로 처리하세요."
+    "expected": [
+      "fillna",
+      "{'col': value}"
+    ],
+    "hint": "fillna({'salary': 0, 'department': 'Unknown'})로 처리하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_distinct_remove_duplicates",
@@ -311,8 +416,11 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["distinct()"],
-    "hint": ".distinct()로 전체 행의 중복을 제거하세요."
+    "expected": [
+      "distinct()"
+    ],
+    "hint": ".distinct()로 전체 행의 중복을 제거하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_drop_duplicates_email",
@@ -326,8 +434,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["dropDuplicates", "count()"],
-    "hint": "dropDuplicates(['email'])로 중복 제거하고, count()로 개수 비교하세요."
+    "expected": [
+      "dropDuplicates",
+      "count()"
+    ],
+    "hint": "dropDuplicates(['email'])로 중복 제거하고, count()로 개수 비교하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_orderby_price_asc",
@@ -340,8 +452,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["orderBy", "'price'"],
-    "hint": ".orderBy('price')로 오름차순 정렬하세요."
+    "expected": [
+      "orderBy",
+      "'price'"
+    ],
+    "hint": ".orderBy('price')로 오름차순 정렬하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_groupby_avg_salary_desc",
@@ -354,8 +470,15 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["groupBy", "agg", "F.avg", "orderBy", "F.desc"],
-    "hint": "F.avg('salary').alias('avg_salary')로 평균 계산 후 F.desc()로 정렬하세요."
+    "expected": [
+      "groupBy",
+      "agg",
+      "F.avg",
+      "orderBy",
+      "F.desc"
+    ],
+    "hint": "F.avg('salary').alias('avg_salary')로 평균 계산 후 F.desc()로 정렬하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_union_combine_dataframes",
@@ -368,8 +491,11 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["union"],
-    "hint": "df1.union(df2)로 결합하세요."
+    "expected": [
+      "union"
+    ],
+    "hint": "df1.union(df2)로 결합하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_unionbyname_mismatched_columns",
@@ -382,8 +508,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["unionByName", ".distinct()"],
-    "hint": "unionByName()로 컬럼명 기반 결합 후 distinct()로 중복 제거하세요."
+    "expected": [
+      "unionByName",
+      ".distinct()"
+    ],
+    "hint": "unionByName()로 컬럼명 기반 결합 후 distinct()로 중복 제거하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_when_otherwise_score_grade",
@@ -396,8 +526,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["F.when", ".otherwise()"],
-    "hint": "F.when(df.score >= 60, 'Pass').otherwise('Fail')로 조건 부여하세요."
+    "expected": [
+      "F.when",
+      ".otherwise()"
+    ],
+    "hint": "F.when(df.score >= 60, 'Pass').otherwise('Fail')로 조건 부여하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_when_otherwise_price_level",
@@ -411,8 +545,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["F.when", ".when().otherwise()"],
-    "hint": "여러 조건을 .when()으로 체이닝하세요."
+    "expected": [
+      "F.when",
+      ".when().otherwise()"
+    ],
+    "hint": "여러 조건을 .when()으로 체이닝하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_agg_count_avg_multiple",
@@ -425,8 +563,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["agg", "F.count", "F.avg"],
-    "hint": "agg(F.count('*').alias('count'), F.avg('price').alias('avg_price'))로 수행하세요."
+    "expected": [
+      "agg",
+      "F.count",
+      "F.avg"
+    ],
+    "hint": "agg(F.count('*').alias('count'), F.avg('price').alias('avg_price'))로 수행하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_agg_groupby_dept_stats",
@@ -439,8 +582,16 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["groupBy", "agg", "F.count", "F.min", "F.max", "F.avg"],
-    "hint": "F.count('*').alias('count'), F.min('salary') 등 여러 함수를 agg() 안에 넣으세요."
+    "expected": [
+      "groupBy",
+      "agg",
+      "F.count",
+      "F.min",
+      "F.max",
+      "F.avg"
+    ],
+    "hint": "F.count('*').alias('count'), F.min('salary') 등 여러 함수를 agg() 안에 넣으세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_date_extract_year_month",
@@ -453,8 +604,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["F.year", "F.month"],
-    "hint": "withColumn('year', F.year('order_date'))로 추출하세요."
+    "expected": [
+      "F.year",
+      "F.month"
+    ],
+    "hint": "withColumn('year', F.year('order_date'))로 추출하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_date_days_ago_filter",
@@ -467,8 +622,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["F.datediff", "F.current_date", "filter"],
-    "hint": "F.datediff(F.current_date(), 'order_date')로 날짜 차이 계산하세요."
+    "expected": [
+      "F.datediff",
+      "F.current_date",
+      "filter"
+    ],
+    "hint": "F.datediff(F.current_date(), 'order_date')로 날짜 차이 계산하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_coalesce_phone_display",
@@ -481,8 +641,12 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "python",
-    "expected": ["F.coalesce", "F.lit"],
-    "hint": "F.coalesce('phone', F.lit('N/A'))로 처리하세요."
+    "expected": [
+      "F.coalesce",
+      "F.lit"
+    ],
+    "hint": "F.coalesce('phone', F.lit('N/A'))로 처리하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_fillna_salary_null",
@@ -495,8 +659,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["fillna", "{'col': value}"],
-    "hint": "fillna({'salary': 0, 'department': 'Unknown'})로 처리하세요."
+    "expected": [
+      "fillna",
+      "{'col': value}"
+    ],
+    "hint": "fillna({'salary': 0, 'department': 'Unknown'})로 처리하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_cache_filter_count",
@@ -509,8 +677,14 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["filter", ".cache()", "count()", "show()"],
-    "hint": "필터링 후 .cache()로 메모리에 저장하세요."
+    "expected": [
+      "filter",
+      ".cache()",
+      "count()",
+      "show()"
+    ],
+    "hint": "필터링 후 .cache()로 메모리에 저장하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_cache_avg_dept_use_twice",
@@ -523,8 +697,15 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["groupBy", "agg", ".cache()", "show()", "filter"],
-    "hint": "cache() 후 여러 작업을 반복적으로 수행할 수 있습니다."
+    "expected": [
+      "groupBy",
+      "agg",
+      ".cache()",
+      "show()",
+      "filter"
+    ],
+    "hint": "cache() 후 여러 작업을 반복적으로 수행할 수 있습니다.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_collect_high_score_students",
@@ -537,8 +718,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["filter", "collect()", "list comprehension"],
-    "hint": "for row in rows: name_list.append(row.name) 또는 리스트 컴프리헨션으로 처리하세요."
+    "expected": [
+      "filter",
+      "collect()",
+      "list comprehension"
+    ],
+    "hint": "for row in rows: name_list.append(row.name) 또는 리스트 컴프리헨션으로 처리하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_repartition_5_partitions",
@@ -551,8 +737,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["repartition", ".getNumPartitions()"],
-    "hint": "df.repartition(5)로 재분할하고, rdd.getNumPartitions()로 확인하세요."
+    "expected": [
+      "repartition",
+      ".getNumPartitions()"
+    ],
+    "hint": "df.repartition(5)로 재분할하고, rdd.getNumPartitions()로 확인하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_repartition_coalesce",
@@ -565,8 +755,13 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["repartition", "coalesce", ".getNumPartitions()"],
-    "hint": "repartition 후 coalesce로 파티션 수를 줄이세요."
+    "expected": [
+      "repartition",
+      "coalesce",
+      ".getNumPartitions()"
+    ],
+    "hint": "repartition 후 coalesce로 파티션 수를 줄이세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_broadcast_join_large_small",
@@ -579,8 +774,12 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["broadcast", "join"],
-    "hint": "broadcast(df_small)를 사용하여 작은 테이블을 브로드캐스트하세요."
+    "expected": [
+      "broadcast",
+      "join"
+    ],
+    "hint": "broadcast(df_small)를 사용하여 작은 테이블을 브로드캐스트하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_broadcast_join_count_by_category",
@@ -593,8 +792,14 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "python",
-    "expected": ["broadcast", "join", "groupBy", "count"],
-    "hint": "broadcast join 후 groupBy('category_name')로 집계하세요."
+    "expected": [
+      "broadcast",
+      "join",
+      "groupBy",
+      "count"
+    ],
+    "hint": "broadcast join 후 groupBy('category_name')로 집계하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_explode_array_to_rows",
@@ -607,8 +812,12 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["F.explode", "withColumn"],
-    "hint": "df.withColumn('item', F.explode('items'))로 펼치세요."
+    "expected": [
+      "F.explode",
+      "withColumn"
+    ],
+    "hint": "df.withColumn('item', F.explode('items'))로 펼치세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_explode_count_by_product",
@@ -621,8 +830,13 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["F.explode", "groupBy", "count"],
-    "hint": "explode 후 groupBy('product')로 집계하세요."
+    "expected": [
+      "F.explode",
+      "groupBy",
+      "count"
+    ],
+    "hint": "explode 후 groupBy('product')로 집계하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_pivot_dept_avg_salary",
@@ -635,8 +849,14 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["groupBy", "pivot", "agg", "F.avg"],
-    "hint": "df.groupBy('department').pivot('year').agg(F.avg('salary'))로 피벗하세요."
+    "expected": [
+      "groupBy",
+      "pivot",
+      "agg",
+      "F.avg"
+    ],
+    "hint": "df.groupBy('department').pivot('year').agg(F.avg('salary'))로 피벗하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_pivot_region_category_sum",
@@ -649,8 +869,12 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "python",
-    "expected": ["pivot", "fillna(0)"],
-    "hint": "pivot 후 fillna(0)로 null을 0으로 채우세요."
+    "expected": [
+      "pivot",
+      "fillna(0)"
+    ],
+    "hint": "pivot 후 fillna(0)로 null을 0으로 채우세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_udf_string_length",
@@ -663,8 +887,13 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "python",
-    "expected": ["udf", "StringType()", "len()"],
-    "hint": "def str_len(s): return len(s)로 함수 정의하고, udf(str_len, IntegerType())로 등록하세요."
+    "expected": [
+      "udf",
+      "StringType()",
+      "len()"
+    ],
+    "hint": "def str_len(s): return len(s)로 함수 정의하고, udf(str_len, IntegerType())로 등록하세요.",
+    "problem_type": "코딩"
   },
   {
     "pid": "pyspark_udf_score_to_grade",
@@ -677,7 +906,12 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "python",
-    "expected": ["udf", "StringType()", "if-elif"],
-    "hint": "조건문을 포함한 함수 정의 후, udf로 등록하세요."
+    "expected": [
+      "udf",
+      "StringType()",
+      "if-elif"
+    ],
+    "hint": "조건문을 포함한 함수 정의 후, udf로 등록하세요.",
+    "problem_type": "코딩"
   }
 ]

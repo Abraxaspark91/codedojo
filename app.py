@@ -125,8 +125,9 @@ class Attempt:
         question: 문제 내용
         code: 제출 코드
         kind: 프로그래밍 언어 (sql/python, Gradio Code 컴포넌트 지원 언어)
-        timestamp: ISO 형식의 제출 시간
+        timestamp: 제출 시간 (형식: "YYYY-MM-DD HH:MM (요일)")
         rechallenge_hint: 재도전 시 참고할 힌트
+        nickname: 문제 별명 (사용자 지정)
     """
     pid: str
     title: str
@@ -142,6 +143,7 @@ class Attempt:
     kind: str
     timestamp: str
     rechallenge_hint: str = ""
+    nickname: str = ""
 
 
 def ensure_state(state: Optional[Dict]) -> Dict:
@@ -167,26 +169,6 @@ def unique_preserve_order(items: List[str]) -> List[str]:
     return ordered
 
 
-def infer_problem_type(problem: Problem) -> str:
-    lower_expected = [kw.lower() for kw in problem.expected]
-    if any(key in lower_expected for key in ["join", "union", "merge"]):
-        return "조인/조합"
-    if any(
-        key in lower_expected for key in [
-            "group by",
-            "sum",
-            "avg",
-            "count",
-            "having"]):
-        return "집계"
-    if any(
-        key in lower_expected for key in [
-            "over",
-            "rank",
-            "dense_rank",
-            "window"]):
-        return "윈도우"
-    return "기본"
 
 
 def ensure_note_file() -> None:
@@ -289,9 +271,8 @@ def matches_filters(
                       "전체") or problem.kind.lower() == language.lower()
     difficulty_match = (not difficulty or difficulty ==
                         "전체") or problem.difficulty == difficulty
-    inferred_type = infer_problem_type(problem)
-    type_match = (not problem_type or problem_type ==
-                  "전체") or inferred_type == problem_type
+    # problem_type matching will be updated in later PR
+    type_match = True
     return difficulty_match and language_match and type_match
 
 
@@ -383,7 +364,7 @@ def render_question(
         )
     return (
         f"### [{banner}] {problem.title}\n"
-        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n- 문제 유형: {infer_problem_type(problem)}\n")
+        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n")
 
 
 def ensure_favorites_file() -> None:
@@ -467,95 +448,30 @@ def call_llm(system_prompt: str, user_prompt: str,
         )
 
 
-def heuristics_score(code: str, expected: List[str]) -> Tuple[int, str]:
-    upper = code.upper()
-    matched = sum(1 for key in expected if key.upper() in upper)
-    # 모든 키워드를 포함할 때만 80점 이상
-    if matched == len(expected):
-        score = 100
-        run_result = "핵심 키워드를 모두 포함했습니다."
-    elif matched >= len(expected) * 0.5:
-        score = 70 + matched * 5
-        run_result = f"일부 키워드가 누락되었습니다. ({matched}/{len(expected)}개 포함)"
-    else:
-        score = 40 + matched * 10
-        run_result = f"대부분의 키워드가 누락되었습니다. ({matched}/{len(expected)}개 포함)"
-    return min(score, 100), run_result
-
-
-def evaluate_submission(problem: Problem, code: str) -> Tuple[int, str]:
-    score, run_result = heuristics_score(code, problem.expected)
-    status = "통과" if score >= 80 else "재도전"
-    detail = f"실행 결과 추정: {run_result} (예상 점수: {score}점, 상태: {status})"
-    return score, detail
 
 
 def build_feedback(
-    problem: Problem, code: str, score: int, run_detail: str, endpoint: str
-) -> Tuple[str, str, str]:
+    problem: Problem, code: str, endpoint: str
+) -> str:
+    """LLM을 사용하여 코드에 대한 피드백을 생성합니다."""
     system_prompt = (
-        "당신은 SQL, Python, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. 코드 실행 결과를 반영해 짧게 평가하세요. "
+        "당신은 SQL, Python, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. "
+        "제출된 코드를 분석하여 피드백을 제공하세요. "
         "정답 여부, 놓친 부분, 효율/논리 개선, 작성자의 의도 추정을 포함합니다.")
     user_prompt = (
-        f"문제: {problem.body}\n코드:```{problem.kind}\n{code}\n```\n"
-        f"실행 결과 요약: {run_detail}\n"
-        "- 1) 정오 판단과 점수 보정 제안\n- 2) 보완 포인트\n- 3) 더 효율적이거나 간결한 방법\n- 4) 작성자의 의도 추측")
+        f"문제: {problem.body}\n"
+        f"스키마: {problem.schema}\n"
+        f"코드:```{problem.kind}\n{code}\n```\n"
+        "다음 사항을 포함하여 피드백을 제공하세요:\n"
+        "- 1) 코드 분석 및 평가\n"
+        "- 2) 보완이 필요한 부분\n"
+        "- 3) 더 효율적이거나 간결한 방법\n"
+        "- 4) 작성자의 의도 추측")
     llm_reply = call_llm(system_prompt, user_prompt, endpoint)
-    if "휴리스틱" in llm_reply:
-        improvement = problem.hint
-        reasoning = "문제에서 요구한 키워드 기반으로 자동 피드백을 생성했습니다."
-    else:
-        improvement = "효율성/가독성 개선 제안을 참고하세요."
-        reasoning = "작성 의도 추정은 피드백 섹션을 확인하세요."
-    return llm_reply, improvement, reasoning
+    return llm_reply
 
 
-def append_attempt(
-        problem: Problem,
-        code: str,
-        score: int,
-        feedback: str,
-        run_detail: str,
-        improvement: str,
-        reasoning: str) -> None:
-    """채점 결과를 오답노트에 추가합니다.
-
-    JSON Lines 형식: 각 라인이 하나의 완전한 JSON
-    - 한 줄씩 append되므로 파일 손상 위험 최소화
-    - JSON 검증을 통해 손상된 데이터 저장 방지
-    """
-    ensure_note_file()
-    attempt = Attempt(
-        pid=problem.pid,
-        title=problem.title,
-        difficulty=problem.difficulty,
-        score=score,
-        status="통과" if score >= 80 else "재도전",
-        submitted=code,
-        feedback=feedback,
-        improvement=improvement,
-        reasoning=reasoning,
-        question=problem.body,
-        code=code,
-        kind=problem.kind,
-        timestamp=datetime.now().isoformat(timespec="seconds"),
-        rechallenge_hint=run_detail,
-    )
-
-    try:
-        serialized = serialize_attempt(attempt)
-        # JSON Lines: 기존 내용에 새 라인을 추가
-        current_content = NOTE_PATH.read_text(encoding="utf-8")
-        # 마지막 줄이 개행으로 끝나지 않으면 추가
-        if current_content and not current_content.endswith("\n"):
-            current_content += "\n"
-        NOTE_PATH.write_text(
-            current_content + serialized + "\n",
-            encoding="utf-8")
-    except ValueError as e:
-        # JSON 직렬화 실패 시 에러 로그만 남기고 계속
-        print(f"[오류] Attempt 저장 실패: {e}", file=__import__('sys').stderr)
-        raise
+# append_attempt function removed - manual note saving will be implemented in PR 3
 
 
 def refresh_note_choices() -> Tuple[List[str], List[str]]:
@@ -661,50 +577,26 @@ def on_new_problem(difficulty: str,
 
 def on_submit(state: Dict, code: str, progress=gr.Progress()
               ) -> Tuple[str, gr.update]:
+    """코드를 제출하고 LLM 피드백을 받습니다. (자동 저장 없음)"""
     state = ensure_state(state)
     if not state or "problem" not in state:
         return "문제가 선택되지 않았습니다.", gr.update()
 
     if state.get("in_progress"):
-        return "채점이 진행 중입니다. 잠시만 기다려주세요.", gr.update()
+        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요.", gr.update()
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
 
-    progress(0.3, desc="코드 평가 중")
-    score, run_detail = evaluate_submission(problem, code)
+    progress(0.5, desc="LLM 피드백 생성 중")
+    feedback = build_feedback(problem, code, LM_STUDIO_ENDPOINT)
 
-    progress(0.7, desc="LLM 피드백 생성 중")
-    feedback, improvement, reasoning = build_feedback(
-        problem, code, score, run_detail, LM_STUDIO_ENDPOINT
-    )
+    state.update({"in_progress": False, "last_feedback": feedback, "last_code": code})
 
-    progress(1.0, desc="결과 저장 중")
-    append_attempt(
-        problem,
-        code,
-        score,
-        feedback,
-        run_detail,
-        improvement,
-        reasoning)
+    # LLM 피드백만 반환
+    result = f"### 💬 LLM 피드백\n{feedback}"
 
-    header = f"점수: {score}점 ({'통과' if score >= 80 else '재도전'})"
-    state.update({"in_progress": False})
-
-    # 통합 결과를 마크다운으로 반환
-    combined = (
-        f"{header}\n\n"
-        f"### 실행 결과\n{run_detail}\n\n"
-        f"### LLM 피드백\n{feedback}\n\n"
-        f"### 보완점\n{improvement}"
-    )
-
-    # 오답노트 목록 자동 업데이트
-    labels, values = refresh_note_choices()
-    note_choices = list(zip(labels, values)) if labels else []
-
-    return combined, gr.update(choices=note_choices, value=None)
+    return result, gr.update()
 
 
 def show_hint(state: Dict) -> str:
@@ -752,9 +644,8 @@ def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
 def build_interface() -> gr.Blocks:
     language_options = ["전체"] + \
         unique_preserve_order([p.kind for p in PROBLEM_BANK])
-    problem_type_options = ["전체"] + unique_preserve_order(
-        [infer_problem_type(p) for p in PROBLEM_BANK]
-    )
+    # problem_type_options will be updated in later PR
+    problem_type_options = ["전체"]
 
     # Create Blocks with dark theme by default
     js_code = """

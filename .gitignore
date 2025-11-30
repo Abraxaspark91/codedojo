@@ -1,5 +1,6 @@
 # Data artifacts and personal notes
 data/
+!data/problems.json
 
 # Python cache files
 __pycache__/

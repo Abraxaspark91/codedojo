@@ -1514,7 +1514,7 @@
     "5 | Diana | 42 | Incheon"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "isNotNull()",
@@ -1539,7 +1539,7 @@
     "105 | Mouse | 2024-03-28 | 3000"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "isNotNull()",
@@ -1563,7 +1563,7 @@
     "4 | 2024-03-27 | 105000"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "groupBy",
     "sum",
@@ -1734,7 +1734,7 @@
     "4 | 95000 | KRW | 2024-03-28"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "gt",
@@ -1757,7 +1757,7 @@
     "2024-03-29 | 110000"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "isNotNull()",
@@ -1783,7 +1783,7 @@
     "3 |   "
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "join",
     "leftOuterJoin",
@@ -1806,7 +1806,7 @@
     "Keyboard | 2024-04-01 | 105000"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "groupBy",
     "sum",
@@ -1828,7 +1828,7 @@
     "3 | 102 | view | 60 | 2024-03-25 10:10:00"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "isin",
@@ -1850,7 +1850,7 @@
     "3 |   CHARLIE "
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "withColumn",
     "trim",
@@ -2145,7 +2145,7 @@
     "3 | 102 | 2024-03-26"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "dropDuplicates",
     "orderBy"
@@ -2163,7 +2163,7 @@
     "2 | 2024-02-28 | 65000"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "withColumn",
     "to_date",
@@ -2185,7 +2185,7 @@
     "3 | Charlie | 65000"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "groupBy",
     "sum",
@@ -2206,7 +2206,7 @@
     "Clothing | 2024-03-26 | 92000 | 102"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "pivot",
     "agg",
@@ -2227,7 +2227,7 @@
     "2 | Bob | Busan, Korea"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "withColumn",
     "split",
@@ -2248,7 +2248,7 @@
     "3 | Casey | NULL"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "when",
     ".otherwise",
@@ -2267,7 +2267,7 @@
     "2 | 2024-04-03 | 95000"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "unionAll",
     "orderBy"
@@ -2285,7 +2285,7 @@
     "2 | Bob | (02)1234-5678"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "regexp_extract",
     "withColumn",
@@ -2304,7 +2304,7 @@
     "2 | Bob | {\"city\": \"Busan\", \"age\": 25}"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "select",
     "col('profile.city')",
@@ -2324,7 +2324,7 @@
     "2024-03-26 | 92000"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "window",
     "lead().over",
@@ -2344,7 +2344,7 @@
     "2 | Bob | John | NULL"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "coalesce",
     "withColumn",
@@ -2364,7 +2364,7 @@
     "1 | 2024-03-25 11:10:00"
   ],
   "difficulty": "Lv3 중급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "window",
     "lag",
@@ -2614,7 +2614,7 @@
     "2 | Bob | 30"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "select('*')",
     "orderBy"
@@ -2631,7 +2631,7 @@
     "2 | Bob | 30"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "gt",
@@ -2649,7 +2649,7 @@
     "2 | NULL | 30"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "isNotNull()",
@@ -2667,7 +2667,7 @@
     "2 | Electronics | 120000"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "and",
@@ -2685,7 +2685,7 @@
     "2 | Bob"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "rlike",
@@ -2703,7 +2703,7 @@
     "102 | Mouse"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "filter",
     "isin",
@@ -2721,7 +2721,7 @@
     "2 | Bob"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "count",
     "alias"
@@ -2738,7 +2738,7 @@
     "2 | 95000"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "sum",
     "alias"
@@ -2755,7 +2755,7 @@
     "2 | Bob | 30"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "avg",
     "alias",
@@ -2773,7 +2773,7 @@
     "Clothing | 65000"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "groupBy",
     "sum",
@@ -2791,7 +2791,7 @@
     "2 | Bob | 85"
   ],
   "difficulty": "Lv2 초급",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "when",
     ".otherwise",
@@ -2812,7 +2812,7 @@
     "3 | Casey | Seoul"
   ],
   "difficulty": "Lv1 입문",
-  "kind": "pyspark",
+  "kind": "python",
   "expected": [
     "distinct",
     "orderBy"

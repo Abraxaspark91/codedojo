@@ -347,24 +347,33 @@ def render_question(
     requested_filters: Dict[str, str],
     applied_filters: Optional[Dict[str, str]] = None,
 ) -> str:
+    """문제를 마크다운 형식으로 렌더링합니다."""
     banner = "재도전" if rechallenge else "신규 문제"
     hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
-    selection_line = (
-        f"- 선택 필터: 난이도 {requested_filters.get('difficulty', '전체')}, "
-        f"언어 {requested_filters.get('language', '전체')}, "
-        f"유형 {requested_filters.get('problem_type', '전체')}"
-    )
-    applied = applied_filters or requested_filters
-    applied_line = ""
-    if applied != requested_filters:
-        applied_line = (
-            f"\n- 적용 필터: 난이도 {applied.get('difficulty', '전체')}, "
-            f"언어 {applied.get('language', '전체')}, "
-            f"유형 {applied.get('problem_type', '전체')}"
-        )
-    return (
+
+    # 기본 정보
+    result = (
         f"### [{banner}] {problem.title}\n"
-        f"- 난이도: {problem.difficulty}\n- 언어: {problem.kind}\n")
+        f"- 난이도: {problem.difficulty}\n"
+        f"- 언어: {problem.kind}\n"
+        f"{hint_line}\n"
+        f"---\n\n"
+        f"**📝 문제**\n\n"
+        f"{problem.body}\n\n"
+    )
+
+    # 스키마 추가 (있을 경우)
+    if problem.schema:
+        result += f"**📊 스키마**\n```\n{problem.schema}\n```\n\n"
+
+    # 샘플 데이터 추가 (있을 경우)
+    if problem.sample_rows:
+        result += "**📋 샘플 데이터**\n```\n"
+        for row in problem.sample_rows:
+            result += f"{row}\n"
+        result += "```\n"
+
+    return result
 
 
 def ensure_favorites_file() -> None:
@@ -675,97 +684,99 @@ def build_interface() -> gr.Blocks:
             with gr.Row():
                 gr.Markdown("# 🎯 SQL & Python 코딩 연습 스테이션", container=True)
 
-        # ===== 필터 섹션 =====
-        with gr.Group():
-            gr.Markdown("### 📋 출제 옵션")
-            with gr.Row():
-                difficulty = gr.Dropdown(
-                    DIFFICULTY_OPTIONS,
-                    value=DIFFICULTY_OPTIONS[0],
-                    label="📊 난이도",
-                    scale=1
-                )
-                language = gr.Dropdown(
-                    language_options,
-                    value=language_options[0],
-                    label="💻 언어",
-                    scale=1
-                )
-                problem_type = gr.Dropdown(
-                    problem_type_options,
-                    value=problem_type_options[0],
-                    label="🏷️ 문제 유형",
-                    scale=1
-                )
-            with gr.Row():
-                new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
+        # ===== 탭 구조 =====
+        with gr.Tabs():
+            # ========== 탭 1: 신규 문제 ==========
+            with gr.Tab("🆕 신규 문제"):
+                # 필터 섹션
+                with gr.Group():
+                    gr.Markdown("### 📋 출제 옵션")
+                    with gr.Row():
+                        difficulty = gr.Dropdown(
+                            DIFFICULTY_OPTIONS,
+                            value=DIFFICULTY_OPTIONS[0],
+                            label="📊 난이도",
+                            scale=1
+                        )
+                        language = gr.Dropdown(
+                            language_options,
+                            value=language_options[0],
+                            label="💻 언어",
+                            scale=1
+                        )
+                        problem_type = gr.Dropdown(
+                            problem_type_options,
+                            value=problem_type_options[0],
+                            label="🏷️ 문제 유형",
+                            scale=1
+                        )
+                    with gr.Row():
+                        new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
 
-        # ===== 메인 콘텐츠 영역 =====
-        with gr.Row():
-            # 왼쪽: 문제 & 피드백
-            with gr.Column(scale=2):
-                # 문제 영역
-                with gr.Group(elem_classes="section-box"):
-                    gr.Markdown("### 📋 문제")
-                    question_md = gr.Markdown(
-                        "새 문제 버튼을 눌러 시작하세요.", 
-                        container=True,
-                        elem_classes="problem-box"
-                    )
+                # 메인 콘텐츠 영역
+                with gr.Row():
+                    # 왼쪽: 문제
+                    with gr.Column(scale=2):
+                        with gr.Group(elem_classes="section-box"):
+                            gr.Markdown("### 📋 문제")
+                            question_md = gr.Markdown(
+                                "새 문제 버튼을 눌러 시작하세요.",
+                                container=True,
+                                elem_classes="problem-box"
+                            )
+
+                    # 오른쪽: 코드 에디터
+                    with gr.Column(scale=3):
+                        with gr.Group(elem_classes="section-box"):
+                            gr.Markdown("### 💻 답변 작성칸")
+                            code_box = gr.Code(
+                                value="",
+                                language="python",
+                                show_label=False,
+                                elem_classes="code-editor-box",
+                                lines=20,
+                                container=True
+                            )
+                            with gr.Row(elem_classes="button-row"):
+                                submit_btn = gr.Button(
+                                    "✅ 제출하기",
+                                    variant="primary",
+                                    size="lg",
+                                    scale=3
+                                )
+                                hint_btn = gr.Button("💡 힌트 보기", size="lg", scale=1)
 
                 # 피드백 영역
-                    gr.Markdown("### 💬 실행 결과 & 피드백")
+                with gr.Group(elem_classes="section-box"):
+                    gr.Markdown("### 💬 LLM 피드백")
                     exec_result = gr.Markdown(
                         value="",
                         elem_classes="feedback-box",
                         container=True
                     )
-                    with gr.Row():
-                        favorite_btn = gr.Button("⭐ 즐겨찾기", size="sm")
-                        favorite_status_md = gr.Markdown("")
 
-            # 오른쪽: 코드 에디터
-            with gr.Column(scale=3):
-                with gr.Group(elem_classes="section-box"):
-                    gr.Markdown("### 💻 답변 작성칸")
-                    code_box = gr.Code(
-                        value="",
-                        language="python",
-                        show_label=False,
-                        elem_classes="code-editor-box",
-                        lines=20,
-                        container=True
-                    )
-                    with gr.Row(elem_classes="button-row"):
-                        submit_btn = gr.Button(
-                            "✅ 제출하기",
-                            variant="primary",
-                            size="lg",
-                            scale=3
-                        )
-                        hint_btn = gr.Button("💡 힌트 보기", size="lg", scale=1)
-
-        # ===== 하단 패널 (즐겨찾기 & 오답노트) =====
-        with gr.Row():
-            # 즐겨찾기
-            with gr.Column(scale=1):
+                # 즐겨찾기 섹션
                 with gr.Group(elem_classes="bottom-panel"):
                     gr.Markdown("### ⭐ 즐겨찾기")
+                    with gr.Row():
+                        favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="sm", scale=1)
+                        favorite_status_md = gr.Markdown("", scale=2)
                     fav_labels, fav_values = refresh_favorite_choices()
                     fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
                     favorite_choices = gr.Dropdown(
                         choices=fav_choices,
-                        label="문제 선택",
+                        label="즐겨찾기 목록",
                         scale=1
                     )
                     with gr.Row():
                         fav_refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
                         load_fav_btn = gr.Button("📖 열기", size="sm", scale=1)
 
-            # 오답노트
-            with gr.Column(scale=1):
-                with gr.Group(elem_classes="bottom-panel"):
-                    gr.Markdown("### 📝 오답노트 (재도전)")
+            # ========== 탭 2: 오답노트 ==========
+            with gr.Tab("📝 오답노트"):
+                # 오답노트 목록
+                with gr.Group():
+                    gr.Markdown("### 📝 오답노트 재도전")
                     note_labels, note_values = refresh_note_choices()
                     note_choice = list(zip(note_labels, note_values)) if note_labels else []
                     note_choices = gr.Dropdown(
@@ -775,103 +786,88 @@ def build_interface() -> gr.Blocks:
                     )
                     with gr.Row():
                         refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
-                        load_note_btn = gr.Button("🎯 재도전", size="sm", scale=1)
+                        load_note_btn = gr.Button("🎯 문제 불러오기", size="sm", scale=1)
 
-        # ===== 이벤트 핸들러 =====
+                # 메인 콘텐츠 영역
+                with gr.Row():
+                    # 왼쪽: 문제
+                    with gr.Column(scale=2):
+                        with gr.Group(elem_classes="section-box"):
+                            gr.Markdown("### 📋 문제")
+                            note_question_md = gr.Markdown(
+                                "오답노트에서 문제를 선택하세요.",
+                                container=True,
+                                elem_classes="problem-box"
+                            )
+
+                    # 오른쪽: 코드 에디터
+                    with gr.Column(scale=3):
+                        with gr.Group(elem_classes="section-box"):
+                            gr.Markdown("### 💻 답변 작성칸")
+                            note_code_box = gr.Code(
+                                value="",
+                                language="python",
+                                show_label=False,
+                                elem_classes="code-editor-box",
+                                lines=20,
+                                container=True
+                            )
+                            with gr.Row(elem_classes="button-row"):
+                                note_submit_btn = gr.Button(
+                                    "✅ 제출하기",
+                                    variant="primary",
+                                    size="lg",
+                                    scale=3
+                                )
+                                note_hint_btn = gr.Button("💡 힌트 보기", size="lg", scale=1)
+
+                # 피드백 영역
+                with gr.Group(elem_classes="section-box"):
+                    gr.Markdown("### 💬 LLM 피드백")
+                    note_exec_result = gr.Markdown(
+                        value="",
+                        elem_classes="feedback-box",
+                        container=True
+                    )
+
+        # ===== 이벤트 핸들러 - 신규 문제 탭 =====
         new_btn.click(
             on_new_problem,
-            inputs=[
-                difficulty,
-                language,
-                problem_type],
-            outputs=[
-                question_md,
-                state,
-                code_box,
-                favorite_btn,
-                favorite_status_md,
-                exec_result,
-                note_choices],
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
+
         difficulty.change(
             on_new_problem,
-            inputs=[
-                difficulty,
-                language,
-                problem_type],
-            outputs=[
-                question_md,
-                state,
-                code_box,
-                favorite_btn,
-                favorite_status_md,
-                exec_result,
-                note_choices],
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
+
         language.change(
             on_new_problem,
-            inputs=[
-                difficulty,
-                language,
-                problem_type],
-            outputs=[
-                question_md,
-                state,
-                code_box,
-                favorite_btn,
-                favorite_status_md,
-                exec_result,
-                note_choices],
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
+
         problem_type.change(
             on_new_problem,
-            inputs=[
-                difficulty,
-                language,
-                problem_type],
-            outputs=[
-                question_md,
-                state,
-                code_box,
-                favorite_btn,
-                favorite_status_md,
-                exec_result,
-                note_choices],
+            inputs=[difficulty, language, problem_type],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
+
         submit_btn.click(
             on_submit,
             inputs=[state, code_box],
             outputs=[exec_result, note_choices],
             show_progress="minimal",
         )
+
         hint_btn.click(show_hint, inputs=state, outputs=exec_result)
+
         favorite_btn.click(
             toggle_favorite,
             inputs=state,
             outputs=[favorite_btn, favorite_status_md, favorite_choices],
-        )
-
-        def refresh_notes():
-            labels, values = refresh_note_choices()
-            choices = list(zip(labels, values))
-            return gr.update(choices=choices, value=None), ""
-
-        refresh_btn.click(refresh_notes, outputs=[note_choices, exec_result])
-
-        def load_selected(pid):
-            if not pid:
-                return gr.update(), {}, gr.update(), "☆ 즐겨찾기 추가", ""
-            return load_from_notes(pid)
-
-        load_note_btn.click(
-            load_selected,
-            inputs=note_choices,
-            outputs=[
-                question_md,
-                state,
-                code_box,
-                favorite_btn,
-                favorite_status_md],
         )
 
         def refresh_favorites():
@@ -888,13 +884,51 @@ def build_interface() -> gr.Blocks:
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[
-                question_md,
-                state,
-                code_box,
-                favorite_btn,
-                favorite_status_md],
+            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
         )
+
+        # ===== 이벤트 핸들러 - 오답노트 탭 =====
+        def refresh_notes():
+            labels, values = refresh_note_choices()
+            choices = list(zip(labels, values))
+            return gr.update(choices=choices, value=None), ""
+
+        refresh_btn.click(refresh_notes, outputs=[note_choices, note_exec_result])
+
+        def load_note_to_tab(pid):
+            """오답노트 탭용: 문제 불러오기"""
+            if not pid:
+                return gr.update(), {}, gr.update(), ""
+
+            entries = failed_attempts(load_attempts())
+            for entry in entries:
+                if entry.pid == pid:
+                    problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+                    if problem:
+                        filters = normalize_filters(None, None, None)
+                        question = render_question(problem, True, entry.rechallenge_hint, filters)
+                        return (
+                            question,
+                            {"problem": problem, "rechallenge": True, "hint": entry.rechallenge_hint, "filters": filters, "in_progress": False},
+                            gr.update(value="", language=problem.kind),
+                            ""
+                        )
+            return "선택한 문제가 없습니다.", {}, gr.update(), ""
+
+        load_note_btn.click(
+            load_note_to_tab,
+            inputs=note_choices,
+            outputs=[note_question_md, state, note_code_box, note_exec_result],
+        )
+
+        note_submit_btn.click(
+            on_submit,
+            inputs=[state, note_code_box],
+            outputs=[note_exec_result, note_choices],
+            show_progress="minimal",
+        )
+
+        note_hint_btn.click(show_hint, inputs=state, outputs=note_exec_result)
 
     return demo
 

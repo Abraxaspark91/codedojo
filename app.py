@@ -480,7 +480,77 @@ def build_feedback(
     return llm_reply
 
 
-# append_attempt function removed - manual note saving will be implemented in PR 3
+# append_attempt function removed - manual note saving implemented below
+
+
+def generate_hint_summary(problem: Problem, code: str, feedback: str, endpoint: str) -> str:
+    """LLM을 사용하여 틀린 이유를 50자 이내로 요약합니다."""
+    system_prompt = (
+        "당신은 학습 도우미입니다. 학생이 문제를 틀린 이유를 50자 이내로 간결하게 요약하세요."
+    )
+    user_prompt = (
+        f"문제: {problem.body}\n"
+        f"제출 코드: {code}\n"
+        f"피드백: {feedback}\n\n"
+        "위 내용을 바탕으로 이 문제를 틀린 핵심 이유를 50자 이내로 요약하세요."
+    )
+    summary = call_llm(system_prompt, user_prompt, endpoint)
+    # 50자로 자르기
+    return summary[:50] if len(summary) > 50 else summary
+
+
+def format_timestamp_with_weekday() -> str:
+    """현재 시간을 'YYYY-MM-DD HH:MM (요일)' 형식으로 반환합니다."""
+    now = datetime.now()
+    weekdays = ["월", "화", "수", "목", "금", "토", "일"]
+    weekday = weekdays[now.weekday()]
+    return now.strftime(f"%Y-%m-%d %H:%M ({weekday})")
+
+
+def save_to_wrong_notes(
+    problem: Problem,
+    code: str,
+    feedback: str,
+    nickname: str,
+    rechallenge_hint: str
+) -> str:
+    """수동으로 오답노트에 저장합니다."""
+    ensure_note_file()
+
+    # Attempt 객체 생성 (수동 저장이므로 score는 0, status는 "재도전")
+    attempt = Attempt(
+        pid=problem.pid,
+        title=problem.title,
+        difficulty=problem.difficulty,
+        score=0,  # 수동 저장이므로 점수 없음
+        status="재도전",
+        submitted=code,
+        feedback=feedback,
+        improvement="수동으로 오답노트에 추가됨",
+        reasoning="수동 추가",
+        question=problem.body,
+        code=code,
+        kind=problem.kind,
+        timestamp=format_timestamp_with_weekday(),
+        rechallenge_hint=rechallenge_hint,
+        nickname=nickname,
+    )
+
+    try:
+        serialized = serialize_attempt(attempt)
+        # JSON Lines: 기존 내용에 새 라인을 추가
+        current_content = NOTE_PATH.read_text(encoding="utf-8")
+        # 마지막 줄이 개행으로 끝나지 않으면 추가
+        if current_content and not current_content.endswith("\n"):
+            current_content += "\n"
+        NOTE_PATH.write_text(
+            current_content + serialized + "\n",
+            encoding="utf-8"
+        )
+        return f"✅ 오답노트에 추가되었습니다! ({format_timestamp_with_weekday()})"
+    except ValueError as e:
+        print(f"[오류] Attempt 저장 실패: {e}", file=__import__('sys').stderr)
+        return f"❌ 저장 실패: {str(e)}"
 
 
 def refresh_note_choices() -> Tuple[List[str], List[str]]:
@@ -755,6 +825,18 @@ def build_interface() -> gr.Blocks:
                         container=True
                     )
 
+                # 오답노트 추가 섹션
+                with gr.Group(elem_classes="bottom-panel"):
+                    gr.Markdown("### 📝 오답노트에 추가")
+                    nickname_input = gr.Textbox(
+                        label="문제 별명 (선택사항)",
+                        placeholder="예: 복잡한 조인 문제",
+                        scale=1
+                    )
+                    with gr.Row():
+                        add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="md", scale=1)
+                    add_notes_status = gr.Markdown("", scale=1)
+
                 # 즐겨찾기 섹션
                 with gr.Group(elem_classes="bottom-panel"):
                     gr.Markdown("### ⭐ 즐겨찾기")
@@ -885,6 +967,38 @@ def build_interface() -> gr.Blocks:
             load_favorite_selection,
             inputs=favorite_choices,
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md],
+        )
+
+        # 오답노트 추가 이벤트
+        def on_add_to_notes(state_dict, nickname, progress=gr.Progress()):
+            """오답노트에 수동으로 추가합니다."""
+            if not state_dict or "problem" not in state_dict:
+                return "⚠️ 먼저 문제를 출제하고 코드를 제출하세요.", gr.update()
+
+            if "last_code" not in state_dict or "last_feedback" not in state_dict:
+                return "⚠️ 먼저 코드를 제출하여 피드백을 받으세요.", gr.update()
+
+            problem = state_dict["problem"]
+            code = state_dict["last_code"]
+            feedback = state_dict["last_feedback"]
+
+            progress(0.5, desc="LLM으로 힌트 요약 중...")
+            hint_summary = generate_hint_summary(problem, code, feedback, LM_STUDIO_ENDPOINT)
+
+            progress(0.8, desc="오답노트에 저장 중...")
+            result = save_to_wrong_notes(problem, code, feedback, nickname, hint_summary)
+
+            # 오답노트 목록 갱신
+            labels, values = refresh_note_choices()
+            note_choices_updated = list(zip(labels, values)) if labels else []
+
+            return result, gr.update(choices=note_choices_updated, value=None)
+
+        add_to_notes_btn.click(
+            on_add_to_notes,
+            inputs=[state, nickname_input],
+            outputs=[add_notes_status, note_choices],
+            show_progress="minimal",
         )
 
         # ===== 이벤트 핸들러 - 오답노트 탭 =====

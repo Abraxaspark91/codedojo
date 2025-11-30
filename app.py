@@ -842,14 +842,14 @@ def build_interface() -> gr.Blocks:
                     )
                     with gr.Row():
                         add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="md", scale=1)
-                    add_notes_status = gr.Markdown("", scale=1)
+                    add_notes_status = gr.Markdown("")
 
                 # 즐겨찾기 섹션
                 with gr.Group(elem_classes="bottom-panel"):
                     gr.Markdown("### ⭐ 즐겨찾기")
                     with gr.Row():
                         favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="sm", scale=1)
-                        favorite_status_md = gr.Markdown("", scale=2)
+                        favorite_status_md = gr.Markdown("")
                     fav_labels, fav_values = refresh_favorite_choices()
                     fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
                     favorite_choices = gr.Dropdown(

@@ -1051,12 +1051,12 @@ def build_interface() -> gr.Blocks:
             else:
                 fav_btn = gr.update()
 
-            return new_btn, message, choices_update, note_btn, fav_btn
+            return new_btn, message, choices_update, note_btn, message, fav_btn, message
 
         favorite_btn.click(
             toggle_favorite_new_tab,
             inputs=[new_state, note_state, fav_state],
-            outputs=[favorite_btn, new_favorite_status_md, favorite_choices, note_favorite_btn, fav_favorite_btn],
+            outputs=[favorite_btn, new_favorite_status_md, favorite_choices, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, fav_favorite_status_md],
         )
 
         # ===== 이벤트 핸들러 - 즐겨찾기 탭 =====
@@ -1164,12 +1164,12 @@ def build_interface() -> gr.Blocks:
             else:
                 note_btn = gr.update()
 
-            return fav_btn, message, choices_update, new_btn, note_btn
+            return fav_btn, message, choices_update, new_btn, message, note_btn, message
 
         fav_favorite_btn.click(
             toggle_favorite_fav_tab,
             inputs=[fav_state, new_state, note_state],
-            outputs=[fav_favorite_btn, fav_favorite_status_md, favorite_choices, favorite_btn, note_favorite_btn],
+            outputs=[fav_favorite_btn, fav_favorite_status_md, favorite_choices, favorite_btn, new_favorite_status_md, note_favorite_btn, note_favorite_status_md],
         )
 
         # 오답노트 추가 이벤트
@@ -1324,12 +1324,12 @@ def build_interface() -> gr.Blocks:
             else:
                 fav_btn = gr.update()
 
-            return note_btn, message, choices_update, new_btn, fav_btn
+            return note_btn, message, choices_update, new_btn, message, fav_btn, message
 
         note_favorite_btn.click(
             toggle_favorite_note_tab,
             inputs=[note_state, new_state, fav_state],
-            outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices, favorite_btn, fav_favorite_btn],
+            outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices, favorite_btn, new_favorite_status_md, fav_favorite_btn, fav_favorite_status_md],
         )
 
     return demo

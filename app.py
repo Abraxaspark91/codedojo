@@ -155,6 +155,7 @@ def ensure_state(state: Optional[Dict]) -> Dict:
     state.setdefault("last_feedback", "")
     state.setdefault("last_improvement", "")
     state.setdefault("filters", normalize_filters(None, None, None))
+    state.setdefault("hint_visible", False)
     return state
 
 
@@ -595,25 +596,27 @@ def load_from_notes(
     return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "재도전 문제를 선택하세요."
 
 
-def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str]:
+def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.update]:
     problem = next((p for p in PROBLEM_BANK if p.pid == pid), None)
     if problem:
         filters = normalize_filters(None, None, None)
         question = render_question(problem, False, "", filters)
+        state = ensure_state({
+            "problem": problem,
+            "rechallenge": False,
+            "hint": "",
+            "filters": filters,
+            "in_progress": False,
+        })
         return (
             question,
-            {
-                "problem": problem,
-                "rechallenge": False,
-                "hint": "",
-                "filters": filters,
-                "in_progress": False,
-            },
+            state,
             gr.update(value="", language=problem.kind),
             favorite_button_label(problem.pid),
             favorite_status_text(problem.pid),
+            gr.update(value="💡 힌트 보기"),
         )
-    return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요."
+    return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요.", gr.update(value="💡 힌트 보기")
 
 
 def on_new_problem(difficulty: str,
@@ -657,21 +660,21 @@ def on_new_problem(difficulty: str,
         state,
         gr.update(value="", language=problem.kind),
         favorite_button_label(problem.pid),
-        favorite_status_text(problem.pid),
         "",  # exec_result 초기화
         gr.update(choices=note_choices, value=None),  # note_choices 업데이트
+        gr.update(value="💡 힌트 보기"),  # hint_btn 초기화
     )
 
 
 def on_submit(state: Dict, code: str, progress=gr.Progress()
-              ) -> Tuple[str, gr.update]:
+              ) -> Tuple[str, gr.update, gr.update]:
     """코드를 제출하고 LLM 피드백을 받습니다. (자동 저장 없음)"""
     state = ensure_state(state)
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다.", gr.update()
+        return "문제가 선택되지 않았습니다.", gr.update(), gr.update(value="💡 힌트 보기")
 
     if state.get("in_progress"):
-        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요.", gr.update()
+        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요.", gr.update(), gr.update()
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
@@ -679,19 +682,48 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()
     progress(0.5, desc="LLM 피드백 생성 중")
     feedback = build_feedback(problem, code, LM_STUDIO_ENDPOINT)
 
-    state.update({"in_progress": False, "last_feedback": feedback, "last_code": code})
+    # 힌트 자동 숨김
+    state.update({
+        "in_progress": False,
+        "last_feedback": feedback,
+        "last_code": code,
+        "hint_visible": False
+    })
 
     # LLM 피드백만 반환
     result = f"### 💬 LLM 피드백\n{feedback}"
 
-    return result, gr.update()
+    return result, gr.update(), gr.update(value="💡 힌트 보기")
 
 
 def show_hint(state: Dict) -> str:
     if not state or "problem" not in state:
         return "문제가 선택되지 않았습니다."
     problem: Problem = state["problem"]
-    return f"문법 힌트: {problem.hint}"
+    return f"### 💡 문법 힌트\n{problem.hint}"
+
+
+def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
+    """힌트 표시/숨김을 토글합니다."""
+    state = ensure_state(state)
+
+    if not state or "problem" not in state:
+        return "문제가 선택되지 않았습니다.", gr.update(value="💡 힌트 보기"), state
+
+    # 힌트 표시 상태 토글
+    state["hint_visible"] = not state.get("hint_visible", False)
+
+    if state["hint_visible"]:
+        # 힌트 표시
+        problem: Problem = state["problem"]
+        hint_text = f"### 💡 문법 힌트\n{problem.hint}"
+        button_label = "💡 힌트 숨기기"
+    else:
+        # 힌트 숨김
+        hint_text = ""
+        button_label = "💡 힌트 보기"
+
+    return hint_text, gr.update(value=button_label), state
 
 
 def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
@@ -976,29 +1008,33 @@ def build_interface() -> gr.Blocks:
         new_btn.click(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            outputs=[question_md, state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
         )
 
         difficulty.change(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            outputs=[question_md, state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
         )
 
         language.change(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
+            outputs=[question_md, state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
         )
 
         submit_btn.click(
             on_submit,
             inputs=[state, code_box],
-            outputs=[exec_result, note_choices],
+            outputs=[exec_result, note_choices, hint_btn],
             show_progress="minimal",
         )
 
-        hint_btn.click(show_hint, inputs=state, outputs=exec_result)
+        hint_btn.click(
+            toggle_hint,
+            inputs=state,
+            outputs=[exec_result, hint_btn, state],
+        )
 
         # 신규 문제 탭의 즐겨찾기 버튼 (상태 메시지 없음)
         def toggle_favorite_new_tab(state_dict):
@@ -1020,13 +1056,13 @@ def build_interface() -> gr.Blocks:
 
         def load_favorite_selection(pid):
             if not pid:
-                return gr.update(), {}, gr.update(), "☆ 즐겨찾기 추가", ""
+                return gr.update(), {}, gr.update(), "☆ 즐겨찾기 추가", "", gr.update(value="💡 힌트 보기")
             return load_favorite_problem(pid)
 
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[fav_question_md, state, fav_code_box, fav_toggle_btn, fav_status_md],
+            outputs=[fav_question_md, state, fav_code_box, fav_toggle_btn, fav_status_md, fav_hint_btn],
         )
 
         # 즐겨찾기 탭의 토글 버튼 (상태 메시지 포함)
@@ -1040,11 +1076,15 @@ def build_interface() -> gr.Blocks:
         fav_submit_btn.click(
             on_submit,
             inputs=[state, fav_code_box],
-            outputs=[fav_exec_result, note_choices],
+            outputs=[fav_exec_result, note_choices, fav_hint_btn],
             show_progress="minimal",
         )
 
-        fav_hint_btn.click(show_hint, inputs=state, outputs=fav_exec_result)
+        fav_hint_btn.click(
+            toggle_hint,
+            inputs=state,
+            outputs=[fav_exec_result, fav_hint_btn, state],
+        )
 
         # 오답노트 추가 이벤트
         def on_add_to_notes(state_dict, nickname, progress=gr.Progress()):
@@ -1089,7 +1129,7 @@ def build_interface() -> gr.Blocks:
         def load_note_to_tab(pid):
             """오답노트 탭용: 문제 불러오기"""
             if not pid:
-                return gr.update(), {}, gr.update(), ""
+                return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기")
 
             entries = failed_attempts(load_attempts())
             for entry in entries:
@@ -1098,28 +1138,40 @@ def build_interface() -> gr.Blocks:
                     if problem:
                         filters = normalize_filters(None, None, None)
                         question = render_question(problem, True, entry.rechallenge_hint, filters)
+                        state = ensure_state({
+                            "problem": problem,
+                            "rechallenge": True,
+                            "hint": entry.rechallenge_hint,
+                            "filters": filters,
+                            "in_progress": False,
+                        })
                         return (
                             question,
-                            {"problem": problem, "rechallenge": True, "hint": entry.rechallenge_hint, "filters": filters, "in_progress": False},
+                            state,
                             gr.update(value="", language=problem.kind),
-                            ""
+                            "",
+                            gr.update(value="💡 힌트 보기"),
                         )
-            return "선택한 문제가 없습니다.", {}, gr.update(), ""
+            return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기")
 
         load_note_btn.click(
             load_note_to_tab,
             inputs=note_choices,
-            outputs=[note_question_md, state, note_code_box, note_exec_result],
+            outputs=[note_question_md, state, note_code_box, note_exec_result, note_hint_btn],
         )
 
         note_submit_btn.click(
             on_submit,
             inputs=[state, note_code_box],
-            outputs=[note_exec_result, note_choices],
+            outputs=[note_exec_result, note_choices, note_hint_btn],
             show_progress="minimal",
         )
 
-        note_hint_btn.click(show_hint, inputs=state, outputs=note_exec_result)
+        note_hint_btn.click(
+            toggle_hint,
+            inputs=state,
+            outputs=[note_exec_result, note_hint_btn, state],
+        )
 
     return demo
 

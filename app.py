@@ -1055,11 +1055,13 @@ def build_interface() -> gr.Blocks:
                 gr.update(value="💡 힌트 보기"),
                 "☆ 즐겨찾기 추가",
                 "",
+                "☆ 즐겨찾기 추가",
+                "☆ 즐겨찾기 추가",
             )
 
         fav_refresh_btn.click(
             refresh_favorites,
-            outputs=[favorite_choices, fav_state, fav_question_md, fav_code_box, fav_exec_result, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md]
+            outputs=[favorite_choices, fav_state, fav_question_md, fav_code_box, fav_exec_result, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md, note_favorite_btn, favorite_btn]
         )
 
         def load_favorite_selection(pid):
@@ -1073,14 +1075,15 @@ def build_interface() -> gr.Blocks:
                     "☆ 즐겨찾기 추가",
                     "",
                     "☆ 즐겨찾기 추가",
+                    "☆ 즐겨찾기 추가",
                 )
             question, state_val, code_update, btn_label, status_text, hint_update = load_favorite_problem(pid)
-            return question, state_val, code_update, status_text, hint_update, btn_label, "", btn_label
+            return question, state_val, code_update, status_text, hint_update, btn_label, "", btn_label, btn_label
 
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[fav_question_md, fav_state, fav_code_box, fav_status_md, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md, note_favorite_btn],
+            outputs=[fav_question_md, fav_state, fav_code_box, fav_status_md, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md, note_favorite_btn, favorite_btn],
         )
 
 
@@ -1155,17 +1158,19 @@ def build_interface() -> gr.Blocks:
                 gr.update(value="💡 힌트 보기"),
                 "☆ 즐겨찾기 추가",
                 "",
+                "☆ 즐겨찾기 추가",
+                "☆ 즐겨찾기 추가",
             )
 
         refresh_btn.click(
             refresh_notes,
-            outputs=[note_choices, note_state, note_question_md, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md]
+            outputs=[note_choices, note_state, note_question_md, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn]
         )
 
         def load_note_to_tab(pid):
             """오답노트 탭용: 문제 불러오기"""
             if not pid:
-                return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가"
+                return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가", "☆ 즐겨찾기 추가"
 
             entries = failed_attempts(load_attempts())
             for entry in entries:
@@ -1191,13 +1196,14 @@ def build_interface() -> gr.Blocks:
                             btn_label,
                             "",
                             btn_label,
+                            btn_label,
                         )
-            return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가"
+            return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가", "☆ 즐겨찾기 추가"
 
         load_note_btn.click(
             load_note_to_tab,
             inputs=note_choices,
-            outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn],
+            outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn],
         )
 
         note_submit_btn.click(

@@ -790,7 +790,7 @@ def build_interface() -> gr.Blocks:
                 # 메인 콘텐츠 영역
                 with gr.Row():
                     # 왼쪽: 문제
-                    with gr.Column(scale=2):
+                    with gr.Column(scale=3):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 📋 문제")
                             question_md = gr.Markdown(
@@ -798,12 +798,12 @@ def build_interface() -> gr.Blocks:
                                 container=True,
                                 elem_classes="problem-box"
                             )
-                        with gr.Row():    
-                            new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
-                            favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                            with gr.Row():    
+                                new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
+                                favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=3):
+                    with gr.Column(scale=8):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 💻 답변 작성칸")
                             code_box = gr.Code(
@@ -811,7 +811,6 @@ def build_interface() -> gr.Blocks:
                                 language="python",
                                 show_label=False,
                                 elem_classes="code-editor-box",
-                                lines=20,
                                 container=True
                             )
                             with gr.Row(elem_classes="button-row"):
@@ -819,30 +818,36 @@ def build_interface() -> gr.Blocks:
                                     "✅ 제출하기",
                                     variant="primary",
                                     size="md",
-                                    scale=3
+                                    scale=8
                                 )
                                 hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
                 # 피드백 영역
-                with gr.Group(elem_classes="section-box"):
-                    gr.Markdown("### 💬 LLM 피드백")
-                    exec_result = gr.Markdown(
-                        value="",
-                        elem_classes="feedback-box",
-                        container=True
-                    )
+                with gr.Row():
+                    # 왼쪽 : 오답노트 추가 섹션
+                    with gr.Column(scale=3):
+                        with gr.Group(elem_classes="bottom-panel"):
+                            gr.Markdown("### 📝 오답노트에 추가")
+                            with gr.Row():
+                                nickname_input = gr.Textbox(
+                                    label="문제 별명 (선택사항)",
+                                    placeholder="예: 복잡한 조인 문제",
+                                    scale=1
+                                    )
+                            with gr.Row():
+                                add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
+                            add_notes_status = gr.Markdown("")
+                    
+                    # 왼쪽: LLM 피드백
+                    with gr.Column(scale=8):
+                        with gr.Group(elem_classes="section-box"):
+                            gr.Markdown("### 💬 LLM 피드백")
+                            exec_result = gr.Markdown(
+                                value="",
+                                elem_classes="feedback-box",
+                                container=True
+                            )
 
-                # 오답노트 추가 섹션
-                with gr.Group(elem_classes="bottom-panel"):
-                    gr.Markdown("### 📝 오답노트에 추가")
-                    nickname_input = gr.Textbox(
-                        label="문제 별명 (선택사항)",
-                        placeholder="예: 복잡한 조인 문제",
-                        scale=1
-                    )
-                    with gr.Row():
-                        add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="md", scale=1)
-                    add_notes_status = gr.Markdown("")
 
 
             # ========== 탭 2: 오답노트 ==========
@@ -874,7 +879,7 @@ def build_interface() -> gr.Blocks:
                             )
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=3):
+                    with gr.Column(scale=5):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 💻 답변 작성칸")
                             note_code_box = gr.Code(
@@ -882,7 +887,6 @@ def build_interface() -> gr.Blocks:
                                 language="python",
                                 show_label=False,
                                 elem_classes="code-editor-box",
-                                lines=20,
                                 container=True
                             )
                             with gr.Row(elem_classes="button-row"):
@@ -890,7 +894,7 @@ def build_interface() -> gr.Blocks:
                                     "✅ 제출하기",
                                     variant="primary",
                                     size="md",
-                                    scale=3
+                                    scale=5
                                 )
                                 note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
                 
@@ -936,7 +940,7 @@ def build_interface() -> gr.Blocks:
                             )
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=3):
+                    with gr.Column(scale=5):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 💻 답변 작성칸")
                             note_code_box = gr.Code(
@@ -944,7 +948,6 @@ def build_interface() -> gr.Blocks:
                                 language="python",
                                 show_label=False,
                                 elem_classes="code-editor-box",
-                                lines=20,
                                 container=True
                             )
                             with gr.Row(elem_classes="button-row"):
@@ -952,7 +955,7 @@ def build_interface() -> gr.Blocks:
                                     "✅ 제출하기",
                                     variant="primary",
                                     size="md",
-                                    scale=3
+                                    scale=5
                                 )
                                 note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 

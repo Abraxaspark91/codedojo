@@ -408,6 +408,7 @@ def save_favorites(favorites: List[Dict]) -> None:
                 "title": fav.get("title", ""),
                 "difficulty": fav.get("difficulty", ""),
                 "kind": fav.get("kind", ""),
+                "timestamp": fav.get("timestamp", format_timestamp_with_weekday()),
             }
     FAVORITES_PATH.write_text(
         json.dumps(
@@ -427,7 +428,7 @@ def favorite_button_label(pid: str) -> str:
 def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
     favorites = load_favorites()
     labels = [
-        f"{fav.get('title', '')} | - | {fav.get('difficulty', '')} | {fav.get('kind', '')}"
+        f"{fav.get('title', '')} | - | {fav.get('difficulty', '')} | {fav.get('kind', '')} | {fav.get('timestamp', '-')}"
         for fav in favorites
     ]
     values = [fav["pid"] for fav in favorites]
@@ -562,7 +563,7 @@ def save_to_wrong_notes(
 def refresh_note_choices() -> Tuple[List[str], List[str]]:
     entries = failed_attempts(load_attempts())
     labels = [
-        f"{a.title} | {a.nickname if a.nickname else '-'} | {a.difficulty} | {a.kind}"
+        f"{a.title} | {a.nickname if a.nickname else '-'} | {a.difficulty} | {a.kind} | {a.timestamp}"
         for a in entries
     ]
     values = [a.pid for a in entries]
@@ -836,9 +837,10 @@ def build_interface() -> gr.Blocks:
                                 container=True,
                                 elem_classes="problem-box"
                             )
-                            with gr.Row():    
+                            with gr.Row():
                                 new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
                                 favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                            new_favorite_status_md = gr.Markdown("", elem_classes="status-message")
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=8):
@@ -917,6 +919,7 @@ def build_interface() -> gr.Blocks:
                             )
                             with gr.Row():
                                 note_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                            note_favorite_status_md = gr.Markdown("", elem_classes="status-message")
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=5):
@@ -1043,15 +1046,15 @@ def build_interface() -> gr.Blocks:
             outputs=[exec_result, hint_btn, new_state],
         )
 
-        # 신규 문제 탭의 즐겨찾기 버튼 (상태 메시지 없음)
+        # 신규 문제 탭의 즐겨찾기 버튼 (상태 메시지 포함)
         def toggle_favorite_new_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
-            return btn_update, choices_update
+            return btn_update, message, choices_update
 
         favorite_btn.click(
             toggle_favorite_new_tab,
             inputs=new_state,
-            outputs=[favorite_btn, favorite_choices],
+            outputs=[favorite_btn, new_favorite_status_md, favorite_choices],
         )
 
         # ===== 이벤트 핸들러 - 즐겨찾기 탭 =====
@@ -1194,15 +1197,15 @@ def build_interface() -> gr.Blocks:
             outputs=[note_exec_result, note_hint_btn, note_state],
         )
 
-        # 오답노트 탭의 즐겨찾기 버튼
+        # 오답노트 탭의 즐겨찾기 버튼 (상태 메시지 포함)
         def toggle_favorite_note_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
-            return btn_update, choices_update
+            return btn_update, message, choices_update
 
         note_favorite_btn.click(
             toggle_favorite_note_tab,
             inputs=note_state,
-            outputs=[note_favorite_btn, favorite_choices],
+            outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices],
         )
 
     return demo

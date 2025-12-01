@@ -951,7 +951,6 @@ def build_interface() -> gr.Blocks:
                     )
                     with gr.Row():
                         fav_refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
-                        fav_toggle_btn = gr.Button("⭐ 즐겨찾기 추가/해제", size="sm", scale=1)
                         load_fav_btn = gr.Button("📖 문제 열기", size="sm", scale=1)
                     fav_status_md = gr.Markdown("")
 
@@ -1056,32 +1055,20 @@ def build_interface() -> gr.Blocks:
                     gr.update(),
                     {},
                     gr.update(),
-                    "☆ 즐겨찾기 추가",
                     "",
                     gr.update(value="💡 힌트 보기"),
                     "☆ 즐겨찾기 추가",
                     ""
                 )
             question, state_val, code_update, btn_label, status_text, hint_update = load_favorite_problem(pid)
-            return question, state_val, code_update, btn_label, status_text, hint_update, btn_label, ""
+            return question, state_val, code_update, status_text, hint_update, btn_label, ""
 
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[fav_question_md, fav_state, fav_code_box, fav_toggle_btn, fav_status_md, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md],
+            outputs=[fav_question_md, fav_state, fav_code_box, fav_status_md, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md],
         )
 
-        # 즐겨찾기 탭의 토글 버튼 (상태 메시지 포함)
-        def toggle_favorite_toggle_btn(state_dict):
-            btn_update, message, choices_update = toggle_favorite(state_dict)
-            # fav_status_md와 fav_favorite_status_md 둘 다 메시지 표시
-            return btn_update, btn_update, message, message, choices_update
-
-        fav_toggle_btn.click(
-            toggle_favorite_toggle_btn,
-            inputs=fav_state,
-            outputs=[fav_toggle_btn, fav_favorite_btn, fav_status_md, fav_favorite_status_md, favorite_choices],
-        )
 
         # 즐겨찾기 탭의 제출/힌트 버튼
         fav_submit_btn.click(
@@ -1100,14 +1087,13 @@ def build_interface() -> gr.Blocks:
         # 즐겨찾기 탭의 문제 영역 즐겨찾기 버튼
         def toggle_favorite_fav_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
-            # fav_toggle_btn과 fav_favorite_btn 둘 다 업데이트
-            # fav_status_md와 fav_favorite_status_md 둘 다 메시지 표시
-            return btn_update, btn_update, message, message, choices_update
+            # fav_favorite_status_md에 메시지 표시
+            return btn_update, message, choices_update
 
         fav_favorite_btn.click(
             toggle_favorite_fav_tab,
             inputs=fav_state,
-            outputs=[fav_favorite_btn, fav_toggle_btn, fav_status_md, fav_favorite_status_md, favorite_choices],
+            outputs=[fav_favorite_btn, fav_favorite_status_md, favorite_choices],
         )
 
         # 오답노트 추가 이벤트
@@ -1153,7 +1139,7 @@ def build_interface() -> gr.Blocks:
         def load_note_to_tab(pid):
             """오답노트 탭용: 문제 불러오기"""
             if not pid:
-                return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가"
+                return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", ""
 
             entries = failed_attempts(load_attempts())
             for entry in entries:
@@ -1176,13 +1162,14 @@ def build_interface() -> gr.Blocks:
                             "",
                             gr.update(value="💡 힌트 보기"),
                             favorite_button_label(problem.pid),
+                            "",
                         )
-            return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가"
+            return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", ""
 
         load_note_btn.click(
             load_note_to_tab,
             inputs=note_choices,
-            outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn],
+            outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md],
         )
 
         note_submit_btn.click(

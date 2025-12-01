@@ -1199,6 +1199,12 @@ def build_interface() -> gr.Blocks:
                 return "⚠️ 먼저 코드를 제출하여 피드백을 받으세요.", gr.update()
 
             problem = state_dict["problem"]
+
+            # 중복 저장 체크: 이미 오답노트에 저장된 문제인지 확인
+            existing_attempts = load_attempts()
+            if any(attempt.pid == problem.pid for attempt in existing_attempts):
+                return "⚠️ 이미 저장된 문제입니다.", gr.update()
+
             code = state_dict["last_code"]
             feedback = state_dict["last_feedback"]
 

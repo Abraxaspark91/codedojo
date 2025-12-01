@@ -1032,20 +1032,48 @@ def build_interface() -> gr.Blocks:
         )
 
         # 신규 문제 탭의 즐겨찾기 버튼 (모든 탭 버튼 동기화)
-        def toggle_favorite_new_tab(state_dict):
-            btn_update, message, choices_update = toggle_favorite(state_dict)
-            # 모든 탭의 즐겨찾기 버튼을 동일하게 업데이트
-            return btn_update, message, choices_update, btn_update, btn_update
+        def toggle_favorite_new_tab(new_state_dict, note_state_dict, fav_state_dict):
+            # 현재 탭(신규 출제)의 문제에 대해 즐겨찾기 토글
+            btn_update, message, choices_update = toggle_favorite(new_state_dict)
+
+            # 각 탭의 현재 문제에 맞는 버튼 레이블 계산
+            new_btn = btn_update  # 현재 탭은 이미 계산됨
+
+            # 오답노트 탭: state에 문제가 있으면 해당 문제의 즐겨찾기 상태 확인
+            if note_state_dict and "problem" in note_state_dict:
+                note_btn = gr.update(value=favorite_button_label(note_state_dict["problem"].pid))
+            else:
+                note_btn = gr.update()  # state 없으면 변경 안 함
+
+            # 즐겨찾기 탭: state에 문제가 있으면 해당 문제의 즐겨찾기 상태 확인
+            if fav_state_dict and "problem" in fav_state_dict:
+                fav_btn = gr.update(value=favorite_button_label(fav_state_dict["problem"].pid))
+            else:
+                fav_btn = gr.update()
+
+            return new_btn, message, choices_update, note_btn, fav_btn
 
         favorite_btn.click(
             toggle_favorite_new_tab,
-            inputs=new_state,
+            inputs=[new_state, note_state, fav_state],
             outputs=[favorite_btn, new_favorite_status_md, favorite_choices, note_favorite_btn, fav_favorite_btn],
         )
 
         # ===== 이벤트 핸들러 - 즐겨찾기 탭 =====
-        def refresh_favorites():
+        def refresh_favorites(new_state_dict, note_state_dict):
             labels, values = refresh_favorite_choices()
+
+            # 다른 탭의 버튼 레이블 계산
+            if new_state_dict and "problem" in new_state_dict:
+                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+            else:
+                new_btn = "☆ 즐겨찾기 추가"
+
+            if note_state_dict and "problem" in note_state_dict:
+                note_btn = favorite_button_label(note_state_dict["problem"].pid)
+            else:
+                note_btn = "☆ 즐겨찾기 추가"
+
             return (
                 gr.update(choices=list(zip(labels, values)), value=None),
                 {},
@@ -1053,18 +1081,19 @@ def build_interface() -> gr.Blocks:
                 gr.update(value=""),
                 "",
                 gr.update(value="💡 힌트 보기"),
-                "☆ 즐겨찾기 추가",
+                "☆ 즐겨찾기 추가",  # fav_favorite_btn (현재 탭이므로 초기화)
                 "",
-                "☆ 즐겨찾기 추가",
-                "☆ 즐겨찾기 추가",
+                note_btn,  # note_favorite_btn
+                new_btn,   # favorite_btn
             )
 
         fav_refresh_btn.click(
             refresh_favorites,
+            inputs=[new_state, note_state],
             outputs=[favorite_choices, fav_state, fav_question_md, fav_code_box, fav_exec_result, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md, note_favorite_btn, favorite_btn]
         )
 
-        def load_favorite_selection(pid):
+        def load_favorite_selection(pid, new_state_dict, note_state_dict, fav_state_dict):
             if not pid:
                 return (
                     gr.update(),
@@ -1078,11 +1107,25 @@ def build_interface() -> gr.Blocks:
                     "☆ 즐겨찾기 추가",
                 )
             question, state_val, code_update, btn_label, status_text, hint_update = load_favorite_problem(pid)
-            return question, state_val, code_update, status_text, hint_update, btn_label, "", btn_label, btn_label
+
+            # 각 탭의 버튼 레이블을 개별적으로 계산
+            fav_btn = btn_label  # 현재 불러온 문제
+
+            if new_state_dict and "problem" in new_state_dict:
+                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+            else:
+                new_btn = "☆ 즐겨찾기 추가"
+
+            if note_state_dict and "problem" in note_state_dict:
+                note_btn = favorite_button_label(note_state_dict["problem"].pid)
+            else:
+                note_btn = "☆ 즐겨찾기 추가"
+
+            return question, state_val, code_update, status_text, hint_update, fav_btn, "", note_btn, new_btn
 
         load_fav_btn.click(
             load_favorite_selection,
-            inputs=favorite_choices,
+            inputs=[favorite_choices, new_state, note_state, fav_state],
             outputs=[fav_question_md, fav_state, fav_code_box, fav_status_md, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md, note_favorite_btn, favorite_btn],
         )
 
@@ -1102,14 +1145,30 @@ def build_interface() -> gr.Blocks:
         )
 
         # 즐겨찾기 탭의 문제 영역 즐겨찾기 버튼 (모든 탭 버튼 동기화)
-        def toggle_favorite_fav_tab(state_dict):
-            btn_update, message, choices_update = toggle_favorite(state_dict)
-            # 모든 탭의 즐겨찾기 버튼을 동일하게 업데이트
-            return btn_update, message, choices_update, btn_update, btn_update
+        def toggle_favorite_fav_tab(fav_state_dict, new_state_dict, note_state_dict):
+            # 현재 탭(즐겨찾기)의 문제에 대해 즐겨찾기 토글
+            btn_update, message, choices_update = toggle_favorite(fav_state_dict)
+
+            # 각 탭의 현재 문제에 맞는 버튼 레이블 계산
+            fav_btn = btn_update  # 현재 탭은 이미 계산됨
+
+            # 신규 출제 탭
+            if new_state_dict and "problem" in new_state_dict:
+                new_btn = gr.update(value=favorite_button_label(new_state_dict["problem"].pid))
+            else:
+                new_btn = gr.update()
+
+            # 오답노트 탭
+            if note_state_dict and "problem" in note_state_dict:
+                note_btn = gr.update(value=favorite_button_label(note_state_dict["problem"].pid))
+            else:
+                note_btn = gr.update()
+
+            return fav_btn, message, choices_update, new_btn, note_btn
 
         fav_favorite_btn.click(
             toggle_favorite_fav_tab,
-            inputs=fav_state,
+            inputs=[fav_state, new_state, note_state],
             outputs=[fav_favorite_btn, fav_favorite_status_md, favorite_choices, favorite_btn, note_favorite_btn],
         )
 
@@ -1146,9 +1205,21 @@ def build_interface() -> gr.Blocks:
         )
 
         # ===== 이벤트 핸들러 - 오답노트 탭 =====
-        def refresh_notes():
+        def refresh_notes(new_state_dict, fav_state_dict):
             labels, values = refresh_note_choices()
             choices = list(zip(labels, values))
+
+            # 다른 탭의 버튼 레이블 계산
+            if new_state_dict and "problem" in new_state_dict:
+                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+            else:
+                new_btn = "☆ 즐겨찾기 추가"
+
+            if fav_state_dict and "problem" in fav_state_dict:
+                fav_btn = favorite_button_label(fav_state_dict["problem"].pid)
+            else:
+                fav_btn = "☆ 즐겨찾기 추가"
+
             return (
                 gr.update(choices=choices, value=None),
                 {},
@@ -1156,18 +1227,19 @@ def build_interface() -> gr.Blocks:
                 gr.update(value=""),
                 "",
                 gr.update(value="💡 힌트 보기"),
-                "☆ 즐겨찾기 추가",
+                "☆ 즐겨찾기 추가",  # note_favorite_btn (현재 탭이므로 초기화)
                 "",
-                "☆ 즐겨찾기 추가",
-                "☆ 즐겨찾기 추가",
+                fav_btn,  # fav_favorite_btn
+                new_btn,  # favorite_btn
             )
 
         refresh_btn.click(
             refresh_notes,
+            inputs=[new_state, fav_state],
             outputs=[note_choices, note_state, note_question_md, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn]
         )
 
-        def load_note_to_tab(pid):
+        def load_note_to_tab(pid, new_state_dict, note_state_dict, fav_state_dict):
             """오답노트 탭용: 문제 불러오기"""
             if not pid:
                 return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가", "☆ 즐겨찾기 추가"
@@ -1186,23 +1258,36 @@ def build_interface() -> gr.Blocks:
                             "filters": filters,
                             "in_progress": False,
                         })
-                        btn_label = favorite_button_label(problem.pid)
+
+                        # 각 탭의 버튼 레이블을 개별적으로 계산
+                        note_btn = favorite_button_label(problem.pid)  # 현재 불러온 문제
+
+                        if new_state_dict and "problem" in new_state_dict:
+                            new_btn = favorite_button_label(new_state_dict["problem"].pid)
+                        else:
+                            new_btn = "☆ 즐겨찾기 추가"
+
+                        if fav_state_dict and "problem" in fav_state_dict:
+                            fav_btn = favorite_button_label(fav_state_dict["problem"].pid)
+                        else:
+                            fav_btn = "☆ 즐겨찾기 추가"
+
                         return (
                             question,
                             note_state_val,
                             gr.update(value="", language=problem.kind),
                             "",
                             gr.update(value="💡 힌트 보기"),
-                            btn_label,
+                            note_btn,
                             "",
-                            btn_label,
-                            btn_label,
+                            fav_btn,
+                            new_btn,
                         )
             return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가", "☆ 즐겨찾기 추가"
 
         load_note_btn.click(
             load_note_to_tab,
-            inputs=note_choices,
+            inputs=[note_choices, new_state, note_state, fav_state],
             outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn],
         )
 
@@ -1220,14 +1305,30 @@ def build_interface() -> gr.Blocks:
         )
 
         # 오답노트 탭의 즐겨찾기 버튼 (모든 탭 버튼 동기화)
-        def toggle_favorite_note_tab(state_dict):
-            btn_update, message, choices_update = toggle_favorite(state_dict)
-            # 모든 탭의 즐겨찾기 버튼을 동일하게 업데이트
-            return btn_update, message, choices_update, btn_update, btn_update
+        def toggle_favorite_note_tab(note_state_dict, new_state_dict, fav_state_dict):
+            # 현재 탭(오답노트)의 문제에 대해 즐겨찾기 토글
+            btn_update, message, choices_update = toggle_favorite(note_state_dict)
+
+            # 각 탭의 현재 문제에 맞는 버튼 레이블 계산
+            note_btn = btn_update  # 현재 탭은 이미 계산됨
+
+            # 신규 출제 탭
+            if new_state_dict and "problem" in new_state_dict:
+                new_btn = gr.update(value=favorite_button_label(new_state_dict["problem"].pid))
+            else:
+                new_btn = gr.update()
+
+            # 즐겨찾기 탭
+            if fav_state_dict and "problem" in fav_state_dict:
+                fav_btn = gr.update(value=favorite_button_label(fav_state_dict["problem"].pid))
+            else:
+                fav_btn = gr.update()
+
+            return note_btn, message, choices_update, new_btn, fav_btn
 
         note_favorite_btn.click(
             toggle_favorite_note_tab,
-            inputs=note_state,
+            inputs=[note_state, new_state, fav_state],
             outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices, favorite_btn, fav_favorite_btn],
         )
 

@@ -579,9 +579,9 @@ def load_from_notes(
                     },
                     gr.update(value="", language=problem.kind),
                     favorite_button_label(problem.pid),
-                    favorite_status_text(problem.pid),
+                    "",
                 )
-    return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "재도전 문제를 선택하세요."
+    return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
 
 
 def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.update]:
@@ -601,10 +601,10 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.
             state,
             gr.update(value="", language=problem.kind),
             favorite_button_label(problem.pid),
-            favorite_status_text(problem.pid),
+            "",
             gr.update(value="💡 힌트 보기"),
         )
-    return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "즐겨찾기 문제를 선택하세요.", gr.update(value="💡 힌트 보기")
+    return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "", gr.update(value="💡 힌트 보기")
 
 
 def on_new_problem(difficulty: str,
@@ -1031,15 +1031,16 @@ def build_interface() -> gr.Blocks:
             outputs=[exec_result, hint_btn, new_state],
         )
 
-        # 신규 문제 탭의 즐겨찾기 버튼 (상태 메시지 포함)
+        # 신규 문제 탭의 즐겨찾기 버튼 (모든 탭 버튼 동기화)
         def toggle_favorite_new_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
-            return btn_update, message, choices_update
+            # 모든 탭의 즐겨찾기 버튼을 동일하게 업데이트
+            return btn_update, message, choices_update, btn_update, btn_update
 
         favorite_btn.click(
             toggle_favorite_new_tab,
             inputs=new_state,
-            outputs=[favorite_btn, new_favorite_status_md, favorite_choices],
+            outputs=[favorite_btn, new_favorite_status_md, favorite_choices, note_favorite_btn, fav_favorite_btn],
         )
 
         # ===== 이벤트 핸들러 - 즐겨찾기 탭 =====
@@ -1084,16 +1085,16 @@ def build_interface() -> gr.Blocks:
             outputs=[fav_exec_result, fav_hint_btn, fav_state],
         )
 
-        # 즐겨찾기 탭의 문제 영역 즐겨찾기 버튼
+        # 즐겨찾기 탭의 문제 영역 즐겨찾기 버튼 (모든 탭 버튼 동기화)
         def toggle_favorite_fav_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
-            # fav_favorite_status_md에 메시지 표시
-            return btn_update, message, choices_update
+            # 모든 탭의 즐겨찾기 버튼을 동일하게 업데이트
+            return btn_update, message, choices_update, btn_update, btn_update
 
         fav_favorite_btn.click(
             toggle_favorite_fav_tab,
             inputs=fav_state,
-            outputs=[fav_favorite_btn, fav_favorite_status_md, favorite_choices],
+            outputs=[fav_favorite_btn, fav_favorite_status_md, favorite_choices, favorite_btn, note_favorite_btn],
         )
 
         # 오답노트 추가 이벤트
@@ -1185,15 +1186,16 @@ def build_interface() -> gr.Blocks:
             outputs=[note_exec_result, note_hint_btn, note_state],
         )
 
-        # 오답노트 탭의 즐겨찾기 버튼 (상태 메시지 포함)
+        # 오답노트 탭의 즐겨찾기 버튼 (모든 탭 버튼 동기화)
         def toggle_favorite_note_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
-            return btn_update, message, choices_update
+            # 모든 탭의 즐겨찾기 버튼을 동일하게 업데이트
+            return btn_update, message, choices_update, btn_update, btn_update
 
         note_favorite_btn.click(
             toggle_favorite_note_tab,
             inputs=note_state,
-            outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices],
+            outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices, favorite_btn, fav_favorite_btn],
         )
 
     return demo

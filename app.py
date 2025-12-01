@@ -426,7 +426,7 @@ def favorite_button_label(pid: str) -> str:
 def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
     favorites = load_favorites()
     labels = [
-        f"{fav['pid']} | {fav.get('difficulty','')} | {fav.get('kind','')} | {fav.get('title','')}"
+        f"{fav.get('title', '')} | - | {fav.get('difficulty', '')} | {fav.get('kind', '')}"
         for fav in favorites
     ]
     values = [fav["pid"] for fav in favorites]
@@ -560,7 +560,10 @@ def save_to_wrong_notes(
 
 def refresh_note_choices() -> Tuple[List[str], List[str]]:
     entries = failed_attempts(load_attempts())
-    labels = [f"{a.pid} | {a.score}점 | {a.title}" for a in entries]
+    labels = [
+        f"{a.title} | {a.nickname if a.nickname else '-'} | {a.difficulty} | {a.kind}"
+        for a in entries
+    ]
     values = [a.pid for a in entries]
     return labels, values
 

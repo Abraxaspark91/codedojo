@@ -701,17 +701,32 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
     # 힌트 표시 상태 토글
     state["hint_visible"] = not state.get("hint_visible", False)
 
+    problem: Problem = state["problem"]
+
+    # LLM 응답이 있는지 확인
+    llm_feedback = state.get("last_feedback", "")
+
     if state["hint_visible"]:
         # 힌트 표시
-        problem: Problem = state["problem"]
         hint_text = f"### 💡 문법 힌트\n{problem.hint}"
         button_label = "💡 힌트 숨기기"
+
+        # LLM 응답이 있으면 함께 표시 (LLM 응답 유지 + 힌트 추가)
+        if llm_feedback:
+            result = f"### 💬 LLM 피드백\n{llm_feedback}\n\n{hint_text}"
+        else:
+            result = hint_text
     else:
         # 힌트 숨김
-        hint_text = ""
         button_label = "💡 힌트 보기"
 
-    return hint_text, gr.update(value=button_label), state
+        # LLM 응답이 있으면 유지
+        if llm_feedback:
+            result = f"### 💬 LLM 피드백\n{llm_feedback}"
+        else:
+            result = ""
+
+    return result, gr.update(value=button_label), state
 
 
 def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:

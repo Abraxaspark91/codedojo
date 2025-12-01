@@ -293,8 +293,6 @@ def pick_problem(
     difficulty: str, language: str, problem_types: List[str]
 ) -> Tuple[Problem, bool, str, Dict]:
     """체크박스로 선택된 problem_types 중에서 문제를 선택합니다."""
-    entries = load_attempts()
-    failed = failed_attempts(entries)
     rechallenge = False
     hint = ""
     target_filters = normalize_filters(difficulty, language, problem_types)
@@ -327,19 +325,8 @@ def pick_problem(
         return prob, normalize_filters(None, None, []) | {
             "hint": attempt_hint}
 
-    failed_pool: List[Tuple[Problem, str]] = []
-    for entry in failed:
-        problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
-        if problem:
-            failed_pool.append((problem, entry.rechallenge_hint))
-
+    # 신규 문제 탭에서는 항상 PROBLEM_BANK에서만 선택
     applied_filters = target_filters
-    if failed_pool and random.random() < 0.3:
-        rechallenge = True
-        problem, applied_filters = choose_candidate(failed_pool)
-        hint = applied_filters.pop("hint", "지난 시도에서 놓친 부분을 점검해 보세요.")
-        return problem, rechallenge, hint, applied_filters
-
     full_pool = [(p, "") for p in PROBLEM_BANK]
     problem, applied_filters = choose_candidate(full_pool)
     hint = applied_filters.pop("hint", "")
@@ -955,9 +942,6 @@ def build_interface() -> gr.Blocks:
                 # 즐겨찾기 섹션
                 with gr.Group(elem_classes="bottom-panel"):
                     gr.Markdown("### ⭐ 즐겨찾기")
-                    with gr.Row():
-
-                        fav_status_md = gr.Markdown("")
                     fav_labels, fav_values = refresh_favorite_choices()
                     fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
                     favorite_choices = gr.Dropdown(
@@ -969,6 +953,7 @@ def build_interface() -> gr.Blocks:
                         fav_refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
                         fav_toggle_btn = gr.Button("⭐ 즐겨찾기 추가/해제", size="sm", scale=1)
                         load_fav_btn = gr.Button("📖 문제 열기", size="sm", scale=1)
+                    fav_status_md = gr.Markdown("")
 
                 # 메인 콘텐츠 영역
                 with gr.Row():
@@ -983,6 +968,7 @@ def build_interface() -> gr.Blocks:
                             )
                             with gr.Row():
                                 fav_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                            fav_favorite_status_md = gr.Markdown("", elem_classes="status-message")
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=5):
@@ -1066,21 +1052,35 @@ def build_interface() -> gr.Blocks:
 
         def load_favorite_selection(pid):
             if not pid:
-                return gr.update(), {}, gr.update(), "☆ 즐겨찾기 추가", "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가"
+                return (
+                    gr.update(),
+                    {},
+                    gr.update(),
+                    "☆ 즐겨찾기 추가",
+                    "",
+                    gr.update(value="💡 힌트 보기"),
+                    "☆ 즐겨찾기 추가",
+                    ""
+                )
             question, state_val, code_update, btn_label, status_text, hint_update = load_favorite_problem(pid)
-            return question, state_val, code_update, btn_label, status_text, hint_update, btn_label
+            return question, state_val, code_update, btn_label, status_text, hint_update, btn_label, ""
 
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[fav_question_md, fav_state, fav_code_box, fav_toggle_btn, fav_status_md, fav_hint_btn, fav_favorite_btn],
+            outputs=[fav_question_md, fav_state, fav_code_box, fav_toggle_btn, fav_status_md, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md],
         )
 
         # 즐겨찾기 탭의 토글 버튼 (상태 메시지 포함)
+        def toggle_favorite_toggle_btn(state_dict):
+            btn_update, message, choices_update = toggle_favorite(state_dict)
+            # fav_status_md와 fav_favorite_status_md 둘 다 메시지 표시
+            return btn_update, btn_update, message, message, choices_update
+
         fav_toggle_btn.click(
-            toggle_favorite,
+            toggle_favorite_toggle_btn,
             inputs=fav_state,
-            outputs=[fav_toggle_btn, fav_status_md, favorite_choices],
+            outputs=[fav_toggle_btn, fav_favorite_btn, fav_status_md, fav_favorite_status_md, favorite_choices],
         )
 
         # 즐겨찾기 탭의 제출/힌트 버튼
@@ -1101,12 +1101,13 @@ def build_interface() -> gr.Blocks:
         def toggle_favorite_fav_tab(state_dict):
             btn_update, message, choices_update = toggle_favorite(state_dict)
             # fav_toggle_btn과 fav_favorite_btn 둘 다 업데이트
-            return btn_update, btn_update, message, choices_update
+            # fav_status_md와 fav_favorite_status_md 둘 다 메시지 표시
+            return btn_update, btn_update, message, message, choices_update
 
         fav_favorite_btn.click(
             toggle_favorite_fav_tab,
             inputs=fav_state,
-            outputs=[fav_favorite_btn, fav_toggle_btn, fav_status_md, favorite_choices],
+            outputs=[fav_favorite_btn, fav_toggle_btn, fav_status_md, fav_favorite_status_md, favorite_choices],
         )
 
         # 오답노트 추가 이벤트

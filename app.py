@@ -788,7 +788,10 @@ def build_interface() -> gr.Blocks:
         demo = gr.Blocks(title="SQL & Python 코딩 연습")
 
     with demo:
-        state = gr.State({})
+        # 탭별 독립적인 state 생성
+        new_state = gr.State({})    # 신규 문제 탭 전용
+        note_state = gr.State({})   # 오답노트 탭 전용
+        fav_state = gr.State({})    # 즐겨찾기 탭 전용
 
         # ===== 헤더 =====
         with gr.Group():
@@ -1012,32 +1015,32 @@ def build_interface() -> gr.Blocks:
         new_btn.click(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
         )
 
         difficulty.change(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
         )
 
         language.change(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
         )
 
         submit_btn.click(
             on_submit,
-            inputs=[state, code_box],
+            inputs=[new_state, code_box],
             outputs=[exec_result, note_choices, hint_btn],
             show_progress="minimal",
         )
 
         hint_btn.click(
             toggle_hint,
-            inputs=state,
-            outputs=[exec_result, hint_btn, state],
+            inputs=new_state,
+            outputs=[exec_result, hint_btn, new_state],
         )
 
         # 신규 문제 탭의 즐겨찾기 버튼 (상태 메시지 없음)
@@ -1047,7 +1050,7 @@ def build_interface() -> gr.Blocks:
 
         favorite_btn.click(
             toggle_favorite_new_tab,
-            inputs=state,
+            inputs=new_state,
             outputs=[favorite_btn, favorite_choices],
         )
 
@@ -1067,28 +1070,28 @@ def build_interface() -> gr.Blocks:
         load_fav_btn.click(
             load_favorite_selection,
             inputs=favorite_choices,
-            outputs=[fav_question_md, state, fav_code_box, fav_toggle_btn, fav_status_md, fav_hint_btn, fav_favorite_btn],
+            outputs=[fav_question_md, fav_state, fav_code_box, fav_toggle_btn, fav_status_md, fav_hint_btn, fav_favorite_btn],
         )
 
         # 즐겨찾기 탭의 토글 버튼 (상태 메시지 포함)
         fav_toggle_btn.click(
             toggle_favorite,
-            inputs=state,
+            inputs=fav_state,
             outputs=[fav_toggle_btn, fav_status_md, favorite_choices],
         )
 
         # 즐겨찾기 탭의 제출/힌트 버튼
         fav_submit_btn.click(
             on_submit,
-            inputs=[state, fav_code_box],
+            inputs=[fav_state, fav_code_box],
             outputs=[fav_exec_result, note_choices, fav_hint_btn],
             show_progress="minimal",
         )
 
         fav_hint_btn.click(
             toggle_hint,
-            inputs=state,
-            outputs=[fav_exec_result, fav_hint_btn, state],
+            inputs=fav_state,
+            outputs=[fav_exec_result, fav_hint_btn, fav_state],
         )
 
         # 즐겨찾기 탭의 문제 영역 즐겨찾기 버튼
@@ -1099,7 +1102,7 @@ def build_interface() -> gr.Blocks:
 
         fav_favorite_btn.click(
             toggle_favorite_fav_tab,
-            inputs=state,
+            inputs=fav_state,
             outputs=[fav_favorite_btn, fav_toggle_btn, fav_status_md, favorite_choices],
         )
 
@@ -1130,7 +1133,7 @@ def build_interface() -> gr.Blocks:
 
         add_to_notes_btn.click(
             on_add_to_notes,
-            inputs=[state, nickname_input],
+            inputs=[new_state, nickname_input],
             outputs=[add_notes_status, note_choices],
             show_progress="minimal",
         )
@@ -1155,7 +1158,7 @@ def build_interface() -> gr.Blocks:
                     if problem:
                         filters = normalize_filters(None, None, None)
                         question = render_question(problem, True, entry.rechallenge_hint, filters)
-                        state = ensure_state({
+                        note_state_val = ensure_state({
                             "problem": problem,
                             "rechallenge": True,
                             "hint": entry.rechallenge_hint,
@@ -1164,7 +1167,7 @@ def build_interface() -> gr.Blocks:
                         })
                         return (
                             question,
-                            state,
+                            note_state_val,
                             gr.update(value="", language=problem.kind),
                             "",
                             gr.update(value="💡 힌트 보기"),
@@ -1175,20 +1178,20 @@ def build_interface() -> gr.Blocks:
         load_note_btn.click(
             load_note_to_tab,
             inputs=note_choices,
-            outputs=[note_question_md, state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn],
+            outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn],
         )
 
         note_submit_btn.click(
             on_submit,
-            inputs=[state, note_code_box],
+            inputs=[note_state, note_code_box],
             outputs=[note_exec_result, note_choices, note_hint_btn],
             show_progress="minimal",
         )
 
         note_hint_btn.click(
             toggle_hint,
-            inputs=state,
-            outputs=[note_exec_result, note_hint_btn, state],
+            inputs=note_state,
+            outputs=[note_exec_result, note_hint_btn, note_state],
         )
 
         # 오답노트 탭의 즐겨찾기 버튼
@@ -1198,7 +1201,7 @@ def build_interface() -> gr.Blocks:
 
         note_favorite_btn.click(
             toggle_favorite_note_tab,
-            inputs=state,
+            inputs=note_state,
             outputs=[note_favorite_btn, favorite_choices],
         )
 

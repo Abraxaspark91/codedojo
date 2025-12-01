@@ -991,12 +991,6 @@ def build_interface() -> gr.Blocks:
             outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
         )
 
-        problem_types.change(
-            on_new_problem,
-            inputs=[difficulty, language, problem_types],
-            outputs=[question_md, state, code_box, favorite_btn, favorite_status_md, exec_result, note_choices],
-        )
-
         submit_btn.click(
             on_submit,
             inputs=[state, code_box],

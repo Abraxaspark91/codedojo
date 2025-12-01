@@ -896,7 +896,7 @@ def build_interface() -> gr.Blocks:
                 # 메인 콘텐츠 영역
                 with gr.Row():
                     # 왼쪽: 문제
-                    with gr.Column(scale=2):
+                    with gr.Column(scale=3):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 📋 문제")
                             note_question_md = gr.Markdown(
@@ -909,7 +909,7 @@ def build_interface() -> gr.Blocks:
                             note_favorite_status_md = gr.Markdown("", elem_classes="status-message")
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=5):
+                    with gr.Column(scale=8):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 💻 답변 작성칸")
                             note_code_box = gr.Code(
@@ -924,7 +924,7 @@ def build_interface() -> gr.Blocks:
                                     "✅ 제출하기",
                                     variant="primary",
                                     size="md",
-                                    scale=5
+                                    scale=8
                                 )
                                 note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
                 
@@ -957,7 +957,7 @@ def build_interface() -> gr.Blocks:
                 # 메인 콘텐츠 영역
                 with gr.Row():
                     # 왼쪽: 문제
-                    with gr.Column(scale=2):
+                    with gr.Column(scale=3):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 📋 문제")
                             fav_question_md = gr.Markdown(
@@ -970,7 +970,7 @@ def build_interface() -> gr.Blocks:
                             fav_favorite_status_md = gr.Markdown("", elem_classes="status-message")
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=5):
+                    with gr.Column(scale=8):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 💻 답변 작성칸")
                             fav_code_box = gr.Code(
@@ -985,7 +985,7 @@ def build_interface() -> gr.Blocks:
                                     "✅ 제출하기",
                                     variant="primary",
                                     size="md",
-                                    scale=5
+                                    scale=8
                                 )
                                 fav_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 

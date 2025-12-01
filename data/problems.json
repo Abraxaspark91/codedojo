@@ -1264,5 +1264,752 @@
     ],
     "hint": "1. `F.concat(col('key'), F.lit('_'), F.rand())`로 키를 쪼갭니다. \n2. 상대 테이블은 해당 개수만큼 복제(explode)하여 조인 조건을 맞춥니다.",
     "problem_type": "코딩"
+  },
+  {
+    "pid": "python_list_comp_basic",
+    "title": "리스트 컴프리헨션: 짝수만 제곱하기",
+    "body": "숫자 리스트 `numbers`가 주어졌을 때, 짝수인 숫자만 골라서 그 값을 제곱한 새로운 리스트를 만드세요. `for` 루프를 쓰지 말고 리스트 컴프리헨션을 사용해야 합니다.",
+    "schema": "numbers (List[int])",
+    "sample_rows": [
+      "[1, 2, 3, 4, 5] -> [4, 16]",
+      "[10, 11, 12] -> [100, 144]"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "[x**2 for x in numbers if ...]"
+    ],
+    "hint": "`[식 for 변수 in 리스트 if 조건]` 형태를 기억하세요. `x % 2 == 0`이 짝수 조건입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_list_comp_string",
+    "title": "리스트 컴프리헨션: 글자 수 필터링 및 변환",
+    "body": "문자열 리스트 `words`에서 길이가 5 이상인 단어만 골라, 모두 대문자로 변환된 리스트를 생성하세요.",
+    "schema": "words (List[str])",
+    "sample_rows": [
+      "['apple', 'cat', 'banana'] -> ['APPLE', 'BANANA']"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "[w.upper() for w in words if ...]"
+    ],
+    "hint": "문자열 길이 확인은 `len(w)`, 대문자 변환은 `.upper()`를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_def_sum_rows",
+    "title": "함수(def) & 행 다루기: 2차원 리스트 행별 합계",
+    "body": "2차원 리스트(행렬)를 입력받아, 각 행(row)의 합계를 담은 리스트를 반환하는 함수 `row_sums(matrix)`를 작성하세요.",
+    "schema": "matrix (List[List[int]])",
+    "sample_rows": [
+      "[[1, 2], [3, 4]] -> [3, 7]",
+      "[[1, 1, 1], [2, 2, 2]] -> [3, 6]"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": [
+      "def row_sums(matrix):",
+      "return [sum(row) for row in matrix]"
+    ],
+    "hint": "`for row in matrix`로 각 행을 꺼낸 뒤, `sum(row)`를 이용하면 쉽게 구할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_array_transpose",
+    "title": "배열 다루기: 행과 열 바꾸기 (Transpose)",
+    "body": "2차원 리스트 `matrix`의 행과 열을 뒤바꾼 새로운 행렬을 만드세요. (예: 2x3 행렬 -> 3x2 행렬). 이중 루프를 사용해도 좋고, 리스트 컴프리헨션을 사용해도 좋습니다.",
+    "schema": "matrix (List[List[int]])",
+    "sample_rows": [
+      "[[1, 2, 3], [4, 5, 6]] -> [[1, 4], [2, 5], [3, 6]]"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": [
+      "[[row[i] for row in matrix] for i in range(len(matrix[0]))]"
+    ],
+    "hint": "외부 루프는 열의 개수(`range(len(matrix[0]))`)만큼 돌고, 내부에서 각 행의 `i`번째 요소를 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_algo_factorial",
+    "title": "알고리즘(Loop): 팩토리얼 계산",
+    "body": "정수 `n`을 입력받아 `n!` (팩토리얼) 값을 반환하는 함수 `factorial(n)`을 작성하세요. 재귀함수가 아닌 `for` 또는 `while` 루프를 사용해 구현하세요.",
+    "schema": "n (int)",
+    "sample_rows": [
+      "5 -> 120 (1*2*3*4*5)",
+      "3 -> 6"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "result = 1",
+      "for i in range(1, n+1):",
+      "result *= i"
+    ],
+    "hint": "초기값을 1로 설정(`result = 1`)하고, 1부터 n까지 반복하며 계속 곱해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_algo_count_dict",
+    "title": "알고리즘 & 딕셔너리: 단어 빈도수 세기",
+    "body": "단어들이 담긴 리스트 `words`를 입력받아, 각 단어가 몇 번 등장했는지 세어 `{단어: 횟수}` 형태의 딕셔너리로 반환하는 함수 `count_words(words)`를 작성하세요.",
+    "schema": "words (List[str])",
+    "sample_rows": [
+      "['apple', 'banana', 'apple'] -> {'apple': 2, 'banana': 1}"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": [
+      "counts = {}",
+      "if word in counts:",
+      "counts[word] += 1",
+      "else: counts[word] = 1"
+    ],
+    "hint": "빈 딕셔너리 `{}`를 만들고, 리스트를 루프 돌면서 키가 있으면 +1, 없으면 1로 초기화합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_list_slice_rotate",
+    "title": "배열 슬라이싱: 리스트 회전시키기",
+    "body": "리스트 `nums`와 정수 `k`가 주어질 때, 리스트의 요소를 오른쪽으로 `k`번 회전시킨 결과를 반환하는 함수 `rotate_list(nums, k)`를 작성하세요. 슬라이싱 기능을 활용하면 루프 없이 한 줄로 가능합니다.",
+    "schema": "nums (List[int]), k (int)",
+    "sample_rows": [
+      "nums=[1, 2, 3, 4, 5], k=2 -> [4, 5, 1, 2, 3]"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": [
+      "def rotate_list(nums, k):",
+      "k = k % len(nums)",
+      "return nums[-k:] + nums[:-k]"
+    ],
+    "hint": "`nums[-k:]`는 뒤에서 k개, `nums[:-k]`는 앞의 나머지 부분입니다. 이 둘을 더하면 회전된 결과가 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_algo_prime",
+    "title": "알고리즘(Loop): 소수(Prime) 판별 함수",
+    "body": "정수 `n`을 입력받아 소수이면 `True`, 아니면 `False`를 반환하는 함수 `is_prime(n)`을 작성하세요. 루프를 사용하여 2부터 `n-1`까지 나누어 떨어지는 수가 있는지 확인해야 합니다.",
+    "schema": "n (int)",
+    "sample_rows": [
+      "7 -> True",
+      "10 -> False"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": [
+      "if n < 2: return False",
+      "for i in range(2, int(n**0.5) + 1):",
+      "if n % i == 0: return False"
+    ],
+    "hint": "반복문 도중 `n % i == 0`인 경우가 한 번이라도 발견되면 즉시 `return False`하고 종료합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_list_flatten",
+    "title": "리스트 컴프리헨션: 2차원 리스트 평탄화(Flatten)",
+    "body": "2차원 리스트(리스트 안의 리스트)를 1차원 리스트로 쭉 펼치는 함수 `flatten(matrix)`를 리스트 컴프리헨션을 사용해 작성하세요.",
+    "schema": "matrix (List[List[int]])",
+    "sample_rows": [
+      "[[1, 2], [3, 4], [5]] -> [1, 2, 3, 4, 5]"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": [
+      "[val for row in matrix for val in row]"
+    ],
+    "hint": "이중 `for`문 순서대로 적으면 됩니다. `for row in matrix`가 먼저 오고, 그 뒤에 `for val in row`가 옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_algo_max_index",
+    "title": "배열 다루기: 최댓값과 그 위치 찾기",
+    "body": "숫자 리스트 `nums`에서 가장 큰 값과 그 값의 인덱스(위치)를 튜플 `(max_val, index)` 형태로 반환하는 함수 `find_max_info(nums)`를 작성하세요. 내장함수 `max()`나 `index()`를 쓰지 않고 루프로 구현해보세요.",
+    "schema": "nums (List[int])",
+    "sample_rows": [
+      "[10, 50, 30] -> (50, 1)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "python",
+    "expected": [
+      "max_val = nums[0]",
+      "idx = 0",
+      "enumerate"
+    ],
+    "hint": "`for i, val in enumerate(nums):`를 사용하여 인덱스와 값을 동시에 얻고, 현재 최댓값보다 크면 갱신합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_list_comp_rename",
+    "title": "List Comprehension: 모든 컬럼명 소문자로 변경하기",
+    "body": "데이터프레임의 컬럼명이 대소문자가 섞여 있어('UserID', 'CreateDATE') 다루기 불편합니다. 파이썬의 리스트 컴프리헨션을 사용하여 모든 컬럼명을 소문자로 바꾼 뒤, `toDF` 메서드를 사용해 한 번에 적용하세요.",
+    "schema": "df(UserID STRING, CreateDATE DATE, Amount INT)",
+    "sample_rows": [
+      "user1 | 2024-01-01 | 100"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "[c.lower() for c in df.columns]",
+      "toDF(*...)"
+    ],
+    "hint": "`df.columns`는 파이썬 리스트를 반환합니다. 이를 리스트 컴프리헨션으로 가공하고, `df.toDF(*new_cols)`와 같이 언패킹(`*`)하여 전달하는 패턴은 국룰입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_unpacking_select",
+    "title": "Unpacking(*): 리스트에 담긴 컬럼들만 선택하기",
+    "body": "분석에 필요한 컬럼 이름들이 파이썬 리스트 `target_cols = ['name', 'age']`에 담겨 있습니다. 이 리스트를 `select` 함수에 직접 전달하면 에러가 납니다. 리스트의 요소들을 풀어서(Unpacking) 전달하는 파이썬 문법을 사용하세요.",
+    "schema": "df(name STRING, age INT, address STRING, phone STRING)",
+    "sample_rows": [
+      "Alice | 25 | Seoul | 010..."
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "select(*target_cols)"
+    ],
+    "hint": "함수 인자로 리스트를 바로 넣는 대신, `*리스트이름`을 쓰면 리스트 껍질을 벗겨서 알맹이만 `arg1, arg2, ...` 형태로 전달합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_udf_def_logic",
+    "title": "Def & UDF: 복잡한 점수 계산 로직 적용",
+    "body": "단순한 사칙연산이 아니라, 비즈니스 로직이 포함된 점수 계산이 필요합니다. 파이썬 함수 `calculate_score(purchase, visits)`를 정의하고(구매액/방문수 비율 계산, 0으로 나누기 방지 등), 이를 UDF로 변환하여 적용하세요.",
+    "schema": "df(user_id INT, purchase INT, visits INT)",
+    "sample_rows": [
+      "1 | 10000 | 5 -> 2000.0",
+      "2 | 0 | 0 -> 0.0"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "python",
+    "expected": [
+      "def calculate_score(p, v):",
+      "if v == 0: return 0.0",
+      "udf(calculate_score, DoubleType())"
+    ],
+    "hint": "Spark SQL만으로 복잡한 `if-else`나 예외처리를 하긴 어렵습니다. 이럴 때 파이썬 함수(`def`)를 짜고 `udf`로 감싸서 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_lambda_udf",
+    "title": "Lambda & UDF: 일회용 함수로 문자열 가공",
+    "body": "email 컬럼에서 '@' 앞의 아이디만 추출하고 싶습니다. 별도로 `def`를 선언하기엔 너무 간단한 로직입니다. 파이썬의 익명 함수 `lambda`를 사용하여 한 줄짜리 UDF를 만들고 적용하세요.",
+    "schema": "df(email STRING)",
+    "sample_rows": [
+      "alice@company.com -> alice"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x.split('@')[0])"
+    ],
+    "hint": "`lambda 입력변수: 반환값` 형식을 사용합니다. `split` 같은 파이썬 문자열 메서드를 Spark 안에서 쓸 수 있게 해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_dict_loop_rename",
+    "title": "Dict Loop: 매핑 사전을 이용한 컬럼명 일괄 변경",
+    "body": "시스템 컬럼명과 한글 컬럼명이 매핑된 딕셔너리 `col_map = {'nm': '이름', 'ag': '나이'}`가 있습니다. `for` 루프와 `withColumnRenamed`를 사용하여 딕셔너리에 정의된 대로 컬럼 이름을 모두 변경하세요.",
+    "schema": "df(nm STRING, ag INT)",
+    "sample_rows": [
+      "Alice | 25"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "for old, new in col_map.items():",
+      "df = df.withColumnRenamed(old, new)"
+    ],
+    "hint": "딕셔너리의 `.items()`를 순회하며 `df` 변수를 계속 덮어쓰는(update) 방식은 PySpark 코드 작성 시 흔한 패턴입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_f_string_sql",
+    "title": "f-string: 동적 SQL 쿼리 생성",
+    "body": "테이블 이름 `table_name = 'sales_2024'`와 기준 금액 `min_amount = 1000`이 변수로 주어집니다. 파이썬의 f-string을 사용하여 `SELECT * FROM sales_2024 WHERE amount >= 1000` 형태의 쿼리 문자열을 생성하고 `spark.sql()`로 실행하세요.",
+    "schema": "N/A (Spark SQL 실행)",
+    "sample_rows": [],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "query = f\"SELECT * FROM {table_name} ...\"",
+      "spark.sql(query)"
+    ],
+    "hint": "SQL 쿼리도 결국 문자열입니다. 파이썬 변수를 쿼리 중간에 꽂아 넣을 때 f-string이 가장 가독성이 좋습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_list_comp_filter",
+    "title": "List Comprehension: 특정 타입의 컬럼만 골라내기",
+    "body": "데이터프레임 `df.dtypes`를 확인하면 `('col_name', 'string')` 형태의 튜플 리스트가 나옵니다. 리스트 컴프리헨션을 사용하여 데이터 타입이 'int'인 컬럼의 이름만 리스트로 추출하세요.",
+    "schema": "df(name STRING, age INT, score INT)",
+    "sample_rows": [
+      "dtypes -> [('name', 'string'), ('age', 'int'), ('score', 'int')]"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "[c for c, t in df.dtypes if t == 'int']"
+    ],
+    "hint": "`for c, t in df.dtypes` 처럼 튜플을 언패킹하며 루프를 돌고, `if` 조건으로 필터링하는 전형적인 파이썬 패턴입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_try_except",
+    "title": "Try-Except: 파일 로드 시 예외 처리",
+    "body": "데이터 파일 경로 `path`가 주어집니다. 파일을 읽어오되(`spark.read.csv`), 파일이 없거나 에러가 발생하면 \"파일을 찾을 수 없습니다\"를 출력하고 빈 데이터프레임을 생성하는 안전한 코드를 작성하세요.",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "try:",
+      "spark.read.csv(path)",
+      "except AnalysisException:",
+      "print(...)"
+    ],
+    "hint": "데이터 파이프라인은 언제든 깨질 수 있습니다. `try-except` 블록으로 에러 상황을 우아하게(Graceful) 처리하는 것은 엔지니어의 기본 소양입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_set_operations",
+    "title": "Set 연산: 두 데이터프레임의 공통 컬럼 찾기",
+    "body": "두 개의 데이터프레임 `df1`과 `df2`가 있습니다. 파이썬의 집합(Set) 자료형과 교집합 연산자(`&`)를 사용하여 두 데이터프레임에 공통으로 존재하는 컬럼명 리스트를 구하세요.",
+    "schema": "df1(id, name, age), df2(id, address, phone)",
+    "sample_rows": [
+      "공통 컬럼 -> ['id']"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "set(df1.columns) & set(df2.columns)",
+      "list(...)"
+    ],
+    "hint": "리스트를 `set()`으로 변환하면 교집합(`&`), 차집합(`-`), 합집합(`|`)을 매우 쉽게 구할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_assert",
+    "title": "Assert: 데이터 검증(Sanity Check)",
+    "body": "데이터 가공이 끝난 후, 결과 데이터프레임 `result_df`의 행 개수가 0이면 안 된다는 조건을 걸고 싶습니다. 파이썬의 `assert` 문을 사용하여 행 개수가 0일 때 에러를 발생시키는 코드를 작성하세요.",
+    "schema": "result_df(...)",
+    "sample_rows": [],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "count = result_df.count()",
+      "assert count > 0, \"메시지\""
+    ],
+    "hint": "`assert 조건, 에러메시지` 형태입니다. 조건이 False면 프로그램이 즉시 중단되며 에러를 뿜습니다. 데이터 품질 체크에 필수적입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_strip_columns",
+    "title": "List Comp & String: 컬럼명 공백 제거",
+    "body": "CSV를 읽었더니 컬럼명 앞뒤에 공백이 섞여 있습니다(예: ' user_id ', ' name'). 파이썬의 문자열 메서드 `.strip()`과 리스트 컴프리헨션을 사용하여 깔끔한 컬럼명 리스트를 만들고, `toDF`로 적용하세요.",
+    "schema": "df(' user_id ', ' name')",
+    "sample_rows": [
+      "1 | Alice"
+    ],
+    "difficulty": "Lv1 실전",
+    "kind": "python",
+    "expected": [
+      "[c.strip() for c in df.columns]",
+      "toDF(*...)"
+    ],
+    "hint": "문자열 `s.strip()`은 양쪽 공백을 제거합니다. `[c.strip() for c in df.columns]` 패턴은 데이터 로드 직후 국룰입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_zip_rename",
+    "title": "Zip Loop: 두 리스트를 엮어서 컬럼명 변경",
+    "body": "현재 컬럼명 리스트 `old_cols = ['a', 'b']`와 바꿀 한글명 리스트 `new_cols = ['이름', '나이']`가 있습니다. 파이썬의 `zip()`을 사용하여 두 리스트를 쌍으로 묶은 뒤, 루프를 돌며 컬럼명을 변경하세요.",
+    "schema": "df(a, b)",
+    "sample_rows": [
+      "Alice | 25"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "for old, new in zip(old_cols, new_cols):",
+      "df = df.withColumnRenamed(old, new)"
+    ],
+    "hint": "`zip(list_a, list_b)`는 두 리스트의 요소를 순서대로 튜플 `(a[0], b[0]), ...`로 묶어줍니다. 매핑 작업에 필수입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_kwargs_options",
+    "title": "Dict Unpacking(**): 읽기 옵션 한 번에 넣기",
+    "body": "CSV를 읽을 때 옵션이 많습니다(header=True, inferSchema=True, sep=','). 이 옵션들을 `read_opts`라는 딕셔너리에 담아두고, `spark.read.options()` 함수에 **언패킹(kwargs)**하여 전달하세요.",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "read_opts = {'header': 'true', 'sep': ','}",
+      "spark.read.options(**read_opts).csv(...)"
+    ],
+    "hint": "함수에 `**딕셔너리`를 넣으면, 딕셔너리의 키=값 쌍이 함수의 인자(keyword arguments)로 풀려서 들어갑니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_dict_get_default",
+    "title": "Dict Get: 매핑 실패 시 기본값 사용 (UDF)",
+    "body": "코드 변환용 딕셔너리 `code_map = {'KR': 'Korea', 'US': 'USA'}`가 있습니다. 국가 코드를 입력받아 이름을 반환하되, 딕셔너리에 없는 코드는 'Unknown'을 반환하는 함수를 `def`로 짜고 UDF로 적용하세요.",
+    "schema": "df(code STRING)",
+    "sample_rows": [
+      "KR -> Korea",
+      "JP -> Unknown"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "def map_country(code):",
+      "return code_map.get(code, 'Unknown')",
+      "udf(...)"
+    ],
+    "hint": "`dict[key]`는 키가 없으면 에러가 나지만, `dict.get(key, default)`는 안전하게 기본값을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_enumerate_columns",
+    "title": "Enumerate: 인덱스와 함께 루프 돌기",
+    "body": "컬럼명이 중복되거나 의미 없을 때, 순서대로 번호를 붙이고 싶습니다. `df.columns`를 루프 돌되, `enumerate()`를 사용하여 'col_0', 'col_1', 'col_2'로 이름을 변경하세요.",
+    "schema": "df(x, y, z)",
+    "sample_rows": [
+      "..."
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "for idx, col_name in enumerate(df.columns):",
+      "df = df.withColumnRenamed(col_name, f'col_{idx}')"
+    ],
+    "hint": "`enumerate(리스트)`는 `(0, 첫번째값), (1, 두번째값)...` 순서로 인덱스와 값을 동시에 뱉어줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_string_slicing",
+    "title": "String Slicing: 날짜 문자열 쪼개기 (Lambda)",
+    "body": "`YYYYMMDD` 형태의 문자열(예: '20240101')에서 연도(앞 4자리)만 추출하고 싶습니다. 복잡한 날짜 함수 대신, 파이썬의 문자열 슬라이싱 기능을 `lambda` UDF로 만들어 해결하세요.",
+    "schema": "df(date_str STRING)",
+    "sample_rows": [
+      "20240101 -> 2024"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x[:4])"
+    ],
+    "hint": "문자열 `s`에서 `s[:4]`는 처음부터 4번째 인덱스 전까지 자릅니다. 파이썬의 가장 강력한 기능 중 하나입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_truthy_check",
+    "title": "Truthy/Falsy: 리스트가 비었는지 확인하기",
+    "body": "데이터 처리 중 에러가 발생하여 `error_list`에 에러 메시지가 담겼습니다. 이 리스트가 **비어있지 않을 때만** 경고 로그를 출력하려고 합니다. 파이썬스럽게 조건문을 작성하세요.",
+    "schema": "N/A (로직 문제)",
+    "sample_rows": [],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "if error_list:",
+      "print('Error!')"
+    ],
+    "hint": "`if len(error_list) > 0:` 대신 `if error_list:`를 씁니다. 빈 리스트 `[]`는 False, 내용이 있으면 True로 취급됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_replace_string",
+    "title": "String Replace: 파일 경로 수정",
+    "body": "S3 경로가 담긴 리스트 `paths`가 있는데, 프로토콜이 `s3n://`으로 되어 있습니다. 이를 모두 `s3a://`로 바꾸는 리스트 컴프리헨션을 작성하세요.",
+    "schema": "paths (List[str])",
+    "sample_rows": [
+      "['s3n://bucket/a', 's3n://bucket/b']"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "[p.replace('s3n://', 's3a://') for p in paths]"
+    ],
+    "hint": "문자열 메서드 `.replace('찾을값', '바꿀값')`을 사용합니다. 단순 치환에 가장 많이 쓰입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_in_operator",
+    "title": "IN Operator: 금지어 포함 여부 확인",
+    "body": "금지어 리스트 `bad_words = ['error', 'fail']`가 있습니다. 로그 메시지(문자열) 내에 금지어 중 하나라도 포함되어 있는지 확인하는 함수를 작성하세요. (Spark 함수가 아닌 파이썬 `in` 연산자 활용)",
+    "schema": "N/A (UDF 로직)",
+    "sample_rows": [],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "def check_bad(msg):",
+      "for w in bad_words:",
+      "if w in msg: return True",
+      "return False"
+    ],
+    "hint": "파이썬에서 `'a' in 'abc'`는 True입니다. 루프와 `in`을 결합하여 부분 문자열 검색을 구현합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_split_unpack",
+    "title": "Split & Indexing: 이메일 도메인 추출",
+    "body": "이메일 주소 'user@gmail.com'을 `@` 기준으로 쪼갠 후, 뒤쪽 도메인('gmail.com')만 가져오고 싶습니다. `split` 함수와 인덱싱을 `lambda` UDF로 구현하세요.",
+    "schema": "df(email STRING)",
+    "sample_rows": [
+      "a@b.com -> b.com"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x.split('@')[1])"
+    ],
+    "hint": "`s.split('@')`은 리스트 `['user', 'gmail.com']`을 반환합니다. `[1]` 또는 `[-1]`로 뒤쪽 요소를 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_type_check",
+    "title": "Isinstance: 데이터 타입 방어 로직",
+    "body": "함수 `process_data(value)`를 만들 때, 입력된 `value`가 정수(int)일 때만 처리하고, 문자열이나 다른 타입이면 None을 반환하도록 방어 코드를 작성하세요.",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "if not isinstance(value, int):",
+      "return None"
+    ],
+    "hint": "`type(value) == int`보다 `isinstance(value, int)`가 권장됩니다. 데이터 파이프라인에서 잘못된 타입이 들어오는 것을 막을 때 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_zfill",
+    "title": "String Padding: 월(Month) 0 채우기",
+    "body": "숫자형으로 된 월(month) 데이터(1, 2, ..., 12)를 문자열 '01', '02', ..., '12' 형태로 변환해야 합니다. 파이썬 문자열 메서드 `.zfill()`을 사용하여 2자리로 맞추는 Lambda UDF를 작성하세요.",
+    "schema": "df(month INT)",
+    "sample_rows": [
+      "1 -> '01', 12 -> '12'"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: str(x).zfill(2))"
+    ],
+    "hint": "숫자를 먼저 `str(x)`로 문자로 바꾼 뒤 `.zfill(2)`를 호출하면 앞에 0을 채워줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_join_list",
+    "title": "String Join: 리스트를 문자열로 합치기",
+    "body": "가공 결과가 리스트 `['Seoul', 'Busan', 'Jeju']`로 나왔습니다. 이를 콤마(,)로 구분된 하나의 문자열 \"Seoul,Busan,Jeju\"로 합쳐서 DB에 저장하려고 합니다. 파이썬 문자열 메서드를 사용하세요.",
+    "schema": "cities (List[str])",
+    "sample_rows": [],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "','.join(cities)"
+    ],
+    "hint": "`'구분자'.join(리스트)` 형태입니다. 리스트를 문자열로 직렬화할 때 가장 많이 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_dict_comp",
+    "title": "Dict Comprehension: 키-값 뒤집기",
+    "body": "코드 매핑 딕셔너리 `mapping = {'A': 1, 'B': 2}`가 있는데, 반대로 숫자로 문자를 찾고 싶어 `{1: 'A', 2: 'B'}` 형태로 뒤집으려 합니다. 딕셔너리 컴프리헨션을 사용하세요.",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "{v: k for k, v in mapping.items()}"
+    ],
+    "hint": "리스트 컴프리헨션과 비슷하지만 중괄호 `{}`를 쓰고 `key: value` 형태로 작성합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "pyspark_python_none_check_udf",
+    "title": "None Check: UDF 내부의 결측치 방어",
+    "body": "UDF로 문자열 길이를 잴 때, 값이 `None`이면 에러가 납니다. 입력 `x`가 `None`이면 0을, 아니면 길이를 반환하는 안전한 Lambda 식을 작성하세요.",
+    "schema": "df(text STRING)",
+    "sample_rows": [
+      "NULL -> 0"
+    ],
+    "difficulty": "Lv2 실전",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: len(x) if x else 0)"
+    ],
+    "hint": "파이썬의 삼항 연산자 `값 if 조건 else 다른값`을 활용합니다. `if x:`는 x가 None이거나 빈 문자열이 아님을 체크합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_slicing_udf",
+    "title": "문자열 슬라이싱: 앞자리만 자르기",
+    "body": "주민등록번호나 ID의 앞 6자리만 필요합니다. 복잡한 함수 정의 없이, 파이썬의 슬라이싱 문법 `[:6]`을 사용하는 `lambda` 함수를 UDF로 만들어 적용하세요.",
+    "schema": "df(personal_id STRING)",
+    "sample_rows": [
+      "900101-1234567 -> 900101"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x[:6])"
+    ],
+    "hint": "파이썬에서 `문자열[:n]`은 처음부터 n번째 글자 앞까지 자릅니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_split_last",
+    "title": "문자열 쪼개기: 파일 확장자 추출",
+    "body": "파일 경로에서 확장자(예: txt, csv)만 가져오고 싶습니다. 점(`.`)을 기준으로 쪼갠(`split`) 후, 리스트의 **맨 마지막 요소**를 가져오는 파이썬 인덱싱 `-1`을 활용하세요.",
+    "schema": "df(filepath STRING)",
+    "sample_rows": [
+      "/data/users.csv -> csv",
+      "report.pdf -> pdf"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x.split('.')[-1])"
+    ],
+    "hint": "`x.split('.')`의 결과는 리스트입니다. `[-1]`은 리스트의 마지막 요소를 의미합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_ternary_op",
+    "title": "삼항 연산자: 한 줄짜리 If-Else",
+    "body": "점수(`score`)가 60 이상이면 'Pass', 아니면 'Fail'을 반환하고 싶습니다. `def`와 `if-else` 블록을 길게 쓰지 말고, 파이썬의 **한 줄 if문(삼항 연산자)**을 사용하여 `lambda` UDF를 만드세요.",
+    "schema": "df(score INT)",
+    "sample_rows": [
+      "80 -> Pass",
+      "50 -> Fail"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: 'Pass' if x >= 60 else 'Fail')"
+    ],
+    "hint": "`값1 if 조건 else 값2` 형식을 사용합니다. 파이썬에서 가장 자주 쓰이는 숏컷 중 하나입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_replace",
+    "title": "문자열 치환: 특수문자 제거",
+    "body": "전화번호에 포함된 하이픈(`-`)을 모두 없애고 숫자만 남기고 싶습니다. 파이썬 문자열의 `.replace()` 메서드를 사용하는 UDF를 작성하세요.",
+    "schema": "df(phone STRING)",
+    "sample_rows": [
+      "010-1234-5678 -> 01012345678"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x.replace('-', ''))"
+    ],
+    "hint": "`문자열.replace('찾을값', '바꿀값')`을 사용합니다. 바꿀 값에 빈 문자열 `''`을 넣으면 삭제 효과가 납니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_f_string_udf",
+    "title": "F-String: 단위 붙이기",
+    "body": "몸무게 데이터가 숫자로 되어있는데, 출력용으로 뒤에 'kg' 단위를 붙이고 싶습니다. 파이썬의 **f-string**을 사용하여 `lambda` UDF를 만드세요.",
+    "schema": "df(weight DOUBLE)",
+    "sample_rows": [
+      "70.5 -> 70.5kg"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: f'{x}kg')"
+    ],
+    "hint": "`f'{변수}kg'` 형태로 작성하면 변수 값이 문자열 안에 예쁘게 삽입됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_upper_lower",
+    "title": "대소문자 변환: 무조건 소문자로",
+    "body": "사용자 입력값이 대문자, 소문자 섞여 있어 검색이 어렵습니다. 파이썬 문자열 메서드 `.lower()`를 사용하여 입력값을 모두 소문자로 통일하는 UDF를 작성하세요.",
+    "schema": "df(input_text STRING)",
+    "sample_rows": [
+      "PySpark -> pyspark",
+      "PYTHON -> python"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: x.lower())"
+    ],
+    "hint": "`x.upper()`는 대문자, `x.lower()`는 소문자로 변환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_round",
+    "title": "숫자 반올림: 소수점 정리",
+    "body": "계산된 평점이 소수점 10자리까지 나와서 지저분합니다. 파이썬 내장 함수 `round()`를 사용하여 소수점 둘째 자리까지만 남기는 UDF를 작성하세요.",
+    "schema": "df(rating DOUBLE)",
+    "sample_rows": [
+      "4.56789 -> 4.57"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: round(x, 2))"
+    ],
+    "hint": "`round(숫자, 자릿수)` 함수를 사용합니다. `round(x, 2)`는 둘째 자리까지 반올림합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_in_operator",
+    "title": "포함 여부 확인: in 연산자",
+    "body": "주소(`address`) 문자열 안에 'Seoul'이라는 단어가 포함되어 있는지 확인하여 True/False를 반환하고 싶습니다. 파이썬의 `in` 키워드를 사용하는 UDF를 작성하세요.",
+    "schema": "df(address STRING)",
+    "sample_rows": [
+      "Gangnam-gu, Seoul -> True",
+      "Busan, Korea -> False"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: 'Seoul' in x)"
+    ],
+    "hint": "`'찾을단어' in 문자열변수` 형태로 작성하면 결과는 `True` 또는 `False`가 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_type_cast",
+    "title": "형변환: 문자를 숫자로 (int)",
+    "body": "숫자로 된 문자열 \"007\"을 정수 `7`로 바꾸고 싶습니다. 파이썬 내장 함수 `int()`를 사용하여 형변환을 수행하는 UDF를 작성하세요.",
+    "schema": "df(code_str STRING)",
+    "sample_rows": [
+      "\"007\" -> 7",
+      "\"100\" -> 100"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: int(x))"
+    ],
+    "hint": "`int(x)`는 문자열이나 실수를 정수로 변환해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_basic_none_check",
+    "title": "None 체크: 안전한 길이 구하기",
+    "body": "문자열의 길이를 구하는 `len()` 함수를 쓰고 싶은데, 데이터에 `None`(NULL)이 섞여 있어 에러가 걱정됩니다. `x`가 `None`이면 0을, 아니면 `len(x)`를 반환하는 안전한 로직을 작성하세요.",
+    "schema": "df(name STRING)",
+    "sample_rows": [
+      "Alice -> 5",
+      "NULL -> 0"
+    ],
+    "difficulty": "Lv1 기초",
+    "kind": "python",
+    "expected": [
+      "udf(lambda x: len(x) if x is not None else 0)"
+    ],
+    "hint": "`if x is not None`은 파이썬에서 가장 정석적인 NULL 체크 방식입니다. (또는 간단히 `if x:`를 쓰기도 합니다)",
+    "problem_type": "코딩"
   }
 ]

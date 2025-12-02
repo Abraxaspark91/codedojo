@@ -615,7 +615,9 @@ def on_new_problem(difficulty: str,
                                                       str,
                                                       str,
                                                       str,
-                                                      gr.update]:
+                                                      gr.update,
+                                                      str,
+                                                      str]:
     """새 문제를 출제합니다. problem_types는 체크박스로 선택된 리스트입니다."""
     filters = normalize_filters(difficulty, language, problem_types)
     problem, rechallenge, hint, applied_filters = pick_problem(
@@ -651,6 +653,8 @@ def on_new_problem(difficulty: str,
         "",  # exec_result 초기화
         gr.update(choices=note_choices, value=None),  # note_choices 업데이트
         gr.update(value="💡 힌트 보기"),  # hint_btn 초기화
+        "",  # add_notes_status 초기화
+        "",  # nickname_input 초기화
     )
 
 
@@ -1018,19 +1022,19 @@ def build_interface() -> gr.Blocks:
         new_btn.click(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
         )
 
         difficulty.change(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
         )
 
         language.change(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
         )
 
         submit_btn.click(
@@ -1192,6 +1196,8 @@ def build_interface() -> gr.Blocks:
         # 오답노트 추가 이벤트
         def on_add_to_notes(state_dict, nickname, progress=gr.Progress()):
             """오답노트에 수동으로 추가합니다."""
+            progress(0.1, desc="오답노트 저장 시작...")
+
             if not state_dict or "problem" not in state_dict:
                 return "⚠️ 먼저 문제를 출제하고 코드를 제출하세요.", gr.update()
 
@@ -1200,6 +1206,7 @@ def build_interface() -> gr.Blocks:
 
             problem = state_dict["problem"]
 
+            progress(0.3, desc="중복 확인 중...")
             # 중복 저장 체크: 이미 오답노트에 저장된 문제인지 확인
             existing_attempts = load_attempts()
             if any(attempt.pid == problem.pid for attempt in existing_attempts):
@@ -1214,6 +1221,7 @@ def build_interface() -> gr.Blocks:
             progress(0.8, desc="오답노트에 저장 중...")
             result = save_to_wrong_notes(problem, code, feedback, nickname, hint_summary)
 
+            progress(0.9, desc="오답노트 목록 갱신 중...")
             # 오답노트 목록 갱신
             labels, values = refresh_note_choices()
             note_choices_updated = list(zip(labels, values)) if labels else []

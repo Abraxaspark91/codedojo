@@ -23,7 +23,7 @@ LM_STUDIO_ENDPOINT = (
 )
 
 CUSTOM_THEME = gr.themes.Soft(
-    primary_hue="emerald",
+    primary_hue="blue",
     neutral_hue="slate",
 ).set(
     body_background_fill="*neutral_50",
@@ -945,6 +945,7 @@ def build_interface() -> gr.Blocks:
                                 language="python",
                                 show_label=False,
                                 elem_classes="code-editor-box",
+                                lines=15,
                                 container=True
                             )
                             with gr.Row(elem_classes="button-row"):
@@ -1034,6 +1035,7 @@ def build_interface() -> gr.Blocks:
                                 language="python",
                                 show_label=False,
                                 elem_classes="code-editor-box",
+                                lines=15,
                                 container=True
                             )
                             with gr.Row(elem_classes="button-row"):
@@ -1095,6 +1097,7 @@ def build_interface() -> gr.Blocks:
                                 language="python",
                                 show_label=False,
                                 elem_classes="code-editor-box",
+                                lines=15,
                                 container=True
                             )
                             with gr.Row(elem_classes="button-row"):

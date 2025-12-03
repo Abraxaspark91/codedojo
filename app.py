@@ -931,7 +931,7 @@ def build_interface() -> gr.Blocks:
         # ===== 헤더 =====
         with gr.Group():
             with gr.Row():
-                gr.Markdown("#🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉", container=True, scale=10)
+                gr.Markdown("#🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉", container=True)
                 theme_toggle_btn = gr.Button(
                     "🌙 다크 모드",
                     elem_id="theme-toggle-btn",

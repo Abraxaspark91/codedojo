@@ -274,9 +274,26 @@ def matches_filters(
         difficulty: Optional[str],
         language: Optional[str],
         problem_types: Optional[List[str]]) -> bool:
-    """문제가 필터 조건과 일치하는지 확인합니다."""
-    language_match = (not language or language ==
-                      "전체") or problem.kind.lower() == language.lower()
+    """
+    문제가 필터 조건과 일치하는지 확인합니다.
+
+    language 필터 동작:
+    - "전체": 모든 문제 포함
+    - "Python": Python, Python.Pyspark, Python.Numpy 등 모두 포함
+    - "Python.Pyspark": Python.Pyspark만 포함
+    - "SQL": SQL만 포함
+    """
+    # 언어 필터 매칭
+    if not language or language == "전체":
+        language_match = True
+    elif '.' not in language:
+        # "Python"이나 "SQL"처럼 base language만 선택한 경우
+        # problem.language는 kind의 '.' 앞부분만 반환
+        language_match = problem.language.lower() == language.lower()
+    else:
+        # "Python.Pyspark"처럼 구체적인 라이브러리까지 선택한 경우
+        language_match = problem.kind.lower() == language.lower()
+
     difficulty_match = (not difficulty or difficulty ==
                         "전체") or problem.difficulty == difficulty
     # problem_types가 리스트로 전달됨 (체크박스 선택값)
@@ -351,10 +368,12 @@ def render_question(
     hint_line = f"\n> 🔁 재도전 힌트: {rechallenge_hint}\n" if rechallenge_hint else ""
 
     # 기본 정보
+    # 라이브러리 정보가 있으면 함께 표시
+    library_info = f" ({problem.library})" if problem.library else ""
     result = (
         f"### [{banner}] {problem.title}\n"
         f"- 난이도: {problem.difficulty}\n"
-        f"- 언어: {problem.kind}\n"
+        f"- 언어: {problem.language}{library_info}\n"
         f"{hint_line}\n"
         f"---\n\n"
         f"**📝 문제**\n\n"
@@ -656,7 +675,7 @@ def load_from_notes(
                                 "filters": filters,
                                 "in_progress": False,
                             },
-                            gr.update(value="", language=problem.kind),
+                            gr.update(value="", language=problem.language),
                             favorite_button_label(problem.pid),
                             "",
                         )
@@ -681,7 +700,7 @@ def load_from_notes(
                             "filters": filters,
                             "in_progress": False,
                         },
-                        gr.update(value="", language=problem.kind),
+                        gr.update(value="", language=problem.language),
                         favorite_button_label(problem.pid),
                         "",
                     )
@@ -703,7 +722,7 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.
         return (
             question,
             state,
-            gr.update(value="", language=problem.kind),
+            gr.update(value="", language=problem.language),
             favorite_button_label(problem.pid),
             "",
             gr.update(value="💡 힌트 보기"),
@@ -752,7 +771,7 @@ def on_new_problem(difficulty: str,
     return (
         question,
         state,
-        gr.update(value="", language=problem.kind),
+        gr.update(value="", language=problem.language),
         favorite_button_label(problem.pid),
         "",  # exec_result 초기화
         gr.update(choices=pid_choices, value=None),  # note_pid_dropdown 업데이트
@@ -873,8 +892,10 @@ def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
 
 
 def build_interface() -> gr.Blocks:
+    # kind 값을 정렬하여 계층적으로 표시
+    # 결과: ["전체", "Python", "Python.Pyspark", "SQL"]
     language_options = ["전체"] + \
-        unique_preserve_order([p.kind for p in PROBLEM_BANK])
+        sorted(unique_preserve_order([p.kind for p in PROBLEM_BANK]))
     # 문제 유형 옵션 (체크박스용)
     problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 

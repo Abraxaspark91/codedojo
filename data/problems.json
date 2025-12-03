@@ -1274,7 +1274,7 @@
       "[1, 2, 3, 4, 5] -> [4, 16]",
       "[10, 11, 12] -> [100, 144]"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "[x**2 for x in numbers if ...]"
@@ -1290,7 +1290,7 @@
     "sample_rows": [
       "['apple', 'cat', 'banana'] -> ['APPLE', 'BANANA']"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "[w.upper() for w in words if ...]"
@@ -1341,7 +1341,7 @@
       "5 -> 120 (1*2*3*4*5)",
       "3 -> 6"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "result = 1",
@@ -1449,7 +1449,7 @@
     "sample_rows": [
       "user1 | 2024-01-01 | 100"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "[c.lower() for c in df.columns]",
@@ -1466,7 +1466,7 @@
     "sample_rows": [
       "Alice | 25 | Seoul | 010..."
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "select(*target_cols)"
@@ -1501,7 +1501,7 @@
     "sample_rows": [
       "alice@company.com -> alice"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "udf(lambda x: x.split('@')[0])"
@@ -1517,7 +1517,7 @@
     "sample_rows": [
       "Alice | 25"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "for old, new in col_map.items():",
@@ -1532,7 +1532,7 @@
     "body": "테이블 이름 `table_name = 'sales_2024'`와 기준 금액 `min_amount = 1000`이 변수로 주어집니다. 파이썬의 f-string을 사용하여 `SELECT * FROM sales_2024 WHERE amount >= 1000` 형태의 쿼리 문자열을 생성하고 `spark.sql()`로 실행하세요.",
     "schema": "N/A (Spark SQL 실행)",
     "sample_rows": [],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "query = f\"SELECT * FROM {table_name} ...\"",
@@ -1549,7 +1549,7 @@
     "sample_rows": [
       "dtypes -> [('name', 'string'), ('age', 'int'), ('score', 'int')]"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "[c for c, t in df.dtypes if t == 'int']"
@@ -1563,7 +1563,7 @@
     "body": "데이터 파일 경로 `path`가 주어집니다. 파일을 읽어오되(`spark.read.csv`), 파일이 없거나 에러가 발생하면 \"파일을 찾을 수 없습니다\"를 출력하고 빈 데이터프레임을 생성하는 안전한 코드를 작성하세요.",
     "schema": "N/A",
     "sample_rows": [],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "try:",
@@ -1582,7 +1582,7 @@
     "sample_rows": [
       "공통 컬럼 -> ['id']"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "set(df1.columns) & set(df2.columns)",
@@ -1597,7 +1597,7 @@
     "body": "데이터 가공이 끝난 후, 결과 데이터프레임 `result_df`의 행 개수가 0이면 안 된다는 조건을 걸고 싶습니다. 파이썬의 `assert` 문을 사용하여 행 개수가 0일 때 에러를 발생시키는 코드를 작성하세요.",
     "schema": "result_df(...)",
     "sample_rows": [],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "count = result_df.count()",
@@ -1614,7 +1614,7 @@
     "sample_rows": [
       "1 | Alice"
     ],
-    "difficulty": "Lv1 실전",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "[c.strip() for c in df.columns]",
@@ -1631,7 +1631,7 @@
     "sample_rows": [
       "Alice | 25"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "for old, new in zip(old_cols, new_cols):",
@@ -1646,7 +1646,7 @@
     "body": "CSV를 읽을 때 옵션이 많습니다(header=True, inferSchema=True, sep=','). 이 옵션들을 `read_opts`라는 딕셔너리에 담아두고, `spark.read.options()` 함수에 **언패킹(kwargs)**하여 전달하세요.",
     "schema": "N/A",
     "sample_rows": [],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "read_opts = {'header': 'true', 'sep': ','}",
@@ -1664,7 +1664,7 @@
       "KR -> Korea",
       "JP -> Unknown"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "def map_country(code):",
@@ -1682,7 +1682,7 @@
     "sample_rows": [
       "..."
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "for idx, col_name in enumerate(df.columns):",
@@ -1699,7 +1699,7 @@
     "sample_rows": [
       "20240101 -> 2024"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: x[:4])"
@@ -1713,7 +1713,7 @@
     "body": "데이터 처리 중 에러가 발생하여 `error_list`에 에러 메시지가 담겼습니다. 이 리스트가 **비어있지 않을 때만** 경고 로그를 출력하려고 합니다. 파이썬스럽게 조건문을 작성하세요.",
     "schema": "N/A (로직 문제)",
     "sample_rows": [],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "if error_list:",
@@ -1730,7 +1730,7 @@
     "sample_rows": [
       "['s3n://bucket/a', 's3n://bucket/b']"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "[p.replace('s3n://', 's3a://') for p in paths]"
@@ -1744,7 +1744,7 @@
     "body": "금지어 리스트 `bad_words = ['error', 'fail']`가 있습니다. 로그 메시지(문자열) 내에 금지어 중 하나라도 포함되어 있는지 확인하는 함수를 작성하세요. (Spark 함수가 아닌 파이썬 `in` 연산자 활용)",
     "schema": "N/A (UDF 로직)",
     "sample_rows": [],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "def check_bad(msg):",
@@ -1763,7 +1763,7 @@
     "sample_rows": [
       "a@b.com -> b.com"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: x.split('@')[1])"
@@ -1777,7 +1777,7 @@
     "body": "함수 `process_data(value)`를 만들 때, 입력된 `value`가 정수(int)일 때만 처리하고, 문자열이나 다른 타입이면 None을 반환하도록 방어 코드를 작성하세요.",
     "schema": "N/A",
     "sample_rows": [],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "if not isinstance(value, int):",
@@ -1794,7 +1794,7 @@
     "sample_rows": [
       "1 -> '01', 12 -> '12'"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: str(x).zfill(2))"
@@ -1808,7 +1808,7 @@
     "body": "가공 결과가 리스트 `['Seoul', 'Busan', 'Jeju']`로 나왔습니다. 이를 콤마(,)로 구분된 하나의 문자열 \"Seoul,Busan,Jeju\"로 합쳐서 DB에 저장하려고 합니다. 파이썬 문자열 메서드를 사용하세요.",
     "schema": "cities (List[str])",
     "sample_rows": [],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "','.join(cities)"
@@ -1822,7 +1822,7 @@
     "body": "코드 매핑 딕셔너리 `mapping = {'A': 1, 'B': 2}`가 있는데, 반대로 숫자로 문자를 찾고 싶어 `{1: 'A', 2: 'B'}` 형태로 뒤집으려 합니다. 딕셔너리 컴프리헨션을 사용하세요.",
     "schema": "N/A",
     "sample_rows": [],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "{v: k for k, v in mapping.items()}"
@@ -1838,7 +1838,7 @@
     "sample_rows": [
       "NULL -> 0"
     ],
-    "difficulty": "Lv2 실전",
+    "difficulty": "Lv2 초급",
     "kind": "python",
     "expected": [
       "udf(lambda x: len(x) if x else 0)"
@@ -1854,7 +1854,7 @@
     "sample_rows": [
       "900101-1234567 -> 900101"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: x[:6])"
@@ -1871,7 +1871,7 @@
       "/data/users.csv -> csv",
       "report.pdf -> pdf"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: x.split('.')[-1])"
@@ -1888,7 +1888,7 @@
       "80 -> Pass",
       "50 -> Fail"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: 'Pass' if x >= 60 else 'Fail')"
@@ -1904,7 +1904,7 @@
     "sample_rows": [
       "010-1234-5678 -> 01012345678"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: x.replace('-', ''))"
@@ -1920,7 +1920,7 @@
     "sample_rows": [
       "70.5 -> 70.5kg"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: f'{x}kg')"
@@ -1937,7 +1937,7 @@
       "PySpark -> pyspark",
       "PYTHON -> python"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: x.lower())"
@@ -1953,7 +1953,7 @@
     "sample_rows": [
       "4.56789 -> 4.57"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: round(x, 2))"
@@ -1970,7 +1970,7 @@
       "Gangnam-gu, Seoul -> True",
       "Busan, Korea -> False"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: 'Seoul' in x)"
@@ -1987,7 +1987,7 @@
       "\"007\" -> 7",
       "\"100\" -> 100"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: int(x))"
@@ -2004,7 +2004,7 @@
       "Alice -> 5",
       "NULL -> 0"
     ],
-    "difficulty": "Lv1 기초",
+    "difficulty": "Lv1 입문",
     "kind": "python",
     "expected": [
       "udf(lambda x: len(x) if x is not None else 0)"

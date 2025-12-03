@@ -18,10 +18,10 @@ def test_problem_properties():
     print("=" * 60)
 
     test_cases = [
-        ("Python.Pyspark", "Python", "Pyspark"),
-        ("Python.Numpy", "Python", "Numpy"),
-        ("Python", "Python", None),
-        ("SQL", "SQL", None),
+        ("Python.Pyspark", "python", "Pyspark"),
+        ("Python.Numpy", "python", "Numpy"),
+        ("Python", "python", None),
+        ("SQL", "sql", None),
     ]
 
     all_passed = True
@@ -87,11 +87,11 @@ def test_filter_logic():
     print(f"✅ Python.Pyspark 문제: {len(pyspark_problems)}개")
 
     # Python 계열 모든 문제 필터링
-    python_problems = [p for p in PROBLEM_BANK if p.language == "Python"]
+    python_problems = [p for p in PROBLEM_BANK if p.language == "python"]
     print(f"✅ Python 계열 문제: {len(python_problems)}개")
 
     # SQL 문제 필터링
-    sql_problems = [p for p in PROBLEM_BANK if p.kind == "SQL"]
+    sql_problems = [p for p in PROBLEM_BANK if p.language == "sql"]
     print(f"✅ SQL 문제: {len(sql_problems)}개")
 
     return True

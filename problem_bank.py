@@ -22,11 +22,12 @@ class Problem:
     @property
     def language(self) -> str:
         """
-        kind에서 언어 부분만 추출합니다.
+        kind에서 언어 부분만 추출하여 소문자로 반환합니다.
+        Gradio의 gr.Code language 파라미터용으로 사용됩니다.
         '.'이 있으면 앞부분만, 없으면 전체를 반환합니다.
-        예: "Python.Pyspark" -> "Python", "SQL" -> "SQL"
+        예: "Python.Pyspark" -> "python", "SQL" -> "sql"
         """
-        return self.kind.split('.')[0]
+        return self.kind.split('.')[0].lower()
 
     @property
     def library(self) -> str | None:

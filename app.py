@@ -880,7 +880,6 @@ def build_interface() -> gr.Blocks:
 
     demo = gr.Blocks(
         title="SQL & Python 코딩 연습",
-        footer_links=["settings"]
     )
 
     with demo:

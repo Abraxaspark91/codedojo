@@ -879,7 +879,7 @@ def build_interface() -> gr.Blocks:
     problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 
     demo = gr.Blocks(
-        title="SQL & Python 코딩 연습",
+        title="SQL & Python 코딩 연습"
     )
 
     with demo:
@@ -891,7 +891,7 @@ def build_interface() -> gr.Blocks:
         # ===== 헤더 =====
         with gr.Group():
             with gr.Row():
-                gr.Markdown("#🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉", container=True)
+                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>", container=True)
 
         # ===== 탭 구조 =====
         with gr.Tabs():

@@ -1025,18 +1025,6 @@ def build_interface() -> gr.Blocks:
             outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
         )
 
-        difficulty.change(
-            on_new_problem,
-            inputs=[difficulty, language, problem_types],
-            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
-        )
-
-        language.change(
-            on_new_problem,
-            inputs=[difficulty, language, problem_types],
-            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
-        )
-
         submit_btn.click(
             on_submit,
             inputs=[new_state, code_box],

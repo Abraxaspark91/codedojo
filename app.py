@@ -894,7 +894,7 @@ def build_interface() -> gr.Blocks:
         # ===== 헤더 =====
         with gr.Group():
             with gr.Row():
-                gr.Markdown("# 🎯 SQL & Python 코딩 연습 스테이션", container=True)
+                gr.Markdown("#🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉", container=True)
 
         # ===== 탭 구조 =====
         with gr.Tabs():
@@ -999,13 +999,13 @@ def build_interface() -> gr.Blocks:
                         pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
                         note_pid_dropdown = gr.Dropdown(
                             choices=pid_choices,
-                            label="문제 선택 (제목 | 난이도 | 언어)",
+                            label="문제 선택",
                             scale=1
                         )
                         # 드롭다운 2: 시도 선택 (드롭다운 1 선택 후 활성화)
                         note_attempt_dropdown = gr.Dropdown(
                             choices=[],
-                            label="시도 선택 (별명 | 시간)",
+                            label="시도 선택",
                             scale=1,
                             interactive=True
                         )

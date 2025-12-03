@@ -878,49 +878,12 @@ def build_interface() -> gr.Blocks:
     # 문제 유형 옵션 (체크박스용)
     problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 
-    # Dark mode toggle with localStorage support
-    js_code = """
-    function() {
-        // Initialize dark mode from localStorage (default: dark)
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark');
-        } else {
-            document.body.classList.remove('dark');
-        }
-
-        // Add toggle function to window for button access
-        window.toggleDarkMode = function() {
-            const isDark = document.body.classList.toggle('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-
-            // Update button text
-            const btn = document.getElementById('theme-toggle-btn');
-            if (btn) {
-                btn.textContent = isDark ? '☀️ 라이트 모드' : '🌙 다크 모드';
-            }
-        };
-
-        // Set initial button text
-        setTimeout(() => {
-            const btn = document.getElementById('theme-toggle-btn');
-            if (btn) {
-                const isDark = document.body.classList.contains('dark');
-                btn.textContent = isDark ? '☀️ 라이트 모드' : '🌙 다크 모드';
-            }
-        }, 100);
-    }
-    """
-
-    try:
-        demo = gr.Blocks(
-            title="SQL & Python 코딩 연습",
-            theme=CUSTOM_THEME,
-            css=CUSTOM_CSS,
-            js=js_code
-        )
-    except TypeError:
-        demo = gr.Blocks(title="SQL & Python 코딩 연습")
+    demo = gr.Blocks(
+        title="SQL & Python 코딩 연습",
+        theme=CUSTOM_THEME,
+        css=CUSTOM_CSS,
+        footer_links=["settings"]
+    )
 
     with demo:
         # 탭별 독립적인 state 생성
@@ -932,12 +895,6 @@ def build_interface() -> gr.Blocks:
         with gr.Group():
             with gr.Row():
                 gr.Markdown("#🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉", container=True)
-                theme_toggle_btn = gr.Button(
-                    "🌙 다크 모드",
-                    elem_id="theme-toggle-btn",
-                    size="sm",
-                    scale=1
-                )
 
         # ===== 탭 구조 =====
         with gr.Tabs():
@@ -1511,14 +1468,6 @@ def build_interface() -> gr.Blocks:
             toggle_favorite_note_tab,
             inputs=[note_state, new_state, fav_state],
             outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices, favorite_btn, new_favorite_status_md, fav_favorite_btn, fav_favorite_status_md],
-        )
-
-        # ===== 다크모드 토글 버튼 =====
-        theme_toggle_btn.click(
-            None,
-            None,
-            None,
-            js="() => { window.toggleDarkMode(); }"
         )
 
     return demo

@@ -739,9 +739,9 @@ def on_new_problem(difficulty: str,
             "last_improvement": "",
         }
     )
-    # 오답노트 목록 자동 업데이트
-    labels, values = refresh_note_choices()
-    note_choices = list(zip(labels, values)) if labels else []
+    # 오답노트 목록 자동 업데이트 (PID 드롭다운만)
+    pid_labels, pid_values = refresh_note_pid_choices()
+    pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
 
     return (
         question,
@@ -749,7 +749,7 @@ def on_new_problem(difficulty: str,
         gr.update(value="", language=problem.kind),
         favorite_button_label(problem.pid),
         "",  # exec_result 초기화
-        gr.update(choices=note_choices, value=None),  # note_choices 업데이트
+        gr.update(choices=pid_choices, value=None),  # note_pid_dropdown 업데이트
         gr.update(value="💡 힌트 보기"),  # hint_btn 초기화
         "",  # add_notes_status 초기화
         "",  # nickname_input 초기화
@@ -999,13 +999,23 @@ def build_interface() -> gr.Blocks:
                 # 오답노트 목록
                 with gr.Group():
                     gr.Markdown("### 📝 오답노트 재도전")
-                    note_labels, note_values = refresh_note_choices()
-                    note_choice = list(zip(note_labels, note_values)) if note_labels else []
-                    note_choices = gr.Dropdown(
-                        choices=note_choice,
-                        label="문제 선택",
-                        scale=1
-                    )
+                    # 2단계 드롭다운: 1) PID 선택 → 2) 시도 선택
+                    with gr.Row():
+                        # 드롭다운 1: PID 선택
+                        pid_labels, pid_values = refresh_note_pid_choices()
+                        pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
+                        note_pid_dropdown = gr.Dropdown(
+                            choices=pid_choices,
+                            label="문제 선택 (PID | 난이도 | 언어)",
+                            scale=1
+                        )
+                        # 드롭다운 2: 시도 선택 (드롭다운 1 선택 후 활성화)
+                        note_attempt_dropdown = gr.Dropdown(
+                            choices=[],
+                            label="시도 선택 (별명 | 시간)",
+                            scale=1,
+                            interactive=True
+                        )
                     with gr.Row():
                         refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
                         load_note_btn = gr.Button("🎯 문제 불러오기", size="sm", scale=1)
@@ -1120,13 +1130,25 @@ def build_interface() -> gr.Blocks:
         new_btn.click(
             on_new_problem,
             inputs=[difficulty, language, problem_types],
-            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_choices, hint_btn, add_notes_status, nickname_input],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_pid_dropdown, hint_btn, add_notes_status, nickname_input],
+        )
+
+        difficulty.change(
+            on_new_problem,
+            inputs=[difficulty, language, problem_types],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_pid_dropdown, hint_btn],
+        )
+
+        language.change(
+            on_new_problem,
+            inputs=[difficulty, language, problem_types],
+            outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_pid_dropdown, hint_btn],
         )
 
         submit_btn.click(
             on_submit,
             inputs=[new_state, code_box],
-            outputs=[exec_result, note_choices, hint_btn],
+            outputs=[exec_result, note_pid_dropdown, hint_btn],
             show_progress="minimal",
         )
 
@@ -1240,7 +1262,7 @@ def build_interface() -> gr.Blocks:
         fav_submit_btn.click(
             on_submit,
             inputs=[fav_state, fav_code_box],
-            outputs=[fav_exec_result, note_choices, fav_hint_btn],
+            outputs=[fav_exec_result, note_pid_dropdown, fav_hint_btn],
             show_progress="minimal",
         )
 
@@ -1310,23 +1332,40 @@ def build_interface() -> gr.Blocks:
             result = save_to_wrong_notes(problem, code, feedback, nickname, hint_summary)
 
             progress(0.9, desc="오답노트 목록 갱신 중...")
-            # 오답노트 목록 갱신
-            labels, values = refresh_note_choices()
-            note_choices_updated = list(zip(labels, values)) if labels else []
+            # 오답노트 목록 갱신 (PID 드롭다운만)
+            pid_labels, pid_values = refresh_note_pid_choices()
+            pid_choices_updated = list(zip(pid_labels, pid_values)) if pid_labels else []
 
-            return result, gr.update(choices=note_choices_updated, value=None)
+            return result, gr.update(choices=pid_choices_updated, value=None)
 
         add_to_notes_btn.click(
             on_add_to_notes,
             inputs=[new_state, nickname_input],
-            outputs=[add_notes_status, note_choices],
+            outputs=[add_notes_status, note_pid_dropdown],
             show_progress="minimal",
         )
 
         # ===== 이벤트 핸들러 - 오답노트 탭 =====
+        def update_attempt_dropdown(selected_pid):
+            """드롭다운 1에서 PID 선택 시 드롭다운 2 업데이트"""
+            if not selected_pid:
+                return gr.update(choices=[], value=None)
+
+            labels, values = refresh_note_attempt_choices(selected_pid)
+            choices = list(zip(labels, values)) if labels else []
+            return gr.update(choices=choices, value=None)
+
+        # 드롭다운 1 선택 시 드롭다운 2 업데이트
+        note_pid_dropdown.change(
+            update_attempt_dropdown,
+            inputs=[note_pid_dropdown],
+            outputs=[note_attempt_dropdown]
+        )
+
         def refresh_notes(new_state_dict, fav_state_dict):
-            labels, values = refresh_note_choices()
-            choices = list(zip(labels, values))
+            # PID 드롭다운 갱신
+            pid_labels, pid_values = refresh_note_pid_choices()
+            pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
 
             # 다른 탭의 버튼 레이블 계산
             if new_state_dict and "problem" in new_state_dict:
@@ -1340,14 +1379,15 @@ def build_interface() -> gr.Blocks:
                 fav_btn = "☆ 즐겨찾기 추가"
 
             return (
-                gr.update(choices=choices, value=None),
-                {},
-                "오답노트에서 문제를 선택하세요.",
-                gr.update(value=""),
-                "",
-                gr.update(value="💡 힌트 보기"),
+                gr.update(choices=pid_choices, value=None),  # note_pid_dropdown
+                gr.update(choices=[], value=None),  # note_attempt_dropdown 초기화
+                {},  # note_state
+                "오답노트에서 문제를 선택하세요.",  # note_question_md
+                gr.update(value=""),  # note_code_box
+                "",  # note_exec_result
+                gr.update(value="💡 힌트 보기"),  # note_hint_btn
                 "☆ 즐겨찾기 추가",  # note_favorite_btn (현재 탭이므로 초기화)
-                "",
+                "",  # note_favorite_status_md
                 fav_btn,  # fav_favorite_btn
                 new_btn,  # favorite_btn
             )
@@ -1355,65 +1395,50 @@ def build_interface() -> gr.Blocks:
         refresh_btn.click(
             refresh_notes,
             inputs=[new_state, fav_state],
-            outputs=[note_choices, note_state, note_question_md, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn]
+            outputs=[note_pid_dropdown, note_attempt_dropdown, note_state, note_question_md, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn]
         )
 
-        def load_note_to_tab(pid, new_state_dict, note_state_dict, fav_state_dict):
-            """오답노트 탭용: 문제 불러오기"""
-            if not pid:
+        def load_note_to_tab(composite_key, new_state_dict, note_state_dict, fav_state_dict):
+            """오답노트 탭용: 문제 불러오기 (복합 키 사용)"""
+            if not composite_key:
                 return gr.update(), {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가", "☆ 즐겨찾기 추가"
 
-            entries = failed_attempts(load_attempts())
-            for entry in entries:
-                if entry.pid == pid:
-                    problem = next((p for p in PROBLEM_BANK if p.pid == entry.pid), None)
-                    if problem:
-                        filters = normalize_filters(None, None, None)
-                        question = render_question(problem, True, entry.rechallenge_hint, filters)
-                        note_state_val = ensure_state({
-                            "problem": problem,
-                            "rechallenge": True,
-                            "hint": entry.rechallenge_hint,
-                            "filters": filters,
-                            "in_progress": False,
-                        })
+            # load_from_notes() 함수 사용
+            question, note_state_val, code_update, note_btn, status = load_from_notes(composite_key)
 
-                        # 각 탭의 버튼 레이블을 개별적으로 계산
-                        note_btn = favorite_button_label(problem.pid)  # 현재 불러온 문제
+            # 다른 탭의 버튼 레이블 계산
+            if new_state_dict and "problem" in new_state_dict:
+                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+            else:
+                new_btn = "☆ 즐겨찾기 추가"
 
-                        if new_state_dict and "problem" in new_state_dict:
-                            new_btn = favorite_button_label(new_state_dict["problem"].pid)
-                        else:
-                            new_btn = "☆ 즐겨찾기 추가"
+            if fav_state_dict and "problem" in fav_state_dict:
+                fav_btn = favorite_button_label(fav_state_dict["problem"].pid)
+            else:
+                fav_btn = "☆ 즐겨찾기 추가"
 
-                        if fav_state_dict and "problem" in fav_state_dict:
-                            fav_btn = favorite_button_label(fav_state_dict["problem"].pid)
-                        else:
-                            fav_btn = "☆ 즐겨찾기 추가"
-
-                        return (
-                            question,
-                            note_state_val,
-                            gr.update(value="", language=problem.kind),
-                            "",
-                            gr.update(value="💡 힌트 보기"),
-                            note_btn,
-                            "",
-                            fav_btn,
-                            new_btn,
-                        )
-            return "선택한 문제가 없습니다.", {}, gr.update(), "", gr.update(value="💡 힌트 보기"), "☆ 즐겨찾기 추가", "", "☆ 즐겨찾기 추가", "☆ 즐겨찾기 추가"
+            return (
+                question,  # note_question_md
+                note_state_val,  # note_state
+                code_update,  # note_code_box
+                status,  # note_exec_result
+                gr.update(value="💡 힌트 보기"),  # note_hint_btn
+                note_btn,  # note_favorite_btn
+                "",  # note_favorite_status_md
+                fav_btn,  # fav_favorite_btn
+                new_btn,  # favorite_btn
+            )
 
         load_note_btn.click(
             load_note_to_tab,
-            inputs=[note_choices, new_state, note_state, fav_state],
+            inputs=[note_attempt_dropdown, new_state, note_state, fav_state],
             outputs=[note_question_md, note_state, note_code_box, note_exec_result, note_hint_btn, note_favorite_btn, note_favorite_status_md, fav_favorite_btn, favorite_btn],
         )
 
         note_submit_btn.click(
             on_submit,
             inputs=[note_state, note_code_box],
-            outputs=[note_exec_result, note_choices, note_hint_btn],
+            outputs=[note_exec_result, note_pid_dropdown, note_hint_btn],
             show_progress="minimal",
         )
 

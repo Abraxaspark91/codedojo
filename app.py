@@ -891,7 +891,7 @@ def build_interface() -> gr.Blocks:
         # ===== 헤더 =====
         with gr.Group():
             with gr.Row():
-                gr.Markdown("#🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉", container=True)
+                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>", container=True)
 
         # ===== 탭 구조 =====
         with gr.Tabs():

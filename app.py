@@ -562,7 +562,7 @@ def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
 
     Returns:
         Tuple[List[str], List[str]]: (labels, values)
-            - labels: "pid | difficulty | kind" 형식
+            - labels: "title | difficulty | kind" 형식
             - values: pid 문자열
     """
     entries = failed_attempts(load_attempts())
@@ -572,8 +572,8 @@ def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
         if a.pid not in pid_dict:
             pid_dict[a.pid] = a
 
-    # pid, difficulty, kind만 표시
-    labels = [f"{a.pid} | {a.difficulty} | {a.kind}" for a in pid_dict.values()]
+    # title, difficulty, kind 표시
+    labels = [f"{a.title} | {a.difficulty} | {a.kind}" for a in pid_dict.values()]
     values = [a.pid for a in pid_dict.values()]
     return labels, values
 
@@ -1006,7 +1006,7 @@ def build_interface() -> gr.Blocks:
                         pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
                         note_pid_dropdown = gr.Dropdown(
                             choices=pid_choices,
-                            label="문제 선택 (PID | 난이도 | 언어)",
+                            label="문제 선택 (제목 | 난이도 | 언어)",
                             scale=1
                         )
                         # 드롭다운 2: 시도 선택 (드롭다운 1 선택 후 활성화)

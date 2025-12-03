@@ -12,12 +12,31 @@ class Problem:
     title: str
     body: str
     difficulty: str
-    kind: str  # "sql" or "python"
+    kind: str  # "Python.Pyspark", "Python.Numpy", "Python", "SQL" 등
     expected: List[str]
     hint: str
     schema: str = ""
     sample_rows: List[str] = field(default_factory=list)
     problem_type: str = "코딩"  # "코딩", "개념문제", "빈칸채우기"
+
+    @property
+    def language(self) -> str:
+        """
+        kind에서 언어 부분만 추출합니다.
+        '.'이 있으면 앞부분만, 없으면 전체를 반환합니다.
+        예: "Python.Pyspark" -> "Python", "SQL" -> "SQL"
+        """
+        return self.kind.split('.')[0]
+
+    @property
+    def library(self) -> str | None:
+        """
+        kind에서 라이브러리 부분을 추출합니다.
+        '.'이 있으면 뒷부분을, 없으면 None을 반환합니다.
+        예: "Python.Pyspark" -> "Pyspark", "SQL" -> None
+        """
+        parts = self.kind.split('.')
+        return parts[1] if len(parts) > 1 else None
 
 
 def _unique_preserve_order(items: Sequence[str]) -> List[str]:

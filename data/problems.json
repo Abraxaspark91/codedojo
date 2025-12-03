@@ -9,7 +9,7 @@
       "Bob | 30"
     ],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "filter",
       "col"
@@ -27,7 +27,7 @@
       "Bob | 30"
     ],
     "difficulty": "Lv0 기초",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "name =",
@@ -43,7 +43,7 @@
     "schema": "N/A (코드 설정 문제)",
     "sample_rows": [],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "import",
       "as F"
@@ -62,7 +62,7 @@
       "Charlie | charlie@test.com"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter",
       "isNull()"
@@ -80,7 +80,7 @@
       "Bob | NULL"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "IS NULL"
@@ -98,7 +98,7 @@
       "Bob | 35"
     ],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter",
       "f\"age >= {target_age}\""
@@ -117,7 +117,7 @@
       "Carrot | Vegetable"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "IN"
@@ -134,7 +134,7 @@
       "Alice | 20"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "F.col",
@@ -152,7 +152,7 @@
       "Mouse | 10000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT",
       "*",
@@ -171,7 +171,7 @@
       "Bob | 35"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter",
       "&",
@@ -191,7 +191,7 @@
       "3 | pending"
     ],
     "difficulty": "Lv0 기초",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "<>",
@@ -210,7 +210,7 @@
       "Bob | 25"
     ],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter",
       "!="
@@ -227,7 +227,7 @@
       "Alice | 20"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumnRenamed"
     ],
@@ -245,7 +245,7 @@
       "3 | 102"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT",
       "(column_name)"
@@ -264,7 +264,7 @@
       "10:01 | Bob"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "dropDuplicates",
       "distinct"
@@ -283,7 +283,7 @@
       "C | 2500"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "BETWEEN",
@@ -302,7 +302,7 @@
       "Bob | 100"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "orderBy",
       "desc"
@@ -320,7 +320,7 @@
       "B | b@gmail.com"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "LIKE",
@@ -339,7 +339,7 @@
       "Old Mouse | 10"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter",
       "startswith"
@@ -356,7 +356,7 @@
       "Alice | 12000"
     ],
     "difficulty": "Lv0 기초",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT",
       "/",
@@ -374,7 +374,7 @@
       "1 | a@test.com | Seoul | 010..."
     ],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "select"
     ],
@@ -390,7 +390,7 @@
       "Alice | \"25\""
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "cast"
@@ -408,7 +408,7 @@
       "Bob | NULL"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT",
       "COALESCE"
@@ -426,7 +426,7 @@
       "Keyboard | 15000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "when",
@@ -445,7 +445,7 @@
       "Bob"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "lit"
@@ -463,7 +463,7 @@
       "Monitor | Computer | 20000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "( ... OR ... )",
@@ -479,7 +479,7 @@
     "schema": "N/A (데이터 확인 문제)",
     "sample_rows": [],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "printSchema()"
     ],
@@ -496,7 +496,7 @@
       "Bob | 9000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT",
       "MAX",
@@ -512,7 +512,7 @@
     "schema": "result_df(name STRING, age INT)",
     "sample_rows": [],
     "difficulty": "Lv0 기초",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "show()"
     ],
@@ -529,7 +529,7 @@
       "2 | 2024-01-02"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       ">",
@@ -548,7 +548,7 @@
       "Bob | 25"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "fillna",
       "na.fill"
@@ -567,7 +567,7 @@
       "3 | 200"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT",
       "DISTINCT"
@@ -585,7 +585,7 @@
       "Bob | 15 | Busan"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "df.filter(...).select(...)"
     ],
@@ -601,7 +601,7 @@
       "Gildong | Hong"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CONCAT",
       "||"
@@ -621,7 +621,7 @@
       "4 | Beauty | 25000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT DISTINCT",
       "ORDER BY"
@@ -639,7 +639,7 @@
       "2 | Bob"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "F.lit"
@@ -659,7 +659,7 @@
       "4 | David | david@example.com"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "IS NULL",
@@ -680,7 +680,7 @@
       "103 | '900'"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "cast",
@@ -700,7 +700,7 @@
       "3 | 30000 | 2024-03-01 09:00:00"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ORDER BY DESC",
       "LIMIT"
@@ -718,7 +718,7 @@
       "2 | 20.00"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "select",
       "alias"
@@ -738,7 +738,7 @@
       "4 | Robert"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "LIKE"
@@ -756,7 +756,7 @@
       "2 | Bob | abcd | 333-444"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "drop"
     ],
@@ -773,7 +773,7 @@
       "2 | 20000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT",
       "*",
@@ -794,7 +794,7 @@
       "4 | Toys"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter",
       "isin"
@@ -814,7 +814,7 @@
       "4 | 8 | Y"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "AND",
@@ -834,7 +834,7 @@
       "Charlie | HR | 4000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "orderBy",
       "asc",
@@ -856,7 +856,7 @@
       "5 | Eve | 2024-01-01"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT",
       "WHERE",
@@ -879,7 +879,7 @@
       "2024-02-28 | 5000"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "GROUP BY",
       "SUM",
@@ -904,7 +904,7 @@
       "orders: 13 | 1 | 20000"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "JOIN",
       "ON",
@@ -928,7 +928,7 @@
       "5 | books | 15000"
     ],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "RANK() OVER",
       "PARTITION BY",
@@ -950,7 +950,7 @@
       "2024-04 | 150000"
     ],
     "difficulty": "Lv5 심화",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM() OVER",
       "ORDER BY",
@@ -971,7 +971,7 @@
       "4 | true | 2024-01-05 09:20:00"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "filter / where",
       "col('active') == True",
@@ -993,7 +993,7 @@
       "Ord: 12 | 2 | 10000.0"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "join",
       "on='cust_id'",
@@ -1014,7 +1014,7 @@
       "2 | 10:00 | 20.0"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "Window.partitionBy",
       "orderBy",
@@ -1036,7 +1036,7 @@
       "2024-01-09 | pending"
     ],
     "difficulty": "Lv4 고급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "date_trunc",
       "groupBy",
@@ -1059,7 +1059,7 @@
       "1 | 11:05"
     ],
     "difficulty": "Lv5 심화",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "Window",
       "F.lag",
@@ -1079,7 +1079,7 @@
       "Small: 100 rows (1 | 'Discount', 2 | 'Regular')"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "F.broadcast",
       "join"
@@ -1099,7 +1099,7 @@
       "4 | NULL"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "F.explode",
       "withColumn / select"
@@ -1118,7 +1118,7 @@
       "Christopher"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "F.length",
       "(Optional) F.udf"
@@ -1137,7 +1137,7 @@
       "..."
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "coalesce(1)",
       "write"
@@ -1155,7 +1155,7 @@
       "2 | 0.456 (computed costly)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "cache / persist",
       "count",
@@ -1175,7 +1175,7 @@
       "Keyboard | 2024-02-10 | -5000"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "AND",
@@ -1196,7 +1196,7 @@
       "uuid-1 | cart"
     ],
     "difficulty": "Lv4 고급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "F.approx_count_distinct"
     ],
@@ -1215,7 +1215,7 @@
       "C | 50"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WITH",
       "AS",
@@ -1235,7 +1235,7 @@
       "Bob | {city: 'Busan', zipcode: 40210}"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "col('col.field')",
       "select"
@@ -1255,7 +1255,7 @@
       "B | 1"
     ],
     "difficulty": "Lv5 심화",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "withColumn",
       "rand",
@@ -1275,7 +1275,7 @@
       "[10, 11, 12] -> [100, 144]"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "[x**2 for x in numbers if ...]"
     ],
@@ -1291,7 +1291,7 @@
       "['apple', 'cat', 'banana'] -> ['APPLE', 'BANANA']"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "[w.upper() for w in words if ...]"
     ],
@@ -1308,7 +1308,7 @@
       "[[1, 1, 1], [2, 2, 2]] -> [3, 6]"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "def row_sums(matrix):",
       "return [sum(row) for row in matrix]"
@@ -1325,7 +1325,7 @@
       "[[1, 2, 3], [4, 5, 6]] -> [[1, 4], [2, 5], [3, 6]]"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "[[row[i] for row in matrix] for i in range(len(matrix[0]))]"
     ],
@@ -1342,7 +1342,7 @@
       "3 -> 6"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "result = 1",
       "for i in range(1, n+1):",
@@ -1360,7 +1360,7 @@
       "['apple', 'banana', 'apple'] -> {'apple': 2, 'banana': 1}"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "counts = {}",
       "if word in counts:",
@@ -1379,7 +1379,7 @@
       "nums=[1, 2, 3, 4, 5], k=2 -> [4, 5, 1, 2, 3]"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "def rotate_list(nums, k):",
       "k = k % len(nums)",
@@ -1398,7 +1398,7 @@
       "10 -> False"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "if n < 2: return False",
       "for i in range(2, int(n**0.5) + 1):",
@@ -1416,7 +1416,7 @@
       "[[1, 2], [3, 4], [5]] -> [1, 2, 3, 4, 5]"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "[val for row in matrix for val in row]"
     ],
@@ -1432,7 +1432,7 @@
       "[10, 50, 30] -> (50, 1)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "max_val = nums[0]",
       "idx = 0",
@@ -1450,7 +1450,7 @@
       "user1 | 2024-01-01 | 100"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "[c.lower() for c in df.columns]",
       "toDF(*...)"
@@ -1467,7 +1467,7 @@
       "Alice | 25 | Seoul | 010..."
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "select(*target_cols)"
     ],
@@ -1484,7 +1484,7 @@
       "2 | 0 | 0 -> 0.0"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "def calculate_score(p, v):",
       "if v == 0: return 0.0",
@@ -1502,7 +1502,7 @@
       "alice@company.com -> alice"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "udf(lambda x: x.split('@')[0])"
     ],
@@ -1518,7 +1518,7 @@
       "Alice | 25"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "for old, new in col_map.items():",
       "df = df.withColumnRenamed(old, new)"
@@ -1533,7 +1533,7 @@
     "schema": "N/A (Spark SQL 실행)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "query = f\"SELECT * FROM {table_name} ...\"",
       "spark.sql(query)"
@@ -1550,7 +1550,7 @@
       "dtypes -> [('name', 'string'), ('age', 'int'), ('score', 'int')]"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "[c for c, t in df.dtypes if t == 'int']"
     ],
@@ -1564,7 +1564,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "try:",
       "spark.read.csv(path)",
@@ -1583,7 +1583,7 @@
       "공통 컬럼 -> ['id']"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "set(df1.columns) & set(df2.columns)",
       "list(...)"
@@ -1598,7 +1598,7 @@
     "schema": "result_df(...)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "count = result_df.count()",
       "assert count > 0, \"메시지\""
@@ -1615,7 +1615,7 @@
       "1 | Alice"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "[c.strip() for c in df.columns]",
       "toDF(*...)"
@@ -1632,7 +1632,7 @@
       "Alice | 25"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "for old, new in zip(old_cols, new_cols):",
       "df = df.withColumnRenamed(old, new)"
@@ -1647,7 +1647,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "read_opts = {'header': 'true', 'sep': ','}",
       "spark.read.options(**read_opts).csv(...)"
@@ -1665,7 +1665,7 @@
       "JP -> Unknown"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "def map_country(code):",
       "return code_map.get(code, 'Unknown')",
@@ -1683,7 +1683,7 @@
       "..."
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "for idx, col_name in enumerate(df.columns):",
       "df = df.withColumnRenamed(col_name, f'col_{idx}')"
@@ -1700,7 +1700,7 @@
       "20240101 -> 2024"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "udf(lambda x: x[:4])"
     ],
@@ -1714,7 +1714,7 @@
     "schema": "N/A (로직 문제)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "if error_list:",
       "print('Error!')"
@@ -1731,7 +1731,7 @@
       "['s3n://bucket/a', 's3n://bucket/b']"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "[p.replace('s3n://', 's3a://') for p in paths]"
     ],
@@ -1745,7 +1745,7 @@
     "schema": "N/A (UDF 로직)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "def check_bad(msg):",
       "for w in bad_words:",
@@ -1764,7 +1764,7 @@
       "a@b.com -> b.com"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "udf(lambda x: x.split('@')[1])"
     ],
@@ -1778,7 +1778,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "if not isinstance(value, int):",
       "return None"
@@ -1795,7 +1795,7 @@
       "1 -> '01', 12 -> '12'"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "udf(lambda x: str(x).zfill(2))"
     ],
@@ -1809,7 +1809,7 @@
     "schema": "cities (List[str])",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "','.join(cities)"
     ],
@@ -1823,7 +1823,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "{v: k for k, v in mapping.items()}"
     ],
@@ -1839,7 +1839,7 @@
       "NULL -> 0"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "python",
+    "kind": "Python.Pyspark",
     "expected": [
       "udf(lambda x: len(x) if x else 0)"
     ],
@@ -1855,7 +1855,7 @@
       "900101-1234567 -> 900101"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: x[:6])"
     ],
@@ -1872,7 +1872,7 @@
       "report.pdf -> pdf"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: x.split('.')[-1])"
     ],
@@ -1889,7 +1889,7 @@
       "50 -> Fail"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: 'Pass' if x >= 60 else 'Fail')"
     ],
@@ -1905,7 +1905,7 @@
       "010-1234-5678 -> 01012345678"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: x.replace('-', ''))"
     ],
@@ -1921,7 +1921,7 @@
       "70.5 -> 70.5kg"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: f'{x}kg')"
     ],
@@ -1938,7 +1938,7 @@
       "PYTHON -> python"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: x.lower())"
     ],
@@ -1954,7 +1954,7 @@
       "4.56789 -> 4.57"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: round(x, 2))"
     ],
@@ -1971,7 +1971,7 @@
       "Busan, Korea -> False"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: 'Seoul' in x)"
     ],
@@ -1988,7 +1988,7 @@
       "\"100\" -> 100"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: int(x))"
     ],
@@ -2005,7 +2005,7 @@
       "NULL -> 0"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "python",
+    "kind": "Python",
     "expected": [
       "udf(lambda x: len(x) if x is not None else 0)"
     ],
@@ -2021,7 +2021,7 @@
       "A: 1, 2 | B: 2, 3 -> Result: 1, 2, 2, 3"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "UNION ALL"
     ],
@@ -2035,7 +2035,7 @@
     "schema": "orders(user_id), users(user_id)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "INNER JOIN"
     ],
@@ -2052,7 +2052,7 @@
       "Order 2 | NULL (회원정보 없음)"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEFT JOIN",
       "OR LEFT OUTER JOIN"
@@ -2069,7 +2069,7 @@
       "' Alice ' -> 'Alice'"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "TRIM(name)"
     ],
@@ -2083,7 +2083,7 @@
     "schema": "users(name TEXT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "UPPER(name) = 'KIM'",
       "OR LOWER(name) = 'kim'"
@@ -2098,7 +2098,7 @@
     "schema": "users(password TEXT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LENGTH(password) < 8",
       "OR LEN(password)"
@@ -2115,7 +2115,7 @@
       "'19900101' -> '1990'"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUBSTRING(birth_str, 1, 4)",
       "OR LEFT(birth_str, 4)"
@@ -2130,7 +2130,7 @@
     "schema": "scores(avg_score DECIMAL)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROUND(avg_score, 0)"
     ],
@@ -2144,7 +2144,7 @@
     "schema": "orders(order_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "BETWEEN '2023-01-01' AND '2023-01-31'"
     ],
@@ -2158,7 +2158,7 @@
     "schema": "users(id INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "아무것도 출력되지 않음"
     ],
@@ -2172,7 +2172,7 @@
     "schema": "orders(user_id)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE EXISTS (SELECT 1 ...)"
     ],
@@ -2186,7 +2186,7 @@
     "schema": "orders(user_id)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "GROUP BY user_id",
       "HAVING COUNT(*) >= 2"
@@ -2201,7 +2201,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "AND"
     ],
@@ -2215,7 +2215,7 @@
     "schema": "emp(dept, job)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT DISTINCT dept, job"
     ],
@@ -2231,7 +2231,7 @@
       "5000 + NULL = ?"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "NULL"
     ],
@@ -2245,7 +2245,7 @@
     "schema": "colors(name), sizes(code)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CROSS JOIN"
     ],
@@ -2259,7 +2259,7 @@
     "schema": "users(gender CHAR(1))",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CASE gender",
       "WHEN 'M' THEN '남성'",
@@ -2276,7 +2276,7 @@
     "schema": "data(num_str VARCHAR)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ORDER BY CAST(num_str AS INT)"
     ],
@@ -2292,7 +2292,7 @@
       "Like 'A__'"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "_"
     ],
@@ -2306,7 +2306,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATE_ADD(dt, INTERVAL 7 DAY)",
       "OR dt + 7"
@@ -2325,7 +2325,7 @@
       "3 | b@test.com"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT(email)"
     ],
@@ -2343,7 +2343,7 @@
       "2"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT(DISTINCT user_id)"
     ],
@@ -2359,7 +2359,7 @@
       "Alice | NULL -> Unknown"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE(address, 'Unknown')"
     ],
@@ -2373,7 +2373,7 @@
     "schema": "students(name TEXT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ORDER BY",
       "score DESC, name ASC"
@@ -2391,7 +2391,7 @@
       "Lee Younghee"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LIKE 'Kim%'"
     ],
@@ -2408,7 +2408,7 @@
       "'2000'"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CAST(price_str AS INT)",
       "OR ::INT"
@@ -2423,7 +2423,7 @@
     "schema": "emp(name TEXT, dept TEXT, salary INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SELECT dept, AVG(salary)",
       "GROUP BY dept"
@@ -2438,7 +2438,7 @@
     "schema": "scores(class TEXT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "GROUP BY class",
       "HAVING AVG(score) >= 80"
@@ -2453,7 +2453,7 @@
     "schema": "projects(start_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF(CURRENT_DATE, start_date)"
     ],
@@ -2470,7 +2470,7 @@
       "80 -> B"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CASE WHEN score >= 90",
       "THEN 'A'",
@@ -2489,7 +2489,7 @@
       "B | 200 | Total: 300"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(salary)",
       "OVER ()"
@@ -2504,7 +2504,7 @@
     "schema": "students(class TEXT, name TEXT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROW_NUMBER()",
       "PARTITION BY class",
@@ -2522,7 +2522,7 @@
       "1일: 100, Prev: NULL (or 0)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE(LAG(...), 0)",
       "OR LAG(..., 0)"
@@ -2539,7 +2539,7 @@
       "1등, 1등, ?등"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "3등"
     ],
@@ -2553,7 +2553,7 @@
     "schema": "test(col INT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "IS NULL"
     ],
@@ -2567,7 +2567,7 @@
     "schema": "orders(order_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "YEAR(order_date)",
       "MONTH(order_date)"
@@ -2582,7 +2582,7 @@
     "schema": "N/A",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "1. GROUP BY"
     ],
@@ -2598,7 +2598,7 @@
       "Gildong | Hong -> Hong Gildong"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CONCAT",
       "||"
@@ -2613,7 +2613,7 @@
     "schema": "orders(status TEXT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "IN ('Pending', ...)"
     ],
@@ -2629,7 +2629,7 @@
       "(10 + 11) / 2 -> 10.5 (Not 10)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CAST(col AS FLOAT)",
       "* 1.0"
@@ -2647,7 +2647,7 @@
       "2023-02 | 120 -> 20%"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "(amount - LAG(amount))",
       "/ LAG(amount)",
@@ -2663,7 +2663,7 @@
     "schema": "daily_logs(dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATE_FORMAT",
       "TRUNC",
@@ -2682,7 +2682,7 @@
       "User1 | 11:00 -> 2"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT(*)",
       "OVER (PARTITION BY user_id ORDER BY visited_at)"
@@ -2697,7 +2697,7 @@
     "schema": "price_history(product_id INT, changed_at DATE, price INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CASE WHEN price > LAG(price)",
       "THEN 'Up'",
@@ -2713,7 +2713,7 @@
     "schema": "users(id INT, real_name TEXT, nickname TEXT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE(nickname, real_name, CAST(id AS CHAR))"
     ],
@@ -2730,7 +2730,7 @@
       "5일 -> 4"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "LAG(order_date)"
@@ -2745,7 +2745,7 @@
     "schema": "emp(salary INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(salary)",
       "OVER (ORDER BY salary)"
@@ -2760,7 +2760,7 @@
     "schema": "scores(student_id INT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "RANK()",
       "ORDER BY score ASC"
@@ -2778,7 +2778,7 @@
       "Shipped (변경) -> 포함"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "status <> LAG(status)",
       "OVER"
@@ -2793,7 +2793,7 @@
     "schema": "users_log(user_id INT, login_dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "MAX(login_dt)",
       "OVER (PARTITION BY user_id)"
@@ -2808,7 +2808,7 @@
     "schema": "products(cat_id INT, product_id INT, view_count INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROW_NUMBER()",
       "PARTITION BY cat_id",
@@ -2826,7 +2826,7 @@
       "100, NULL, 0"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "50"
     ],
@@ -2840,7 +2840,7 @@
     "schema": "employees(join_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CASE WHEN DATEDIFF(...) < 365",
       "THEN 'Newbie'"
@@ -2858,7 +2858,7 @@
       "Group 2 (50%)"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "NTILE(2)",
       "ORDER BY RAND()",
@@ -2874,7 +2874,7 @@
     "schema": "visits(dt DATE, user_id INT)",
     "sample_rows": [],
     "difficulty": "Lv5 심화",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "지원되지 않음 -> 대안 필요",
       "Recursive CTE or Self Join"
@@ -2889,7 +2889,7 @@
     "schema": "orders(amount INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(amount)",
       "ROWS BETWEEN 2 PRECEDING",
@@ -2905,7 +2905,7 @@
     "schema": "orders(user_id INT, order_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "LEAD(order_date)",
@@ -2924,7 +2924,7 @@
       "12:00 Google -> Initial: FB"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "FIRST_VALUE(channel)",
       "PARTITION BY user_id",
@@ -2940,7 +2940,7 @@
     "schema": "games(player TEXT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DENSE_RANK()"
     ],
@@ -2954,7 +2954,7 @@
     "schema": "users(region TEXT, age INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "(@region IS NULL OR region = @region)",
       "(@age IS NULL OR age = @age)"
@@ -2973,7 +2973,7 @@
       "11:00 -> 1 (New, Gap > 30m)"
     ],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CASE WHEN",
       "ts - LAG(ts)",
@@ -2992,7 +2992,7 @@
       "90 (Max 100) -> -10%"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "MAX(price)",
       "OVER (ORDER BY dt)"
@@ -3010,7 +3010,7 @@
       "U1 | 2023-01-01 | Cohort: 2023-01-01"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "MIN(order_date)",
       "OVER (PARTITION BY user_id)"
@@ -3025,7 +3025,7 @@
     "schema": "sales(shop_id INT, revenue INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "(revenue - AVG(revenue) OVER())",
       "/ STDDEV(revenue) OVER()"
@@ -3040,7 +3040,7 @@
     "schema": "daily_temp(dt DATE, temp DECIMAL)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROWS BETWEEN",
       "1 PRECEDING",
@@ -3059,7 +3059,7 @@
       "2024-01-01 | 누적 10 (리셋됨)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(amount)",
       "PARTITION BY YEAR(dt)",
@@ -3079,7 +3079,7 @@
       "5일(rk3) -> 2 (그룹B)"
     ],
     "difficulty": "Lv5 심화",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "login_dt - INTERVAL",
       "ROW_NUMBER()",
@@ -3098,7 +3098,7 @@
       "Cart | Next: Purchase -> X"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEAD(action_name)",
       "OVER",
@@ -3114,7 +3114,7 @@
     "schema": "monthly_sales(month INT, amount INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(CASE WHEN month = 1 THEN amount ELSE 0 END)"
     ],
@@ -3130,7 +3130,7 @@
       "100 | Apple, Banana, Cherry"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "GROUP_CONCAT",
       "STRING_AGG"
@@ -3148,7 +3148,7 @@
       "Cost 200 | Remain 700"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "total_budget - SUM(cost)",
       "OVER (ORDER BY used_at)"
@@ -3163,7 +3163,7 @@
     "schema": "stock(dt DATE, price DECIMAL)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "price * 0.5",
       "+ LAG(price, 1) * 0.3",
@@ -3182,7 +3182,7 @@
       "U2 | Order, Order -> 0"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "MAX(CASE WHEN status='Return' THEN 1 ELSE 0 END)",
       "GROUP BY user_id"
@@ -3197,7 +3197,7 @@
     "schema": "scores(student_id INT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CUME_DIST()",
       "OVER (ORDER BY score DESC)"
@@ -3216,7 +3216,7 @@
       "20 -> 20"
     ],
     "difficulty": "Lv5 심화",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LAST_VALUE(val)",
       "IGNORE NULLS",
@@ -3232,7 +3232,7 @@
     "schema": "emp(salary INT, dept TEXT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "AVG(salary) OVER (PARTITION BY dept)",
       "AVG(salary) OVER ()"
@@ -3250,7 +3250,7 @@
       "10:18 -> 10:10"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "FLOOR(MINUTE(ts) / 10)",
       "* 10"
@@ -3265,7 +3265,7 @@
     "schema": "history(id INT, start_dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE",
       "LEAD(start_dt)"
@@ -3280,7 +3280,7 @@
     "schema": "scores(score INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "PERCENT_RANK()",
       "OVER (ORDER BY score ASC)",
@@ -3300,7 +3300,7 @@
       "Paid 50 -> 누적 150"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(CASE WHEN status != 'Refund' THEN amount ELSE 0 END)",
       "OVER (ORDER BY dt)"
@@ -3319,7 +3319,7 @@
       "2024-01 | 120 (비교대상: 100)"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LAG",
       "amount, 12"
@@ -3334,7 +3334,7 @@
     "schema": "visitors(dt DATE, cnt INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROWS BETWEEN",
       "6 PRECEDING",
@@ -3352,7 +3352,7 @@
       "10 / 0 -> NULL (Error X)"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "NULLIF(impressions, 0)"
     ],
@@ -3370,7 +3370,7 @@
       "20점 -> Max 20"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "MAX(score)",
       "OVER (ORDER BY created_at)"
@@ -3385,7 +3385,7 @@
     "schema": "employees(joined_at DATE, target_dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "TIMESTAMPDIFF",
       "MONTH"
@@ -3403,7 +3403,7 @@
       "Direct (12:00) -> Original: Google"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "FIRST_VALUE(channel)",
       "PARTITION BY user_id",
@@ -3421,7 +3421,7 @@
       "1일, 2일, 4일 -> 4일에서 Gap 감지"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "> 1"
@@ -3436,7 +3436,7 @@
     "schema": "customers(id INT, amount DECIMAL)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "NTILE(10)",
       "ORDER BY amount DESC"
@@ -3455,7 +3455,7 @@
       "C: 900 (2등)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DENSE_RANK()",
       "ORDER BY price DESC"
@@ -3470,7 +3470,7 @@
     "schema": "users(name TEXT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE name =",
       "COALESCE(@query, name)"
@@ -3485,7 +3485,7 @@
     "schema": "api_logs(req_at TIMESTAMP, res_at TIMESTAMP)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "TIMESTAMPDIFF(SECOND, ...)",
       "OR DATEDIFF(s, ...)"
@@ -3502,7 +3502,7 @@
       "Dev | 5000 | (Min: 3000) -> +2000"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "salary - MIN(salary)",
       "OVER",
@@ -3518,7 +3518,7 @@
     "schema": "logins(user_id INT, login_dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEAD(login_dt)",
       "IS NULL"
@@ -3537,7 +3537,7 @@
       "C | IT | 1명"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT(*)",
       "OVER (PARTITION BY dept)"
@@ -3552,7 +3552,7 @@
     "schema": "orders(user_id INT, amount INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "amount - LAG",
       "amount, 1, amount"
@@ -3571,7 +3571,7 @@
       "3등: 20 -> 누적 100 (100%)"
     ],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(amount) OVER (ORDER BY...)",
       "/ SUM(amount) OVER ()"
@@ -3586,7 +3586,7 @@
     "schema": "logs(id INT, msg TEXT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROW_NUMBER()",
       "WHERE rn > 1"
@@ -3601,7 +3601,7 @@
     "schema": "weather(dt DATE, temp DECIMAL)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "temp - AVG(temp)",
       "PARTITION BY MONTH(dt)"
@@ -3616,7 +3616,7 @@
     "schema": "jobs(id INT, status TEXT, created_at TIMESTAMP)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "status = 'Success'",
       "AND LEAD(status) = 'Fail'"
@@ -3631,7 +3631,7 @@
     "schema": "N/A (개념 문제)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "RANK",
       "DENSE_RANK"
@@ -3650,7 +3650,7 @@
       "C | 80 -> 2"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "NTILE(4)",
       "OVER",
@@ -3669,7 +3669,7 @@
       "4000 | 500 -> 4500"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "salary + COALESCE(bonus, 0)"
     ],
@@ -3687,7 +3687,7 @@
       "3 | Ship -> Completed"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEAD",
       "status, 1, 'Completed'"
@@ -3704,7 +3704,7 @@
       "2023-01-08 (일) -> 비교대상: 2023-01-01 (일)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LAG",
       "amount, 7"
@@ -3721,7 +3721,7 @@
       "A | Math | 90 (반평균 80) -> +10"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "score - AVG(score)",
       "OVER",
@@ -3737,7 +3737,7 @@
     "schema": "posts(id INT, created_at TIMESTAMP)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROW_NUMBER()",
       "WHERE rn BETWEEN 11 AND 20"
@@ -3755,7 +3755,7 @@
       "Radio | Electronics | 500 | (Min: 500)"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "MIN(price)",
       "OVER",
@@ -3771,7 +3771,7 @@
     "schema": "employees(name TEXT, birth_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "YEAR"
@@ -3786,7 +3786,7 @@
     "schema": "emp(name TEXT, dept TEXT, salary INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROWS BETWEEN",
       "UNBOUNDED PRECEDING",
@@ -3802,7 +3802,7 @@
     "schema": "users(id INT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "PERCENT_RANK()",
       "OVER",
@@ -3821,7 +3821,7 @@
       "2 | B | a@test.com | cnt: 2"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT(*)",
       "PARTITION BY email"
@@ -3836,7 +3836,7 @@
     "schema": "users(id INT, join_date DATE)",
     "sample_rows": [],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "<= 30"
@@ -3851,7 +3851,7 @@
     "schema": "scores(id INT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "RANK() - DENSE_RANK()",
       "<> 0"
@@ -3868,7 +3868,7 @@
       "A | Elec | 100 / 500 = 0.2"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "revenue / SUM(revenue)",
       "PARTITION BY category"
@@ -3883,7 +3883,7 @@
     "schema": "tasks(start_dt DATE, end_dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "* 5 / 7"
@@ -3902,7 +3902,7 @@
       "3 | Done -> X"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE(status, '')",
       "<> 'Done'"
@@ -3917,7 +3917,7 @@
     "schema": "events(event_id INT, start_at TIMESTAMP)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEAD(start_at)",
       "OVER (ORDER BY start_at)"
@@ -3932,7 +3932,7 @@
     "schema": "values(val INT)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "rn =",
       "(cnt + 1) / 2"
@@ -3947,7 +3947,7 @@
     "schema": "scores(name TEXT, score INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DENSE_RANK",
       "rank = 3"
@@ -3964,7 +3964,7 @@
       "100 -> 90 : 변동폭 10"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ABS",
       "price - LAG(price)"
@@ -3983,7 +3983,7 @@
       "NULL | NULL"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE"
     ],
@@ -4000,7 +4000,7 @@
       "2 | 2023-01-10 | 2023-01-11"
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "delivered_date",
@@ -4020,7 +4020,7 @@
       "Charlie | HR | 4000"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROW_NUMBER()",
       "OVER",
@@ -4041,7 +4041,7 @@
       "C | 90"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DENSE_RANK()"
     ],
@@ -4059,7 +4059,7 @@
       "2023-01-03 | 120"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LAG(revenue)",
       "OVER",
@@ -4079,7 +4079,7 @@
       "2 | 2023-01-02"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEAD(login_date)",
       "PARTITION BY user_id",
@@ -4098,7 +4098,7 @@
       "100 | Delivered | 12:00"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "ROW_NUMBER()",
       "DESC"
@@ -4116,7 +4116,7 @@
       "2023-01-02 | 110"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LAG(amount)",
       "(amount - prev) / prev"
@@ -4135,7 +4135,7 @@
       "01-03 | 90"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE",
       "LAG"
@@ -4152,7 +4152,7 @@
       "1 | 2023-01-01 | 2023-01-08"
     ],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "= 7"
@@ -4167,7 +4167,7 @@
     "schema": "employees(dept TEXT, salary INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "WHERE",
       "rnk <= 3"
@@ -4186,7 +4186,7 @@
       "01-03 | 150 -> 450"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "SUM(revenue)",
       "OVER",
@@ -4202,7 +4202,7 @@
     "schema": "stock(dt DATE, close_price DECIMAL)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "AVG(close_price)",
       "ROWS BETWEEN",
@@ -4221,7 +4221,7 @@
       "U1 | Detail | 10:00:30"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "LEAD(visited_at)",
       "DATEDIFF (or TIMESTAMPDIFF)"
@@ -4236,7 +4236,7 @@
     "schema": "emp(name TEXT, salary INT)",
     "sample_rows": [],
     "difficulty": "Lv2 초급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DENSE_RANK",
       "WHERE rank = 2"
@@ -4251,7 +4251,7 @@
     "schema": "logins(user_id INT, login_dt DATE)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "DATEDIFF",
       "LAG",
@@ -4271,7 +4271,7 @@
       "3 | B"
     ],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COUNT(*)",
       "OVER()"
@@ -4288,7 +4288,7 @@
       "NULL | 010-... | 02-..."
     ],
     "difficulty": "Lv1 입문",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "COALESCE(home, mobile, office)"
     ],
@@ -4302,7 +4302,7 @@
     "schema": "emp(name TEXT, dept TEXT, salary INT)",
     "sample_rows": [],
     "difficulty": "Lv3 중급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "FIRST_VALUE(name)",
       "ORDER BY salary DESC"
@@ -4317,7 +4317,7 @@
     "schema": "clicks(user_id INT, ts TIMESTAMP)",
     "sample_rows": [],
     "difficulty": "Lv4 고급",
-    "kind": "sql",
+    "kind": "SQL",
     "expected": [
       "CASE WHEN",
       "ts - LAG(ts)",

@@ -879,8 +879,7 @@ def build_interface() -> gr.Blocks:
     problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 
     demo = gr.Blocks(
-        title="SQL & Python 코딩 연습",
-        footer_links=["settings"]
+        title="SQL & Python 코딩 연습"
     )
 
     with demo:

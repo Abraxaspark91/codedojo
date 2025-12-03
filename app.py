@@ -557,31 +557,129 @@ def refresh_note_choices() -> Tuple[List[str], List[str]]:
     return labels, values
 
 
-def load_from_notes(
-        selected_pid: str) -> Tuple[str, Dict, gr.update, str, str]:
+def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
+    """고유한 PID 목록을 반환합니다 (중복 제거).
+
+    Returns:
+        Tuple[List[str], List[str]]: (labels, values)
+            - labels: "pid | difficulty | kind" 형식
+            - values: pid 문자열
+    """
     entries = failed_attempts(load_attempts())
-    for entry in entries:
-        if entry.pid == selected_pid:
-            problem = next(
-                (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
-            if problem:
-                filters = normalize_filters(None, None, None)
-                question = render_question(
-                    problem, True, entry.rechallenge_hint, filters)
-                return (
-                    question,
-                    {
-                        "problem": problem,
-                        "rechallenge": True,
-                        "hint": entry.rechallenge_hint,
-                        "filters": filters,
-                        "in_progress": False,
-                    },
-                    gr.update(value="", language=problem.kind),
-                    favorite_button_label(problem.pid),
-                    "",
-                )
-    return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
+    # pid별로 첫 번째 항목만 유지 (중복 제거)
+    pid_dict = {}
+    for a in entries:
+        if a.pid not in pid_dict:
+            pid_dict[a.pid] = a
+
+    # pid, difficulty, kind만 표시
+    labels = [f"{a.pid} | {a.difficulty} | {a.kind}" for a in pid_dict.values()]
+    values = [a.pid for a in pid_dict.values()]
+    return labels, values
+
+
+def refresh_note_attempt_choices(selected_pid: str) -> Tuple[List[str], List[str]]:
+    """특정 PID의 모든 시도 목록을 반환합니다.
+
+    Args:
+        selected_pid: 선택된 문제 ID
+
+    Returns:
+        Tuple[List[str], List[str]]: (labels, values)
+            - labels: "nickname | timestamp" 형식
+            - values: "pid:nickname:timestamp" 복합 키
+    """
+    if not selected_pid:
+        return [], []
+
+    entries = failed_attempts(load_attempts())
+    # 선택된 pid만 필터링
+    pid_entries = [a for a in entries if a.pid == selected_pid]
+
+    # nickname과 timestamp 표시
+    labels = [
+        f"{a.nickname if a.nickname else '(별명없음)'} | {a.timestamp}"
+        for a in pid_entries
+    ]
+    # 복합 키: pid:nickname:timestamp
+    values = [
+        f"{a.pid}:{a.nickname}:{a.timestamp}"
+        for a in pid_entries
+    ]
+    return labels, values
+
+
+def load_from_notes(
+        selected_key: str) -> Tuple[str, Dict, gr.update, str, str]:
+    """오답노트에서 문제를 로드합니다.
+
+    Args:
+        selected_key: PID 또는 복합 키 (pid:nickname:timestamp)
+
+    Returns:
+        Tuple[str, Dict, gr.update, str, str]: (question, state, code_update, fav_button, status)
+    """
+    if not selected_key:
+        return "문제를 선택하세요.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
+
+    entries = failed_attempts(load_attempts())
+
+    # 복합 키인지 확인 (pid:nickname:timestamp 형식)
+    if ":" in selected_key:
+        # 복합 키 파싱: maxsplit=2로 nickname이나 timestamp에 ":"가 있어도 처리
+        parts = selected_key.split(":", 2)
+        if len(parts) == 3:
+            pid, nickname, timestamp = parts
+            # 모든 조건으로 정확히 매칭
+            for entry in entries:
+                if (entry.pid == pid and
+                    entry.nickname == nickname and
+                    entry.timestamp == timestamp):
+                    problem = next(
+                        (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+                    if problem:
+                        filters = normalize_filters(None, None, None)
+                        question = render_question(
+                            problem, True, entry.rechallenge_hint, filters)
+                        return (
+                            question,
+                            {
+                                "problem": problem,
+                                "rechallenge": True,
+                                "hint": entry.rechallenge_hint,
+                                "filters": filters,
+                                "in_progress": False,
+                            },
+                            gr.update(value="", language=problem.kind),
+                            favorite_button_label(problem.pid),
+                            "",
+                        )
+        return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
+    else:
+        # 기존 방식: pid만으로 검색 (하위 호환성)
+        selected_pid = selected_key
+        for entry in entries:
+            if entry.pid == selected_pid:
+                problem = next(
+                    (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+                if problem:
+                    filters = normalize_filters(None, None, None)
+                    question = render_question(
+                        problem, True, entry.rechallenge_hint, filters)
+                    return (
+                        question,
+                        {
+                            "problem": problem,
+                            "rechallenge": True,
+                            "hint": entry.rechallenge_hint,
+                            "filters": filters,
+                            "in_progress": False,
+                        },
+                        gr.update(value="", language=problem.kind),
+                        favorite_button_label(problem.pid),
+                        "",
+                    )
+        return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
 
 
 def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.update]:
@@ -1200,10 +1298,13 @@ def build_interface() -> gr.Blocks:
 
             problem = state_dict["problem"]
 
-            # 중복 저장 체크: 이미 오답노트에 저장된 문제인지 확인
+            # 중복 저장 체크: 같은 pid와 nickname으로 이미 저장되었는지 확인
             existing_attempts = load_attempts()
-            if any(attempt.pid == problem.pid for attempt in existing_attempts):
-                return "⚠️ 이미 저장된 문제입니다.", gr.update()
+            if any(
+                attempt.pid == problem.pid and attempt.nickname == nickname
+                for attempt in existing_attempts
+            ):
+                return "⚠️ 같은 별명으로 이미 저장된 문제입니다.", gr.update()
 
             code = state_dict["last_code"]
             feedback = state_dict["last_feedback"]

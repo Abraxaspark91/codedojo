@@ -880,8 +880,6 @@ def build_interface() -> gr.Blocks:
 
     demo = gr.Blocks(
         title="SQL & Python 코딩 연습",
-        theme=CUSTOM_THEME,
-        css=CUSTOM_CSS,
         footer_links=["settings"]
     )
 
@@ -1476,4 +1474,4 @@ def build_interface() -> gr.Blocks:
 app = build_interface()
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(theme=CUSTOM_THEME, css=CUSTOM_CSS)

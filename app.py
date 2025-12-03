@@ -890,8 +890,8 @@ def build_interface() -> gr.Blocks:
 
         # ===== 헤더 =====
         with gr.Group():
-            with gr.Row():
-                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>", variant='panel')
+            with gr.Row(variant='panel'):
+                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>")
 
         # ===== 탭 구조 =====
         with gr.Tabs():

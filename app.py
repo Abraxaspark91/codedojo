@@ -210,15 +210,140 @@ def serialize_attempt(attempt: Attempt) -> str:
     return meta  # 순수 JSON 한 줄만 반환
 
 
+def safe_read_file(path: Path) -> str:
+    """다중 인코딩 시도로 안전하게 파일 읽기
+
+    Args:
+        path: 읽을 파일 경로
+
+    Returns:
+        str: 파일 내용 (UTF-8 BOM 제거됨)
+    """
+    encodings = ['utf-8-sig', 'utf-8', 'latin-1', 'cp1252']
+
+    for encoding in encodings:
+        try:
+            text = path.read_text(encoding=encoding, errors='ignore')
+            # UTF-8 BOM 제거 (utf-8-sig가 실패한 경우 대비)
+            if text.startswith('\ufeff'):
+                text = text[1:]
+            return text
+        except Exception:
+            continue
+
+    # 최후의 수단: 바이너리 읽기 후 디코드
+    return path.read_bytes().decode('utf-8', errors='replace')
+
+
+def sanitize_line(line: str) -> str:
+    """JSON 파싱 전 라인 정제
+
+    Args:
+        line: 정제할 라인
+
+    Returns:
+        str: 정제된 라인
+    """
+    import unicodedata
+
+    # 제어 문자 제거 (탭/개행 제외)
+    line = ''.join(c for c in line if c >= ' ' or c in '\t\n')
+
+    # NULL 바이트 제거
+    line = line.replace('\x00', '')
+
+    # 유니코드 정규화 (NFKC)
+    line = unicodedata.normalize('NFKC', line)
+
+    # 양쪽 공백 제거
+    return line.strip()
+
+
+def is_likely_json(line: str) -> bool:
+    """라인이 JSON 객체일 가능성이 있는지 빠르게 체크
+
+    Args:
+        line: 체크할 라인
+
+    Returns:
+        bool: JSON 객체일 가능성이 있으면 True
+    """
+    line = line.strip()
+    # JSON 객체는 { 로 시작하고 } 로 끝남
+    return line.startswith('{') and line.endswith('}')
+
+
+def robust_json_parse(line: str) -> Optional[Dict]:
+    """여러 방법으로 JSON 파싱 시도
+
+    Args:
+        line: 파싱할 JSON 라인
+
+    Returns:
+        Optional[Dict]: 파싱된 딕셔너리 또는 None
+    """
+    # 1차: 기본 파싱
+    try:
+        return json.loads(line)
+    except json.JSONDecodeError:
+        pass
+
+    # 2차: 손상된 이스케이프 시퀀스 복구
+    try:
+        # 백슬래시가 과도하게 이스케이프된 경우
+        fixed = line.replace('\\\\', '\\')
+        return json.loads(fixed)
+    except json.JSONDecodeError:
+        pass
+
+    # 3차: 중괄호 매칭으로 JSON 추출
+    try:
+        start = line.find('{')
+        end = line.rfind('}') + 1
+        if start >= 0 and end > start:
+            return json.loads(line[start:end])
+    except (json.JSONDecodeError, ValueError):
+        pass
+
+    return None
+
+
+def log_parse_error(line_idx: int, line: str, error: Exception) -> None:
+    """파싱 실패 시 상세 정보 출력
+
+    Args:
+        line_idx: 라인 번호
+        line: 실패한 라인 내용
+        error: 발생한 예외
+    """
+    import sys
+
+    # 라인 미리보기 (첫 100자)
+    preview = line[:100] + ('...' if len(line) > 100 else '')
+
+    # 에러 메시지
+    error_msg = str(error)[:80]
+
+    print(
+        f"[경고] 라인 {line_idx} 파싱 실패\n"
+        f"  오류: {error_msg}\n"
+        f"  내용: {repr(preview)}",
+        file=sys.stderr
+    )
+
+
 def load_attempts() -> List[Attempt]:
     """오답노트 파일에서 모든 Attempt를 로드합니다.
 
     JSON Lines 형식: 각 라인이 하나의 JSON 객체
     - 손상된 라인은 무시하고 나머지 계속 파싱
     - 라인 단위 오류 로깅으로 문제 진단 용이
+    - 다중 인코딩 지원, 제어 문자 제거, 다단계 파싱 시도
     """
     ensure_note_file()
-    text = NOTE_PATH.read_text(encoding="utf-8")
+
+    # 강건한 파일 읽기 (다중 인코딩, BOM 처리)
+    text = safe_read_file(NOTE_PATH)
     entries: List[Attempt] = []
 
     # 빈 파일 처리
@@ -227,39 +352,38 @@ def load_attempts() -> List[Attempt]:
 
     # 각 라인을 독립적으로 파싱
     for line_idx, line in enumerate(text.split("\n"), 1):
-        line = line.strip()
+        # 라인 정제 (제어 문자, NULL 바이트 제거)
+        line = sanitize_line(line)
 
         # 빈 라인 무시
         if not line:
             continue
 
+        # JSON이 아닌 라인 건너뛰기 (마크다운 헤더, 주석 등)
+        if not is_likely_json(line):
+            continue
+
         try:
-            # JSON 파싱
-            data = json.loads(line)
+            # 강건한 JSON 파싱 (다단계 재시도)
+            data = robust_json_parse(line)
+
+            if data is None:
+                # 모든 파싱 방법 실패
+                log_parse_error(line_idx, line, ValueError("JSON 파싱 불가"))
+                continue
 
             # Attempt 객체 생성
             entry = Attempt(**data)
             entries.append(entry)
 
-        except json.JSONDecodeError as e:
-            # JSON 파싱 오류: 해당 라인 무시, 계속 진행
-            print(
-                f"[경고] 라인 {line_idx}의 JSON 파싱 실패: {str(e)[:80]}",
-                file=__import__('sys').stderr)
-            continue
-
         except TypeError as e:
             # Attempt 필드 부족: 해당 라인 무시, 계속 진행
-            print(
-                f"[경고] 라인 {line_idx}의 Attempt 생성 실패: {str(e)[:80]}",
-                file=__import__('sys').stderr)
+            log_parse_error(line_idx, line, e)
             continue
 
         except Exception as e:
             # 예상 외의 오류
-            print(
-                f"[경고] 라인 {line_idx}의 처리 오류: {str(e)[:80]}",
-                file=__import__('sys').stderr)
+            log_parse_error(line_idx, line, e)
             continue
 
     return entries

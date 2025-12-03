@@ -1003,7 +1003,7 @@ def build_interface() -> gr.Blocks:
                         note_attempt_dropdown = gr.Dropdown(
                             choices=[],
                             label="시도 선택",
-                            scale=1,
+                            scale=2,
                             interactive=True
                         )
                     with gr.Row():

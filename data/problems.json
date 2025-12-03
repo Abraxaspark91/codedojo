@@ -2011,5 +2011,2319 @@
     ],
     "hint": "`if x is not None`은 파이썬에서 가장 정석적인 NULL 체크 방식입니다. (또는 간단히 `if x:`를 쓰기도 합니다)",
     "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_union_vs_union_all",
+    "title": "집합 연산: 중복을 포함할까?",
+    "body": "두 개의 테이블(A, B)에서 얻은 유저 ID 목록을 하나로 합치고 싶습니다. 단, A와 B 양쪽에 모두 존재하는 유저가 있다면 두 번 모두 출력되어야 합니다(중복 허용). 어떤 연산자를 써야 할까요?",
+    "schema": "table_a(id INT), table_b(id INT)",
+    "sample_rows": [
+      "A: 1, 2 | B: 2, 3 -> Result: 1, 2, 2, 3"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "UNION ALL"
+    ],
+    "hint": "`UNION`은 중복을 제거(Unique)하지만, `UNION ALL`은 단순히 이어 붙여서 중복을 유지합니다. 성능도 `UNION ALL`이 더 빠릅니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_join_inner",
+    "title": "JOIN 기초: 교집합 구하기",
+    "body": "주문 내역(orders)과 회원 정보(users)를 연결해서 조회하려 합니다. 탈퇴했거나 정보가 없는 회원의 주문은 제외하고, '두 테이블 모두에 데이터가 있는 경우'만 남기려면 어떤 JOIN을 써야 할까요?",
+    "schema": "orders(user_id), users(user_id)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "INNER JOIN"
+    ],
+    "hint": "양쪽 모두에 매칭되는 데이터만 가져오는 것은 `INNER JOIN`입니다. (그냥 `JOIN`이라고 써도 기본값은 INNER입니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_join_left",
+    "title": "JOIN 기초: 주문 내역 보존하기",
+    "body": "주문(orders) 테이블을 기준으로, 회원(users) 정보를 붙이려고 합니다. 회원이 탈퇴해서 정보가 없더라도 주문 기록은 그대로 나와야 합니다. 이때 사용하는 JOIN은?",
+    "schema": "orders(o_id, u_id), users(u_id, name)",
+    "sample_rows": [
+      "Order 1 | User A",
+      "Order 2 | NULL (회원정보 없음)"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "LEFT JOIN",
+      "OR LEFT OUTER JOIN"
+    ],
+    "hint": "왼쪽(기준) 테이블의 모든 행을 유지하고 오른쪽 테이블을 붙이는 것은 `LEFT JOIN`입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_string_trim",
+    "title": "공백 제거: ' Alice '는 'Alice'가 아니다",
+    "body": "사용자가 실수로 이름 앞뒤에 공백을 넣어 가입했습니다(' Alice '). 이를 'Alice'로 검색하려면 공백을 제거하는 함수를 써서 비교해야 합니다.",
+    "schema": "users(name TEXT)",
+    "sample_rows": [
+      "' Alice ' -> 'Alice'"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "TRIM(name)"
+    ],
+    "hint": "`TRIM()` 함수는 문자열 양쪽의 공백을 제거합니다. (`LTRIM`, `RTRIM`도 있습니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_string_upper",
+    "title": "대소문자 무시 검색",
+    "body": "저장된 데이터는 'Kim', 'kim', 'KIM' 등 제각각입니다. 대소문자 구분 없이 'kim'을 검색하려면 양쪽을 모두 대문자(혹은 소문자)로 맞춰서 비교해야 합니다.",
+    "schema": "users(name TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "UPPER(name) = 'KIM'",
+      "OR LOWER(name) = 'kim'"
+    ],
+    "hint": "`UPPER(col)` 혹은 `LOWER(col)` 함수를 사용하여 통일한 뒤 비교합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_length_check",
+    "title": "문자열 길이: 비밀번호 길이 제한",
+    "body": "비밀번호(password) 길이가 8자리 미만인 취약한 계정을 찾으려 합니다. 문자열의 길이를 반환하는 함수를 사용하세요.",
+    "schema": "users(password TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "LENGTH(password) < 8",
+      "OR LEN(password)"
+    ],
+    "hint": "표준은 `LENGTH()`이고, SQL Server 등 일부는 `LEN()`을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_substring_extract",
+    "title": "문자열 자르기: 생년월일에서 연도만",
+    "body": "주민번호나 생년월일 문자열('19900101')의 앞에서부터 4글자(연도)만 잘라내고 싶습니다.",
+    "schema": "users(birth_str TEXT)",
+    "sample_rows": [
+      "'19900101' -> '1990'"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "SUBSTRING(birth_str, 1, 4)",
+      "OR LEFT(birth_str, 4)"
+    ],
+    "hint": "`SUBSTRING(컬럼, 시작위치, 길이)` 또는 `LEFT(컬럼, 길이)`를 사용합니다. SQL의 문자열 인덱스는 보통 1부터 시작합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_math_round",
+    "title": "반올림: 소수점 제거",
+    "body": "평균 점수가 85.6점일 때, 이를 반올림하여 86점으로 만들고 싶습니다.",
+    "schema": "scores(avg_score DECIMAL)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "ROUND(avg_score, 0)"
+    ],
+    "hint": "`ROUND(값, 소수점자리수)`를 씁니다. 정수로 만들려면 자리수에 0을 넣습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_between_dates",
+    "title": "기간 조회: 1월의 데이터",
+    "body": "주문일(order_date)이 2023년 1월 1일부터 1월 31일 사이인 데이터를 찾으려 합니다. `>=`와 `<=`를 써도 되지만, 더 가독성 좋은 연산자는 무엇일까요?",
+    "schema": "orders(order_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "BETWEEN '2023-01-01' AND '2023-01-31'"
+    ],
+    "hint": "`col BETWEEN 시작값 AND 종료값`을 사용합니다. (양쪽 끝값을 포함합니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_not_in_null_trap",
+    "title": "NOT IN의 함정: NULL이 목록에 있다면?",
+    "body": "제외할 ID 목록에 NULL이 하나라도 포함되어 있으면(`NOT IN (1, 2, NULL)`), 결과는 어떻게 될까요? (매우 중요한 개념 문제입니다)",
+    "schema": "users(id INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "아무것도 출력되지 않음"
+    ],
+    "hint": "`NOT IN`은 목록 중 하나라도 NULL이면 전체 결과가 Unknown이 되어버려 아무 데이터도 나오지 않습니다. `NOT EXISTS`를 쓰거나 NULL을 제거해야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_exists_performance",
+    "title": "존재 여부 확인: EXISTS",
+    "body": "특정 조건을 만족하는 주문이 '하나라도 있는지' 확인하고 싶습니다. 전체 개수를 세는 `COUNT(*) > 0`보다 성능상 유리하고 '있으면 참'을 반환하는 연산자는?",
+    "schema": "orders(user_id)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "WHERE EXISTS (SELECT 1 ...)"
+    ],
+    "hint": "`EXISTS`는 조건을 만족하는 첫 번째 행을 발견하면 즉시 탐색을 멈추고 True를 반환하므로 빠릅니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_group_by_having_count",
+    "title": "중복 찾기: 2번 이상 주문한 사람",
+    "body": "주문 내역에서 주문 횟수가 2회 이상인 user_id만 뽑아내고 싶습니다. `GROUP BY`와 함께 써야 할 조건절은?",
+    "schema": "orders(user_id)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "GROUP BY user_id",
+      "HAVING COUNT(*) >= 2"
+    ],
+    "hint": "집계 결과(`COUNT`)에 대한 필터링은 `WHERE`가 아니라 `HAVING`에 써야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_operator_precedence",
+    "title": "논리 연산 순서: AND vs OR",
+    "body": "`A AND B OR C` 와 `A AND (B OR C)`는 결과가 다릅니다. SQL에서 AND와 OR 중 우선순위가 더 높은 것은 무엇일까요?",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "AND"
+    ],
+    "hint": "곱셈이 덧셈보다 먼저인 것처럼, `AND`가 `OR`보다 먼저 실행됩니다. 헷갈리면 무조건 괄호`()`를 쓰세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_select_distinct_col",
+    "title": "고유한 조합 찾기: 부서와 직책",
+    "body": "우리 회사에 존재하는 '부서(dept)'와 '직책(job)'의 모든 고유한 조합을 보고 싶습니다. (예: IT팀-개발자, IT팀-매니저)",
+    "schema": "emp(dept, job)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "SELECT DISTINCT dept, job"
+    ],
+    "hint": "`DISTINCT` 뒤에 여러 컬럼을 적으면 그 컬럼들의 '조합'이 중복되지 않게 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_arithmetic_null",
+    "title": "NULL과의 산술 연산",
+    "body": "연봉(salary)이 5000이고 커미션(comm)이 NULL인 직원의 `salary + comm` 결과는 얼마일까요?",
+    "schema": "emp(salary, comm)",
+    "sample_rows": [
+      "5000 + NULL = ?"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "NULL"
+    ],
+    "hint": "NULL에 어떤 숫자를 더하거나 빼도 결과는 무조건 NULL입니다. 그래서 `COALESCE(comm, 0)` 처리가 필요합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_cross_join",
+    "title": "모든 경우의 수: 카테시안 곱",
+    "body": "색상 테이블(Red, Blue)과 사이즈 테이블(S, M, L)을 결합하여 만들 수 있는 모든 옵션(Red-S, Red-M...)을 생성하고 싶습니다. 조건 없이 모든 행을 1:1로 결합하는 JOIN은?",
+    "schema": "colors(name), sizes(code)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "CROSS JOIN"
+    ],
+    "hint": "`CROSS JOIN`은 두 테이블 행의 개수를 곱한 만큼의 결과를 만듭니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_case_in_select",
+    "title": "조건부 출력: 성별 코드 변환",
+    "body": "DB에 성별이 'M', 'F'로 저장되어 있습니다. 조회할 때는 이를 '남성', '여성'으로 바꿔서 보여주고 싶습니다.",
+    "schema": "users(gender CHAR(1))",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "CASE gender",
+      "WHEN 'M' THEN '남성'",
+      "WHEN 'F' THEN '여성'",
+      "ELSE '기타' END"
+    ],
+    "hint": "`CASE WHEN 조건 THEN 결과 ... END` 구문을 SELECT 절에 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_order_by_string_number",
+    "title": "문자열 정렬의 함정: '10' vs '2'",
+    "body": "숫자가 문자열(VARCHAR)로 저장된 컬럼을 정렬(`ORDER BY col`)하면, '1, 10, 2' 순서로 나옵니다. 이를 숫자 크기순('1, 2, 10')으로 정렬하려면?",
+    "schema": "data(num_str VARCHAR)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "ORDER BY CAST(num_str AS INT)"
+    ],
+    "hint": "정렬 기준에서 타입을 숫자로 변환(`CAST`)해주어야 크기 비교가 올바르게 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_like_underscore",
+    "title": "패턴 매칭: 정확히 3글자?",
+    "body": "`LIKE` 연산자에서 `%`는 길이 상관없는 와일드카드지만, '정확히 한 글자'를 의미하는 와일드카드는 무엇일까요? (예: A로 시작하는 3글자 단어 찾기)",
+    "schema": "words(w TEXT)",
+    "sample_rows": [
+      "Like 'A__'"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "_"
+    ],
+    "hint": "언더스코어 `_`는 문자 한 개를 의미합니다. `LIKE 'A__'`는 A 뒤에 두 글자가 더 있는 3글자 문자열을 찾습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_date_add",
+    "title": "날짜 더하기: 7일 후",
+    "body": "오늘 날짜로부터 일주일(7일) 뒤의 날짜를 구하고 싶습니다. (함수 이름은 DB마다 조금 다르지만 일반적인 형태)",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "DATE_ADD(dt, INTERVAL 7 DAY)",
+      "OR dt + 7"
+    ],
+    "hint": "MySQL은 `DATE_ADD`, Postgres/Oracle은 `dt + INTERVAL '7' DAY`, SQL Server는 `DATEADD(day, 7, dt)`를 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_count_asterisk_vs_col",
+    "title": "COUNT(*) vs COUNT(컬럼): NULL은 세나요?",
+    "body": "테이블의 전체 행 개수를 세는 것과 특정 컬럼의 개수를 세는 것의 차이를 묻습니다. `email` 컬럼에 NULL이 포함되어 있을 때, NULL을 포함하지 않고 개수를 세려면 어떻게 해야 할까요?",
+    "schema": "users(id INT, email TEXT)",
+    "sample_rows": [
+      "1 | a@test.com",
+      "2 | NULL",
+      "3 | b@test.com"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "COUNT(email)"
+    ],
+    "hint": "`COUNT(*)`는 NULL 여부와 상관없이 무조건 행의 수를 셉니다. 반면 `COUNT(컬럼명)`은 해당 컬럼이 NULL인 행은 세지 않습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_distinct_count",
+    "title": "중복 제거하고 세기: 고유 방문자 수",
+    "body": "한 유저가 여러 번 방문했습니다. 중복을 제외하고 '실제 방문한 유저 수(UV)'를 구하려면 `COUNT` 안에 어떤 키워드를 넣어야 할까요?",
+    "schema": "visits(user_id INT)",
+    "sample_rows": [
+      "1",
+      "1",
+      "2"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "COUNT(DISTINCT user_id)"
+    ],
+    "hint": "`COUNT(DISTINCT 컬럼명)`을 사용하면 중복된 값을 하나로 쳐서 셉니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_coalesce_usage",
+    "title": "NULL 값 대체하기: 기본값 설정",
+    "body": "주소(address) 정보가 없는 경우 'Unknown'이라고 출력하고 싶습니다. IFNULL이나 ISNULL은 DB마다 다르지만, 표준 SQL 함수인 이것을 사용하면 됩니다.",
+    "schema": "users(name TEXT, address TEXT)",
+    "sample_rows": [
+      "Alice | NULL -> Unknown"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "COALESCE(address, 'Unknown')"
+    ],
+    "hint": "`COALESCE(컬럼, 대체값)`은 컬럼이 NULL일 때 대체값을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_order_by_multi",
+    "title": "정렬 기준 여러 개: 성적순, 이름순",
+    "body": "성적(score)이 높은 순서대로 정렬하되, 성적이 같으면 이름(name)의 가나다(알파벳) 순으로 정렬하세요.",
+    "schema": "students(name TEXT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "ORDER BY",
+      "score DESC, name ASC"
+    ],
+    "hint": "콤마(`,`)로 구분하여 순서대로 적습니다. `ORDER BY score DESC, name ASC` (ASC는 생략 가능)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_like_wildcard",
+    "title": "문자열 패턴 찾기: 김씨 성을 가진 사람",
+    "body": "이름이 'Kim'으로 시작하는 모든 사람을 찾으려 합니다. `=` 연산자가 아닌 패턴 매칭 연산자와 와일드카드(`%`)를 사용하세요.",
+    "schema": "users(name TEXT)",
+    "sample_rows": [
+      "Kim Chulsu",
+      "Lee Younghee"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "LIKE 'Kim%'"
+    ],
+    "hint": "`WHERE name LIKE 'Kim%'`를 쓰면 Kim으로 시작하는 모든 문자열을 찾습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_cast_int_string",
+    "title": "타입 변환: 숫자가 문자로 저장되었을 때",
+    "body": "가격(price) 컬럼이 실수로 문자열(`VARCHAR`) 타입으로 저장되어 있습니다. 이를 숫자로 바꿔서 1000 이상인 것만 찾으려면 어떻게 변환해야 할까요?",
+    "schema": "products(price_str TEXT)",
+    "sample_rows": [
+      "'500'",
+      "'2000'"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "CAST(price_str AS INT)",
+      "OR ::INT"
+    ],
+    "hint": "표준은 `CAST(컬럼 AS 타입)`입니다. 예: `CAST(price_str AS INTEGER) >= 1000`. (일부 DB는 `::INT` 지원)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_group_by_error",
+    "title": "GROUP BY의 규칙: SELECT에 쓸 수 있는 컬럼",
+    "body": "부서별 평균 연봉을 구하는 쿼리입니다. `SELECT dept, name, AVG(salary) FROM emp GROUP BY dept`를 실행하면 에러가 납니다. 왜일까요? 올바르게 고쳐보세요. (이름은 제외)",
+    "schema": "emp(name TEXT, dept TEXT, salary INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "SELECT dept, AVG(salary)",
+      "GROUP BY dept"
+    ],
+    "hint": "`GROUP BY`에 포함되지 않은 컬럼(name)은 집계 함수 없이 `SELECT` 절에 단독으로 올 수 없습니다. 부서별로 묶었는데 이름이 여러 개면 무엇을 출력할지 모르기 때문입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_having_vs_where",
+    "title": "조건 필터링: 집계 후 결과 필터링",
+    "body": "평균 점수가 80점 이상인 '반(Class)'만 조회하고 싶습니다. `WHERE AVG(score) >= 80`이라고 쓰면 에러가 납니다. 집계 결과에 조건을 걸 때는 무엇을 써야 할까요?",
+    "schema": "scores(class TEXT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "GROUP BY class",
+      "HAVING AVG(score) >= 80"
+    ],
+    "hint": "`WHERE`는 집계 전의 개별 행을 필터링하고, `HAVING`은 `GROUP BY`가 끝난 후의 집계 결과를 필터링합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_datediff_today",
+    "title": "날짜 차이: 오늘까지 며칠 지났나?",
+    "body": "프로젝트 시작일(start_date)로부터 오늘(`CURRENT_DATE`)까지 며칠이 지났는지 계산하세요.",
+    "schema": "projects(start_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF(CURRENT_DATE, start_date)"
+    ],
+    "hint": "미래(오늘)에서 과거(시작일)를 빼야 양수가 나옵니다. DB에 따라 순서가 `DATEDIFF(end, start)`입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_case_when_basic",
+    "title": "조건문: 성적 등급 매기기",
+    "body": "점수가 90 이상이면 'A', 아니면 'B'를 출력하는 컬럼을 만드세요.",
+    "schema": "scores(score INT)",
+    "sample_rows": [
+      "95 -> A",
+      "80 -> B"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "CASE WHEN score >= 90",
+      "THEN 'A'",
+      "ELSE 'B' END"
+    ],
+    "hint": "`CASE WHEN 조건 THEN 값 ELSE 값 END` 구문을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_sum_over_basic",
+    "title": "윈도우 함수 맛보기: 전체 합계 붙이기",
+    "body": "각 직원의 정보 옆에 '전사 총 급여 합계'를 똑같이 붙여서 보여주고 싶습니다. `GROUP BY` 없이 하려면 윈도우 함수를 어떻게 써야 할까요?",
+    "schema": "emp(name TEXT, salary INT)",
+    "sample_rows": [
+      "A | 100 | Total: 300",
+      "B | 200 | Total: 300"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "SUM(salary)",
+      "OVER ()"
+    ],
+    "hint": "`OVER()` 안에 아무것도 넣지 않으면 전체 데이터를 하나의 창(Window)으로 봅니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_row_number_reset",
+    "title": "순번 매기기: 그룹별로 1번부터 다시",
+    "body": "반(Class)별로 학생들에게 번호를 매기고 싶습니다. A반 1, 2, 3번... B반 1, 2번... 처럼 그룹이 바뀔 때마다 번호가 리셋되게 하세요.",
+    "schema": "students(class TEXT, name TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "ROW_NUMBER()",
+      "PARTITION BY class",
+      "ORDER BY name"
+    ],
+    "hint": "`PARTITION BY`가 '그룹을 나누는 기준'이고 `ORDER BY`가 '순번을 매기는 순서'입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_lag_null",
+    "title": "LAG의 첫 번째 값: 이전이 없으면?",
+    "body": "첫 번째 행은 '이전 행'이 없습니다. 이때 `LAG` 함수는 무엇을 반환할까요? 그리고 이를 0으로 바꾸려면 어떻게 해야 할까요?",
+    "schema": "sales(dt DATE, amount INT)",
+    "sample_rows": [
+      "1일: 100, Prev: NULL (or 0)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "COALESCE(LAG(...), 0)",
+      "OR LAG(..., 0)"
+    ],
+    "hint": "기본적으로 `NULL`을 반환합니다. `COALESCE`로 감싸거나, `LAG(col, 1, 0)` 처럼 3번째 인자에 기본값을 줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_rank_concept",
+    "title": "순위 함수: RANK vs ROW_NUMBER",
+    "body": "점수가 같은 사람이 있을 때, `ROW_NUMBER`는 무조건 1, 2등으로 나누지만 `RANK`는 공동 1등(1, 1)을 줍니다. 공동 1등이 2명이면 그 다음 사람은 몇 등이 되나요?",
+    "schema": "N/A",
+    "sample_rows": [
+      "1등, 1등, ?등"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "3등"
+    ],
+    "hint": "`RANK`는 앞의 인원수만큼 건너뜁니다. (1, 1 다음은 3). 건너뛰기 싫으면 `DENSE_RANK`를 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_null_comparison",
+    "title": "NULL과 비교 연산: NULL = NULL ?",
+    "body": "`WHERE col = NULL`이나 `WHERE NULL = NULL`은 참(True)일까요? SQL에서 NULL을 찾으려면 어떻게 해야 하는지 다시 확인합니다.",
+    "schema": "test(col INT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "IS NULL"
+    ],
+    "hint": "SQL에서 NULL과의 모든 연산(`=`, `!=`, `+` 등)은 `Unknown(NULL)`입니다. 반드시 `IS NULL` 혹은 `IS NOT NULL`을 써야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_date_extraction",
+    "title": "날짜에서 정보 뽑기: 연도와 월",
+    "body": "`2025-12-25` 같은 날짜 컬럼에서 '연도(2025)'와 '월(12)'만 숫자로 추출하고 싶습니다.",
+    "schema": "orders(order_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "YEAR(order_date)",
+      "MONTH(order_date)"
+    ],
+    "hint": "대부분의 DB에서 `YEAR()`, `MONTH()` 함수를 지원합니다. (Postgres는 `EXTRACT(YEAR FROM ...)` 사용)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_window_vs_group",
+    "title": "개념 확인: GROUP BY vs Partition By",
+    "body": "데이터의 행(Row) 수가 줄어드는 것은 어느 것일까요? 1. `GROUP BY` 집계, 2. `OVER (PARTITION BY)` 윈도우 집계",
+    "schema": "N/A",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "1. GROUP BY"
+    ],
+    "hint": "`GROUP BY`는 그룹당 한 행으로 요약(압축)하지만, 윈도우 함수는 원래 행을 그대로 유지하면서 옆에 계산 결과만 붙입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_concat_string",
+    "title": "문자열 합치기: 성 + 이름",
+    "body": "`first_name`과 `last_name` 컬럼을 합쳐서 'Full Name'을 만들고 싶습니다. (띄어쓰기 한 칸 포함)",
+    "schema": "users(first_name TEXT, last_name TEXT)",
+    "sample_rows": [
+      "Gildong | Hong -> Hong Gildong"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "CONCAT",
+      "||"
+    ],
+    "hint": "MySQL은 `CONCAT(last_name, ' ', first_name)`, 표준 SQL이나 Oracle/Postgres는 `last_name || ' ' || first_name`을 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_in_usage",
+    "title": "여러 값 필터링: OR 노가다 줄이기",
+    "body": "status가 'Pending', 'Processing', 'Shipped' 중 하나인 주문을 찾을 때 `OR`를 3번 쓰는 대신 사용하는 연산자는?",
+    "schema": "orders(status TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "IN ('Pending', ...)"
+    ],
+    "hint": "`status IN ('A', 'B', 'C')` 형태로 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_basic_avg_integer",
+    "title": "정수 나눗셈 주의: 10 / 3 = ?",
+    "body": "정수형 컬럼끼리 나누거나 평균을 구할 때, 소수점이 버려지는 DB(예: SQL Server, 일부 설정의 MySQL)가 있습니다. 소수점까지 정확히 구하려면 어떻게 해야 할까요?",
+    "schema": "scores(math INT, eng INT)",
+    "sample_rows": [
+      "(10 + 11) / 2 -> 10.5 (Not 10)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "CAST(col AS FLOAT)",
+      "* 1.0"
+    ],
+    "hint": "둘 중 하나를 실수(Float/Decimal)로 바꿔줘야 합니다. 가장 쉬운 꼼수는 `col * 1.0`을 하는 것입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_mom_growth_rate",
+    "title": "MoM (Month-over-Month) 성장률 구하기",
+    "body": "월별 매출 테이블이 있습니다. 이번 달 매출이 지난달 대비 몇 퍼센트 성장했는지 구하는 식을 작성하세요. `(이번달 - 지난달) / 지난달 * 100` 공식을 `LAG`를 써서 완성하세요.",
+    "schema": "monthly_sales(ym DATE, amount DECIMAL)",
+    "sample_rows": [
+      "2023-01 | 100",
+      "2023-02 | 120 -> 20%"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "(amount - LAG(amount))",
+      "/ LAG(amount)",
+      "* 100"
+    ],
+    "hint": "먼저 `LAG(amount) OVER (ORDER BY ym)`으로 지난달 매출을 가져온 뒤, 이를 분모와 분자에 배치하여 계산합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_first_day_of_month",
+    "title": "날짜 정제: 월의 첫 날로 변환 (Truncation)",
+    "body": "일별 데이터를 월별로 그룹핑하기 위해, 모든 날짜(`2023-01-25`)를 해당 월의 1일(`2023-01-01`)로 바꾸는 일반적인 패턴은 무엇일까요? (DB마다 함수는 다르지만, 문자열 포맷팅이나 날짜 연산 로직을 떠올려보세요)",
+    "schema": "daily_logs(dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DATE_FORMAT",
+      "TRUNC",
+      "YYYY-MM-01"
+    ],
+    "hint": "MySQL은 `DATE_FORMAT(dt, '%Y-%m-01')`, Oracle/Postgres는 `DATE_TRUNC('month', dt)`를 씁니다. 이를 통해 `GROUP BY` 기준을 만듭니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_count_window_running",
+    "title": "누적 접속 횟수: N번째 방문 표시",
+    "body": "유저가 접속할 때마다 '이것은 당신의 N번째 접속입니다'라고 알려주고 싶습니다. `COUNT`와 윈도우 함수를 조합하여 접속 순서를 카운트하세요.",
+    "schema": "logins(user_id INT, visited_at TIMESTAMP)",
+    "sample_rows": [
+      "User1 | 10:00 -> 1",
+      "User1 | 11:00 -> 2"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "COUNT(*)",
+      "OVER (PARTITION BY user_id ORDER BY visited_at)"
+    ],
+    "hint": "`ROW_NUMBER`와 결과는 같지만 의미상 '누적 개수'이므로 `COUNT(*) OVER (ORDER BY ...)`를 쓸 수도 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_price_change_flag",
+    "title": "가격 변동 탐지: 가격이 올랐나요?",
+    "body": "상품의 가격 변경 이력 테이블에서, 직전 가격보다 현재 가격이 인상되었으면 'Up', 인하되었으면 'Down', 같으면 'Same'을 출력하는 CASE 문을 작성하세요. (과거->미래 순 정렬 가정)",
+    "schema": "price_history(product_id INT, changed_at DATE, price INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "CASE WHEN price > LAG(price)",
+      "THEN 'Up'",
+      "ELSE 'Down'"
+    ],
+    "hint": "`LAG(price) OVER (PARTITION BY product_id ORDER BY changed_at)`으로 이전 가격을 가져와서 현재 `price`와 비교합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_display_name",
+    "title": "화면 표시용 이름: 닉네임 > 실명 > ID",
+    "body": "커뮤니티에서 작성자 이름을 보여줄 때 닉네임, 실명, 유저ID 순으로 존재하는 값을 보여주려 합니다. 3단계 우선순위를 `COALESCE`로 처리하세요. ID는 숫자기 때문에 문자열 변환이 필요할 수 있습니다.",
+    "schema": "users(id INT, real_name TEXT, nickname TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "COALESCE(nickname, real_name, CAST(id AS CHAR))"
+    ],
+    "hint": "데이터 타입이 다르면(문자와 숫자) 에러가 날 수 있으니 `CAST(id AS CHAR)` 등으로 타입을 맞춰 `COALESCE`에 넣습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_time_since_last_event",
+    "title": "경과 시간 계산: 마지막 주문으로부터 며칠?",
+    "body": "각 주문 건마다 '직전 주문으로부터 며칠 만에 주문했는지'를 계산하여 `days_since_prev` 컬럼을 만드세요.",
+    "schema": "orders(user_id INT, order_date DATE)",
+    "sample_rows": [
+      "1일 -> NULL",
+      "5일 -> 4"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "LAG(order_date)"
+    ],
+    "hint": "`DATEDIFF(order_date, LAG(order_date) OVER (...))`를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_sum_unbounded",
+    "title": "전체 누적 합계 vs 그룹 누적 합계",
+    "body": "부서별 누적 급여가 아니라, 회사 전체에서 연봉이 낮은 순서대로 누적 급여 합계를 구하고 싶습니다. `PARTITION BY`를 어떻게 처리해야 할까요?",
+    "schema": "emp(salary INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "SUM(salary)",
+      "OVER (ORDER BY salary)"
+    ],
+    "hint": "`PARTITION BY`를 생략하고 `ORDER BY`만 쓰면 전체 데이터를 대상으로 정렬 순서대로 누적합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_rank_bottom_n",
+    "title": "하위 N명 추출: 성적 부진자 확인",
+    "body": "성적이 낮은 순서대로 3명을 뽑고 싶습니다. 오름차순/내림차순 정렬만 바꾸면 `RANK` 함수로 간단히 해결됩니다.",
+    "schema": "scores(student_id INT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "RANK()",
+      "ORDER BY score ASC"
+    ],
+    "hint": "`RANK() OVER (ORDER BY score ASC)`를 쓰면 점수가 낮은 사람이 1등이 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_string_change",
+    "title": "상태 변경 이력: 값이 바뀐 순간만 찾기",
+    "body": "주문의 배송 상태가 'Ready'에서 'Shipped'로 바뀌는 등, 상태값이 **이전과 달라진 순간**의 로그만 필터링하고 싶습니다. `LAG`값과 현재값이 다를 때를 조건으로 거세요.",
+    "schema": "logs(order_id INT, status TEXT, updated_at TIMESTAMP)",
+    "sample_rows": [
+      "Ready (유지) -> 제외",
+      "Shipped (변경) -> 포함"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "status <> LAG(status)",
+      "OVER"
+    ],
+    "hint": "서브쿼리에서 `prev_status`를 구한 뒤, 외부 WHERE 절에서 `status <> prev_status` 조건을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_max_date_latest_action",
+    "title": "최근 활동일: 유저별 마지막 접속일",
+    "body": "유저 리스트 옆에 '이 유저의 마지막 접속일'을 붙여서, 현재 활동 중인지(Active) 판단하려 합니다. `GROUP BY` 없이 윈도우 함수로 최댓값을 붙이세요.",
+    "schema": "users_log(user_id INT, login_dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "MAX(login_dt)",
+      "OVER (PARTITION BY user_id)"
+    ],
+    "hint": "`MAX(login_dt) OVER (PARTITION BY user_id)`를 쓰면 해당 유저의 로그 중 가장 최신 날짜가 모든 행에 복제됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_row_number_per_category_limit",
+    "title": "카테고리별 최대 2개씩 추천 상품 뽑기",
+    "body": "각 카테고리별로 인기가 많은 상품을 딱 2개씩만 메인 화면에 노출하고 싶습니다. `ROW_NUMBER`를 이용해 필터링 쿼리를 구상하세요.",
+    "schema": "products(cat_id INT, product_id INT, view_count INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "ROW_NUMBER()",
+      "PARTITION BY cat_id",
+      "ORDER BY view_count DESC"
+    ],
+    "hint": "카테고리로 파티션을 나누고 조회수 내림차순으로 번호를 매긴 뒤, `WHERE rn <= 2`로 자릅니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_avg_null_handling",
+    "title": "평균 계산의 함정: NULL은 분모에 포함될까?",
+    "body": "점수 컬럼에 `100, NULL, 0` 세 개의 값이 있습니다. `AVG(score)`의 결과는 얼마일까요? (NULL 처리 방식을 이해하고 있는지 묻는 문제입니다)",
+    "schema": "scores(val INT)",
+    "sample_rows": [
+      "100, NULL, 0"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "50"
+    ],
+    "hint": "`AVG` 등 집계 함수는 NULL을 **없는 데이터** 취급합니다. 즉 `(100 + 0) / 2 = 50`이 됩니다. (NULL을 0으로 치려면 `COALESCE` 후 평균을 내야 해서 33.3이 됨)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_tenure_classification",
+    "title": "재직 기간 분류: 1년 미만, 3년 미만...",
+    "body": "직원의 입사일로부터 현재까지의 일수를 구하고, CASE 문을 써서 'Newbie'(1년 미만), 'Junior'(3년 미만), 'Senior'(그 외)로 등급을 나누세요. (1년=365일 가정)",
+    "schema": "employees(join_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "CASE WHEN DATEDIFF(...) < 365",
+      "THEN 'Newbie'"
+    ],
+    "hint": "`DATEDIFF(CURRENT_DATE, join_date)`로 일수를 구한 뒤 `CASE WHEN` 조건절에 사용하여 분류합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_ntile_ab_test_bucket",
+    "title": "A/B 테스트 버킷 나누기",
+    "body": "전체 사용자를 무작위로 섞어서 2개의 그룹(A군, B군)으로 50:50 분할하고 싶습니다. `NTILE`을 사용하되, 정렬 기준을 랜덤으로 설정해보세요.",
+    "schema": "users(user_id INT)",
+    "sample_rows": [
+      "Group 1 (50%)",
+      "Group 2 (50%)"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "NTILE(2)",
+      "ORDER BY RAND()",
+      "OR NEWID()"
+    ],
+    "hint": "`NTILE(2) OVER (ORDER BY RAND())` (MySQL) 또는 `ORDER BY NEWID()` (SQL Server) 등을 쓰면 랜덤하게 반으로 나뉩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_count_distinct_window_trick",
+    "title": "누적 고유 방문자 수 (Trick)",
+    "body": "시간이 흐름에 따라 '지금까지 방문한 고유 유저 수(Cumulative Distinct Users)'를 구하는 것은 표준 SQL 윈도우 함수(`COUNT(DISTINCT) OVER`)로 지원되지 않는 경우가 많습니다. 대신 `DENSE_RANK`를 날짜+유저 조합에 쓰는 등의 우회 전략이 필요합니다. (개념적으로만 접근해보세요)",
+    "schema": "visits(dt DATE, user_id INT)",
+    "sample_rows": [],
+    "difficulty": "Lv5 심화",
+    "kind": "sql",
+    "expected": [
+      "지원되지 않음 -> 대안 필요",
+      "Recursive CTE or Self Join"
+    ],
+    "hint": "보통은 윈도우 함수로 한 번에 못 구합니다. 매일매일 그 날짜까지의 데이터를 `GROUP BY`하는 서브쿼리를 날리거나 전용 함수(HyperLogLog 등)를 써야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_sum_window_range_frame",
+    "title": "윈도우 프레임: 지난 3건의 합계 (행 기준)",
+    "body": "최근 3건의 주문 금액 합계를 구하려 합니다. 날짜가 아니라 **행의 개수**를 기준으로 `ROWS` 프레임을 지정하세요.",
+    "schema": "orders(amount INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "SUM(amount)",
+      "ROWS BETWEEN 2 PRECEDING",
+      "AND CURRENT ROW"
+    ],
+    "hint": "`ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`는 나를 포함해 총 3행을 의미합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_next_purchase_gap",
+    "title": "재구매 주기 분석: 다음 구매까지 걸린 시간",
+    "body": "유저의 구매 내역에서, '이번 구매 후 다음 구매를 할 때까지 며칠이 걸렸는지'를 계산하여 유저들의 평균 재구매 주기를 파악하려 합니다.",
+    "schema": "orders(user_id INT, order_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "LEAD(order_date)",
+      "order_date"
+    ],
+    "hint": "`DATEDIFF(LEAD(order_date) OVER (...), order_date)`를 구하면 각 구매 건 사이의 공백 기간(Gap)이 나옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_first_value_initial_channel",
+    "title": "최초 유입 채널 고정하기",
+    "body": "유저가 여러 경로로 들어오지만, 성과 분석을 위해 '가장 처음에 들어왔던 채널'을 모든 로그에 기록해두고 싶습니다. `FIRST_VALUE`를 쓰세요.",
+    "schema": "visits(user_id INT, ts TIMESTAMP, channel TEXT)",
+    "sample_rows": [
+      "10:00 FB -> Initial: FB",
+      "12:00 Google -> Initial: FB"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "FIRST_VALUE(channel)",
+      "PARTITION BY user_id",
+      "ORDER BY ts"
+    ],
+    "hint": "파티션 내에서 시간순 정렬 후 첫 번째 값을 가져오면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_dense_rank_medals",
+    "title": "올림픽 메달 순위: 동점자 처리",
+    "body": "점수가 높은 순으로 금, 은, 동메달을 주려 합니다. 동점자는 모두 같은 메달을 받고, 그 다음 순위는 건너뛰지 않습니다. (예: 공동 금메달 2명이면 다음은 은메달). 적절한 순위 함수는?",
+    "schema": "games(player TEXT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DENSE_RANK()"
+    ],
+    "hint": "공동 등수 후 순위가 밀리지 않아야 하므로 `DENSE_RANK`가 적합합니다. (`RANK`를 쓰면 공동 금메달 뒤에 동메달이 나옴)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_search_filter_opt",
+    "title": "선택적 필터링: 입력된 조건만 검색하기",
+    "body": "사용자가 지역(`@region`)과 나이(`@age`) 중 하나만 입력하거나 둘 다 입력할 수 있습니다. 입력된 값(NULL이 아님)에 대해서만 필터링하고 싶을 때 `COALESCE`나 `OR`를 어떻게 쓸까요?",
+    "schema": "users(region TEXT, age INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "(@region IS NULL OR region = @region)",
+      "(@age IS NULL OR age = @age)"
+    ],
+    "hint": "이는 `COALESCE`보다 `(@param IS NULL OR col = @param)` 패턴이 인덱스 활용 면에서 유리할 때가 많지만, `col = COALESCE(@param, col)` 형태도 논리적으로는 같습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_sessionization_sum_case",
+    "title": "세션 ID 만들기 1단계: 세션 끊기",
+    "body": "웹 로그 분석에서 가장 중요한 '세션(Session)'을 정의하려 합니다. 이전 로그(`LAG`)와의 시간 차이가 30분(1800초) 이상이면 '새로운 세션(1)', 아니면 '기존 세션(0)'으로 표시하는 `is_new_session` 플래그를 만드세요.",
+    "schema": "logs(user_id INT, ts TIMESTAMP)",
+    "sample_rows": [
+      "10:00 -> 1 (New)",
+      "10:05 -> 0",
+      "11:00 -> 1 (New, Gap > 30m)"
+    ],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "CASE WHEN",
+      "ts - LAG(ts)",
+      "> 1800"
+    ],
+    "hint": "시간 차이가 조건보다 크면 1, 아니면 0을 반환합니다. 이 1과 0들의 누적 합(`SUM OVER`)을 구하면 그것이 곧 고유한 세션 ID가 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_running_max_drawdown",
+    "title": "MDD 계산 기초: 고점 대비 하락폭",
+    "body": "주식 데이터에서 '지금까지의 최고가(Running Max)' 대비 현재 가격이 얼마나 떨어졌는지(Drawdown) 비율을 구하고 싶습니다. `MAX()` 윈도우 함수를 이용해 역대 최고가를 먼저 구하세요.",
+    "schema": "stock(dt DATE, price DECIMAL)",
+    "sample_rows": [
+      "100 (Max 100) -> 0%",
+      "90 (Max 100) -> -10%"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "MAX(price)",
+      "OVER (ORDER BY dt)"
+    ],
+    "hint": "`MAX(price) OVER (ORDER BY dt)`는 현재 시점까지의 최대값을 반환합니다. 이를 분모로 활용하여 하락률을 계산합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_cohort_min_date",
+    "title": "코호트 분석: 유저의 첫 구매월 붙이기",
+    "body": "모든 구매 내역 옆에, 해당 유저가 '최초로 구매했던 달(Cohort Month)'을 붙여서 비교 분석을 하려 합니다. 집계(`GROUP BY`) 없이 원본 행을 유지하며 최솟값을 붙이세요.",
+    "schema": "orders(user_id INT, order_date DATE, amount INT)",
+    "sample_rows": [
+      "U1 | 2023-02-01 | Cohort: 2023-01-01",
+      "U1 | 2023-01-01 | Cohort: 2023-01-01"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "MIN(order_date)",
+      "OVER (PARTITION BY user_id)"
+    ],
+    "hint": "파티션 내의 최솟값을 구하는 `MIN(col) OVER (PARTITION BY ...)`를 사용하면 모든 행에 동일한 '첫 구매일' 값이 복제됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_zscore_outlier_detection",
+    "title": "이상치 탐지: Z-Score 계산",
+    "body": "매출 데이터에서 평균으로부터 표준편차의 3배 이상 떨어진 이상치를 찾기 위해 Z-Score `(Value - Avg) / StdDev`를 계산하려 합니다. 윈도우 함수로 평균과 표준편차를 한 번에 구해서 식을 만드세요.",
+    "schema": "sales(shop_id INT, revenue INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "(revenue - AVG(revenue) OVER())",
+      "/ STDDEV(revenue) OVER()"
+    ],
+    "hint": "`OVER()`를 비워두면 전체 데이터셋에 대한 평균과 표준편차를 계산합니다. 이를 각 행의 값과 연산합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_frame_centered_avg",
+    "title": "중심 이동 평균: 어제+오늘+내일",
+    "body": "데이터 분석 시 시계열을 부드럽게 만들기 위해 '나를 중심으로 앞뒤 1일'의 평균을 구하고 싶습니다. 3일 이동평균이지만 프레임이 대칭입니다.",
+    "schema": "daily_temp(dt DATE, temp DECIMAL)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "ROWS BETWEEN",
+      "1 PRECEDING",
+      "AND 1 FOLLOWING"
+    ],
+    "hint": "`ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING`을 쓰면 (전 행, 현 행, 다음 행) 총 3개의 평균을 구합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_ytd_partition_year",
+    "title": "YTD (Year-To-Date) 매출 집계",
+    "body": "일별 매출을 누적하되, 연도가 바뀌면 누적 합계가 0부터 다시 시작되게 하고 싶습니다. `PARTITION BY`에 어떤 값을 넣어야 할까요?",
+    "schema": "sales(dt DATE, amount INT)",
+    "sample_rows": [
+      "2023-12-31 | 누적 1000",
+      "2024-01-01 | 누적 10 (리셋됨)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "SUM(amount)",
+      "PARTITION BY YEAR(dt)",
+      "ORDER BY dt"
+    ],
+    "hint": "연도별로 그룹을 나누면(`PARTITION BY YEAR(dt)`) 해가 바뀔 때마다 윈도우가 새로 시작됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_consecutive_days_grouping",
+    "title": "연속 기록 찾기: Gaps-and-Islands 기초",
+    "body": "매일 로그인한 유저의 연속 출석 일수를 구하기 위한 첫 단계입니다. '로그인 날짜'에서 '순위(Row Number)'만큼의 일수를 뺐을 때, 연속된 날짜들은 **같은 값**을 가지게 됩니다. 이 로직을 작성하세요.",
+    "schema": "attendance(user_id INT, login_dt DATE)",
+    "sample_rows": [
+      "1일(rk1) -> 0",
+      "2일(rk2) -> 0 (그룹A)",
+      "5일(rk3) -> 2 (그룹B)"
+    ],
+    "difficulty": "Lv5 심화",
+    "kind": "sql",
+    "expected": [
+      "login_dt - INTERVAL",
+      "ROW_NUMBER()",
+      "DAY"
+    ],
+    "hint": "날짜가 하루씩 증가하고 순위도 1씩 증가하므로, 둘의 차이는 연속된 기간 동안 일정하게 유지됩니다. 이 차이값이 그룹 ID가 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_funnel_lead_check",
+    "title": "퍼널 분석: 다음 단계로 전환되었는가?",
+    "body": "페이지 뷰(View) 로그 옆에, 해당 유저가 바로 다음에 '장바구니(Cart)' 행동을 했는지 여부를 O/X로 표시하고 싶습니다. `LEAD` 함수를 응용하세요.",
+    "schema": "actions(user_id INT, action_name TEXT, ts TIMESTAMP)",
+    "sample_rows": [
+      "View | Next: Cart -> O",
+      "Cart | Next: Purchase -> X"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "LEAD(action_name)",
+      "OVER",
+      "= 'Cart'"
+    ],
+    "hint": "`LEAD(action_name) OVER (PARTITION BY user ORDER BY ts) = 'Cart'` 조건식을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_pivot_sum_case",
+    "title": "피벗 테이블: 행을 열로 변환 (Pivot)",
+    "body": "세로로 긴 월별 매출 데이터를 가로로 펼쳐서 [Jan_Sales, Feb_Sales] 컬럼으로 만들고 싶습니다. `SUM` 함수 안에 `CASE WHEN`을 넣는 패턴을 사용하세요.",
+    "schema": "monthly_sales(month INT, amount INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "SUM(CASE WHEN month = 1 THEN amount ELSE 0 END)"
+    ],
+    "hint": "각 월에 해당하는 값만 남기고 나머지는 0으로 만든 뒤 합계(`SUM`)를 구하면 특정 월의 매출만 컬럼으로 추출됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_string_agg_group_concat",
+    "title": "문자열 합치기: 주문 상품 목록 만들기",
+    "body": "하나의 주문번호(order_id)에 여러 상품이 있습니다. 주문번호별로 상품명들을 쉼표(`,`)로 연결해 한 줄로 보고 싶습니다. (DB에 따라 `STRING_AGG`, `GROUP_CONCAT` 등을 사용)",
+    "schema": "order_items(order_id INT, product_name TEXT)",
+    "sample_rows": [
+      "100 | Apple, Banana, Cherry"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "GROUP_CONCAT",
+      "STRING_AGG"
+    ],
+    "hint": "MySQL은 `GROUP_CONCAT(product_name SEPARATOR ', ')`, PostgreSQL/SQLServer는 `STRING_AGG`를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_reverse_running_total_budget",
+    "title": "잔여 예산 계산 (Reverse Running Total)",
+    "body": "프로젝트의 총 예산이 주어졌을 때, 지출 내역을 시간순으로 조회하며 '남은 예산'을 표시하고 싶습니다. `전체예산 - 누적지출` 형식을 사용하세요.",
+    "schema": "expenses(cost INT, used_at DATE)",
+    "sample_rows": [
+      "Cost 100 | Remain 900",
+      "Cost 200 | Remain 700"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "total_budget - SUM(cost)",
+      "OVER (ORDER BY used_at)"
+    ],
+    "hint": "상수(총 예산)에서 `SUM(cost) OVER (ORDER BY ...)`인 누적 합계를 빼주면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_weighted_moving_avg",
+    "title": "가중 이동 평균 (Weighted Moving Avg)",
+    "body": "최근 데이터에 더 가중치를 두고 싶습니다. `오늘*0.5 + 어제*0.3 + 그제*0.2`로 평균을 구하는 식을 `LAG`를 이용해 작성하세요.",
+    "schema": "stock(dt DATE, price DECIMAL)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "price * 0.5",
+      "+ LAG(price, 1) * 0.3",
+      "+ LAG(price, 2) * 0.2"
+    ],
+    "hint": "`LAG` 함수를 여러 번 호출하여 각각 다른 가중치를 곱해서 더합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_boolean_aggregation_max",
+    "title": "조건 충족 여부 확인: 하나라도 있으면 1",
+    "body": "유저가 가입 후 한 번이라도 '반품(Return)'을 한 적이 있는지 `is_returned` (1/0)로 표시하고 싶습니다. `MAX`와 `CASE WHEN`을 조합하여 유저별로 집계하세요.",
+    "schema": "orders(user_id INT, status TEXT)",
+    "sample_rows": [
+      "U1 | Order, Return, Order -> 1",
+      "U2 | Order, Order -> 0"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "MAX(CASE WHEN status='Return' THEN 1 ELSE 0 END)",
+      "GROUP BY user_id"
+    ],
+    "hint": "하나라도 1(True)이 있으면 `MAX` 값은 1이 됩니다. Boolean OR 연산의 집계 버전으로 자주 쓰이는 테크닉입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_cume_dist_percentile",
+    "title": "누적 분포: 상위 몇 %인가?",
+    "body": "내 점수가 전체 수강생 중 상위 몇 % 위치에 있는지(예: 0.1이면 상위 10%) 알고 싶습니다. `CUME_DIST()` 함수를 사용해보세요.",
+    "schema": "scores(student_id INT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "CUME_DIST()",
+      "OVER (ORDER BY score DESC)"
+    ],
+    "hint": "`CUME_DIST()`는 Cumulative Distribution(누적 분포) 값을 반환합니다. 점수 내림차순 정렬 시 앞쪽에 있을수록 값이 작습니다(혹은 오름차순 시 하위 % 계산).",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_last_value_ignore_nulls",
+    "title": "결측치 채우기: 앞의 값으로 채우기 (Forward Fill)",
+    "body": "데이터가 비어있을 때(NULL), 바로 앞의 유효한 값을 가져와서 채우고 싶습니다. `LAST_VALUE` 함수와 `IGNORE NULLS` 옵션을 사용해야 합니다. (지원 DB 확인 필요)",
+    "schema": "sensor(ts TIMESTAMP, val INT)",
+    "sample_rows": [
+      "10 -> 10",
+      "NULL -> 10 (Copy)",
+      "20 -> 20"
+    ],
+    "difficulty": "Lv5 심화",
+    "kind": "sql",
+    "expected": [
+      "LAST_VALUE(val)",
+      "IGNORE NULLS",
+      "OVER"
+    ],
+    "hint": "`LAST_VALUE(val IGNORE NULLS) OVER (ORDER BY ts ROWS UNBOUNDED PRECEDING)` 형태로 씁니다. 현재까지의 값 중 NULL이 아닌 마지막 값을 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_avg_partition_vs_global",
+    "title": "비교 분석: 내 연봉 vs 부서 평균 vs 전체 평균",
+    "body": "내 연봉 옆에 '부서 평균'과 '회사 전체 평균'을 나란히 출력하여 비교하고 싶습니다. 윈도우 함수의 `PARTITION BY` 유무를 활용해 두 개의 컬럼을 만드세요.",
+    "schema": "emp(salary INT, dept TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "AVG(salary) OVER (PARTITION BY dept)",
+      "AVG(salary) OVER ()"
+    ],
+    "hint": "하나는 `PARTITION BY dept`를 쓰고, 다른 하나는 `OVER ()`로 비워두면 전체 평균이 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_time_bucket_grouping",
+    "title": "시간대 분석: 10분 단위로 그룹핑",
+    "body": "로그 데이터를 10분 단위로 묶어서 건수를 세고 싶습니다. 분(minute) 정보를 10으로 나누고 내림(`FLOOR`)하여 그룹핑 키를 만드세요.",
+    "schema": "logs(ts TIMESTAMP)",
+    "sample_rows": [
+      "10:05 -> 10:00",
+      "10:18 -> 10:10"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "FLOOR(MINUTE(ts) / 10)",
+      "* 10"
+    ],
+    "hint": "`FLOOR(분 / 10) * 10`을 하면 0~9분은 0, 10~19분은 10... 처럼 변환되어 `GROUP BY` 하기 좋아집니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_coalesce_default_date",
+    "title": "날짜 구간 만들기: 종료일 추론",
+    "body": "이력 데이터(`history`)에 시작일(`start_dt`)만 있습니다. 다음 이력의 시작일을 나의 종료일(`end_dt`)로 쓰되, 다음 이력이 없으면 '9999-12-31'로 채우세요.",
+    "schema": "history(id INT, start_dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "COALESCE",
+      "LEAD(start_dt)"
+    ],
+    "hint": "`COALESCE(LEAD(start_dt) OVER (...), '9999-12-31')` 형식을 쓰면 마지막 행의 NULL 문제를 해결할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_percent_rank_relative_standing",
+    "title": "상대적 순위: 하위 10% 찾기",
+    "body": "성적이 낮은 순서대로 정렬했을 때 하위 10%에 해당하는 학생을 찾으려 합니다. `PERCENT_RANK()` 값이 0.1 이하인 경우를 찾으면 될까요?",
+    "schema": "scores(score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "PERCENT_RANK()",
+      "OVER (ORDER BY score ASC)",
+      "<= 0.1"
+    ],
+    "hint": "`PERCENT_RANK`는 0~1 사이 값을 반환합니다. 오름차순 정렬(ASC) 시 0에 가까울수록 낮은 점수(하위권)입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_sum_case_conditional_running",
+    "title": "조건부 누적 합계: 환불 제외 매출 누적",
+    "body": "일별 매출을 누적하되, 상태가 'Refund'인 건은 제외하고(더하지 않고) 합계를 구하고 싶습니다. `SUM` 안에 `CASE`문을 넣어 윈도우 함수를 작성하세요.",
+    "schema": "sales(dt DATE, amount INT, status TEXT)",
+    "sample_rows": [
+      "Paid 100 -> 누적 100",
+      "Refund 50 -> 누적 100 (변동없음)",
+      "Paid 50 -> 누적 150"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "SUM(CASE WHEN status != 'Refund' THEN amount ELSE 0 END)",
+      "OVER (ORDER BY dt)"
+    ],
+    "hint": "누적할 대상(`amount`)을 `CASE`문으로 걸러냅니다. 환불이면 0을 더하게 하여 누적값에 영향을 주지 않게 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_yoy_growth",
+    "title": "YoY(전년 대비 증감률) 계산",
+    "body": "월별 매출 테이블에서 '작년 동월'의 매출과 비교하여 성장률을 계산하려 합니다. 데이터가 월별로 빠짐없이 있다고 가정할 때, `LAG`의 offset(간격) 파라미터를 어떻게 설정해야 할까요?",
+    "schema": "monthly_sales(ym DATE, amount DECIMAL)",
+    "sample_rows": [
+      "2023-01 | 100",
+      "...",
+      "2024-01 | 120 (비교대상: 100)"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "LAG",
+      "amount, 12"
+    ],
+    "hint": "월별 데이터라면 1년 전은 12칸 뒤에 있습니다. `LAG(amount, 12) OVER (ORDER BY ym)`을 사용하세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_frame_7day_avg",
+    "title": "이동 평균: 최근 7일 평균 (Rolling Average)",
+    "body": "주간 트렌드를 보기 위해 '오늘을 포함한 최근 7일간'의 방문자 수 평균을 구하고 싶습니다. `AVG`와 `ROWS BETWEEN`을 사용하여 윈도우 프레임을 설정하세요.",
+    "schema": "visitors(dt DATE, cnt INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "ROWS BETWEEN",
+      "6 PRECEDING",
+      "AND CURRENT ROW"
+    ],
+    "hint": "오늘 포함 7일이려면, 내 앞의 6일(`6 PRECEDING`)과 나(`CURRENT ROW`)를 합쳐야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_divide_zero",
+    "title": "안전한 나눗셈: 0으로 나누기 방지",
+    "body": "클릭률(CTR)을 구하기 위해 `clicks / impressions`를 계산하려는데, 노출(impressions)이 0인 경우가 있어 에러가 발생합니다. `NULLIF`를 쓰거나 `COALESCE`를 쓸 수 있지만, 여기선 분모가 0이면 NULL을 반환하게 하는 표준 패턴을 생각해보세요.",
+    "schema": "ads(clicks INT, impressions INT)",
+    "sample_rows": [
+      "10 / 0 -> NULL (Error X)"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "NULLIF(impressions, 0)"
+    ],
+    "hint": "`clicks / NULLIF(impressions, 0)`을 쓰면 분모가 0일 때 NULL이 되어 전체 결과가 NULL(에러 없음)이 됩니다. 이후 필요하면 `COALESCE`로 0 처리합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_max_over_high_water_mark",
+    "title": "Running Max: 지금까지의 최고 기록",
+    "body": "게임 점수 로그를 시간순으로 보면서, '해당 시점까지의 역대 최고 점수(High Water Mark)'를 매 행마다 표시하고 싶습니다.",
+    "schema": "scores(user_id INT, created_at TIMESTAMP, score INT)",
+    "sample_rows": [
+      "10점 -> Max 10",
+      "5점 -> Max 10",
+      "20점 -> Max 20"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "MAX(score)",
+      "OVER (ORDER BY created_at)"
+    ],
+    "hint": "기본 윈도우(`RANGE UNBOUNDED PRECEDING`)를 사용하는 `MAX` 함수는 정렬 순서에 따라 누적 최대값을 보여줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_months_service",
+    "title": "근속 개월 수 계산",
+    "body": "입사일(joined_at)과 기준일(target_dt) 사이의 차이를 '개월 수'로 구하고 싶습니다. 단순 일수 나누기 30은 부정확하므로, SQL의 월 단위 차이 함수(혹은 로직)를 사용하세요.",
+    "schema": "employees(joined_at DATE, target_dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "TIMESTAMPDIFF",
+      "MONTH"
+    ],
+    "hint": "MySQL/MariaDB 등에서는 `TIMESTAMPDIFF(MONTH, joined_at, target_dt)`를, SQL Server는 `DATEDIFF(MONTH, ...)`를 씁니다. 문맥에 맞는 월 차이 함수를 선택하세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_first_value_attribution",
+    "title": "첫 유입 채널 찾기: Attribution 분석",
+    "body": "유저가 여러 번 방문했지만, 최초로 방문했을 때의 유입 경로(channel)를 모든 로그에 표시하여 '이 유저는 원래 어디서 왔나'를 분석하고 싶습니다. `FIRST_VALUE`를 사용하세요.",
+    "schema": "visits(user_id INT, visited_at TIMESTAMP, channel TEXT)",
+    "sample_rows": [
+      "Google (10:00)",
+      "Direct (12:00) -> Original: Google"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "FIRST_VALUE(channel)",
+      "PARTITION BY user_id",
+      "ORDER BY visited_at"
+    ],
+    "hint": "`PARTITION BY`로 유저를 묶고 시간순 정렬한 뒤 맨 첫 값을 가져오면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_date_gap",
+    "title": "데이터 누락 탐지: 날짜가 끊긴 곳 찾기",
+    "body": "일별 로그가 연속되어야 하는데 중간에 빠진 날짜가 있는지 확인하려 합니다. `LAG`로 이전 날짜를 가져온 뒤, 현재 날짜와의 차이가 1보다 큰 경우를 찾으세요.",
+    "schema": "logs(log_date DATE)",
+    "sample_rows": [
+      "1일, 2일, 4일 -> 4일에서 Gap 감지"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "> 1"
+    ],
+    "hint": "`DATEDIFF(log_date, LAG(log_date) OVER(...)) > 1` 이면 중간에 하루 이상 비었다는 뜻입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_ntile_decile_analysis",
+    "title": "고객 등급 나누기: 10분위(Decile) 분석",
+    "body": "구매 금액(amount) 기준으로 고객들을 1등급부터 10등급까지 나누어 마케팅에 활용하려 합니다. 금액이 많은 순서대로 1등급을 부여하세요.",
+    "schema": "customers(id INT, amount DECIMAL)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "NTILE(10)",
+      "ORDER BY amount DESC"
+    ],
+    "hint": "`NTILE(10) OVER (ORDER BY amount DESC)`를 쓰면 상위 10%가 1그룹, 그 다음 10%가 2그룹... 순으로 배정됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_dense_rank_price_tier",
+    "title": "가격대별 순위: 동일 가격은 같은 등수로",
+    "body": "상품 가격이 비싼 순서대로 순위를 매기되, 가격이 같으면 같은 순위를 주고 그 다음 순위도 연속되게(1, 1, 2, 3...) 하고 싶습니다.",
+    "schema": "products(name TEXT, price INT)",
+    "sample_rows": [
+      "A: 1000 (1등)",
+      "B: 1000 (1등)",
+      "C: 900 (2등)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DENSE_RANK()",
+      "ORDER BY price DESC"
+    ],
+    "hint": "순위가 건너뛰지 않길 원할 때는 무조건 `DENSE_RANK`입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_search_params",
+    "title": "동적 검색 조건: 파라미터가 없으면 전체 조회",
+    "body": "검색어(`@query`)가 들어오면 해당 이름만 찾고, 검색어가 NULL이면 전체 목록을 출력하는 트릭을 `COALESCE`를 활용해 WHERE 절에 작성해보세요.",
+    "schema": "users(name TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "WHERE name =",
+      "COALESCE(@query, name)"
+    ],
+    "hint": "`name = COALESCE(@query, name)`: 쿼리가 있으면 name=@query가 되고, 없으면 name=name(항상 참)이 되어 전체가 조회됩니다. (성능 주의)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_seconds_latency",
+    "title": "처리 시간(Latency) 분석: 초 단위 차이",
+    "body": "요청 시간(req_at)과 응답 시간(res_at)의 차이를 '초(Second)' 단위로 계산하여 평균 응답 속도를 구하려 합니다.",
+    "schema": "api_logs(req_at TIMESTAMP, res_at TIMESTAMP)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "TIMESTAMPDIFF(SECOND, ...)",
+      "OR DATEDIFF(s, ...)"
+    ],
+    "hint": "MySQL은 `TIMESTAMPDIFF(SECOND, req_at, res_at)`, SQL Server는 `DATEDIFF(SECOND, req_at, res_at)`를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_min_over_salary_range",
+    "title": "연봉 범위 확인: 최저 연봉과의 차이",
+    "body": "각 직원의 연봉이 해당 직무(job)의 '최저 연봉'보다 얼마나 더 많은지 계산하고 싶습니다. `GROUP BY` 없이 윈도우 함수로 최저 연봉을 구해서 빼세요.",
+    "schema": "emp(job TEXT, salary INT)",
+    "sample_rows": [
+      "Dev | 5000 | (Min: 3000) -> +2000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "salary - MIN(salary)",
+      "OVER",
+      "PARTITION BY job"
+    ],
+    "hint": "각 행마다 `MIN(salary) OVER (PARTITION BY job)` 값을 생성하여 본인 연봉에서 뺍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_churn_signal",
+    "title": "이탈 신호 감지: 다음 접속이 없을 때",
+    "body": "유저의 접속 로그에서, '다음 접속일'이 존재하지 않는(NULL) 경우를 '마지막 접속(Last Login)'으로 판단하여 표시하려 합니다.",
+    "schema": "logins(user_id INT, login_dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "LEAD(login_dt)",
+      "IS NULL"
+    ],
+    "hint": "`LEAD(...)`의 결과가 `IS NULL`이면 그 행이 해당 파티션(유저)의 마지막 데이터라는 뜻입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_count_over_partition_size",
+    "title": "그룹 크기 확인: 우리 팀은 몇 명?",
+    "body": "직원 목록을 출력하면서, 옆에 '소속 부서의 총 인원 수'를 함께 표시하고 싶습니다. 집계 쿼리를 조인하지 말고 윈도우 함수로 해결하세요.",
+    "schema": "emp(name TEXT, dept TEXT)",
+    "sample_rows": [
+      "A | HR | 2명",
+      "B | HR | 2명",
+      "C | IT | 1명"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "COUNT(*)",
+      "OVER (PARTITION BY dept)"
+    ],
+    "hint": "`COUNT(*) OVER (PARTITION BY dept)`를 쓰면 각 행마다 해당 부서의 전체 인원수가 계산되어 붙습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_default_param",
+    "title": "LAG 기본값: 첫 구매라 이전 기록이 없다면?",
+    "body": "이번 구매 금액과 이전 구매 금액의 차이를 구하는데, '첫 구매'라 이전 금액이 NULL인 경우 차이를 0으로 간주하고 싶습니다. `LAG`의 3번째 인자(default)를 활용하세요.",
+    "schema": "orders(user_id INT, amount INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "amount - LAG",
+      "amount, 1, amount"
+    ],
+    "hint": "`LAG(amount, 1, amount)`라고 쓰면 이전 값이 없을 때 '내 금액(amount)'을 가져오므로, `amount - LAG` 결과가 0이 됩니다. (혹은 0을 기본값으로 쓰고 로직을 바꿀 수도 있음)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_sum_over_cumulative_percent",
+    "title": "파레토 법칙: 누적 매출 비중 구하기",
+    "body": "매출이 높은 상품부터 정렬했을 때, 상위 상품들의 매출 합계가 전체 매출의 몇 %를 차지하는지(누적 비율) 알고 싶습니다. `SUM() OVER(ORDER BY..)`와 `SUM() OVER()`를 나누세요.",
+    "schema": "sales(product TEXT, amount INT)",
+    "sample_rows": [
+      "1등: 50 -> 누적 50 (50%)",
+      "2등: 30 -> 누적 80 (80%)",
+      "3등: 20 -> 누적 100 (100%)"
+    ],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "SUM(amount) OVER (ORDER BY...)",
+      "/ SUM(amount) OVER ()"
+    ],
+    "hint": "분자: `SUM(amount) OVER (ORDER BY amount DESC)` (누적합)\n분모: `SUM(amount) OVER ()` (전체합)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_row_number_delete_dups",
+    "title": "중복 제거 로직: DELETE 문과 결합 (개념)",
+    "body": "중복된 데이터 중 id가 가장 큰 최신 데이터 하나만 남기고 나머지를 삭제(`DELETE`)하려 합니다. 보통 `ROW_NUMBER`로 순위를 매긴 CTE를 만들고, `DELETE FROM CTE WHERE ...` 구문을 씁니다. 이때 남길 행의 조건은?",
+    "schema": "logs(id INT, msg TEXT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "ROW_NUMBER()",
+      "WHERE rn > 1"
+    ],
+    "hint": "최신 데이터를 1등으로 만들었다면, `rn > 1`인 행들(2등, 3등...)이 삭제 대상이 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_avg_over_deviation",
+    "title": "편차 구하기: 평균보다 얼마나 다른가?",
+    "body": "일별 기온 데이터에서 '월 평균 기온'과 '그 날의 기온' 차이(편차)를 구하세요.",
+    "schema": "weather(dt DATE, temp DECIMAL)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "temp - AVG(temp)",
+      "PARTITION BY MONTH(dt)"
+    ],
+    "hint": "`PARTITION BY`에 월(Month) 정보를 넣어 월별 평균을 구하고, 현재 행의 `temp`에서 뺍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_boolean_check",
+    "title": "패턴 매칭: 성공 후 바로 실패한 경우 찾기",
+    "body": "작업 로그에서 상태가 'Success'인 바로 다음 작업이 'Fail'인 경우를 찾고 싶습니다. `LEAD`로 다음 상태를 가져와서 비교하세요.",
+    "schema": "jobs(id INT, status TEXT, created_at TIMESTAMP)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "status = 'Success'",
+      "AND LEAD(status) = 'Fail'"
+    ],
+    "hint": "현재 행이 Success이고 `LEAD(...)`가 Fail인 행을 필터링하면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_rank_dense_rank_concept",
+    "title": "개념 확인: RANK와 DENSE_RANK의 차이",
+    "body": "1등이 3명일 때, 그 다음 사람의 등수가 `4등`이 되는 함수와 `2등`이 되는 함수를 순서대로 나열하세요.",
+    "schema": "N/A (개념 문제)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "RANK",
+      "DENSE_RANK"
+    ],
+    "hint": "`RANK`는 1, 1, 1 다음 4 (건너뜀), `DENSE_RANK`는 1, 1, 1 다음 2 (빽빽함)입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_ntile_quartile",
+    "title": "데이터 4등분하기: NTILE",
+    "body": "전체 학생을 성적(score) 순으로 줄 세운 뒤, 정확히 4개의 그룹(1분위~4분위)으로 나누고 싶습니다. 1등 그룹에게는 1, 꼴찌 그룹에게는 4가 부여되도록 하세요.",
+    "schema": "students(name TEXT, score INT)",
+    "sample_rows": [
+      "A | 100 -> 1",
+      "B | 90 -> 1",
+      "C | 80 -> 2"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "NTILE(4)",
+      "OVER",
+      "ORDER BY"
+    ],
+    "hint": "`NTILE(n)` 함수는 데이터를 n개의 바구니에 똑같이 나누어 담습니다. `NTILE(4) OVER (ORDER BY score DESC)`를 사용하세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_math",
+    "title": "NULL이 포함된 연산: 급여 + 보너스",
+    "body": "총 수령액을 계산하기 위해 `salary + bonus`를 하려고 합니다. 하지만 보너스를 받지 못한 직원의 bonus 컬럼이 NULL이라서, 더하기 결과가 NULL이 됩니다. 보너스가 없으면 0으로 처리하여 더하세요.",
+    "schema": "employees(salary INT, bonus INT)",
+    "sample_rows": [
+      "3000 | NULL -> 3000",
+      "4000 | 500 -> 4500"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "salary + COALESCE(bonus, 0)"
+    ],
+    "hint": "SQL에서 `숫자 + NULL`은 `NULL`입니다. 반드시 `COALESCE(bonus, 0)`으로 NULL을 0으로 바꿔준 뒤 더해야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_default_value",
+    "title": "LEAD 기본값 설정: 다음 단계가 없으면?",
+    "body": "주문의 처리 단계(status) 흐름을 보고 있는데, 마지막 단계인 경우 '다음 단계'가 없어 NULL이 나옵니다. 이 경우 NULL 대신 'Completed'라고 표시하고 싶습니다. `LEAD` 함수의 3번째 인자를 활용하세요.",
+    "schema": "process(step_id INT, status TEXT)",
+    "sample_rows": [
+      "1 | Order -> Pay",
+      "2 | Pay -> Ship",
+      "3 | Ship -> Completed"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "LEAD",
+      "status, 1, 'Completed'"
+    ],
+    "hint": "`LEAD(col, offset, default_value)` 형식을 사용합니다. 예: `LEAD(status, 1, 'Completed')`",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_offset_wow",
+    "title": "지난주 대비 비교: LAG의 Offset 활용",
+    "body": "매일 기록되는 데이터에서 '어제'가 아니라 '7일 전(지난주 같은 요일)'의 매출과 비교하고 싶습니다. `LAG` 함수의 2번째 인자(offset)를 사용하세요.",
+    "schema": "daily_sales(dt DATE, amount INT)",
+    "sample_rows": [
+      "2023-01-08 (일) -> 비교대상: 2023-01-01 (일)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "LAG",
+      "amount, 7"
+    ],
+    "hint": "`LAG(amount, 7) OVER (ORDER BY dt)`를 쓰면 7행 앞의 데이터를 가져옵니다. (데이터가 매일 빠짐없이 있다는 가정 하에)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_avg_partition_diff",
+    "title": "평균과의 차이: 내 점수는 평균보다 얼마나 높을까?",
+    "body": "학생 본인의 점수와 '해당 반(class)의 평균 점수'의 차이를 구하고 싶습니다. `GROUP BY`를 쓰지 않고 윈도우 함수 `AVG`를 사용하여 각 행에 평균값을 붙인 뒤 빼세요.",
+    "schema": "scores(name TEXT, class TEXT, score INT)",
+    "sample_rows": [
+      "A | Math | 90 (반평균 80) -> +10"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "score - AVG(score)",
+      "OVER",
+      "PARTITION BY"
+    ],
+    "hint": "`AVG(score) OVER (PARTITION BY class)`를 하면 해당 행 옆에 반 평균이 붙습니다. 여기서 내 점수를 빼면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_row_number_pagination",
+    "title": "게시판 페이징: 11~20번째 글 가져오기",
+    "body": "게시글 목록에서 2페이지(11등부터 20등까지)에 해당하는 글만 가져오려고 합니다. `ROW_NUMBER`로 순번을 매긴 후, 서브쿼리 밖에서 범위를 지정하세요.",
+    "schema": "posts(id INT, created_at TIMESTAMP)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "ROW_NUMBER()",
+      "WHERE rn BETWEEN 11 AND 20"
+    ],
+    "hint": "내부에서 `ROW_NUMBER() OVER (ORDER BY created_at DESC) as rn`을 만들고, 외부 WHERE 절에서 `rn BETWEEN 11 AND 20`을 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_min_over_lowest_price",
+    "title": "카테고리 최저가 확인: 최저가와 비교",
+    "body": "상품 목록을 출력하되, 해당 상품이 속한 카테고리의 '최저가'도 함께 컬럼으로 보여주고 싶습니다. (그래서 내 가격이 최저가인지 한눈에 보게요)",
+    "schema": "products(name TEXT, category TEXT, price INT)",
+    "sample_rows": [
+      "TV | Electronics | 1000 | (Min: 500)",
+      "Radio | Electronics | 500 | (Min: 500)"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "MIN(price)",
+      "OVER",
+      "PARTITION BY"
+    ],
+    "hint": "`MIN(price) OVER (PARTITION BY category)`를 사용하면 집계(Group by)로 행이 줄어들지 않고 원본 행 옆에 최저가가 붙습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_age_calc",
+    "title": "나이 계산 (연도 차이)",
+    "body": "직원의 생년월일(birth_date)을 기준으로 현재(2025-01-01 기준이라고 가정) 몇 년을 살았는지, 즉 '한국식 나이 말고 만 나이와 유사한 연차'를 `DATEDIFF`나 연도 계산으로 구해보세요.",
+    "schema": "employees(name TEXT, birth_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "YEAR"
+    ],
+    "hint": "단순 연도 차이는 `YEAR(Current) - YEAR(Birth)`로 구하거나, DB에 따라 `DATEDIFF(year, birth, current)`를 쓸 수 있습니다. (일수 차이 / 365는 윤년 때문에 부정확할 수 있음)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_last_value_frame_trap",
+    "title": "함정 문제: LAST_VALUE가 이상해요",
+    "body": "부서별로 가장 연봉이 높은 사람을 구하려고 `LAST_VALUE(name) OVER (PARTITION BY dept ORDER BY salary)`를 썼더니, 1등 이름이 아니라 자기 자신의 이름이 나옵니다. 무엇을 추가해야 전체 범위를 볼까요?",
+    "schema": "emp(name TEXT, dept TEXT, salary INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "ROWS BETWEEN",
+      "UNBOUNDED PRECEDING",
+      "UNBOUNDED FOLLOWING"
+    ],
+    "hint": "기본 윈도우 프레임은 '처음부터 **현재 행까지**'입니다. 그래서 마지막 값(`LAST_VALUE`)이 항상 '나(현재 행)'가 됩니다. `ROWS BETWEEN ... AND UNBOUNDED FOLLOWING`으로 뒷부분까지 열어줘야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_percent_rank_top_percent",
+    "title": "상위 N% 추출: PERCENT_RANK",
+    "body": "게임 점수가 상위 1%에 드는 유저만 추출하고 싶습니다. `PERCENT_RANK` 함수를 사용하여 0~1 사이의 백분위 순위를 구하고 조건을 거세요.",
+    "schema": "users(id INT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "PERCENT_RANK()",
+      "OVER",
+      "<= 0.01"
+    ],
+    "hint": "`PERCENT_RANK()`는 0(1등)에서 1(꼴등) 사이의 값을 반환합니다. 상위 1%는 값이 0.01 이하인 경우입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_count_over_duplicates",
+    "title": "중복 데이터 찾기: GROUP BY 없이",
+    "body": "이메일(email)이 중복된 사용자를 찾고 싶은데, 중복된 사용자의 '모든 컬럼 정보'를 보고 싶습니다. `GROUP BY`를 하면 다른 컬럼을 보기 힘드니, 윈도우 함수로 '중복 횟수' 컬럼을 만들어 필터링하세요.",
+    "schema": "users(id INT, name TEXT, email TEXT)",
+    "sample_rows": [
+      "1 | A | a@test.com | cnt: 2",
+      "2 | B | a@test.com | cnt: 2"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "COUNT(*)",
+      "PARTITION BY email"
+    ],
+    "hint": "`COUNT(*) OVER (PARTITION BY email)`을 계산해서 그 값이 1보다 큰 행만 서브쿼리로 추출합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_recent_filter",
+    "title": "최근 30일 데이터 필터링",
+    "body": "오늘 날짜(NOW() 혹은 CURRENT_DATE)를 기준으로, 최근 30일 이내에 가입한 유저만 조회하는 WHERE 절을 `DATEDIFF`를 사용하여 작성하세요.",
+    "schema": "users(id INT, join_date DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "<= 30"
+    ],
+    "hint": "`DATEDIFF(CURRENT_DATE, join_date) BETWEEN 0 AND 30` 처럼 작성하여 미래 날짜는 제외하고 과거 30일만 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_rank_dense_gap_check",
+    "title": "순위의 빈 공간 확인: RANK와 DENSE_RANK 차이",
+    "body": "특정 컬럼 기준으로 `RANK()` 값과 `DENSE_RANK()` 값이 **다른** 행을 찾으면, 그 앞 순위에 동점자가 존재했다는 뜻입니다. 이를 이용해 동점자가 발생한 구간을 찾는 로직을 생각해보세요.",
+    "schema": "scores(id INT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "RANK() - DENSE_RANK()",
+      "<> 0"
+    ],
+    "hint": "동점자가 없으면 두 순위는 항상 같습니다. 차이가 0이 아니라면 그 앞에 공동 순위가 있었다는 증거입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_sum_over_category_total",
+    "title": "비중 계산: (내 매출 / 카테고리 총 매출)",
+    "body": "각 상품의 매출이 해당 카테고리 전체 매출에서 차지하는 비율(%)을 구하세요. `SUM(revenue) OVER (...)`를 분모로 사용해야 합니다.",
+    "schema": "sales(product TEXT, category TEXT, revenue DECIMAL)",
+    "sample_rows": [
+      "A | Elec | 100 / 500 = 0.2"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "revenue / SUM(revenue)",
+      "PARTITION BY category"
+    ],
+    "hint": "`revenue / SUM(revenue) OVER (PARTITION BY category)` 형태로 계산합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_business_days",
+    "title": "주말 제외 로직 (힌트)",
+    "body": "두 날짜 사이의 일수를 `DATEDIFF`로 구하면 주말도 포함됩니다. 만약 주말을 대략적으로 제외하고 싶다면, 전체 일수에서 어떤 연산(7로 나누기 등)을 응용해야 할까요? (정확한 공휴일 제외는 달력 테이블이 필요하지만, 단순 5/7 근사치 아이디어를 떠올려보세요)",
+    "schema": "tasks(start_dt DATE, end_dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "* 5 / 7"
+    ],
+    "hint": "단순 근사치로는 `DATEDIFF(...) * 5 / 7`을 쓰거나, 복잡하게는 `WEEKDAY()` 함수를 조합해야 합니다. 이 문제는 아이디어 차원에서 접근해보세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_filter",
+    "title": "NULL 포함 필터링: <> 'Done'",
+    "body": "status가 'Done'이 **아닌** 작업을 모두 찾고 싶습니다. `WHERE status <> 'Done'`이라고 쓰면 NULL인 행이 누락됩니다. `COALESCE`를 사용해 NULL도 결과에 포함되게 만드세요.",
+    "schema": "tasks(id INT, status TEXT)",
+    "sample_rows": [
+      "1 | Doing -> O",
+      "2 | NULL -> O (포함되어야 함)",
+      "3 | Done -> X"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "COALESCE(status, '')",
+      "<> 'Done'"
+    ],
+    "hint": "`COALESCE(status, '') <> 'Done'`으로 비교하면 NULL이 빈 문자열로 바뀌어 'Done'과 다르다고 판단되므로 결과에 나옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_time_duration",
+    "title": "종료 시간 추론: 다음 시작 시간이 내 종료 시간",
+    "body": "로그에 시작 시간(start_at)만 있고 종료 시간이 없습니다. '다음 이벤트의 시작 시간'을 '내 이벤트의 종료 시간'으로 간주하여 `end_at` 컬럼을 만드세요.",
+    "schema": "events(event_id INT, start_at TIMESTAMP)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "LEAD(start_at)",
+      "OVER (ORDER BY start_at)"
+    ],
+    "hint": "`LEAD(start_at) OVER (ORDER BY start_at)`을 하면 바로 다음 행의 시작 시간을 가져올 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_row_number_median",
+    "title": "중앙값(Median) 찾기 기초",
+    "body": "데이터를 순서대로 나열했을 때 정확히 한가운데 있는 값을 찾으려면, 순번(`ROW_NUMBER`)과 전체 개수(`COUNT`)를 비교해야 합니다. 중앙값의 위치를 찾는 조건식은 무엇일까요? (홀수 개일 때)",
+    "schema": "values(val INT)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "rn =",
+      "(cnt + 1) / 2"
+    ],
+    "hint": "전체 개수(cnt)가 5개면 3등이 중앙입니다. `rn = (cnt + 1) / 2` (혹은 짝수일 경우 평균 등 추가 로직 필요) 조건을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_dense_rank_third_distinct",
+    "title": "3번째로 높은 '고유한' 점수 찾기",
+    "body": "점수 분포가 `100, 100, 90, 90, 80` 일 때, 80점은 5등(RANK)이지만 고유한 값으로는 3번째(DENSE_RANK)입니다. 3번째로 높은 점수(80)를 가진 사람을 찾으세요.",
+    "schema": "scores(name TEXT, score INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DENSE_RANK",
+      "rank = 3"
+    ],
+    "hint": "`DENSE_RANK()`를 쓰고 `WHERE rank = 3`을 걸면 중복을 건너뛰지 않고 3번째 그룹을 찾습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_rolling_volatility",
+    "title": "변동성 확인: 전일 대비 가격 변화량 절대값",
+    "body": "주식 가격이 전일 대비 얼마나 변했는지(오르든 내리든) '변동폭'을 알고 싶습니다. `LAG`를 이용해 차이를 구하고, `ABS()` 함수로 절대값을 씌우세요.",
+    "schema": "stock(date DATE, price DECIMAL)",
+    "sample_rows": [
+      "100 -> 90 : 변동폭 10"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "ABS",
+      "price - LAG(price)"
+    ],
+    "hint": "`ABS(price - LAG(price) OVER (...))` 를 사용하면 상승/하락 관계없이 변화의 크기만 구할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_basic",
+    "title": "NULL 채우기: COALESCE 기초",
+    "body": "users 테이블에서 사용자의 별명(nickname)을 조회하려고 합니다. 만약 별명이 NULL이라면 실명(real_name)을, 실명도 NULL이라면 'Unknown'을 출력하는 SQL을 작성하세요.",
+    "schema": "users(nickname TEXT, real_name TEXT)",
+    "sample_rows": [
+      "NULL | Jason",
+      "Terminator | Arnold",
+      "NULL | NULL"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "COALESCE"
+    ],
+    "hint": "COALESCE(컬럼1, 컬럼2, '기본값') 순서로 나열하면, 앞에서부터 순서대로 NULL이 아닌 첫 번째 값을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_shipping",
+    "title": "날짜 차이 계산: 배송 소요 시간",
+    "body": "orders 테이블에서 주문일(order_date)과 배송 완료일(delivered_date)의 차이를 일(Day) 단위로 계산하여 'days_taken'이라는 컬럼으로 조회하세요.",
+    "schema": "orders(order_id INT, order_date DATE, delivered_date DATE)",
+    "sample_rows": [
+      "1 | 2023-01-01 | 2023-01-05",
+      "2 | 2023-01-10 | 2023-01-11"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "delivered_date",
+      "order_date"
+    ],
+    "hint": "DB 종류에 따라 다르지만 보통 `DATEDIFF(종료일, 시작일)` 혹은 `DATEDIFF(단위, 시작일, 종료일)` 형식을 씁니다. 여기서는 `DATEDIFF(delivered_date, order_date)` 로직을 생각해보세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_basic_row_number",
+    "title": "그룹별 순번 매기기: ROW_NUMBER 입문",
+    "body": "employees 테이블에서 각 부서(department)별로 급여(salary)가 높은 순서대로 1부터 순번을 매겨보세요. 순번 컬럼명은 'salary_rank'로 지정하세요.",
+    "schema": "employees(name TEXT, department TEXT, salary INT)",
+    "sample_rows": [
+      "Alice | IT | 5000",
+      "Bob | IT | 4500",
+      "Charlie | HR | 4000"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "ROW_NUMBER()",
+      "OVER",
+      "PARTITION BY",
+      "ORDER BY"
+    ],
+    "hint": "`ROW_NUMBER() OVER (PARTITION BY 그룹기준컬럼 ORDER BY 정렬기준컬럼 DESC)` 구문을 사용합니다. 부서로 나누고(Partition), 급여로 정렬(Order)해야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_rank_vs_dense",
+    "title": "공동 등수 처리: RANK vs DENSE_RANK",
+    "body": "학생들의 성적(score)을 기준으로 등수를 매기려고 합니다. 점수가 같을 경우 공동 등수(예: 1등, 1등)를 부여하되, 그 다음 등수가 건너뛰지 않고 이어지게(예: 3등이 아닌 2등) 하려면 어떤 함수를 써야 할까요?",
+    "schema": "students(name TEXT, score INT)",
+    "sample_rows": [
+      "A | 100",
+      "B | 100",
+      "C | 90"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DENSE_RANK()"
+    ],
+    "hint": "`RANK()`는 공동 1등이 2명이면 다음은 3등이 됩니다. 반면 `DENSE_RANK()`는 'Dense(빽빽한)'라는 뜻처럼 번호를 건너뛰지 않고 2등을 부여합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_lag_basic",
+    "title": "이전 행 값 가져오기: LAG 기초",
+    "body": "일별 매출(sales) 테이블에서, '어제 매출'을 'prev_sales'라는 컬럼으로 오늘 날짜 행에 함께 표시하고 싶습니다. 날짜(date)순으로 정렬된 상태에서 이전 행의 값을 가져오세요.",
+    "schema": "daily_sales(date DATE, revenue INT)",
+    "sample_rows": [
+      "2023-01-01 | 100",
+      "2023-01-02 | 150",
+      "2023-01-03 | 120"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "LAG(revenue)",
+      "OVER",
+      "ORDER BY date"
+    ],
+    "hint": "`LAG(가져올컬럼) OVER (ORDER BY 정렬기준)`을 사용합니다. 파티션이 필요 없다면 ORDER BY만 적으면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_window_lead_basic",
+    "title": "다음 행 값 가져오기: LEAD 기초",
+    "body": "로그인 로그(logs) 테이블에서, 유저별로 '다음 번 접속일'이 언제였는지 확인하고 싶습니다. `next_login_date`라는 컬럼을 생성하세요.",
+    "schema": "logs(user_id INT, login_date DATE)",
+    "sample_rows": [
+      "1 | 2023-01-01",
+      "1 | 2023-01-05",
+      "2 | 2023-01-02"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "LEAD(login_date)",
+      "PARTITION BY user_id",
+      "ORDER BY login_date"
+    ],
+    "hint": "LAG의 반대입니다. `LEAD` 함수를 사용하며, 유저별로 계산해야 하므로 `PARTITION BY user_id`가 필수입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_row_number_deduplication",
+    "title": "중복 제거: 가장 최신 기록만 남기기",
+    "body": "시스템 오류로 동일한 주문(order_id)의 상태 변경 로그가 여러 번 쌓였습니다. 각 order_id별로 가장 최근(updated_at 기준)의 로그 하나만 필터링하는 쿼리의 핵심 로직을 작성하세요. (서브쿼리나 CTE는 생략하고 윈도우 함수 부분만 작성)",
+    "schema": "order_logs(order_id INT, status TEXT, updated_at TIMESTAMP)",
+    "sample_rows": [
+      "100 | Shipped | 10:00",
+      "100 | Delivered | 12:00"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "ROW_NUMBER()",
+      "DESC"
+    ],
+    "hint": "최신순으로 번호를 매기려면 `ORDER BY updated_at DESC`를 씁니다. 이후 WHERE절에서 rn = 1 인 것만 추출하면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_growth_rate",
+    "title": "전일 대비 증감률(WoW/DoD) 계산",
+    "body": "`LAG` 함수를 응용하여 전일 대비 매출 성장률((오늘매출 - 어제매출)/어제매출)을 계산하는 수식을 작성하세요.",
+    "schema": "daily_sales(dt DATE, amount DECIMAL)",
+    "sample_rows": [
+      "2023-01-01 | 100",
+      "2023-01-02 | 110"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "LAG(amount)",
+      "(amount - prev) / prev"
+    ],
+    "hint": "먼저 `LAG`로 어제 매출을 구한 뒤, 이를 분모와 분자에 사용하여 나눗셈을 합니다. 0으로 나누기 오류 방지는 일단 고려하지 않아도 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_lag_fill",
+    "title": "결측치 채우기: 직전 값으로 NULL 채우기",
+    "body": "재고 데이터에 기록 누락이 있어 일부 날짜의 재고량(stock)이 NULL입니다. 이 경우 '직전 날짜의 재고량'을 가져와서 채우고 싶습니다. (단, 쿼리가 복잡해지므로 개념적으로 `LAG`와 `COALESCE`를 어떻게 조합할지 생각해보세요.)",
+    "schema": "inventory(dt DATE, stock INT)",
+    "sample_rows": [
+      "01-01 | 100",
+      "01-02 | NULL",
+      "01-03 | 90"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "COALESCE",
+      "LAG"
+    ],
+    "hint": "`COALESCE(stock, LAG(stock) OVER (...))` 형태를 사용하면 현재 값이 NULL일 때 이전 값을 가져올 수 있습니다. (연속된 NULL 처리는 더 복잡한 테크닉이 필요합니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_retention",
+    "title": "리텐션 분석: N일 후 재방문 유저",
+    "body": "유저가 가입일(join_date)로부터 정확히 7일 뒤에 접속(login_date)한 기록이 있는지 찾으려 합니다. WHERE 절에서 `DATEDIFF`를 활용해 조건을 작성하세요.",
+    "schema": "activity(user_id INT, join_date DATE, login_date DATE)",
+    "sample_rows": [
+      "1 | 2023-01-01 | 2023-01-08"
+    ],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "= 7"
+    ],
+    "hint": "`DATEDIFF(login_date, join_date) = 7`을 조건으로 걸면 가입 후 7일차에 접속한 로그만 남길 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_rank_top_n",
+    "title": "Top N 추출: 부서별 연봉 Top 3",
+    "body": "각 부서별로 연봉이 높은 상위 3명을 뽑고 싶습니다. 공동 등수가 있어도 3명까지만(혹은 3위까지만) 뽑으려면 WHERE 절에 어떤 조건을 써야 할까요? (서브쿼리에서 `RANK` 결과를 `rnk`로 만들었다고 가정)",
+    "schema": "employees(dept TEXT, salary INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "WHERE",
+      "rnk <= 3"
+    ],
+    "hint": "윈도우 함수는 WHERE 절에 직접 쓸 수 없으므로 서브쿼리 사용 후 `WHERE rnk <= 3` 조건을 줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_sum_over_running_total",
+    "title": "누적 합계(Running Total) 구하기",
+    "body": "주문 일자별로 매출의 '누적 합계'를 구하고 싶습니다. `SUM()` 함수와 `OVER`를 조합하여 날짜가 흐름에 따라 매출이 쌓이는 값을 출력하세요.",
+    "schema": "daily_sales(dt DATE, revenue INT)",
+    "sample_rows": [
+      "01-01 | 100 -> 100",
+      "01-02 | 200 -> 300",
+      "01-03 | 150 -> 450"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "SUM(revenue)",
+      "OVER",
+      "ORDER BY dt"
+    ],
+    "hint": "`SUM(col) OVER (ORDER BY col)`을 쓰면 정렬 순서에 따라 누적해서 더해나갑니다. `PARTITION BY`가 없으면 전체 데이터에 대해 누적합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_avg_over_moving_avg",
+    "title": "이동 평균(Moving Average): 최근 3일 평균",
+    "body": "주가 데이터에서 '최근 3일간의 종가 평균'을 구하려 합니다. `AVG()`와 `OVER`, 그리고 `ROWS BETWEEN` 구문을 활용해야 합니다.",
+    "schema": "stock(dt DATE, close_price DECIMAL)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "AVG(close_price)",
+      "ROWS BETWEEN",
+      "2 PRECEDING AND CURRENT ROW"
+    ],
+    "hint": "`ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`는 '나를 포함해 앞의 2개 행' 즉 총 3개 행의 범위를 지정합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lead_time_diff",
+    "title": "세션 시간 계산: 다음 로그까지 걸린 시간",
+    "body": "한 유저의 로그(timestamp) 사이의 시간 간격을 구하여, 해당 페이지에 얼마나 머물렀는지 추정하려 합니다. `LEAD` 함수를 이용해 '다음 로그 시간'을 가져와서 현재 로그 시간과의 차이를 구하세요.",
+    "schema": "page_logs(user_id INT, page_id TEXT, visited_at TIMESTAMP)",
+    "sample_rows": [
+      "U1 | Home | 10:00:00",
+      "U1 | Detail | 10:00:30"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "LEAD(visited_at)",
+      "DATEDIFF (or TIMESTAMPDIFF)"
+    ],
+    "hint": "현재 행에서 `LEAD`로 다음 행의 시간을 당겨온 뒤, 두 시간의 차이를 구하면 체류 시간이 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_dense_rank_nth_highest",
+    "title": "N번째로 높은 값 찾기: 연봉 2위 찾기",
+    "body": "전체 사원 중 연봉이 '2번째'로 높은 금액을 받는 사원들을 모두 찾으세요. `LIMIT`을 쓰면 공동 2등을 다 못 가져오므로 `DENSE_RANK`를 써야 합니다.",
+    "schema": "emp(name TEXT, salary INT)",
+    "sample_rows": [],
+    "difficulty": "Lv2 초급",
+    "kind": "sql",
+    "expected": [
+      "DENSE_RANK",
+      "WHERE rank = 2"
+    ],
+    "hint": "연봉 내림차순으로 `DENSE_RANK`를 매기고, 외부 쿼리에서 `rank = 2`인 사람을 조회합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_datediff_consecutive",
+    "title": "연속 접속일 확인: 날짜 차이가 1일인가?",
+    "body": "어제 접속하고 오늘 또 접속한 유저를 찾기 위해, `LAG`함수로 구한 '이전 접속일'과 '현재 접속일'의 차이가 1일인 경우를 찾으려 합니다. 조건식을 작성하세요.",
+    "schema": "logins(user_id INT, login_dt DATE)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "DATEDIFF",
+      "LAG",
+      "= 1"
+    ],
+    "hint": "`DATEDIFF(current_dt, prev_dt) = 1`이면 연속 접속입니다. (주말 제외 등 복잡한 로직이 없다면)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_over_count_total",
+    "title": "전체 대비 비율: 비율 계산을 위한 전체 수",
+    "body": "각 카테고리별 상품 수가 전체 상품 수에서 차지하는 비율을 구하고 싶습니다. `GROUP BY` 없이 원본 데이터를 유지하면서 '전체 행 개수'를 각 행에 붙이려면 `COUNT(*) OVER (...)`를 어떻게 써야 할까요?",
+    "schema": "products(id INT, category TEXT)",
+    "sample_rows": [
+      "1 | A",
+      "2 | A",
+      "3 | B"
+    ],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "COUNT(*)",
+      "OVER()"
+    ],
+    "hint": "`OVER()` 안에 아무것도 넣지 않으면(빈 괄호), 전체 테이블을 하나의 윈도우로 보아 전체 개수를 모든 행에 붙여줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_coalesce_multi_columns",
+    "title": "다중 연락처 우선순위: 집 > 휴대폰 > 회사",
+    "body": "고객에게 연락을 하려 합니다. 집전화(home)가 있으면 그걸 쓰고, 없으면 휴대폰(mobile), 그것도 없으면 회사전화(office)를 쓰려 합니다. `COALESCE` 하나로 해결하세요.",
+    "schema": "contacts(home TEXT, mobile TEXT, office TEXT)",
+    "sample_rows": [
+      "NULL | 010-... | 02-..."
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "sql",
+    "expected": [
+      "COALESCE(home, mobile, office)"
+    ],
+    "hint": "인자를 여러 개 넣으면 됩니다. `COALESCE(home, mobile, office)`.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_first_value_vs_row_number",
+    "title": "그룹별 첫 번째 값: FIRST_VALUE vs ROW_NUMBER",
+    "body": "부서별로 가장 연봉이 높은 사람의 '이름'을 모든 행 옆에 붙여서 출력하고 싶습니다(집계가 아니라 윈도우 함수). `FIRST_VALUE`를 사용할 때 필수적인 절은 무엇인가요?",
+    "schema": "emp(name TEXT, dept TEXT, salary INT)",
+    "sample_rows": [],
+    "difficulty": "Lv3 중급",
+    "kind": "sql",
+    "expected": [
+      "FIRST_VALUE(name)",
+      "ORDER BY salary DESC"
+    ],
+    "hint": "`FIRST_VALUE(name) OVER (PARTITION BY dept ORDER BY salary DESC)`를 쓰면 해당 파티션 내 1등의 이름을 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "sql_lag_session_start",
+    "title": "세션 정의: 30분 이상 공백이면 새 세션",
+    "body": "로그 간 간격이 30분(`1800`초) 이상이면 새로운 세션으로 간주하여 'is_new_session' 플래그(1 또는 0)를 만들려고 합니다. `LAG`와 `DATEDIFF`(혹은 초 단위 차이 계산)를 활용한 CASE 문을 작성하세요.",
+    "schema": "clicks(user_id INT, ts TIMESTAMP)",
+    "sample_rows": [],
+    "difficulty": "Lv4 고급",
+    "kind": "sql",
+    "expected": [
+      "CASE WHEN",
+      "ts - LAG(ts)",
+      "> 1800"
+    ],
+    "hint": "이전 시간(`LAG`)과의 차이가 1800초보다 크면 `1`, 아니면 `0`을 반환하는 식을 짭니다. 이는 세션 ID를 생성하는 기초 로직이 됩니다.",
+    "problem_type": "코딩"
   }
 ]

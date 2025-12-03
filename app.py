@@ -26,7 +26,7 @@ CUSTOM_THEME = gr.themes.Soft(
     primary_hue="emerald",
     neutral_hue="slate",
 ).set(
-    body_background_fill="*neutral_950",
+    body_background_fill="*neutral_50",
     body_background_fill_dark="*neutral_950",
 )
 
@@ -69,6 +69,12 @@ CUSTOM_CSS = """
     border-radius: 0.75rem;
     border: 1px solid var(--border-color-primary);
     background: var(--background-fill-secondary);
+}
+
+/* ===== 상태 메시지 ===== */
+.status-message {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
 }
 
 /* ===== 스크롤바 커스터마이징 ===== */
@@ -872,25 +878,9 @@ def build_interface() -> gr.Blocks:
     # 문제 유형 옵션 (체크박스용)
     problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 
-    # Create Blocks with dark theme by default
-    js_code = """
-    function() {
-        // Set dark mode by default
-        if (document.querySelector('.dark') === null) {
-            document.body.classList.add('dark');
-        }
-    }
-    """
-
-    try:
-        demo = gr.Blocks(
-            title="SQL & Python 코딩 연습",
-            theme=CUSTOM_THEME,
-            css=CUSTOM_CSS,
-            js=js_code
-        )
-    except TypeError:
-        demo = gr.Blocks(title="SQL & Python 코딩 연습")
+    demo = gr.Blocks(
+        title="SQL & Python 코딩 연습"
+    )
 
     with demo:
         # 탭별 독립적인 state 생성
@@ -901,7 +891,7 @@ def build_interface() -> gr.Blocks:
         # ===== 헤더 =====
         with gr.Group():
             with gr.Row():
-                gr.Markdown("# 🎯 SQL & Python 코딩 연습 스테이션", container=True)
+                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>", container=True)
 
         # ===== 탭 구조 =====
         with gr.Tabs():
@@ -1006,13 +996,13 @@ def build_interface() -> gr.Blocks:
                         pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
                         note_pid_dropdown = gr.Dropdown(
                             choices=pid_choices,
-                            label="문제 선택 (제목 | 난이도 | 언어)",
+                            label="문제 선택",
                             scale=1
                         )
                         # 드롭다운 2: 시도 선택 (드롭다운 1 선택 후 활성화)
                         note_attempt_dropdown = gr.Dropdown(
                             choices=[],
-                            label="시도 선택 (별명 | 시간)",
+                            label="시도 선택",
                             scale=1,
                             interactive=True
                         )
@@ -1483,4 +1473,4 @@ def build_interface() -> gr.Blocks:
 app = build_interface()
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(theme=CUSTOM_THEME, css=CUSTOM_CSS)

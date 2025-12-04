@@ -591,7 +591,15 @@ def call_llm(system_prompt: str, user_prompt: str,
         response = requests.post(endpoint, json=payload, timeout=120)
         response.raise_for_status()
         content = response.json()
-        return content["choices"][0]["message"]["content"]
+        result = content["choices"][0]["message"]["content"]
+
+        # 일부 모델이 생성하는 <think>...</think> 태그 제거
+        # (Gradio Markdown 렌더링 방해 방지)
+        import re
+        result = re.sub(r'<think>.*?</think>', '', result, flags=re.DOTALL)
+        result = result.strip()
+
+        return result
     except (requests.RequestException, KeyError, ValueError, IndexError) as exc:
         return (
             "LLM 서버에 연결하지 못했습니다.\n"

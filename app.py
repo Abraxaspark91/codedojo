@@ -905,14 +905,15 @@ def on_new_problem(difficulty: str,
     )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()) -> str:
+def on_submit(state: Dict, code: str, progress=gr.Progress()
+              ) -> Tuple[str, gr.update, gr.update]:
     """코드를 제출하고 LLM 피드백을 받습니다. (자동 저장 없음)"""
     state = ensure_state(state)
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다."
+        return "문제가 선택되지 않았습니다.", gr.update(), gr.update(value="💡 힌트 보기")
 
     if state.get("in_progress"):
-        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요."
+        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요.", gr.update(), gr.update()
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
@@ -928,8 +929,8 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()) -> str:
         "hint_visible": False
     })
 
-    # 피드백만 반환 (UI에 이미 고정 헤더가 있음)
-    return feedback
+    # 피드백만 반환 (UI에 이미 고정 헤더가 있으므로 헤더 제거)
+    return feedback, gr.update(), gr.update(value="💡 힌트 보기")
 
 
 def show_hint(state: Dict) -> str:
@@ -1271,7 +1272,7 @@ def build_interface() -> gr.Blocks:
         submit_btn.click(
             on_submit,
             inputs=[new_state, code_box],
-            outputs=[exec_result],
+            outputs=[exec_result, note_pid_dropdown, hint_btn],
             show_progress="minimal",
         )
 
@@ -1385,7 +1386,7 @@ def build_interface() -> gr.Blocks:
         fav_submit_btn.click(
             on_submit,
             inputs=[fav_state, fav_code_box],
-            outputs=[fav_exec_result],
+            outputs=[fav_exec_result, note_pid_dropdown, fav_hint_btn],
             show_progress="minimal",
         )
 
@@ -1561,7 +1562,7 @@ def build_interface() -> gr.Blocks:
         note_submit_btn.click(
             on_submit,
             inputs=[note_state, note_code_box],
-            outputs=[note_exec_result],
+            outputs=[note_exec_result, note_pid_dropdown, note_hint_btn],
             show_progress="minimal",
         )
 

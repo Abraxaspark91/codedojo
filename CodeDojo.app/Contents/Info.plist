@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- 앱 식별자 -->
+    <key>CFBundleIdentifier</key>
+    <string>com.codedojo.app</string>
+
+    <!-- 앱 이름 -->
+    <key>CFBundleName</key>
+    <string>CodeDojo</string>
+
+    <!-- 앱 표시 이름 (Finder에서 보이는 이름) -->
+    <key>CFBundleDisplayName</key>
+    <string>CodeDojo</string>
+
+    <!-- 앱 버전 -->
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+
+    <!-- 짧은 버전 문자열 -->
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+
+    <!-- 실행 파일 이름 -->
+    <key>CFBundleExecutable</key>
+    <string>launch</string>
+
+    <!-- 아이콘 파일 이름 (확장자 제외) -->
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+
+    <!-- 패키지 타입 (APPL = 애플리케이션) -->
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+
+    <!-- 개발자 서명 (선택사항) -->
+    <key>CFBundleSignature</key>
+    <string>????</string>
+
+    <!-- 정보 문자열 -->
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+
+    <!-- 최소 시스템 버전 -->
+    <key>LSMinimumSystemVersion</key>
+    <string>10.13</string>
+
+    <!-- 앱 카테고리 -->
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.developer-tools</string>
+
+    <!-- 백그라운드에서만 실행 (NO = 일반 앱) -->
+    <key>LSUIElement</key>
+    <false/>
+
+    <!-- High Resolution 지원 -->
+    <key>NSHighResolutionCapable</key>
+    <true/>
+
+    <!-- 저작권 -->
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright © 2024 CodeDojo. All rights reserved.</string>
+
+    <!-- 앱 설명 -->
+    <key>CFBundleGetInfoString</key>
+    <string>CodeDojo - SQL &amp; PySpark 연습 스테이션</string>
+</dict>
+</plist>

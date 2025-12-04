@@ -40,8 +40,8 @@ Gradio 기반으로 SQL/PySpark 문제를 풀고, 로컬 LLM(LM Studio)로 피�
 - `run_codedojo.bat` 파일을 더블클릭하세요
 
 **Mac 사용자:**
-- `run_codedojo.command` 파일을 더블클릭하세요
-- (또는 `CodeDojo.app`을 사용하세요 - 추후 제공 예정)
+- `CodeDojo.app`을 더블클릭하세요 (추천! 네이티브 앱)
+- 또는 `run_codedojo.command` 파일을 더블클릭하세요
 
 자동으로 브라우저가 열리고 CodeDojo가 실행됩니다!
 
@@ -80,6 +80,62 @@ Windows 사용자를 위한 더 편리한 기능들입니다!
 4. `create_shortcuts.vbs`를 실행하세요
 
 📖 자세한 가이드: [ICON_GUIDE.md](ICON_GUIDE.md) 참조
+
+---
+
+## 🍎 Mac 고급 기능
+
+Mac 사용자를 위한 네이티브 앱 번들입니다!
+
+### CodeDojo.app - 네이티브 Mac 앱
+
+`CodeDojo.app`을 더블클릭하면:
+- 💬 친절한 대화 상자로 상태 확인
+- 🔍 자동으로 Python 및 가상환경 체크
+- ⚠️ 문제 발견 시 해결 방법 제시
+- 🚀 모든 준비가 되면 자동으로 실행
+- 🌐 브라우저 자동 오픈
+
+### 주요 기능
+
+**똑똑한 에러 처리:**
+- Python 미설치 → 다운로드 링크 안내
+- 가상환경 없음 → 설치 스크립트 자동 실행
+- LM Studio 미실행 → 경고 후 선택 가능
+
+**Mac 네이티브 경험:**
+- Finder에서 일반 앱처럼 사용
+- Dock에 추가 가능
+- 커스텀 아이콘 지원
+- 백그라운드 실행
+
+### 커스텀 아이콘 추가
+
+1. `.icns` 형식의 아이콘 파일을 준비하세요
+2. 파일 이름을 `AppIcon.icns`로 변경
+3. `CodeDojo.app/Contents/Resources/` 폴더에 넣으세요
+4. Finder를 재시작하세요
+
+```bash
+# 아이콘 캐시 강제 업데이트
+sudo rm -rf /Library/Caches/com.apple.iconservices.store
+killall Finder
+killall Dock
+```
+
+📖 자세한 가이드: [ICON_GUIDE.md](ICON_GUIDE.md#mac-아이콘-가이드-icns) 참조
+
+### 앱 번들 구조
+
+```
+CodeDojo.app/
+├── Contents/
+│   ├── Info.plist          # 앱 메타데이터
+│   ├── MacOS/
+│   │   └── launch          # 실행 스크립트
+│   └── Resources/
+│       └── AppIcon.icns    # 앱 아이콘 (선택사항)
+```
 
 ---
 

@@ -10,10 +10,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "Python",
-    "expected": [
-      "filter",
-      "col"
-    ],
     "hint": "Python에서는 작은따옴표(')와 큰따옴표(\") 중 무엇을 써도 상관없습니다. 시작과 끝만 일치시켜주세요.",
     "problem_type": "코딩"
   },
@@ -28,11 +24,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "name =",
-      "'Alice'"
-    ],
     "hint": "SQL에서 문자열 값은 반드시 **작은따옴표(')**를 사용해야 합니다. 큰따옴표(\")는 컬럼명 등을 감쌀 때 쓰입니다.",
     "problem_type": "코딩"
   },
@@ -44,10 +35,6 @@
     "sample_rows": [],
     "difficulty": "Lv0 기초",
     "kind": "Python.Pyspark",
-    "expected": [
-      "import",
-      "as F"
-    ],
     "hint": "`import ... as ...` 구문을 사용합니다. 보통 `F`라는 약어를 많이 사용합니다.",
     "problem_type": "코딩"
   },
@@ -63,10 +50,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter",
-      "isNull()"
-    ],
     "hint": "컬럼 객체 뒤에 `.isNull()` 메서드를 붙여서 확인해야 합니다.",
     "problem_type": "코딩"
   },
@@ -81,10 +64,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "IS NULL"
-    ],
     "hint": "`컬럼명 IS NULL` 구문을 사용해야 합니다. (`= NULL`은 동작하지 않습니다.)",
     "problem_type": "코딩"
   },
@@ -99,10 +78,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter",
-      "f\"age >= {target_age}\""
-    ],
     "hint": "따옴표 앞에 `f`를 붙이고, 변수를 중괄호 `{}` 안에 넣는 **f-string** 문법을 사용해보세요.",
     "problem_type": "코딩"
   },
@@ -118,10 +93,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "IN"
-    ],
     "hint": "`컬럼명 IN ('값1', '값2')` 형태의 문법을 사용하세요.",
     "problem_type": "코딩"
   },
@@ -135,11 +106,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "F.col",
-      "+ 1"
-    ],
     "hint": "`F.col(\"컬럼명\")` 함수를 사용하여 문자열을 컬럼 객체로 감싸주세요.",
     "problem_type": "코딩"
   },
@@ -153,11 +119,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT",
-      "*",
-      "AS"
-    ],
     "hint": "계산식 뒤에 `AS 새로운이름`을 붙여줍니다.",
     "problem_type": "코딩"
   },
@@ -172,11 +133,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter",
-      "&",
-      "( )"
-    ],
     "hint": "각 조건을 괄호 `()`로 감싸고, `&` (AND) 또는 `|` (OR) 연산자를 사용하세요.",
     "problem_type": "코딩"
   },
@@ -192,11 +148,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "<>",
-      "!="
-    ],
     "hint": "표준 SQL에서는 `<>`를 많이 쓰지만, `!=`도 대부분 지원합니다. 둘 중 하나를 사용해보세요.",
     "problem_type": "코딩"
   },
@@ -211,10 +162,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter",
-      "!="
-    ],
     "hint": "같다는 `==`이고, 다르다는 `!=` 입니다. `F.col('age') != 20` 형태로 작성합니다.",
     "problem_type": "코딩"
   },
@@ -228,9 +175,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumnRenamed"
-    ],
     "hint": "`df.withColumnRenamed('기존이름', '새이름')` 메서드를 사용합니다. `alias`는 select 할 때 쓰고, 이 메서드는 DF 자체를 변환할 때 씁니다.",
     "problem_type": "코딩"
   },
@@ -246,10 +190,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COUNT",
-      "(column_name)"
-    ],
     "hint": "`COUNT(*)`는 NULL 포함 전체를 세고, `COUNT(컬럼명)`은 해당 컬럼의 NULL을 제외하고 셉니다.",
     "problem_type": "코딩"
   },
@@ -265,10 +205,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "dropDuplicates",
-      "distinct"
-    ],
     "hint": "`df.dropDuplicates()` 또는 `df.distinct()`를 사용합니다. 실무에서는 특정 컬럼 기준 중복 제거가 가능한 `dropDuplicates()`를 더 자주 씁니다.",
     "problem_type": "코딩"
   },
@@ -284,11 +220,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "BETWEEN",
-      "AND"
-    ],
     "hint": "`price BETWEEN 1000 AND 2000` 구문을 사용하세요. (시작과 끝 값을 포함합니다)",
     "problem_type": "코딩"
   },
@@ -303,10 +234,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "orderBy",
-      "desc"
-    ],
     "hint": "`F.col('score').desc()` 함수를 사용해야 합니다. (`F.desc('score')`도 가능)",
     "problem_type": "코딩"
   },
@@ -321,11 +248,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "LIKE",
-      "%"
-    ],
     "hint": "`email LIKE '%@gmail.com'`을 사용하세요. `%`는 '0개 이상의 아무 문자'를 뜻합니다.",
     "problem_type": "코딩"
   },
@@ -340,10 +262,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter",
-      "startswith"
-    ],
     "hint": "`F.col('name').startswith('New')` 메서드를 사용하세요. 코드가 훨씬 읽기 좋아집니다.",
     "problem_type": "코딩"
   },
@@ -357,11 +275,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "SQL",
-    "expected": [
-      "SELECT",
-      "/",
-      "AS"
-    ],
     "hint": "`salary / 12 AS monthly_salary` 처럼 작성하면 됩니다. SQL은 SELECT 절에서 사칙연산이 가능합니다.",
     "problem_type": "코딩"
   },
@@ -375,9 +288,6 @@
     ],
     "difficulty": "Lv0 기초",
     "kind": "Python.Pyspark",
-    "expected": [
-      "select"
-    ],
     "hint": "`df.select('id', 'email')`을 사용하세요. 분석의 첫 단계는 필요한 데이터만 남기는 것입니다.",
     "problem_type": "코딩"
   },
@@ -391,10 +301,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "cast"
-    ],
     "hint": "`F.col('age').cast('int')` 또는 `.cast('integer')`를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -409,10 +315,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT",
-      "COALESCE"
-    ],
     "hint": "`COALESCE(컬럼명, '대체값')` 함수를 사용하세요. NULL이 아니면 원래 값을, NULL이면 뒤의 값을 반환합니다.",
     "problem_type": "코딩"
   },
@@ -427,11 +329,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "when",
-      "otherwise"
-    ],
     "hint": "`F.when(조건, 값).otherwise(값)` 형태를 사용합니다. 아주 자주 쓰이는 패턴입니다.",
     "problem_type": "코딩"
   },
@@ -446,10 +343,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "lit"
-    ],
     "hint": "단순한 값(숫자, 문자, 불린)을 컬럼으로 넣을 때는 반드시 `F.lit(값)`으로 감싸야 합니다. (Literal의 줄임말)",
     "problem_type": "코딩"
   },
@@ -464,11 +357,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "( ... OR ... )",
-      "AND"
-    ],
     "hint": "AND는 OR보다 우선순위가 높습니다. 따라서 OR 조건을 먼저 묶어주려면 반드시 **괄호 `()`**를 사용해야 합니다.",
     "problem_type": "코딩"
   },
@@ -480,9 +368,6 @@
     "sample_rows": [],
     "difficulty": "Lv0 기초",
     "kind": "Python.Pyspark",
-    "expected": [
-      "printSchema()"
-    ],
     "hint": "`df.printSchema()`를 실행하면 스키마 정보를 눈으로 확인할 수 있습니다. 디버깅할 때 필수입니다.",
     "problem_type": "코딩"
   },
@@ -497,11 +382,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT",
-      "MAX",
-      "MIN"
-    ],
     "hint": "`MAX(salary)`, `MIN(salary)`를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -513,9 +393,6 @@
     "sample_rows": [],
     "difficulty": "Lv0 기초",
     "kind": "Python.Pyspark",
-    "expected": [
-      "show()"
-    ],
     "hint": "`df.show()`를 사용합니다. 괄호 안에 숫자를 넣어 `df.show(5)` 처럼 줄 수를 지정할 수도 있습니다.",
     "problem_type": "코딩"
   },
@@ -530,11 +407,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      ">",
-      "'YYYY-MM-DD'"
-    ],
     "hint": "SQL 표준 날짜 포맷은 **'YYYY-MM-DD'**입니다. `order_date > '2024-01-01'` 처럼 작은따옴표로 감싸서 비교하면 자동으로 날짜로 인식합니다.",
     "problem_type": "코딩"
   },
@@ -549,10 +421,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "fillna",
-      "na.fill"
-    ],
     "hint": "`df.fillna(0, subset=['age'])` 형태로 사용합니다. 특정 컬럼을 지정하지 않으면 호환되는 모든 컬럼을 채워버리니 주의하세요.",
     "problem_type": "코딩"
   },
@@ -568,10 +436,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COUNT",
-      "DISTINCT"
-    ],
     "hint": "`COUNT(DISTINCT user_id)`를 사용합니다. 중복을 제거한 뒤 개수를 셉니다.",
     "problem_type": "코딩"
   },
@@ -586,9 +450,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "df.filter(...).select(...)"
-    ],
     "hint": "`df.filter(조건).select(컬럼)` 처럼 메서드 뒤에 바로 점을 찍어 다음 메서드를 연결하는 방식을 '체이닝'이라고 합니다.",
     "problem_type": "코딩"
   },
@@ -602,10 +463,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "CONCAT",
-      "||"
-    ],
     "hint": "데이터베이스마다 다르지만 표준적으로 `CONCAT(first_name, ' ', last_name)`을 쓰거나, `||` 기호를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -622,10 +479,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT DISTINCT",
-      "ORDER BY"
-    ],
     "hint": "`SELECT DISTINCT category`를 사용하여 중복을 제거한 후 정렬하세요.",
     "problem_type": "코딩"
   },
@@ -640,10 +493,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "F.lit"
-    ],
     "hint": "단순 문자열을 할당하면 에러가 납니다. `df.withColumn('country', F.lit('Korea'))`를 사용하세요.",
     "problem_type": "코딩"
   },
@@ -660,12 +509,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "IS NULL",
-      "OR",
-      "=''"
-    ],
     "hint": "`WHERE email IS NULL OR email = ''` 조건을 사용하세요. `email = NULL`은 동작하지 않습니다.",
     "problem_type": "코딩"
   },
@@ -681,11 +524,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "cast",
-      "filter"
-    ],
     "hint": "`df.withColumn('price', F.col('price').cast('int'))`로 타입을 변경한 후 필터링을 수행하세요.",
     "problem_type": "코딩"
   },
@@ -701,10 +539,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "ORDER BY DESC",
-      "LIMIT"
-    ],
     "hint": "`ORDER BY order_date DESC LIMIT 5` 구문을 사용하세요.",
     "problem_type": "코딩"
   },
@@ -719,10 +553,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "select",
-      "alias"
-    ],
     "hint": "`df.select(F.col('product_id'), F.col('product_manufacturing_cost').alias('cost'))`를 사용하세요.",
     "problem_type": "코딩"
   },
@@ -739,10 +569,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "LIKE"
-    ],
     "hint": "`WHERE name LIKE 'J%'`를 사용하세요. `%J%`와 달리 접두사 검색은 인덱스를 탈 가능성이 높습니다.",
     "problem_type": "코딩"
   },
@@ -757,9 +583,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "drop"
-    ],
     "hint": "`df.drop('password', 'ssn')`과 같이 여러 컬럼을 한 번에 삭제할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -774,11 +597,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT",
-      "*",
-      "AS"
-    ],
     "hint": "`SELECT product_id, price, price * 1.1 AS final_price FROM products`와 같이 작성하세요.",
     "problem_type": "코딩"
   },
@@ -795,10 +613,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter",
-      "isin"
-    ],
     "hint": "`df.filter(F.col('category').isin(['Electronics', 'Books', 'Garden']))`을 사용하세요.",
     "problem_type": "코딩"
   },
@@ -815,11 +629,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "AND",
-      "<"
-    ],
     "hint": "`WHERE stock < 10 AND is_discontinued = 'N'` 조건을 사용하세요.",
     "problem_type": "코딩"
   },
@@ -835,11 +644,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "orderBy",
-      "asc",
-      "desc"
-    ],
     "hint": "`df.orderBy(F.col('department').asc(), F.col('salary').desc())`와 같이 정렬 기준을 순서대로 나열하세요.",
     "problem_type": "코딩"
   },
@@ -857,12 +661,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT",
-      "WHERE",
-      ">=",
-      "ORDER BY"
-    ],
     "hint": "컬럼을 가공(예: YEAR(signup_date))하면 인덱스를 타지 않을 수 있습니다. `signup_date >= '2024-01-01'`과 같이 원본 컬럼을 그대로 비교하세요.",
     "problem_type": "코딩"
   },
@@ -880,13 +678,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "GROUP BY",
-      "SUM",
-      "DATE_TRUNC",
-      "TO_CHAR / DATE_FORMAT",
-      "ORDER BY"
-    ],
     "hint": "`DATE_TRUNC('month', order_date)`를 사용하여 월 단위로 절삭한 후 그룹화하세요.",
     "problem_type": "코딩"
   },
@@ -905,13 +696,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "JOIN",
-      "ON",
-      "GROUP BY",
-      "SUM",
-      "ORDER BY"
-    ],
     "hint": "조인 조건은 `ON c.cust_id = o.cust_id`입니다. 집계 함수 `SUM(amount)`는 조인 결과 집합에 대해 수행됨을 유의하세요.",
     "problem_type": "코딩"
   },
@@ -929,12 +713,6 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "RANK() OVER",
-      "PARTITION BY",
-      "ORDER BY DESC",
-      "Subquery / CTE"
-    ],
     "hint": "`ROW_NUMBER()`는 강제로 순위를 매기지만, `RANK()`나 `DENSE_RANK()`는 동점을 처리합니다. 공동 1등을 모두 포함하려면 `RANK()`를 사용하세요.",
     "problem_type": "코딩"
   },
@@ -951,11 +729,6 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "SQL",
-    "expected": [
-      "SUM() OVER",
-      "ORDER BY",
-      "ROWS BETWEEN"
-    ],
     "hint": "`SUM(amount) OVER (ORDER BY month)` 구문을 사용하세요. 문자열 날짜 포맷이 'YYYY-MM'으로 통일되어 있다면 별도 캐스팅 없이 정렬 가능합니다.",
     "problem_type": "코딩"
   },
@@ -972,11 +745,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "filter / where",
-      "col('active') == True",
-      "col('last_login') > ..."
-    ],
     "hint": "`df.filter((F.col('active') == True) & (F.col('last_login') >= F.lit('2024-01-01')))` 형태로 작성하세요.",
     "problem_type": "코딩"
   },
@@ -994,11 +762,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "join",
-      "on='cust_id'",
-      "how='inner'"
-    ],
     "hint": "`orders.join(customers, on='cust_id', how='inner')`를 사용합니다. 키 컬럼의 이름이 같다면 `on` 파라미터를 단일 문자열로 전달하는 것이 깔끔합니다.",
     "problem_type": "코딩"
   },
@@ -1015,12 +778,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "Window.partitionBy",
-      "orderBy",
-      "rowsBetween",
-      "F.avg"
-    ],
     "hint": "`Window.partitionBy('device_id').orderBy('time').rowsBetween(-2, 0)`을 정의하여 디바이스별로 계산되도록 하세요.",
     "problem_type": "코딩"
   },
@@ -1037,13 +794,6 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "date_trunc",
-      "groupBy",
-      "pivot",
-      "count",
-      "fillna"
-    ],
     "hint": "`df.groupBy(F.date_trunc('week', 'timestamp')).pivot('status').count()`를 사용하고, 결측치는 `.fillna(0)`으로 처리하세요.",
     "problem_type": "코딩"
   },
@@ -1060,12 +810,6 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "Python.Pyspark",
-    "expected": [
-      "Window",
-      "F.lag",
-      "F.when",
-      "F.sum().over"
-    ],
     "hint": "1. `F.lag('ts')`로 이전 시간 확보 \n2. 시간 차이 > 30분이면 1, 아니면 0인 플래그 생성 \n3. 해당 플래그를 누적 합(`F.sum`)하여 세션 ID 생성.",
     "problem_type": "코딩"
   },
@@ -1080,10 +824,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "F.broadcast",
-      "join"
-    ],
     "hint": "`df_large.join(F.broadcast(df_small), 'code_id')` 구문을 사용하여 스파크가 맵 사이드 조인(Map-side Join)을 수행하도록 유도하세요.",
     "problem_type": "코딩"
   },
@@ -1100,10 +840,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "F.explode",
-      "withColumn / select"
-    ],
     "hint": "`df.select('user_id', F.explode('items').alias('item'))`을 사용하세요. `explode_outer`를 쓰면 빈 배열도 보존할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -1119,10 +855,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "F.length",
-      "(Optional) F.udf"
-    ],
     "hint": "단순 길이는 `F.length('name')` 내장 함수가 가장 빠릅니다. 굳이 UDF를 써야 한다면 `@F.udf(returnType=IntegerType())` 데코레이터를 사용하세요.",
     "problem_type": "코딩"
   },
@@ -1138,10 +870,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "coalesce(1)",
-      "write"
-    ],
     "hint": "`df.repartition(1)`은 전체 셔플을 유발합니다. 단순히 파티션을 합치는 것이라면 `df.coalesce(1)`이 훨씬 효율적입니다.",
     "problem_type": "코딩"
   },
@@ -1156,11 +884,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "cache / persist",
-      "count",
-      "show"
-    ],
     "hint": "`df.cache()` 호출 후 첫 번째 액션(`count()` 등)이 일어날 때 메모리에 적재됩니다. 작업이 끝나면 `df.unpersist()`로 해제하는 것이 좋습니다.",
     "problem_type": "코딩"
   },
@@ -1176,12 +899,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "AND",
-      ">",
-      "ORDER BY"
-    ],
     "hint": "`WHERE amount > 0` 조건은 암시적으로 NULL을 배제합니다. 날짜 필터는 `order_date >= '2024-01-01'`을 사용하세요.",
     "problem_type": "코딩"
   },
@@ -1197,9 +914,6 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "F.approx_count_distinct"
-    ],
     "hint": "`F.countDistinct('user_id')` 대신 `F.approx_count_distinct('user_id', rsd=0.05)`를 사용하면 훨씬 빠른 속도로 근사치를 얻을 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -1216,12 +930,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "WITH",
-      "AS",
-      "SELECT",
-      "JOIN / FILTER"
-    ],
     "hint": "`WITH CategorySales AS (SELECT ...)` 구문으로 먼저 요약 테이블을 정의한 후 메인 쿼리에서 활용하세요.",
     "problem_type": "코딩"
   },
@@ -1236,10 +944,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "col('col.field')",
-      "select"
-    ],
     "hint": "`F.col('address.city')`와 같이 점(dot) 표기법을 사용하여 구조체 내부 필드에 접근할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -1256,12 +960,6 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "Python.Pyspark",
-    "expected": [
-      "withColumn",
-      "rand",
-      "concat",
-      "join"
-    ],
     "hint": "1. `F.concat(col('key'), F.lit('_'), F.rand())`로 키를 쪼갭니다. \n2. 상대 테이블은 해당 개수만큼 복제(explode)하여 조인 조건을 맞춥니다.",
     "problem_type": "코딩"
   },
@@ -1276,9 +974,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "[x**2 for x in numbers if ...]"
-    ],
     "hint": "`[식 for 변수 in 리스트 if 조건]` 형태를 기억하세요. `x % 2 == 0`이 짝수 조건입니다.",
     "problem_type": "코딩"
   },
@@ -1292,9 +987,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "[w.upper() for w in words if ...]"
-    ],
     "hint": "문자열 길이 확인은 `len(w)`, 대문자 변환은 `.upper()`를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -1309,10 +1001,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python",
-    "expected": [
-      "def row_sums(matrix):",
-      "return [sum(row) for row in matrix]"
-    ],
     "hint": "`for row in matrix`로 각 행을 꺼낸 뒤, `sum(row)`를 이용하면 쉽게 구할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -1326,9 +1014,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python",
-    "expected": [
-      "[[row[i] for row in matrix] for i in range(len(matrix[0]))]"
-    ],
     "hint": "외부 루프는 열의 개수(`range(len(matrix[0]))`)만큼 돌고, 내부에서 각 행의 `i`번째 요소를 가져옵니다.",
     "problem_type": "코딩"
   },
@@ -1343,11 +1028,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "result = 1",
-      "for i in range(1, n+1):",
-      "result *= i"
-    ],
     "hint": "초기값을 1로 설정(`result = 1`)하고, 1부터 n까지 반복하며 계속 곱해줍니다.",
     "problem_type": "코딩"
   },
@@ -1361,12 +1041,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python",
-    "expected": [
-      "counts = {}",
-      "if word in counts:",
-      "counts[word] += 1",
-      "else: counts[word] = 1"
-    ],
     "hint": "빈 딕셔너리 `{}`를 만들고, 리스트를 루프 돌면서 키가 있으면 +1, 없으면 1로 초기화합니다.",
     "problem_type": "코딩"
   },
@@ -1380,11 +1054,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python",
-    "expected": [
-      "def rotate_list(nums, k):",
-      "k = k % len(nums)",
-      "return nums[-k:] + nums[:-k]"
-    ],
     "hint": "`nums[-k:]`는 뒤에서 k개, `nums[:-k]`는 앞의 나머지 부분입니다. 이 둘을 더하면 회전된 결과가 됩니다.",
     "problem_type": "코딩"
   },
@@ -1399,11 +1068,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python",
-    "expected": [
-      "if n < 2: return False",
-      "for i in range(2, int(n**0.5) + 1):",
-      "if n % i == 0: return False"
-    ],
     "hint": "반복문 도중 `n % i == 0`인 경우가 한 번이라도 발견되면 즉시 `return False`하고 종료합니다.",
     "problem_type": "코딩"
   },
@@ -1417,9 +1081,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python",
-    "expected": [
-      "[val for row in matrix for val in row]"
-    ],
     "hint": "이중 `for`문 순서대로 적으면 됩니다. `for row in matrix`가 먼저 오고, 그 뒤에 `for val in row`가 옵니다.",
     "problem_type": "코딩"
   },
@@ -1433,11 +1094,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python",
-    "expected": [
-      "max_val = nums[0]",
-      "idx = 0",
-      "enumerate"
-    ],
     "hint": "`for i, val in enumerate(nums):`를 사용하여 인덱스와 값을 동시에 얻고, 현재 최댓값보다 크면 갱신합니다.",
     "problem_type": "코딩"
   },
@@ -1451,10 +1107,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "[c.lower() for c in df.columns]",
-      "toDF(*...)"
-    ],
     "hint": "`df.columns`는 파이썬 리스트를 반환합니다. 이를 리스트 컴프리헨션으로 가공하고, `df.toDF(*new_cols)`와 같이 언패킹(`*`)하여 전달하는 패턴은 국룰입니다.",
     "problem_type": "코딩"
   },
@@ -1468,9 +1120,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "select(*target_cols)"
-    ],
     "hint": "함수 인자로 리스트를 바로 넣는 대신, `*리스트이름`을 쓰면 리스트 껍질을 벗겨서 알맹이만 `arg1, arg2, ...` 형태로 전달합니다.",
     "problem_type": "코딩"
   },
@@ -1485,11 +1134,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "def calculate_score(p, v):",
-      "if v == 0: return 0.0",
-      "udf(calculate_score, DoubleType())"
-    ],
     "hint": "Spark SQL만으로 복잡한 `if-else`나 예외처리를 하긴 어렵습니다. 이럴 때 파이썬 함수(`def`)를 짜고 `udf`로 감싸서 사용합니다.",
     "problem_type": "코딩"
   },
@@ -1503,9 +1147,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "udf(lambda x: x.split('@')[0])"
-    ],
     "hint": "`lambda 입력변수: 반환값` 형식을 사용합니다. `split` 같은 파이썬 문자열 메서드를 Spark 안에서 쓸 수 있게 해줍니다.",
     "problem_type": "코딩"
   },
@@ -1519,10 +1160,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "for old, new in col_map.items():",
-      "df = df.withColumnRenamed(old, new)"
-    ],
     "hint": "딕셔너리의 `.items()`를 순회하며 `df` 변수를 계속 덮어쓰는(update) 방식은 PySpark 코드 작성 시 흔한 패턴입니다.",
     "problem_type": "코딩"
   },
@@ -1534,10 +1171,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "query = f\"SELECT * FROM {table_name} ...\"",
-      "spark.sql(query)"
-    ],
     "hint": "SQL 쿼리도 결국 문자열입니다. 파이썬 변수를 쿼리 중간에 꽂아 넣을 때 f-string이 가장 가독성이 좋습니다.",
     "problem_type": "코딩"
   },
@@ -1551,9 +1184,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "[c for c, t in df.dtypes if t == 'int']"
-    ],
     "hint": "`for c, t in df.dtypes` 처럼 튜플을 언패킹하며 루프를 돌고, `if` 조건으로 필터링하는 전형적인 파이썬 패턴입니다.",
     "problem_type": "코딩"
   },
@@ -1565,12 +1195,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "try:",
-      "spark.read.csv(path)",
-      "except AnalysisException:",
-      "print(...)"
-    ],
     "hint": "데이터 파이프라인은 언제든 깨질 수 있습니다. `try-except` 블록으로 에러 상황을 우아하게(Graceful) 처리하는 것은 엔지니어의 기본 소양입니다.",
     "problem_type": "코딩"
   },
@@ -1584,10 +1208,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "set(df1.columns) & set(df2.columns)",
-      "list(...)"
-    ],
     "hint": "리스트를 `set()`으로 변환하면 교집합(`&`), 차집합(`-`), 합집합(`|`)을 매우 쉽게 구할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -1599,10 +1219,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "count = result_df.count()",
-      "assert count > 0, \"메시지\""
-    ],
     "hint": "`assert 조건, 에러메시지` 형태입니다. 조건이 False면 프로그램이 즉시 중단되며 에러를 뿜습니다. 데이터 품질 체크에 필수적입니다.",
     "problem_type": "코딩"
   },
@@ -1616,10 +1232,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "[c.strip() for c in df.columns]",
-      "toDF(*...)"
-    ],
     "hint": "문자열 `s.strip()`은 양쪽 공백을 제거합니다. `[c.strip() for c in df.columns]` 패턴은 데이터 로드 직후 국룰입니다.",
     "problem_type": "코딩"
   },
@@ -1633,10 +1245,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "for old, new in zip(old_cols, new_cols):",
-      "df = df.withColumnRenamed(old, new)"
-    ],
     "hint": "`zip(list_a, list_b)`는 두 리스트의 요소를 순서대로 튜플 `(a[0], b[0]), ...`로 묶어줍니다. 매핑 작업에 필수입니다.",
     "problem_type": "코딩"
   },
@@ -1648,10 +1256,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "read_opts = {'header': 'true', 'sep': ','}",
-      "spark.read.options(**read_opts).csv(...)"
-    ],
     "hint": "함수에 `**딕셔너리`를 넣으면, 딕셔너리의 키=값 쌍이 함수의 인자(keyword arguments)로 풀려서 들어갑니다.",
     "problem_type": "코딩"
   },
@@ -1666,11 +1270,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "def map_country(code):",
-      "return code_map.get(code, 'Unknown')",
-      "udf(...)"
-    ],
     "hint": "`dict[key]`는 키가 없으면 에러가 나지만, `dict.get(key, default)`는 안전하게 기본값을 반환합니다.",
     "problem_type": "코딩"
   },
@@ -1684,10 +1283,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "for idx, col_name in enumerate(df.columns):",
-      "df = df.withColumnRenamed(col_name, f'col_{idx}')"
-    ],
     "hint": "`enumerate(리스트)`는 `(0, 첫번째값), (1, 두번째값)...` 순서로 인덱스와 값을 동시에 뱉어줍니다.",
     "problem_type": "코딩"
   },
@@ -1701,9 +1296,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "udf(lambda x: x[:4])"
-    ],
     "hint": "문자열 `s`에서 `s[:4]`는 처음부터 4번째 인덱스 전까지 자릅니다. 파이썬의 가장 강력한 기능 중 하나입니다.",
     "problem_type": "코딩"
   },
@@ -1715,10 +1307,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "if error_list:",
-      "print('Error!')"
-    ],
     "hint": "`if len(error_list) > 0:` 대신 `if error_list:`를 씁니다. 빈 리스트 `[]`는 False, 내용이 있으면 True로 취급됩니다.",
     "problem_type": "코딩"
   },
@@ -1732,9 +1320,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "[p.replace('s3n://', 's3a://') for p in paths]"
-    ],
     "hint": "문자열 메서드 `.replace('찾을값', '바꿀값')`을 사용합니다. 단순 치환에 가장 많이 쓰입니다.",
     "problem_type": "코딩"
   },
@@ -1746,12 +1331,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "def check_bad(msg):",
-      "for w in bad_words:",
-      "if w in msg: return True",
-      "return False"
-    ],
     "hint": "파이썬에서 `'a' in 'abc'`는 True입니다. 루프와 `in`을 결합하여 부분 문자열 검색을 구현합니다.",
     "problem_type": "코딩"
   },
@@ -1765,9 +1344,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "udf(lambda x: x.split('@')[1])"
-    ],
     "hint": "`s.split('@')`은 리스트 `['user', 'gmail.com']`을 반환합니다. `[1]` 또는 `[-1]`로 뒤쪽 요소를 가져옵니다.",
     "problem_type": "코딩"
   },
@@ -1779,10 +1355,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "if not isinstance(value, int):",
-      "return None"
-    ],
     "hint": "`type(value) == int`보다 `isinstance(value, int)`가 권장됩니다. 데이터 파이프라인에서 잘못된 타입이 들어오는 것을 막을 때 씁니다.",
     "problem_type": "코딩"
   },
@@ -1796,9 +1368,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "udf(lambda x: str(x).zfill(2))"
-    ],
     "hint": "숫자를 먼저 `str(x)`로 문자로 바꾼 뒤 `.zfill(2)`를 호출하면 앞에 0을 채워줍니다.",
     "problem_type": "코딩"
   },
@@ -1810,9 +1379,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "Python.Pyspark",
-    "expected": [
-      "','.join(cities)"
-    ],
     "hint": "`'구분자'.join(리스트)` 형태입니다. 리스트를 문자열로 직렬화할 때 가장 많이 씁니다.",
     "problem_type": "코딩"
   },
@@ -1824,9 +1390,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "{v: k for k, v in mapping.items()}"
-    ],
     "hint": "리스트 컴프리헨션과 비슷하지만 중괄호 `{}`를 쓰고 `key: value` 형태로 작성합니다.",
     "problem_type": "코딩"
   },
@@ -1840,9 +1403,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "Python.Pyspark",
-    "expected": [
-      "udf(lambda x: len(x) if x else 0)"
-    ],
     "hint": "파이썬의 삼항 연산자 `값 if 조건 else 다른값`을 활용합니다. `if x:`는 x가 None이거나 빈 문자열이 아님을 체크합니다.",
     "problem_type": "코딩"
   },
@@ -1856,9 +1416,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: x[:6])"
-    ],
     "hint": "파이썬에서 `문자열[:n]`은 처음부터 n번째 글자 앞까지 자릅니다.",
     "problem_type": "코딩"
   },
@@ -1873,9 +1430,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: x.split('.')[-1])"
-    ],
     "hint": "`x.split('.')`의 결과는 리스트입니다. `[-1]`은 리스트의 마지막 요소를 의미합니다.",
     "problem_type": "코딩"
   },
@@ -1890,9 +1444,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: 'Pass' if x >= 60 else 'Fail')"
-    ],
     "hint": "`값1 if 조건 else 값2` 형식을 사용합니다. 파이썬에서 가장 자주 쓰이는 숏컷 중 하나입니다.",
     "problem_type": "코딩"
   },
@@ -1906,9 +1457,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: x.replace('-', ''))"
-    ],
     "hint": "`문자열.replace('찾을값', '바꿀값')`을 사용합니다. 바꿀 값에 빈 문자열 `''`을 넣으면 삭제 효과가 납니다.",
     "problem_type": "코딩"
   },
@@ -1922,9 +1470,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: f'{x}kg')"
-    ],
     "hint": "`f'{변수}kg'` 형태로 작성하면 변수 값이 문자열 안에 예쁘게 삽입됩니다.",
     "problem_type": "코딩"
   },
@@ -1939,9 +1484,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: x.lower())"
-    ],
     "hint": "`x.upper()`는 대문자, `x.lower()`는 소문자로 변환합니다.",
     "problem_type": "코딩"
   },
@@ -1955,9 +1497,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: round(x, 2))"
-    ],
     "hint": "`round(숫자, 자릿수)` 함수를 사용합니다. `round(x, 2)`는 둘째 자리까지 반올림합니다.",
     "problem_type": "코딩"
   },
@@ -1972,9 +1511,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: 'Seoul' in x)"
-    ],
     "hint": "`'찾을단어' in 문자열변수` 형태로 작성하면 결과는 `True` 또는 `False`가 됩니다.",
     "problem_type": "코딩"
   },
@@ -1989,9 +1525,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: int(x))"
-    ],
     "hint": "`int(x)`는 문자열이나 실수를 정수로 변환해줍니다.",
     "problem_type": "코딩"
   },
@@ -2006,9 +1539,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "Python",
-    "expected": [
-      "udf(lambda x: len(x) if x is not None else 0)"
-    ],
     "hint": "`if x is not None`은 파이썬에서 가장 정석적인 NULL 체크 방식입니다. (또는 간단히 `if x:`를 쓰기도 합니다)",
     "problem_type": "코딩"
   },
@@ -2022,9 +1552,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "UNION ALL"
-    ],
     "hint": "`UNION`은 중복을 제거(Unique)하지만, `UNION ALL`은 단순히 이어 붙여서 중복을 유지합니다. 성능도 `UNION ALL`이 더 빠릅니다.",
     "problem_type": "코딩"
   },
@@ -2036,9 +1563,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "INNER JOIN"
-    ],
     "hint": "양쪽 모두에 매칭되는 데이터만 가져오는 것은 `INNER JOIN`입니다. (그냥 `JOIN`이라고 써도 기본값은 INNER입니다)",
     "problem_type": "코딩"
   },
@@ -2053,10 +1577,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "LEFT JOIN",
-      "OR LEFT OUTER JOIN"
-    ],
     "hint": "왼쪽(기준) 테이블의 모든 행을 유지하고 오른쪽 테이블을 붙이는 것은 `LEFT JOIN`입니다.",
     "problem_type": "코딩"
   },
@@ -2070,9 +1590,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "TRIM(name)"
-    ],
     "hint": "`TRIM()` 함수는 문자열 양쪽의 공백을 제거합니다. (`LTRIM`, `RTRIM`도 있습니다)",
     "problem_type": "코딩"
   },
@@ -2084,10 +1601,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "UPPER(name) = 'KIM'",
-      "OR LOWER(name) = 'kim'"
-    ],
     "hint": "`UPPER(col)` 혹은 `LOWER(col)` 함수를 사용하여 통일한 뒤 비교합니다.",
     "problem_type": "코딩"
   },
@@ -2099,10 +1612,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "LENGTH(password) < 8",
-      "OR LEN(password)"
-    ],
     "hint": "표준은 `LENGTH()`이고, SQL Server 등 일부는 `LEN()`을 사용합니다.",
     "problem_type": "코딩"
   },
@@ -2116,10 +1625,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SUBSTRING(birth_str, 1, 4)",
-      "OR LEFT(birth_str, 4)"
-    ],
     "hint": "`SUBSTRING(컬럼, 시작위치, 길이)` 또는 `LEFT(컬럼, 길이)`를 사용합니다. SQL의 문자열 인덱스는 보통 1부터 시작합니다.",
     "problem_type": "코딩"
   },
@@ -2131,9 +1636,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "ROUND(avg_score, 0)"
-    ],
     "hint": "`ROUND(값, 소수점자리수)`를 씁니다. 정수로 만들려면 자리수에 0을 넣습니다.",
     "problem_type": "코딩"
   },
@@ -2145,9 +1647,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "BETWEEN '2023-01-01' AND '2023-01-31'"
-    ],
     "hint": "`col BETWEEN 시작값 AND 종료값`을 사용합니다. (양쪽 끝값을 포함합니다)",
     "problem_type": "코딩"
   },
@@ -2159,9 +1658,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "아무것도 출력되지 않음"
-    ],
     "hint": "`NOT IN`은 목록 중 하나라도 NULL이면 전체 결과가 Unknown이 되어버려 아무 데이터도 나오지 않습니다. `NOT EXISTS`를 쓰거나 NULL을 제거해야 합니다.",
     "problem_type": "코딩"
   },
@@ -2173,9 +1669,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "WHERE EXISTS (SELECT 1 ...)"
-    ],
     "hint": "`EXISTS`는 조건을 만족하는 첫 번째 행을 발견하면 즉시 탐색을 멈추고 True를 반환하므로 빠릅니다.",
     "problem_type": "코딩"
   },
@@ -2187,10 +1680,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "GROUP BY user_id",
-      "HAVING COUNT(*) >= 2"
-    ],
     "hint": "집계 결과(`COUNT`)에 대한 필터링은 `WHERE`가 아니라 `HAVING`에 써야 합니다.",
     "problem_type": "코딩"
   },
@@ -2202,9 +1691,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "AND"
-    ],
     "hint": "곱셈이 덧셈보다 먼저인 것처럼, `AND`가 `OR`보다 먼저 실행됩니다. 헷갈리면 무조건 괄호`()`를 쓰세요.",
     "problem_type": "코딩"
   },
@@ -2216,9 +1702,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "SELECT DISTINCT dept, job"
-    ],
     "hint": "`DISTINCT` 뒤에 여러 컬럼을 적으면 그 컬럼들의 '조합'이 중복되지 않게 가져옵니다.",
     "problem_type": "코딩"
   },
@@ -2232,9 +1715,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "NULL"
-    ],
     "hint": "NULL에 어떤 숫자를 더하거나 빼도 결과는 무조건 NULL입니다. 그래서 `COALESCE(comm, 0)` 처리가 필요합니다.",
     "problem_type": "코딩"
   },
@@ -2246,9 +1726,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "CROSS JOIN"
-    ],
     "hint": "`CROSS JOIN`은 두 테이블 행의 개수를 곱한 만큼의 결과를 만듭니다.",
     "problem_type": "코딩"
   },
@@ -2260,12 +1737,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "CASE gender",
-      "WHEN 'M' THEN '남성'",
-      "WHEN 'F' THEN '여성'",
-      "ELSE '기타' END"
-    ],
     "hint": "`CASE WHEN 조건 THEN 결과 ... END` 구문을 SELECT 절에 사용합니다.",
     "problem_type": "코딩"
   },
@@ -2277,9 +1748,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "ORDER BY CAST(num_str AS INT)"
-    ],
     "hint": "정렬 기준에서 타입을 숫자로 변환(`CAST`)해주어야 크기 비교가 올바르게 됩니다.",
     "problem_type": "코딩"
   },
@@ -2293,9 +1761,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "_"
-    ],
     "hint": "언더스코어 `_`는 문자 한 개를 의미합니다. `LIKE 'A__'`는 A 뒤에 두 글자가 더 있는 3글자 문자열을 찾습니다.",
     "problem_type": "코딩"
   },
@@ -2307,10 +1772,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "DATE_ADD(dt, INTERVAL 7 DAY)",
-      "OR dt + 7"
-    ],
     "hint": "MySQL은 `DATE_ADD`, Postgres/Oracle은 `dt + INTERVAL '7' DAY`, SQL Server는 `DATEADD(day, 7, dt)`를 씁니다.",
     "problem_type": "코딩"
   },
@@ -2326,9 +1787,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COUNT(email)"
-    ],
     "hint": "`COUNT(*)`는 NULL 여부와 상관없이 무조건 행의 수를 셉니다. 반면 `COUNT(컬럼명)`은 해당 컬럼이 NULL인 행은 세지 않습니다.",
     "problem_type": "코딩"
   },
@@ -2344,9 +1802,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COUNT(DISTINCT user_id)"
-    ],
     "hint": "`COUNT(DISTINCT 컬럼명)`을 사용하면 중복된 값을 하나로 쳐서 셉니다.",
     "problem_type": "코딩"
   },
@@ -2360,9 +1815,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COALESCE(address, 'Unknown')"
-    ],
     "hint": "`COALESCE(컬럼, 대체값)`은 컬럼이 NULL일 때 대체값을 반환합니다.",
     "problem_type": "코딩"
   },
@@ -2374,10 +1826,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "ORDER BY",
-      "score DESC, name ASC"
-    ],
     "hint": "콤마(`,`)로 구분하여 순서대로 적습니다. `ORDER BY score DESC, name ASC` (ASC는 생략 가능)",
     "problem_type": "코딩"
   },
@@ -2392,9 +1840,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "LIKE 'Kim%'"
-    ],
     "hint": "`WHERE name LIKE 'Kim%'`를 쓰면 Kim으로 시작하는 모든 문자열을 찾습니다.",
     "problem_type": "코딩"
   },
@@ -2409,10 +1854,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "CAST(price_str AS INT)",
-      "OR ::INT"
-    ],
     "hint": "표준은 `CAST(컬럼 AS 타입)`입니다. 예: `CAST(price_str AS INTEGER) >= 1000`. (일부 DB는 `::INT` 지원)",
     "problem_type": "코딩"
   },
@@ -2424,10 +1865,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "SELECT dept, AVG(salary)",
-      "GROUP BY dept"
-    ],
     "hint": "`GROUP BY`에 포함되지 않은 컬럼(name)은 집계 함수 없이 `SELECT` 절에 단독으로 올 수 없습니다. 부서별로 묶었는데 이름이 여러 개면 무엇을 출력할지 모르기 때문입니다.",
     "problem_type": "코딩"
   },
@@ -2439,10 +1876,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "GROUP BY class",
-      "HAVING AVG(score) >= 80"
-    ],
     "hint": "`WHERE`는 집계 전의 개별 행을 필터링하고, `HAVING`은 `GROUP BY`가 끝난 후의 집계 결과를 필터링합니다.",
     "problem_type": "코딩"
   },
@@ -2454,9 +1887,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF(CURRENT_DATE, start_date)"
-    ],
     "hint": "미래(오늘)에서 과거(시작일)를 빼야 양수가 나옵니다. DB에 따라 순서가 `DATEDIFF(end, start)`입니다.",
     "problem_type": "코딩"
   },
@@ -2471,11 +1901,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "CASE WHEN score >= 90",
-      "THEN 'A'",
-      "ELSE 'B' END"
-    ],
     "hint": "`CASE WHEN 조건 THEN 값 ELSE 값 END` 구문을 사용합니다.",
     "problem_type": "코딩"
   },
@@ -2490,10 +1915,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "SUM(salary)",
-      "OVER ()"
-    ],
     "hint": "`OVER()` 안에 아무것도 넣지 않으면 전체 데이터를 하나의 창(Window)으로 봅니다.",
     "problem_type": "코딩"
   },
@@ -2505,11 +1926,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "ROW_NUMBER()",
-      "PARTITION BY class",
-      "ORDER BY name"
-    ],
     "hint": "`PARTITION BY`가 '그룹을 나누는 기준'이고 `ORDER BY`가 '순번을 매기는 순서'입니다.",
     "problem_type": "코딩"
   },
@@ -2523,10 +1939,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "COALESCE(LAG(...), 0)",
-      "OR LAG(..., 0)"
-    ],
     "hint": "기본적으로 `NULL`을 반환합니다. `COALESCE`로 감싸거나, `LAG(col, 1, 0)` 처럼 3번째 인자에 기본값을 줍니다.",
     "problem_type": "코딩"
   },
@@ -2540,9 +1952,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "3등"
-    ],
     "hint": "`RANK`는 앞의 인원수만큼 건너뜁니다. (1, 1 다음은 3). 건너뛰기 싫으면 `DENSE_RANK`를 씁니다.",
     "problem_type": "코딩"
   },
@@ -2554,9 +1963,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "IS NULL"
-    ],
     "hint": "SQL에서 NULL과의 모든 연산(`=`, `!=`, `+` 등)은 `Unknown(NULL)`입니다. 반드시 `IS NULL` 혹은 `IS NOT NULL`을 써야 합니다.",
     "problem_type": "코딩"
   },
@@ -2568,10 +1974,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "YEAR(order_date)",
-      "MONTH(order_date)"
-    ],
     "hint": "대부분의 DB에서 `YEAR()`, `MONTH()` 함수를 지원합니다. (Postgres는 `EXTRACT(YEAR FROM ...)` 사용)",
     "problem_type": "코딩"
   },
@@ -2583,9 +1985,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "1. GROUP BY"
-    ],
     "hint": "`GROUP BY`는 그룹당 한 행으로 요약(압축)하지만, 윈도우 함수는 원래 행을 그대로 유지하면서 옆에 계산 결과만 붙입니다.",
     "problem_type": "코딩"
   },
@@ -2599,10 +1998,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "CONCAT",
-      "||"
-    ],
     "hint": "MySQL은 `CONCAT(last_name, ' ', first_name)`, 표준 SQL이나 Oracle/Postgres는 `last_name || ' ' || first_name`을 씁니다.",
     "problem_type": "코딩"
   },
@@ -2614,9 +2009,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "IN ('Pending', ...)"
-    ],
     "hint": "`status IN ('A', 'B', 'C')` 형태로 씁니다.",
     "problem_type": "코딩"
   },
@@ -2630,10 +2022,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "CAST(col AS FLOAT)",
-      "* 1.0"
-    ],
     "hint": "둘 중 하나를 실수(Float/Decimal)로 바꿔줘야 합니다. 가장 쉬운 꼼수는 `col * 1.0`을 하는 것입니다.",
     "problem_type": "코딩"
   },
@@ -2648,11 +2036,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "(amount - LAG(amount))",
-      "/ LAG(amount)",
-      "* 100"
-    ],
     "hint": "먼저 `LAG(amount) OVER (ORDER BY ym)`으로 지난달 매출을 가져온 뒤, 이를 분모와 분자에 배치하여 계산합니다.",
     "problem_type": "코딩"
   },
@@ -2664,11 +2047,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DATE_FORMAT",
-      "TRUNC",
-      "YYYY-MM-01"
-    ],
     "hint": "MySQL은 `DATE_FORMAT(dt, '%Y-%m-01')`, Oracle/Postgres는 `DATE_TRUNC('month', dt)`를 씁니다. 이를 통해 `GROUP BY` 기준을 만듭니다.",
     "problem_type": "코딩"
   },
@@ -2683,10 +2061,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "COUNT(*)",
-      "OVER (PARTITION BY user_id ORDER BY visited_at)"
-    ],
     "hint": "`ROW_NUMBER`와 결과는 같지만 의미상 '누적 개수'이므로 `COUNT(*) OVER (ORDER BY ...)`를 쓸 수도 있습니다.",
     "problem_type": "코딩"
   },
@@ -2698,11 +2072,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "CASE WHEN price > LAG(price)",
-      "THEN 'Up'",
-      "ELSE 'Down'"
-    ],
     "hint": "`LAG(price) OVER (PARTITION BY product_id ORDER BY changed_at)`으로 이전 가격을 가져와서 현재 `price`와 비교합니다.",
     "problem_type": "코딩"
   },
@@ -2714,9 +2083,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COALESCE(nickname, real_name, CAST(id AS CHAR))"
-    ],
     "hint": "데이터 타입이 다르면(문자와 숫자) 에러가 날 수 있으니 `CAST(id AS CHAR)` 등으로 타입을 맞춰 `COALESCE`에 넣습니다.",
     "problem_type": "코딩"
   },
@@ -2731,10 +2097,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "LAG(order_date)"
-    ],
     "hint": "`DATEDIFF(order_date, LAG(order_date) OVER (...))`를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -2746,10 +2108,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "SUM(salary)",
-      "OVER (ORDER BY salary)"
-    ],
     "hint": "`PARTITION BY`를 생략하고 `ORDER BY`만 쓰면 전체 데이터를 대상으로 정렬 순서대로 누적합니다.",
     "problem_type": "코딩"
   },
@@ -2761,10 +2119,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "RANK()",
-      "ORDER BY score ASC"
-    ],
     "hint": "`RANK() OVER (ORDER BY score ASC)`를 쓰면 점수가 낮은 사람이 1등이 됩니다.",
     "problem_type": "코딩"
   },
@@ -2779,10 +2133,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "status <> LAG(status)",
-      "OVER"
-    ],
     "hint": "서브쿼리에서 `prev_status`를 구한 뒤, 외부 WHERE 절에서 `status <> prev_status` 조건을 사용합니다.",
     "problem_type": "코딩"
   },
@@ -2794,10 +2144,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "MAX(login_dt)",
-      "OVER (PARTITION BY user_id)"
-    ],
     "hint": "`MAX(login_dt) OVER (PARTITION BY user_id)`를 쓰면 해당 유저의 로그 중 가장 최신 날짜가 모든 행에 복제됩니다.",
     "problem_type": "코딩"
   },
@@ -2809,11 +2155,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "ROW_NUMBER()",
-      "PARTITION BY cat_id",
-      "ORDER BY view_count DESC"
-    ],
     "hint": "카테고리로 파티션을 나누고 조회수 내림차순으로 번호를 매긴 뒤, `WHERE rn <= 2`로 자릅니다.",
     "problem_type": "코딩"
   },
@@ -2827,9 +2168,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "50"
-    ],
     "hint": "`AVG` 등 집계 함수는 NULL을 **없는 데이터** 취급합니다. 즉 `(100 + 0) / 2 = 50`이 됩니다. (NULL을 0으로 치려면 `COALESCE` 후 평균을 내야 해서 33.3이 됨)",
     "problem_type": "코딩"
   },
@@ -2841,10 +2179,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "CASE WHEN DATEDIFF(...) < 365",
-      "THEN 'Newbie'"
-    ],
     "hint": "`DATEDIFF(CURRENT_DATE, join_date)`로 일수를 구한 뒤 `CASE WHEN` 조건절에 사용하여 분류합니다.",
     "problem_type": "코딩"
   },
@@ -2859,11 +2193,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "NTILE(2)",
-      "ORDER BY RAND()",
-      "OR NEWID()"
-    ],
     "hint": "`NTILE(2) OVER (ORDER BY RAND())` (MySQL) 또는 `ORDER BY NEWID()` (SQL Server) 등을 쓰면 랜덤하게 반으로 나뉩니다.",
     "problem_type": "코딩"
   },
@@ -2875,10 +2204,6 @@
     "sample_rows": [],
     "difficulty": "Lv5 심화",
     "kind": "SQL",
-    "expected": [
-      "지원되지 않음 -> 대안 필요",
-      "Recursive CTE or Self Join"
-    ],
     "hint": "보통은 윈도우 함수로 한 번에 못 구합니다. 매일매일 그 날짜까지의 데이터를 `GROUP BY`하는 서브쿼리를 날리거나 전용 함수(HyperLogLog 등)를 써야 합니다.",
     "problem_type": "코딩"
   },
@@ -2890,11 +2215,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "SUM(amount)",
-      "ROWS BETWEEN 2 PRECEDING",
-      "AND CURRENT ROW"
-    ],
     "hint": "`ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`는 나를 포함해 총 3행을 의미합니다.",
     "problem_type": "코딩"
   },
@@ -2906,11 +2226,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "LEAD(order_date)",
-      "order_date"
-    ],
     "hint": "`DATEDIFF(LEAD(order_date) OVER (...), order_date)`를 구하면 각 구매 건 사이의 공백 기간(Gap)이 나옵니다.",
     "problem_type": "코딩"
   },
@@ -2925,11 +2240,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "FIRST_VALUE(channel)",
-      "PARTITION BY user_id",
-      "ORDER BY ts"
-    ],
     "hint": "파티션 내에서 시간순 정렬 후 첫 번째 값을 가져오면 됩니다.",
     "problem_type": "코딩"
   },
@@ -2941,9 +2251,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DENSE_RANK()"
-    ],
     "hint": "공동 등수 후 순위가 밀리지 않아야 하므로 `DENSE_RANK`가 적합합니다. (`RANK`를 쓰면 공동 금메달 뒤에 동메달이 나옴)",
     "problem_type": "코딩"
   },
@@ -2955,10 +2262,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "(@region IS NULL OR region = @region)",
-      "(@age IS NULL OR age = @age)"
-    ],
     "hint": "이는 `COALESCE`보다 `(@param IS NULL OR col = @param)` 패턴이 인덱스 활용 면에서 유리할 때가 많지만, `col = COALESCE(@param, col)` 형태도 논리적으로는 같습니다.",
     "problem_type": "코딩"
   },
@@ -2974,11 +2277,6 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "CASE WHEN",
-      "ts - LAG(ts)",
-      "> 1800"
-    ],
     "hint": "시간 차이가 조건보다 크면 1, 아니면 0을 반환합니다. 이 1과 0들의 누적 합(`SUM OVER`)을 구하면 그것이 곧 고유한 세션 ID가 됩니다.",
     "problem_type": "코딩"
   },
@@ -2993,10 +2291,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "MAX(price)",
-      "OVER (ORDER BY dt)"
-    ],
     "hint": "`MAX(price) OVER (ORDER BY dt)`는 현재 시점까지의 최대값을 반환합니다. 이를 분모로 활용하여 하락률을 계산합니다.",
     "problem_type": "코딩"
   },
@@ -3011,10 +2305,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "MIN(order_date)",
-      "OVER (PARTITION BY user_id)"
-    ],
     "hint": "파티션 내의 최솟값을 구하는 `MIN(col) OVER (PARTITION BY ...)`를 사용하면 모든 행에 동일한 '첫 구매일' 값이 복제됩니다.",
     "problem_type": "코딩"
   },
@@ -3026,10 +2316,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "(revenue - AVG(revenue) OVER())",
-      "/ STDDEV(revenue) OVER()"
-    ],
     "hint": "`OVER()`를 비워두면 전체 데이터셋에 대한 평균과 표준편차를 계산합니다. 이를 각 행의 값과 연산합니다.",
     "problem_type": "코딩"
   },
@@ -3041,11 +2327,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "ROWS BETWEEN",
-      "1 PRECEDING",
-      "AND 1 FOLLOWING"
-    ],
     "hint": "`ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING`을 쓰면 (전 행, 현 행, 다음 행) 총 3개의 평균을 구합니다.",
     "problem_type": "코딩"
   },
@@ -3060,11 +2341,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "SUM(amount)",
-      "PARTITION BY YEAR(dt)",
-      "ORDER BY dt"
-    ],
     "hint": "연도별로 그룹을 나누면(`PARTITION BY YEAR(dt)`) 해가 바뀔 때마다 윈도우가 새로 시작됩니다.",
     "problem_type": "코딩"
   },
@@ -3080,11 +2356,6 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "SQL",
-    "expected": [
-      "login_dt - INTERVAL",
-      "ROW_NUMBER()",
-      "DAY"
-    ],
     "hint": "날짜가 하루씩 증가하고 순위도 1씩 증가하므로, 둘의 차이는 연속된 기간 동안 일정하게 유지됩니다. 이 차이값이 그룹 ID가 됩니다.",
     "problem_type": "코딩"
   },
@@ -3099,11 +2370,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "LEAD(action_name)",
-      "OVER",
-      "= 'Cart'"
-    ],
     "hint": "`LEAD(action_name) OVER (PARTITION BY user ORDER BY ts) = 'Cart'` 조건식을 사용합니다.",
     "problem_type": "코딩"
   },
@@ -3115,9 +2381,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "SUM(CASE WHEN month = 1 THEN amount ELSE 0 END)"
-    ],
     "hint": "각 월에 해당하는 값만 남기고 나머지는 0으로 만든 뒤 합계(`SUM`)를 구하면 특정 월의 매출만 컬럼으로 추출됩니다.",
     "problem_type": "코딩"
   },
@@ -3131,10 +2394,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "GROUP_CONCAT",
-      "STRING_AGG"
-    ],
     "hint": "MySQL은 `GROUP_CONCAT(product_name SEPARATOR ', ')`, PostgreSQL/SQLServer는 `STRING_AGG`를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -3149,10 +2408,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "total_budget - SUM(cost)",
-      "OVER (ORDER BY used_at)"
-    ],
     "hint": "상수(총 예산)에서 `SUM(cost) OVER (ORDER BY ...)`인 누적 합계를 빼주면 됩니다.",
     "problem_type": "코딩"
   },
@@ -3164,11 +2419,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "price * 0.5",
-      "+ LAG(price, 1) * 0.3",
-      "+ LAG(price, 2) * 0.2"
-    ],
     "hint": "`LAG` 함수를 여러 번 호출하여 각각 다른 가중치를 곱해서 더합니다.",
     "problem_type": "코딩"
   },
@@ -3183,10 +2433,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "MAX(CASE WHEN status='Return' THEN 1 ELSE 0 END)",
-      "GROUP BY user_id"
-    ],
     "hint": "하나라도 1(True)이 있으면 `MAX` 값은 1이 됩니다. Boolean OR 연산의 집계 버전으로 자주 쓰이는 테크닉입니다.",
     "problem_type": "코딩"
   },
@@ -3198,10 +2444,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "CUME_DIST()",
-      "OVER (ORDER BY score DESC)"
-    ],
     "hint": "`CUME_DIST()`는 Cumulative Distribution(누적 분포) 값을 반환합니다. 점수 내림차순 정렬 시 앞쪽에 있을수록 값이 작습니다(혹은 오름차순 시 하위 % 계산).",
     "problem_type": "코딩"
   },
@@ -3217,11 +2459,6 @@
     ],
     "difficulty": "Lv5 심화",
     "kind": "SQL",
-    "expected": [
-      "LAST_VALUE(val)",
-      "IGNORE NULLS",
-      "OVER"
-    ],
     "hint": "`LAST_VALUE(val IGNORE NULLS) OVER (ORDER BY ts ROWS UNBOUNDED PRECEDING)` 형태로 씁니다. 현재까지의 값 중 NULL이 아닌 마지막 값을 가져옵니다.",
     "problem_type": "코딩"
   },
@@ -3233,10 +2470,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "AVG(salary) OVER (PARTITION BY dept)",
-      "AVG(salary) OVER ()"
-    ],
     "hint": "하나는 `PARTITION BY dept`를 쓰고, 다른 하나는 `OVER ()`로 비워두면 전체 평균이 됩니다.",
     "problem_type": "코딩"
   },
@@ -3251,10 +2484,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "FLOOR(MINUTE(ts) / 10)",
-      "* 10"
-    ],
     "hint": "`FLOOR(분 / 10) * 10`을 하면 0~9분은 0, 10~19분은 10... 처럼 변환되어 `GROUP BY` 하기 좋아집니다.",
     "problem_type": "코딩"
   },
@@ -3266,10 +2495,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "COALESCE",
-      "LEAD(start_dt)"
-    ],
     "hint": "`COALESCE(LEAD(start_dt) OVER (...), '9999-12-31')` 형식을 쓰면 마지막 행의 NULL 문제를 해결할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -3281,11 +2506,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "PERCENT_RANK()",
-      "OVER (ORDER BY score ASC)",
-      "<= 0.1"
-    ],
     "hint": "`PERCENT_RANK`는 0~1 사이 값을 반환합니다. 오름차순 정렬(ASC) 시 0에 가까울수록 낮은 점수(하위권)입니다.",
     "problem_type": "코딩"
   },
@@ -3301,10 +2521,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "SUM(CASE WHEN status != 'Refund' THEN amount ELSE 0 END)",
-      "OVER (ORDER BY dt)"
-    ],
     "hint": "누적할 대상(`amount`)을 `CASE`문으로 걸러냅니다. 환불이면 0을 더하게 하여 누적값에 영향을 주지 않게 합니다.",
     "problem_type": "코딩"
   },
@@ -3320,10 +2536,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "LAG",
-      "amount, 12"
-    ],
     "hint": "월별 데이터라면 1년 전은 12칸 뒤에 있습니다. `LAG(amount, 12) OVER (ORDER BY ym)`을 사용하세요.",
     "problem_type": "코딩"
   },
@@ -3335,11 +2547,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "ROWS BETWEEN",
-      "6 PRECEDING",
-      "AND CURRENT ROW"
-    ],
     "hint": "오늘 포함 7일이려면, 내 앞의 6일(`6 PRECEDING`)과 나(`CURRENT ROW`)를 합쳐야 합니다.",
     "problem_type": "코딩"
   },
@@ -3353,9 +2560,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "NULLIF(impressions, 0)"
-    ],
     "hint": "`clicks / NULLIF(impressions, 0)`을 쓰면 분모가 0일 때 NULL이 되어 전체 결과가 NULL(에러 없음)이 됩니다. 이후 필요하면 `COALESCE`로 0 처리합니다.",
     "problem_type": "코딩"
   },
@@ -3371,10 +2575,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "MAX(score)",
-      "OVER (ORDER BY created_at)"
-    ],
     "hint": "기본 윈도우(`RANGE UNBOUNDED PRECEDING`)를 사용하는 `MAX` 함수는 정렬 순서에 따라 누적 최대값을 보여줍니다.",
     "problem_type": "코딩"
   },
@@ -3386,10 +2586,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "TIMESTAMPDIFF",
-      "MONTH"
-    ],
     "hint": "MySQL/MariaDB 등에서는 `TIMESTAMPDIFF(MONTH, joined_at, target_dt)`를, SQL Server는 `DATEDIFF(MONTH, ...)`를 씁니다. 문맥에 맞는 월 차이 함수를 선택하세요.",
     "problem_type": "코딩"
   },
@@ -3404,11 +2600,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "FIRST_VALUE(channel)",
-      "PARTITION BY user_id",
-      "ORDER BY visited_at"
-    ],
     "hint": "`PARTITION BY`로 유저를 묶고 시간순 정렬한 뒤 맨 첫 값을 가져오면 됩니다.",
     "problem_type": "코딩"
   },
@@ -3422,10 +2613,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "> 1"
-    ],
     "hint": "`DATEDIFF(log_date, LAG(log_date) OVER(...)) > 1` 이면 중간에 하루 이상 비었다는 뜻입니다.",
     "problem_type": "코딩"
   },
@@ -3437,10 +2624,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "NTILE(10)",
-      "ORDER BY amount DESC"
-    ],
     "hint": "`NTILE(10) OVER (ORDER BY amount DESC)`를 쓰면 상위 10%가 1그룹, 그 다음 10%가 2그룹... 순으로 배정됩니다.",
     "problem_type": "코딩"
   },
@@ -3456,10 +2639,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DENSE_RANK()",
-      "ORDER BY price DESC"
-    ],
     "hint": "순위가 건너뛰지 않길 원할 때는 무조건 `DENSE_RANK`입니다.",
     "problem_type": "코딩"
   },
@@ -3471,10 +2650,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "WHERE name =",
-      "COALESCE(@query, name)"
-    ],
     "hint": "`name = COALESCE(@query, name)`: 쿼리가 있으면 name=@query가 되고, 없으면 name=name(항상 참)이 되어 전체가 조회됩니다. (성능 주의)",
     "problem_type": "코딩"
   },
@@ -3486,10 +2661,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "TIMESTAMPDIFF(SECOND, ...)",
-      "OR DATEDIFF(s, ...)"
-    ],
     "hint": "MySQL은 `TIMESTAMPDIFF(SECOND, req_at, res_at)`, SQL Server는 `DATEDIFF(SECOND, req_at, res_at)`를 사용합니다.",
     "problem_type": "코딩"
   },
@@ -3503,11 +2674,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "salary - MIN(salary)",
-      "OVER",
-      "PARTITION BY job"
-    ],
     "hint": "각 행마다 `MIN(salary) OVER (PARTITION BY job)` 값을 생성하여 본인 연봉에서 뺍니다.",
     "problem_type": "코딩"
   },
@@ -3519,10 +2685,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "LEAD(login_dt)",
-      "IS NULL"
-    ],
     "hint": "`LEAD(...)`의 결과가 `IS NULL`이면 그 행이 해당 파티션(유저)의 마지막 데이터라는 뜻입니다.",
     "problem_type": "코딩"
   },
@@ -3538,10 +2700,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "COUNT(*)",
-      "OVER (PARTITION BY dept)"
-    ],
     "hint": "`COUNT(*) OVER (PARTITION BY dept)`를 쓰면 각 행마다 해당 부서의 전체 인원수가 계산되어 붙습니다.",
     "problem_type": "코딩"
   },
@@ -3553,10 +2711,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "amount - LAG",
-      "amount, 1, amount"
-    ],
     "hint": "`LAG(amount, 1, amount)`라고 쓰면 이전 값이 없을 때 '내 금액(amount)'을 가져오므로, `amount - LAG` 결과가 0이 됩니다. (혹은 0을 기본값으로 쓰고 로직을 바꿀 수도 있음)",
     "problem_type": "코딩"
   },
@@ -3572,10 +2726,6 @@
     ],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "SUM(amount) OVER (ORDER BY...)",
-      "/ SUM(amount) OVER ()"
-    ],
     "hint": "분자: `SUM(amount) OVER (ORDER BY amount DESC)` (누적합)\n분모: `SUM(amount) OVER ()` (전체합)",
     "problem_type": "코딩"
   },
@@ -3587,10 +2737,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "ROW_NUMBER()",
-      "WHERE rn > 1"
-    ],
     "hint": "최신 데이터를 1등으로 만들었다면, `rn > 1`인 행들(2등, 3등...)이 삭제 대상이 됩니다.",
     "problem_type": "코딩"
   },
@@ -3602,10 +2748,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "temp - AVG(temp)",
-      "PARTITION BY MONTH(dt)"
-    ],
     "hint": "`PARTITION BY`에 월(Month) 정보를 넣어 월별 평균을 구하고, 현재 행의 `temp`에서 뺍니다.",
     "problem_type": "코딩"
   },
@@ -3617,10 +2759,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "status = 'Success'",
-      "AND LEAD(status) = 'Fail'"
-    ],
     "hint": "현재 행이 Success이고 `LEAD(...)`가 Fail인 행을 필터링하면 됩니다.",
     "problem_type": "코딩"
   },
@@ -3632,10 +2770,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "RANK",
-      "DENSE_RANK"
-    ],
     "hint": "`RANK`는 1, 1, 1 다음 4 (건너뜀), `DENSE_RANK`는 1, 1, 1 다음 2 (빽빽함)입니다.",
     "problem_type": "코딩"
   },
@@ -3651,11 +2785,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "NTILE(4)",
-      "OVER",
-      "ORDER BY"
-    ],
     "hint": "`NTILE(n)` 함수는 데이터를 n개의 바구니에 똑같이 나누어 담습니다. `NTILE(4) OVER (ORDER BY score DESC)`를 사용하세요.",
     "problem_type": "코딩"
   },
@@ -3670,9 +2799,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "salary + COALESCE(bonus, 0)"
-    ],
     "hint": "SQL에서 `숫자 + NULL`은 `NULL`입니다. 반드시 `COALESCE(bonus, 0)`으로 NULL을 0으로 바꿔준 뒤 더해야 합니다.",
     "problem_type": "코딩"
   },
@@ -3688,10 +2814,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "LEAD",
-      "status, 1, 'Completed'"
-    ],
     "hint": "`LEAD(col, offset, default_value)` 형식을 사용합니다. 예: `LEAD(status, 1, 'Completed')`",
     "problem_type": "코딩"
   },
@@ -3705,10 +2827,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "LAG",
-      "amount, 7"
-    ],
     "hint": "`LAG(amount, 7) OVER (ORDER BY dt)`를 쓰면 7행 앞의 데이터를 가져옵니다. (데이터가 매일 빠짐없이 있다는 가정 하에)",
     "problem_type": "코딩"
   },
@@ -3722,11 +2840,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "score - AVG(score)",
-      "OVER",
-      "PARTITION BY"
-    ],
     "hint": "`AVG(score) OVER (PARTITION BY class)`를 하면 해당 행 옆에 반 평균이 붙습니다. 여기서 내 점수를 빼면 됩니다.",
     "problem_type": "코딩"
   },
@@ -3738,10 +2851,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "ROW_NUMBER()",
-      "WHERE rn BETWEEN 11 AND 20"
-    ],
     "hint": "내부에서 `ROW_NUMBER() OVER (ORDER BY created_at DESC) as rn`을 만들고, 외부 WHERE 절에서 `rn BETWEEN 11 AND 20`을 씁니다.",
     "problem_type": "코딩"
   },
@@ -3756,11 +2865,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "MIN(price)",
-      "OVER",
-      "PARTITION BY"
-    ],
     "hint": "`MIN(price) OVER (PARTITION BY category)`를 사용하면 집계(Group by)로 행이 줄어들지 않고 원본 행 옆에 최저가가 붙습니다.",
     "problem_type": "코딩"
   },
@@ -3772,10 +2876,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "YEAR"
-    ],
     "hint": "단순 연도 차이는 `YEAR(Current) - YEAR(Birth)`로 구하거나, DB에 따라 `DATEDIFF(year, birth, current)`를 쓸 수 있습니다. (일수 차이 / 365는 윤년 때문에 부정확할 수 있음)",
     "problem_type": "코딩"
   },
@@ -3787,11 +2887,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "ROWS BETWEEN",
-      "UNBOUNDED PRECEDING",
-      "UNBOUNDED FOLLOWING"
-    ],
     "hint": "기본 윈도우 프레임은 '처음부터 **현재 행까지**'입니다. 그래서 마지막 값(`LAST_VALUE`)이 항상 '나(현재 행)'가 됩니다. `ROWS BETWEEN ... AND UNBOUNDED FOLLOWING`으로 뒷부분까지 열어줘야 합니다.",
     "problem_type": "코딩"
   },
@@ -3803,11 +2898,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "PERCENT_RANK()",
-      "OVER",
-      "<= 0.01"
-    ],
     "hint": "`PERCENT_RANK()`는 0(1등)에서 1(꼴등) 사이의 값을 반환합니다. 상위 1%는 값이 0.01 이하인 경우입니다.",
     "problem_type": "코딩"
   },
@@ -3822,10 +2912,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "COUNT(*)",
-      "PARTITION BY email"
-    ],
     "hint": "`COUNT(*) OVER (PARTITION BY email)`을 계산해서 그 값이 1보다 큰 행만 서브쿼리로 추출합니다.",
     "problem_type": "코딩"
   },
@@ -3837,10 +2923,6 @@
     "sample_rows": [],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "<= 30"
-    ],
     "hint": "`DATEDIFF(CURRENT_DATE, join_date) BETWEEN 0 AND 30` 처럼 작성하여 미래 날짜는 제외하고 과거 30일만 가져옵니다.",
     "problem_type": "코딩"
   },
@@ -3852,10 +2934,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "RANK() - DENSE_RANK()",
-      "<> 0"
-    ],
     "hint": "동점자가 없으면 두 순위는 항상 같습니다. 차이가 0이 아니라면 그 앞에 공동 순위가 있었다는 증거입니다.",
     "problem_type": "코딩"
   },
@@ -3869,10 +2947,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "revenue / SUM(revenue)",
-      "PARTITION BY category"
-    ],
     "hint": "`revenue / SUM(revenue) OVER (PARTITION BY category)` 형태로 계산합니다.",
     "problem_type": "코딩"
   },
@@ -3884,10 +2958,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "* 5 / 7"
-    ],
     "hint": "단순 근사치로는 `DATEDIFF(...) * 5 / 7`을 쓰거나, 복잡하게는 `WEEKDAY()` 함수를 조합해야 합니다. 이 문제는 아이디어 차원에서 접근해보세요.",
     "problem_type": "코딩"
   },
@@ -3903,10 +2973,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "COALESCE(status, '')",
-      "<> 'Done'"
-    ],
     "hint": "`COALESCE(status, '') <> 'Done'`으로 비교하면 NULL이 빈 문자열로 바뀌어 'Done'과 다르다고 판단되므로 결과에 나옵니다.",
     "problem_type": "코딩"
   },
@@ -3918,10 +2984,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "LEAD(start_at)",
-      "OVER (ORDER BY start_at)"
-    ],
     "hint": "`LEAD(start_at) OVER (ORDER BY start_at)`을 하면 바로 다음 행의 시작 시간을 가져올 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -3933,10 +2995,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "rn =",
-      "(cnt + 1) / 2"
-    ],
     "hint": "전체 개수(cnt)가 5개면 3등이 중앙입니다. `rn = (cnt + 1) / 2` (혹은 짝수일 경우 평균 등 추가 로직 필요) 조건을 사용합니다.",
     "problem_type": "코딩"
   },
@@ -3948,10 +3006,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DENSE_RANK",
-      "rank = 3"
-    ],
     "hint": "`DENSE_RANK()`를 쓰고 `WHERE rank = 3`을 걸면 중복을 건너뛰지 않고 3번째 그룹을 찾습니다.",
     "problem_type": "코딩"
   },
@@ -3965,10 +3019,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "ABS",
-      "price - LAG(price)"
-    ],
     "hint": "`ABS(price - LAG(price) OVER (...))` 를 사용하면 상승/하락 관계없이 변화의 크기만 구할 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -3984,9 +3034,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COALESCE"
-    ],
     "hint": "COALESCE(컬럼1, 컬럼2, '기본값') 순서로 나열하면, 앞에서부터 순서대로 NULL이 아닌 첫 번째 값을 반환합니다.",
     "problem_type": "코딩"
   },
@@ -4001,11 +3048,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "delivered_date",
-      "order_date"
-    ],
     "hint": "DB 종류에 따라 다르지만 보통 `DATEDIFF(종료일, 시작일)` 혹은 `DATEDIFF(단위, 시작일, 종료일)` 형식을 씁니다. 여기서는 `DATEDIFF(delivered_date, order_date)` 로직을 생각해보세요.",
     "problem_type": "코딩"
   },
@@ -4021,12 +3063,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "ROW_NUMBER()",
-      "OVER",
-      "PARTITION BY",
-      "ORDER BY"
-    ],
     "hint": "`ROW_NUMBER() OVER (PARTITION BY 그룹기준컬럼 ORDER BY 정렬기준컬럼 DESC)` 구문을 사용합니다. 부서로 나누고(Partition), 급여로 정렬(Order)해야 합니다.",
     "problem_type": "코딩"
   },
@@ -4042,9 +3078,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DENSE_RANK()"
-    ],
     "hint": "`RANK()`는 공동 1등이 2명이면 다음은 3등이 됩니다. 반면 `DENSE_RANK()`는 'Dense(빽빽한)'라는 뜻처럼 번호를 건너뛰지 않고 2등을 부여합니다.",
     "problem_type": "코딩"
   },
@@ -4060,11 +3093,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "LAG(revenue)",
-      "OVER",
-      "ORDER BY date"
-    ],
     "hint": "`LAG(가져올컬럼) OVER (ORDER BY 정렬기준)`을 사용합니다. 파티션이 필요 없다면 ORDER BY만 적으면 됩니다.",
     "problem_type": "코딩"
   },
@@ -4080,11 +3108,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "LEAD(login_date)",
-      "PARTITION BY user_id",
-      "ORDER BY login_date"
-    ],
     "hint": "LAG의 반대입니다. `LEAD` 함수를 사용하며, 유저별로 계산해야 하므로 `PARTITION BY user_id`가 필수입니다.",
     "problem_type": "코딩"
   },
@@ -4099,10 +3122,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "ROW_NUMBER()",
-      "DESC"
-    ],
     "hint": "최신순으로 번호를 매기려면 `ORDER BY updated_at DESC`를 씁니다. 이후 WHERE절에서 rn = 1 인 것만 추출하면 됩니다.",
     "problem_type": "코딩"
   },
@@ -4117,10 +3136,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "LAG(amount)",
-      "(amount - prev) / prev"
-    ],
     "hint": "먼저 `LAG`로 어제 매출을 구한 뒤, 이를 분모와 분자에 사용하여 나눗셈을 합니다. 0으로 나누기 오류 방지는 일단 고려하지 않아도 됩니다.",
     "problem_type": "코딩"
   },
@@ -4136,10 +3151,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "COALESCE",
-      "LAG"
-    ],
     "hint": "`COALESCE(stock, LAG(stock) OVER (...))` 형태를 사용하면 현재 값이 NULL일 때 이전 값을 가져올 수 있습니다. (연속된 NULL 처리는 더 복잡한 테크닉이 필요합니다)",
     "problem_type": "코딩"
   },
@@ -4153,10 +3164,6 @@
     ],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "= 7"
-    ],
     "hint": "`DATEDIFF(login_date, join_date) = 7`을 조건으로 걸면 가입 후 7일차에 접속한 로그만 남길 수 있습니다.",
     "problem_type": "코딩"
   },
@@ -4168,10 +3175,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "WHERE",
-      "rnk <= 3"
-    ],
     "hint": "윈도우 함수는 WHERE 절에 직접 쓸 수 없으므로 서브쿼리 사용 후 `WHERE rnk <= 3` 조건을 줍니다.",
     "problem_type": "코딩"
   },
@@ -4187,11 +3190,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "SUM(revenue)",
-      "OVER",
-      "ORDER BY dt"
-    ],
     "hint": "`SUM(col) OVER (ORDER BY col)`을 쓰면 정렬 순서에 따라 누적해서 더해나갑니다. `PARTITION BY`가 없으면 전체 데이터에 대해 누적합니다.",
     "problem_type": "코딩"
   },
@@ -4203,11 +3201,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "AVG(close_price)",
-      "ROWS BETWEEN",
-      "2 PRECEDING AND CURRENT ROW"
-    ],
     "hint": "`ROWS BETWEEN 2 PRECEDING AND CURRENT ROW`는 '나를 포함해 앞의 2개 행' 즉 총 3개 행의 범위를 지정합니다.",
     "problem_type": "코딩"
   },
@@ -4222,10 +3215,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "LEAD(visited_at)",
-      "DATEDIFF (or TIMESTAMPDIFF)"
-    ],
     "hint": "현재 행에서 `LEAD`로 다음 행의 시간을 당겨온 뒤, 두 시간의 차이를 구하면 체류 시간이 됩니다.",
     "problem_type": "코딩"
   },
@@ -4237,10 +3226,6 @@
     "sample_rows": [],
     "difficulty": "Lv2 초급",
     "kind": "SQL",
-    "expected": [
-      "DENSE_RANK",
-      "WHERE rank = 2"
-    ],
     "hint": "연봉 내림차순으로 `DENSE_RANK`를 매기고, 외부 쿼리에서 `rank = 2`인 사람을 조회합니다.",
     "problem_type": "코딩"
   },
@@ -4252,11 +3237,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "DATEDIFF",
-      "LAG",
-      "= 1"
-    ],
     "hint": "`DATEDIFF(current_dt, prev_dt) = 1`이면 연속 접속입니다. (주말 제외 등 복잡한 로직이 없다면)",
     "problem_type": "코딩"
   },
@@ -4272,10 +3252,6 @@
     ],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "COUNT(*)",
-      "OVER()"
-    ],
     "hint": "`OVER()` 안에 아무것도 넣지 않으면(빈 괄호), 전체 테이블을 하나의 윈도우로 보아 전체 개수를 모든 행에 붙여줍니다.",
     "problem_type": "코딩"
   },
@@ -4289,9 +3265,6 @@
     ],
     "difficulty": "Lv1 입문",
     "kind": "SQL",
-    "expected": [
-      "COALESCE(home, mobile, office)"
-    ],
     "hint": "인자를 여러 개 넣으면 됩니다. `COALESCE(home, mobile, office)`.",
     "problem_type": "코딩"
   },
@@ -4303,10 +3276,6 @@
     "sample_rows": [],
     "difficulty": "Lv3 중급",
     "kind": "SQL",
-    "expected": [
-      "FIRST_VALUE(name)",
-      "ORDER BY salary DESC"
-    ],
     "hint": "`FIRST_VALUE(name) OVER (PARTITION BY dept ORDER BY salary DESC)`를 쓰면 해당 파티션 내 1등의 이름을 가져옵니다.",
     "problem_type": "코딩"
   },
@@ -4318,11 +3287,6 @@
     "sample_rows": [],
     "difficulty": "Lv4 고급",
     "kind": "SQL",
-    "expected": [
-      "CASE WHEN",
-      "ts - LAG(ts)",
-      "> 1800"
-    ],
     "hint": "이전 시간(`LAG`)과의 차이가 1800초보다 크면 `1`, 아니면 `0`을 반환하는 식을 짭니다. 이는 세션 ID를 생성하는 기초 로직이 됩니다.",
     "problem_type": "코딩"
   }

@@ -13,7 +13,6 @@ class Problem:
     body: str
     difficulty: str
     kind: str  # "Python.Pyspark", "Python.Numpy", "Python", "SQL" 등
-    expected: List[str]
     hint: str
     schema: str = ""
     sample_rows: List[str] = field(default_factory=list)
@@ -66,7 +65,6 @@ def load_problem_bank(path: Path | str = Path("data/problems.json")) -> List[Pro
                 body=item["body"],
                 difficulty=item["difficulty"],
                 kind=item["kind"],
-                expected=item.get("expected", []),
                 hint=item.get("hint", ""),
                 schema=item.get("schema", ""),
                 sample_rows=item.get("sample_rows", []),

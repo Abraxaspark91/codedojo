@@ -125,7 +125,7 @@ class Attempt:
         score: 채점 점수 (0-100)
         status: 상태 (통과/재도전)
         submitted: 제출된 코드
-        feedback: LLM 또는 휴리스틱 피드백
+        feedback: LLM 피드백
         improvement: 보완 포인트
         reasoning: 해설/의도 추측
         question: 문제 내용
@@ -596,7 +596,7 @@ def call_llm(system_prompt: str, user_prompt: str,
         return (
             "LLM 서버에 연결하지 못했습니다.\n"
             f"로컬 엔드포인트({endpoint})를 확인하세요.\n"
-            f"대신 휴리스틱 피드백을 제공합니다. ({exc})"
+            f"네트워크를 확인하거나 나중에 다시 시도하세요. ({exc})"
         )
 
 

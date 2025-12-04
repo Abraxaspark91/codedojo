@@ -905,15 +905,14 @@ def on_new_problem(difficulty: str,
     )
 
 
-def on_submit(state: Dict, code: str, progress=gr.Progress()
-              ) -> Tuple[str, gr.update, gr.update]:
+def on_submit(state: Dict, code: str, progress=gr.Progress()) -> str:
     """코드를 제출하고 LLM 피드백을 받습니다. (자동 저장 없음)"""
     state = ensure_state(state)
     if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다.", gr.update(), gr.update(value="💡 힌트 보기")
+        return "문제가 선택되지 않았습니다."
 
     if state.get("in_progress"):
-        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요.", gr.update(), gr.update()
+        return "피드백 생성이 진행 중입니다. 잠시만 기다려주세요."
 
     state["in_progress"] = True
     problem: Problem = state["problem"]
@@ -929,10 +928,8 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()
         "hint_visible": False
     })
 
-    # LLM 피드백만 반환
-    result = f"### 💬 LLM 피드백\n{feedback}"
-
-    return result, gr.update(), gr.update(value="💡 힌트 보기")
+    # 피드백만 반환 (UI에 이미 고정 헤더가 있음)
+    return feedback
 
 
 def show_hint(state: Dict) -> str:
@@ -964,7 +961,7 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
 
         # LLM 응답이 있으면 함께 표시 (LLM 응답 유지 + 힌트 추가)
         if llm_feedback:
-            result = f"### 💬 LLM 피드백\n{llm_feedback}\n\n{hint_text}"
+            result = f"{llm_feedback}\n\n{hint_text}"
         else:
             result = hint_text
     else:
@@ -973,7 +970,7 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
 
         # LLM 응답이 있으면 유지
         if llm_feedback:
-            result = f"### 💬 LLM 피드백\n{llm_feedback}"
+            result = llm_feedback
         else:
             result = ""
 
@@ -1274,7 +1271,7 @@ def build_interface() -> gr.Blocks:
         submit_btn.click(
             on_submit,
             inputs=[new_state, code_box],
-            outputs=[exec_result, note_pid_dropdown, hint_btn],
+            outputs=[exec_result],
             show_progress="minimal",
         )
 
@@ -1388,7 +1385,7 @@ def build_interface() -> gr.Blocks:
         fav_submit_btn.click(
             on_submit,
             inputs=[fav_state, fav_code_box],
-            outputs=[fav_exec_result, note_pid_dropdown, fav_hint_btn],
+            outputs=[fav_exec_result],
             show_progress="minimal",
         )
 
@@ -1564,7 +1561,7 @@ def build_interface() -> gr.Blocks:
         note_submit_btn.click(
             on_submit,
             inputs=[note_state, note_code_box],
-            outputs=[note_exec_result, note_pid_dropdown, note_hint_btn],
+            outputs=[note_exec_result],
             show_progress="minimal",
         )
 

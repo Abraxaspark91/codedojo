@@ -403,8 +403,10 @@ def matches_filters(
 
     language 필터 동작:
     - "전체": 모든 문제 포함
-    - "Python": Python, Python.Pyspark, Python.Numpy 등 모두 포함
+    - "Python": Python 관련 모두 포함
     - "Python.Pyspark": Python.Pyspark만 포함
+    - "Python.Pandas": Python.Pandas만 포함
+    - "Python.NumPy": Python.NumPy만 포함
     - "SQL": SQL만 포함
     """
     # 언어 필터 매칭
@@ -621,7 +623,7 @@ def build_feedback(
     user_prompt = (
         f"문제: {problem.body}\n"
         f"스키마: {problem.schema}\n"
-        f"코드:```{problem.kind}\n{code}\n```\n"
+        f"코드:```{code}\n```\n"
         "다음 사항을 포함하여 피드백을 제공하세요:\n"
         "- 1) 코드 분석 및 평가\n"
         "- 2) 보완이 필요한 부분\n"

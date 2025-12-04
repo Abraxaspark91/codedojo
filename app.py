@@ -929,8 +929,10 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()
         "hint_visible": False
     })
 
-    # 피드백만 반환 (UI에 이미 고정 헤더가 있으므로 헤더 제거)
-    return feedback, gr.update(), gr.update(value="💡 힌트 보기")
+    # LLM 피드백만 반환
+    result = f"### 💬 LLM 피드백\n{feedback}"
+
+    return result, gr.update(), gr.update(value="💡 힌트 보기")
 
 
 def show_hint(state: Dict) -> str:
@@ -962,7 +964,7 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
 
         # LLM 응답이 있으면 함께 표시 (LLM 응답 유지 + 힌트 추가)
         if llm_feedback:
-            result = f"{llm_feedback}\n\n{hint_text}"
+            result = f"### 💬 LLM 피드백\n{llm_feedback}\n\n{hint_text}"
         else:
             result = hint_text
     else:
@@ -971,7 +973,7 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
 
         # LLM 응답이 있으면 유지
         if llm_feedback:
-            result = llm_feedback
+            result = f"### 💬 LLM 피드백\n{llm_feedback}"
         else:
             result = ""
 

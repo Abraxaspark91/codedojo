@@ -3289,5 +3289,2314 @@
     "kind": "SQL",
     "hint": "이전 시간(`LAG`)과의 차이가 1800초보다 크면 `1`, 아니면 `0`을 반환하는 식을 짭니다. 이는 세션 ID를 생성하는 기초 로직이 됩니다.",
     "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_brackets",
+    "title": "리스트(List) 만들기: 대괄호의 사용",
+    "body": "숫자 1, 2, 3을 순서대로 담는 리스트 `my_list`를 만들려고 합니다. Python에서 리스트를 감싸는 올바른 괄호를 사용해 코드를 완성하세요.",
+    "schema": "my_list = ...",
+    "sample_rows": [
+      "[1, 2, 3]"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "[",
+      "]"
+    ],
+    "hint": "리스트는 반드시 **대괄호 `[]`**를 사용해야 합니다. (중괄호 `{}`는 딕셔너리, 소괄호 `()`는 튜플입니다.)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_braces",
+    "title": "딕셔너리(Dictionary) 만들기: 중괄호의 사용",
+    "body": "이름('name')은 'Alice', 나이('age')는 25인 정보를 담은 딕셔너리 `user`를 만드세요. 키와 값(Key-Value) 쌍을 감싸는 괄호는 무엇일까요?",
+    "schema": "user = ...",
+    "sample_rows": [
+      "{'name': 'Alice', 'age': 25}"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "{",
+      "}"
+    ],
+    "hint": "딕셔너리는 **중괄호 `{}`**를 사용합니다. `key: value` 형태를 잊지 마세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_func_def_colon",
+    "title": "함수 정의하기: 콜론(:)의 중요성",
+    "body": "인사말을 출력하는 함수 `greet()`를 정의하려고 합니다. 함수 정의(`def`) 줄의 맨 끝에 반드시 찍어야 하는 문장 부호는 무엇일까요?",
+    "schema": "def greet() ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ":"
+    ],
+    "hint": "Python에서 함수 정의, 조건문(if), 반복문(for) 등의 끝에는 반드시 **콜론(`:`)**을 붙여야 '여기서부터 내용이 시작된다'는 것을 알립니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_indentation",
+    "title": "들여쓰기(Indentation): 코드 블록 구분",
+    "body": "다음 `if` 문 안에 있는 `print` 코드가 실행되려면 앞부분을 비워둬야 합니다. Python에서 종속된 코드 블록임을 나타내기 위해 사용하는 공백 규칙은 무엇인가요?",
+    "schema": "if True:\n    print('Hello')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "    ",
+      "Tap"
+    ],
+    "hint": "Python은 **들여쓰기(Indentation)**로 영역을 구분합니다. 보통 스페이스 4칸(혹은 탭 1번)을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_assignment_vs_equal",
+    "title": "변수 할당 vs 비교 연산",
+    "body": "변수 `x`에 10을 **저장**하고 싶습니다. 수학에서의 '같다'와 혼동하지 말고, 값을 대입할 때 쓰는 연산자를 사용하세요.",
+    "schema": "x ... 10",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "="
+    ],
+    "hint": "값을 넣을 때는 **등호 하나(`=`)**를 쓰고, 값이 같은지 비교할 때는 **등호 두 개(`==`)**를 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_string_quotes",
+    "title": "문자열(String) 표기법",
+    "body": "변수 `message`에 `Hello Python`이라는 문장을 담으세요. 문자열의 시작과 끝을 알리는 기호를 사용해야 합니다.",
+    "schema": "message = ...",
+    "sample_rows": [
+      "'Hello Python'",
+      "\"Hello Python\""
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "'",
+      "\""
+    ],
+    "hint": "문자열은 **작은따옴표(`'`)**나 **큰따옴표(`\"`)**로 감싸야 합니다. 시작한 따옴표와 같은 종류로 닫아주세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_comment",
+    "title": "주석(Comment) 달기",
+    "body": "코드 내에 설명문을 적고 싶지만, 프로그램이 실행할 때는 무시하게 하고 싶습니다. 문장 앞에 어떤 특수문자를 붙여야 주석처리가 될까요?",
+    "schema": "... 이 코드는 실행되지 않습니다.",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "#"
+    ],
+    "hint": "Python의 한 줄 주석은 **샵(`#`)** 기호로 시작합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_method_call_dot",
+    "title": "메서드 호출: 점(.) 연산자",
+    "body": "리스트 `my_list`에 새로운 값 5를 추가(`append`)하고 싶습니다. 객체(리스트)가 가진 함수(메서드)를 불러올 때, 객체와 함수 사이에 찍는 기호는 무엇인가요?",
+    "schema": "my_list ... append(5)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "."
+    ],
+    "hint": "객체의 속성이나 메서드에 접근할 때는 **점(`.`)**을 찍습니다. 이를 'Dot Notation'이라고 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_arguments_comma",
+    "title": "인자 구분: 쉼표(,)의 역할",
+    "body": "함수 `print()`를 사용하여 'Hello'와 'World' 두 단어를 출력하되, 함수 안에 두 개의 값을 전달하려고 합니다. 값과 값 사이를 구분해주는 기호는 무엇인가요?",
+    "schema": "print('Hello' ... 'World')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ","
+    ],
+    "hint": "함수에 여러 값을 전달하거나 리스트 아이템을 나열할 때는 **쉼표(`,`)**로 구분합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_f_string",
+    "title": "f-string: 문자열 안에 변수 넣기",
+    "body": "변수 `name = 'Alice'`가 있을 때, `My name is Alice`라고 출력하고 싶습니다. 문자열 앞에 붙여서 중괄호 `{}` 안에 변수를 쓸 수 있게 해주는 알파벳은 무엇일까요?",
+    "schema": "name = 'Alice'\nmsg = ...\"My name is {name}\"",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "f"
+    ],
+    "hint": "따옴표 바로 앞에 **`f`**를 붙이면 f-string이 되어, 문자열 안에서 `{변수명}`을 사용할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_boolean_capital",
+    "title": "참과 거짓: Boolean 값의 대소문자",
+    "body": "변수 `is_okay`에 '참(True)'이라는 값을 저장하세요. Python에서 예약어로 지정된 참/거짓 값은 첫 글자를 어떻게 써야 할까요?",
+    "schema": "is_okay = ...",
+    "sample_rows": [
+      "True",
+      "False"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "True",
+      "False"
+    ],
+    "hint": "Python에서는 소문자 `true`가 아니라, 첫 글자가 대문자인 **`True`**와 **`False`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_function_call_parens",
+    "title": "함수 실행하기: 소괄호의 사용",
+    "body": "`greet`라는 이름의 함수가 이미 정의되어 있습니다. 이 함수를 지금 바로 **실행(호출)**하려면 이름 뒤에 무엇을 붙여야 할까요?",
+    "schema": "greet ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "()"
+    ],
+    "hint": "함수 이름만 쓰면 함수 자체를 가리키고, 실행하려면 뒤에 **소괄호 `()`**를 붙여야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_none_type",
+    "title": "비어있는 값: None",
+    "body": "변수 `result`를 만들고 싶지만 아직 어떤 값도 넣고 싶지 않습니다. '값이 없음'을 명시적으로 나타내는 Python의 키워드는 무엇일까요?",
+    "schema": "result = ...",
+    "sample_rows": [
+      "None"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "None"
+    ],
+    "hint": "다른 언어의 null과 비슷하게 Python에서는 **`None`** (첫 글자 대문자)을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_indexing_brackets",
+    "title": "데이터 꺼내기: 인덱싱(Indexing)",
+    "body": "리스트 `items = ['a', 'b', 'c']`에서 첫 번째 값 'a'를 가져오고 싶습니다. 순서 번호(인덱스)를 지정할 때 사용하는 괄호는 무엇일까요?",
+    "schema": "items ... 0 ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "[",
+      "]"
+    ],
+    "hint": "리스트나 문자열에서 특정 위치의 값을 꺼낼 때는 **대괄호 `[]`**를 사용합니다. 예: `items[0]`",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_lambda_keyword",
+    "title": "익명 함수: lambda",
+    "body": "이름 없이 한 줄로 작성하는 간단한 함수를 만들고 싶습니다. `def` 대신 사용하는 키워드는 무엇일까요?",
+    "schema": "plus_one = ... x: x + 1",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "lambda"
+    ],
+    "hint": "**`lambda`** 키워드를 사용하면 `lambda 인자: 결과` 형태로 간단하게 함수를 만들 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_decorator_at",
+    "title": "데코레이터: @ 기호",
+    "body": "함수 위에 붙여서 추가 기능을 부여하는 '데코레이터(Decorator)'를 사용하려고 합니다. 함수 정의 바로 윗줄에 쓰는 특수 기호는 무엇일까요?",
+    "schema": "... app.route('/')\ndef home(): ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "@"
+    ],
+    "hint": "데코레이터는 **골뱅이(`@`)** 기호를 사용합니다. 예: `@staticmethod`, `@app.route`",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_import_module",
+    "title": "라이브러리 불러오기: import",
+    "body": "수학 관련 기능이 들어있는 `math` 모듈을 사용하고 싶습니다. 다른 파일이나 라이브러리를 내 코드로 가져올 때 쓰는 키워드는 무엇일까요?",
+    "schema": "... math",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "import"
+    ],
+    "hint": "**`import`** 키워드를 사용하여 `import math`와 같이 작성합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_pass_keyword",
+    "title": "아무것도 안 함: pass",
+    "body": "함수나 if문의 뼈대만 만들어두고, 실제 코드는 나중에 작성하고 싶습니다. 비워두면 에러가 나기 때문에 '아무 일도 하지 않고 넘어감'을 뜻하는 키워드를 적어둬야 합니다.",
+    "schema": "def later():\n    ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "pass"
+    ],
+    "hint": "**`pass`** 키워드는 문법적인 오류를 막기 위해 자리만 차지하는 역할을 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_power_operator",
+    "title": "거듭제곱 연산자: 별이 두 개",
+    "body": "2의 3승(2^3 = 8)을 계산하고 싶습니다. 곱하기(`*`)와 헷갈리지 않게 주의하여 거듭제곱 연산자를 사용하세요.",
+    "schema": "2 ... 3",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "**"
+    ],
+    "hint": "Python에서 거듭제곱은 별 두 개 **`**`**를 사용합니다. `2 ** 3`은 8입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_range_function",
+    "title": "숫자 범위 생성: range()",
+    "body": "0부터 9까지의 숫자를 만들어내서 반복문을 돌리고 싶습니다. 연속된 숫자를 생성해주는 Python 내장 함수의 이름은 무엇일까요?",
+    "schema": "for i in ... (10):",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "range"
+    ],
+    "hint": "**`range(n)`** 함수는 0부터 n-1까지의 숫자를 생성합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_f_string_identifier",
+    "title": "f-string의 시작: 마법의 알파벳",
+    "body": "변수 `name`의 값을 문자열 안에 바로 넣고 싶습니다. 따옴표 앞에 붙여서 '이 문자열은 변수를 인식한다'고 알려주는 알파벳은 무엇일까요?",
+    "schema": "name = 'Alice'\nmsg = ...\"Hello, {name}!\"",
+    "sample_rows": [
+      "Hello, Alice!"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "f",
+      "F"
+    ],
+    "hint": "format의 약자인 **`f`**를 따옴표 바로 앞에 붙여 `f'...'` 형태로 만듭니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_f_string_braces",
+    "title": "f-string의 핵심: 변수를 감싸는 괄호",
+    "body": "f-string을 사용할 때, 문자열 안에서 실제 변수나 계산식이 들어갈 자리를 표시하는 괄호는 무엇일까요?",
+    "schema": "age = 20\nmsg = f\"I am ... age ... years old.\"",
+    "sample_rows": [
+      "I am 20 years old."
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "{",
+      "}"
+    ],
+    "hint": "변수는 **중괄호 `{}`**로 감싸야 문자열 안에서 값으로 변환됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_f_string_expression",
+    "title": "f-string 안에서의 연산",
+    "body": "f-string의 강력한 점은 중괄호 안에서 더하기 같은 연산도 가능하다는 점입니다. 내년 나이를 구하기 위해 `age`에 1을 더해서 출력해보세요.",
+    "schema": "age = 20\nmsg = f\"Next year: { ... }\"",
+    "sample_rows": [
+      "Next year: 21"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "age + 1"
+    ],
+    "hint": "`{age + 1}`처럼 중괄호 안에는 Python 코드를 쓸 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_access",
+    "title": "데이터 꺼내기: 리스트는 대괄호",
+    "body": "리스트 `colors = ['red', 'blue']`에서 첫 번째 값 'red'를 꺼내려 합니다. 인덱스 번호(0)를 감싸는 괄호를 작성하세요.",
+    "schema": "first = colors ... 0 ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "[",
+      "]"
+    ],
+    "hint": "리스트를 만들 때도 `[]`, 값을 꺼낼 때도 **대괄호 `[]`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_access",
+    "title": "데이터 꺼내기: 딕셔너리도 대괄호",
+    "body": "딕셔너리 `user = {'name': 'Bob'}`을 만들 때는 중괄호 `{}`를 썼습니다. 하지만 키('name')를 이용해 값을 꺼낼 때는 어떤 괄호를 써야 할까요?",
+    "schema": "name = user ... 'name' ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "[",
+      "]"
+    ],
+    "hint": "딕셔너리 정의는 `{}`, 접근은 **대괄호 `[]`**입니다. 이 점이 초보자가 가장 많이 헷갈리는 부분입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_tuple_parens",
+    "title": "변경 불가능한 리스트: 튜플(Tuple)",
+    "body": "수정할 수 없는 목록인 '튜플'을 만들려고 합니다. 리스트의 `[]` 대신 사용하는 둥근 괄호는 무엇인가요?",
+    "schema": "coords = ... 10, 20 ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "(",
+      ")"
+    ],
+    "hint": "튜플은 **소괄호 `()`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_set_braces",
+    "title": "중복 없는 모임: 세트(Set)",
+    "body": "순서가 없고 중복을 허용하지 않는 '집합(Set)'을 만들려고 합니다. 딕셔너리와 똑같이 생겼지만 키:값 쌍이 아닌 값만 나열할 때 쓰는 괄호는 무엇일까요?",
+    "schema": "unique_nums = ... 1, 2, 3 ...",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "{",
+      "}"
+    ],
+    "hint": "세트도 딕셔너리처럼 **중괄호 `{}`**를 사용합니다. 내용물이 `key:value`면 딕셔너리, 그냥 값 `v`면 세트입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_in_operator",
+    "title": "있나 없나 확인: in",
+    "body": "리스트 `menu` 안에 'Pizza'가 들어있는지 확인하는 조건문을 작성하세요.",
+    "schema": "if 'Pizza' ... menu:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "in"
+    ],
+    "hint": "영어 문장처럼 자연스러운 **`in`** 키워드를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_not_operator",
+    "title": "부정하기: not",
+    "body": "변수 `is_closed`가 `True`일 때, '닫히지 않았으면(False이면)' 실행하라는 조건문을 만들고 싶습니다. `!` 대신 사용하는 Python 키워드는?",
+    "schema": "if ... is_closed:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "not"
+    ],
+    "hint": "Python에서는 기호 `!` 대신 단어 **`not`**을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_break",
+    "title": "반복문 탈출: break",
+    "body": "무한 루프 `while True:`를 돌다가 특정 조건이 되면 반복문을 즉시 종료하고 싶습니다.",
+    "schema": "if condition:\n    ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "break"
+    ],
+    "hint": "**`break`**를 만나면 가장 가까운 반복문이 즉시 끝납니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_continue",
+    "title": "이번만 건너뛰기: continue",
+    "body": "반복문에서 아래 코드를 실행하지 않고, 즉시 다음 순번(반복)으로 넘어가게 하는 키워드는 무엇일까요?",
+    "schema": "for i in range(10):\n    if i % 2 == 0:\n        ...",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "continue"
+    ],
+    "hint": "**`continue`**는 루프를 멈추지 않고 이번 회차만 스킵합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_try_except",
+    "title": "에러 잡기: try-except",
+    "body": "코드를 실행해보고(`try`), 에러가 발생했을 때 멈추지 않고 대처 코드를 실행하게 하는 짝꿍 키워드는 무엇일까요?",
+    "schema": "try:\n    1 / 0\n... ZeroDivisionError:\n    print('Error!')",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "except"
+    ],
+    "hint": "다른 언어의 catch 대신 Python은 **`except`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_class_def",
+    "title": "설계도 만들기: class",
+    "body": "객체를 찍어낼 틀인 '클래스'를 정의하려고 합니다. `def`는 함수를 만들 때 쓰고, 클래스를 만들 때 쓰는 키워드는 무엇일까요?",
+    "schema": "... Car:",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "class"
+    ],
+    "hint": "**`class`** 키워드를 사용하여 `class 이름:` 형태로 정의합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_init_method",
+    "title": "생성자: __init__",
+    "body": "클래스에서 객체가 처음 만들어질 때 자동으로 실행되는 초기화 메서드의 이름은 무엇일까요? 밑줄(_) 개수에 주의하세요.",
+    "schema": "def ... (self):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "__init__"
+    ],
+    "hint": "앞뒤로 밑줄이 두 개씩 붙은 **`__init__`**입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_self",
+    "title": "나 자신: self",
+    "body": "클래스 내부의 메서드(함수)들은 첫 번째 인자로 '객체 자기 자신'을 받아야 합니다. 관례적으로 사용하는 이 첫 번째 매개변수의 이름은?",
+    "schema": "def introduce( ... ):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "self"
+    ],
+    "hint": "**`self`**를 통해 인스턴스 변수에 접근합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_return",
+    "title": "결과 돌려주기: return",
+    "body": "함수 안에서 계산한 값을 함수를 호출한 곳으로 반환하고 함수를 종료시키는 키워드는?",
+    "schema": "def add(a, b):\n    ... a + b",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "return"
+    ],
+    "hint": "**`return`** 키워드를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_from_import",
+    "title": "콕 집어 가져오기: from",
+    "body": "`math` 모듈 전체를 가져오는 게 아니라, 그 안의 `sqrt` 함수 하나만 가져오고 싶습니다. `import` 앞에 써야 하는 키워드는?",
+    "schema": "... math import sqrt",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "from"
+    ],
+    "hint": "**`from`** 모듈명 `import` 함수명 형식을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_alias_as",
+    "title": "별명 붙이기: as",
+    "body": "`import pandas`를 할 때 매번 `pandas`라고 치기 귀찮아서 `pd`라는 짧은 별명으로 부르고 싶습니다.",
+    "schema": "import pandas ... pd",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "as"
+    ],
+    "hint": "`import ... **as** ...` 구문을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_type_cast_str",
+    "title": "문자로 변환: str()",
+    "body": "숫자 123을 문자열 \"123\"으로 바꾸고 싶습니다. 타입을 변환해주는 함수는 무엇일까요?",
+    "schema": "s = ... (123)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "str"
+    ],
+    "hint": "문자열(String)의 앞글자를 딴 **`str()`** 함수를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_len_function",
+    "title": "길이 재기: len()",
+    "body": "리스트에 아이템이 몇 개 있는지, 혹은 문자열이 몇 글자인지 길이를 알고 싶을 때 쓰는 필수 내장 함수는?",
+    "schema": "count = ... (my_list)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "len"
+    ],
+    "hint": "Length의 줄임말인 **`len()`**을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_slicing_basic",
+    "title": "리스트 자르기: 슬라이싱(Slicing)",
+    "body": "리스트 `nums = [0, 1, 2, 3, 4]`에서 앞의 3개 `[0, 1, 2]`만 잘라내고 싶습니다. 숫자 범위 사이에 들어가는 문장 부호는 무엇일까요?",
+    "schema": "sub_list = nums[0 ... 3]",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ":"
+    ],
+    "hint": "Python의 슬라이싱은 **`[시작:끝]`** 형태입니다. 콜론(`:`)을 사용하세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_modulo",
+    "title": "나머지 구하기: 모듈로 연산자",
+    "body": "짝수인지 홀수인지 판별하기 위해 숫자를 2로 나눈 **나머지**를 구하려고 합니다. 나눗셈(`/`) 말고 나머지만 구하는 기호는 무엇인가요?",
+    "schema": "remainder = number ... 2",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "%"
+    ],
+    "hint": "퍼센트 기호 **`%`**는 수학에서 나머지를 구할 때 사용합니다. (예: `5 % 2`는 1)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_floor_division",
+    "title": "몫만 구하기: 버림 나눗셈",
+    "body": "나눗셈 결과에서 소수점을 버리고 **정수 몫**만 취하고 싶습니다. (예: `7` 나누기 `2`는 `3.5`가 아니라 `3`). 슬래시를 두 번 써야 합니다.",
+    "schema": "result = 7 ... 2",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "//"
+    ],
+    "hint": "**`//`** 연산자는 나눗셈 후 소수점 이하를 버립니다(Floor Division).",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_split",
+    "title": "문자열 쪼개기: split",
+    "body": "문장 `'Hello World'`를 공백 기준으로 쪼개서 `['Hello', 'World']` 리스트로 만들고 싶습니다. 문자열이 가진 메서드를 사용하세요.",
+    "schema": "words = 'Hello World'....()",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "split"
+    ],
+    "hint": "**`.split()`** 메서드는 문자열을 특정 구분자(기본은 공백)로 잘라 리스트로 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_join",
+    "title": "문자열 합치기: join",
+    "body": "리스트 `['A', 'B', 'C']`를 하이픈(`-`)으로 연결해 `'A-B-C'`라는 문자열로 만들고 싶습니다. `split`의 반대 역할을 하는 메서드입니다.",
+    "schema": "result = '-'. ... (['A', 'B', 'C'])",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "join"
+    ],
+    "hint": "**`'구분자'.join(리스트)`** 형태를 사용합니다. 초보자가 문법 순서를 자주 헷갈리는 함수입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_append",
+    "title": "리스트에 추가하기: append",
+    "body": "빈 리스트 `cart = []`에 'Apple'이라는 아이템을 담으려 합니다. 리스트의 맨 뒤에 값을 추가하는 메서드는 무엇일까요?",
+    "schema": "cart. ... ('Apple')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "append"
+    ],
+    "hint": "**`.append(값)`** 메서드는 리스트의 끝에 요소를 추가합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_len_index",
+    "title": "마지막 항목 가져오기: 음수 인덱스",
+    "body": "리스트의 길이가 얼마인지 몰라도, 무조건 **맨 마지막** 아이템을 가져오고 싶습니다. 0부터 세지 말고 뒤에서부터 세는 인덱스 번호를 쓰세요.",
+    "schema": "last_item = my_list[ ... ]",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "-1"
+    ],
+    "hint": "인덱스 **`-1`**은 리스트의 마지막 요소를 가리킵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_type_check",
+    "title": "너의 정체는?: type()",
+    "body": "변수 `x`에 들어있는 값이 숫자인지 문자열인지 헷갈립니다. 이 변수의 자료형(Data Type)을 알려주는 함수는 무엇일까요?",
+    "schema": "print( ... (x))",
+    "sample_rows": [
+      "<class 'int'>",
+      "<class 'str'>"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "type"
+    ],
+    "hint": "**`type(변수)`** 함수를 쓰면 해당 변수의 자료형을 확인할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_input_func",
+    "title": "사용자 입력 받기: input()",
+    "body": "프로그램 실행 중에 사용자가 키보드로 값을 입력하게 하고 싶습니다. 엔터를 칠 때까지 기다렸다가 입력값을 문자열로 돌려주는 함수는?",
+    "schema": "name = ... ('이름을 입력하세요: ')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "input"
+    ],
+    "hint": "**`input()`** 함수는 사용자의 입력을 받습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_int_cast",
+    "title": "정수로 변환: int()",
+    "body": "`input()`으로 받은 값은 항상 문자열입니다. 나이 계산을 위해 문자열 `'20'`을 숫자 `20`으로 바꿔야 합니다.",
+    "schema": "age = ... ('20')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "int"
+    ],
+    "hint": "**`int()`** 함수는 값을 정수(Integer)로 변환해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_augmented_assign",
+    "title": "더해서 저장하기: +=",
+    "body": "변수 `count`의 값을 1 증가시키고 싶습니다. `count = count + 1`을 줄여서 쓰는 연산자는 무엇일까요?",
+    "schema": "count ... 1",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "+="
+    ],
+    "hint": "**`+=`** 연산자는 값을 더한 뒤 다시 그 변수에 할당합니다. (`-=`, `*=`, `/=` 도 있습니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_logical_and",
+    "title": "그리고: and",
+    "body": "조건문에서 '나이가 20 이상' **이고** '신분증이 있음'을 모두 만족해야 할 때, 두 조건을 연결하는 키워드는?",
+    "schema": "if age >= 20 ... has_id:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "and"
+    ],
+    "hint": "두 조건이 모두 참이어야 할 때는 **`and`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_logical_or",
+    "title": "또는: or",
+    "body": "쿠폰이 있거나(**OR**) 회원이면 할인해주려고 합니다. 둘 중 하나만 만족해도 될 때 사용하는 키워드는?",
+    "schema": "if has_coupon ... is_member:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "or"
+    ],
+    "hint": "둘 중 하나라도 참이면 될 때는 **`or`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_comparison_ge",
+    "title": "크거나 같다: >=",
+    "body": "성적이 60점 **이상**(크거나 같다)인지 비교하고 싶습니다. 부등호의 순서에 주의하세요.",
+    "schema": "if score ... 60:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ">="
+    ],
+    "hint": "크거나 같다(이상)는 **`>=`**입니다. 등호(`=`)는 항상 뒤에 옵니다 (`=>`는 틀린 문법입니다).",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_keys",
+    "title": "딕셔너리 열쇠 목록: .keys()",
+    "body": "딕셔너리 `user = {'name': 'Kim', 'age': 20}`에서 값은 빼고 키('name', 'age')들만 리스트처럼 가져오고 싶습니다.",
+    "schema": "k_list = user. ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "keys"
+    ],
+    "hint": "**`.keys()`** 메서드는 딕셔너리의 키 목록을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_values",
+    "title": "딕셔너리 값 목록: .values()",
+    "body": "이번에는 키는 무시하고, 딕셔너리에 저장된 값들('Kim', 20)만 가져오고 싶습니다.",
+    "schema": "v_list = user. ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "values"
+    ],
+    "hint": "**`.values()`** 메서드는 값 목록을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_upper",
+    "title": "대문자로 변환: .upper()",
+    "body": "소문자로 입력된 'python'을 대문자 'PYTHON'으로 바꾸고 싶습니다.",
+    "schema": "s = 'python'\nprint(s. ... ())",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "upper"
+    ],
+    "hint": "**`.upper()`**는 대문자로, `.lower()`는 소문자로 변환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_strip",
+    "title": "양쪽 공백 제거: .strip()",
+    "body": "사용자가 입력한 아이디 앞뒤에 불필요한 공백이 포함되었습니다(`'  user1 '`). 이를 깨끗하게 지우는 문자열 메서드는?",
+    "schema": "clean_id = user_id. ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "strip"
+    ],
+    "hint": "**`.strip()`**은 문자열 양쪽 끝의 공백(스페이스, 탭, 엔터)을 제거합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_range_step",
+    "title": "건너뛰며 숫자 세기: range의 3번째 인자",
+    "body": "0부터 10까지 2씩 증가하는 숫자(0, 2, 4, 6...)를 만들고 싶습니다. `range` 함수의 세 번째 칸에 들어갈 숫자는?",
+    "schema": "for i in range(0, 10, ...):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "2"
+    ],
+    "hint": "`range(시작, 끝, **보폭**)`입니다. 세 번째 인자는 숫자를 얼마씩 증가시킬지 정합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_pop",
+    "title": "꺼내고 지우기: pop",
+    "body": "리스트에서 마지막 요소를 가져오면서 동시에 리스트에서 삭제하고 싶습니다. `append`의 반대 개념입니다.",
+    "schema": "last_item = my_list. ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "pop"
+    ],
+    "hint": "**`.pop()`**은 리스트의 맨 뒤(혹은 지정한 인덱스)의 요소를 뽑아서 반환하고 삭제합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_string_concat",
+    "title": "문자열 더하기: 연결(Concatenation)",
+    "body": "숫자 1+1은 2지만, 문자열 '1'+'1'은 '11'이 됩니다. 두 문자열 `s1`과 `s2`를 이어 붙여서 하나로 만드는 연산자는 무엇일까요?",
+    "schema": "s1 = 'Hello'\ns2 = 'World'\nresult = s1 ... s2",
+    "sample_rows": [
+      "HelloWorld"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "+"
+    ],
+    "hint": "문자열끼리 더하기 기호 **`+`**를 사용하면 앞뒤로 이어 붙입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_string_repeat",
+    "title": "문자열 곱하기: 반복(Repetition)",
+    "body": "문자열 'Ha'를 5번 반복해서 'HaHaHaHaHa'를 만들고 싶습니다. 반복을 위해 사용하는 연산자는 무엇일까요?",
+    "schema": "laugh = 'Ha' ... 5",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "*"
+    ],
+    "hint": "숫자 곱하기처럼 별표 **`*`**를 사용하면 문자열을 해당 횟수만큼 반복합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_modify",
+    "title": "리스트 값 수정하기",
+    "body": "리스트 `nums = [1, 2, 3]`이 있습니다. 첫 번째 값인 `1`을 `99`로 바꾸고 싶습니다. 인덱스를 사용하여 값을 재할당하세요.",
+    "schema": "nums[0] ... 99",
+    "sample_rows": [
+      "[99, 2, 3]"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "="
+    ],
+    "hint": "변수에 값을 넣을 때처럼, `리스트[인덱스] = 새값` 형태로 등호 **`=`**를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_elif",
+    "title": "그게 아니라면: elif",
+    "body": "`if` 조건이 거짓일 때, 바로 `else`로 넘어가지 않고 다른 조건을 한 번 더 확인하고 싶습니다. Python에서 'else if'를 줄여 쓴 키워드는?",
+    "schema": "if score >= 90:\n    print('A')\n... score >= 80:\n    print('B')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "elif"
+    ],
+    "hint": "**`elif`**는 '그렇지 않고 만약에...'라는 뜻으로 추가 조건을 걸 때 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_not_equal",
+    "title": "다르다: !=",
+    "body": "비밀번호가 기존 비밀번호와 **다를 때만** 변경하고 싶습니다. 같다는 `==`인데, 다르다는 비교 연산자는 무엇일까요?",
+    "schema": "if new_pw ... old_pw:\n    update()",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "!="
+    ],
+    "hint": "느낌표와 등호를 붙여 **`!=`**라고 씁니다. (수학의 ≠ 기호 대신 사용)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_float_cast",
+    "title": "실수로 변환: float()",
+    "body": "문자열 \"3.14\"를 숫자 계산에 쓰기 위해 소수점이 있는 실수형(Float)으로 바꾸려 합니다. `int()`는 정수로 바꾸느라 소수점을 날려버립니다. 실수를 유지하는 함수는?",
+    "schema": "pi = ... ('3.14')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "float"
+    ],
+    "hint": "**`float()`** 함수를 사용하면 문자열이나 정수를 실수형(Floating point)으로 변환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_max_func",
+    "title": "가장 큰 수 찾기: max()",
+    "body": "리스트 `scores = [80, 90, 50]` 중에서 가장 높은 점수를 찾고 싶습니다. 루프를 돌릴 필요 없이 한 번에 찾아주는 내장 함수는?",
+    "schema": "best = ... (scores)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "max"
+    ],
+    "hint": "Maximum의 줄임말인 **`max()`** 함수를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_min_func",
+    "title": "가장 작은 수 찾기: min()",
+    "body": "이번에는 리스트에서 가장 낮은 점수를 찾고 싶습니다.",
+    "schema": "worst = ... (scores)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "min"
+    ],
+    "hint": "Minimum의 줄임말인 **`min()`** 함수를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_abs_func",
+    "title": "절댓값 구하기: abs()",
+    "body": "숫자가 음수(-10)이든 양수(10)이든 상관없이 양수(10)로 통일하고 싶습니다. 수학의 절댓값 기호 `|x|` 역할을 하는 함수는?",
+    "schema": "positive_val = ... (-10)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "abs"
+    ],
+    "hint": "Absolute value의 줄임말인 **`abs()`** 함수를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_while_loop",
+    "title": "조건만큼 반복하기: while",
+    "body": "`for` 문은 리스트 개수만큼 돌지만, 이 반복문은 조건이 `True`인 동안 계속 돕니다. '배터리가 0보다 큰 동안' 계속 실행하려면 어떤 키워드를 쓸까요?",
+    "schema": "... battery > 0:\n    run()",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "while"
+    ],
+    "hint": "~하는 동안을 뜻하는 **`while`** 키워드를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_add",
+    "title": "딕셔너리 값 추가하기",
+    "body": "딕셔너리 `user = {}`에 새로운 키 'email'과 값 'a@test.com'을 추가하고 싶습니다. 리스트와 달리 `append`를 쓰지 않고 대괄호를 사용합니다.",
+    "schema": "user['email'] ... 'a@test.com'",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "="
+    ],
+    "hint": "`딕셔너리[새키] = 값` 형태로 등호 **`=`**를 사용하여 할당하면 자동으로 추가됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_del_keyword",
+    "title": "삭제하기: del",
+    "body": "리스트의 특정 요소나 딕셔너리의 특정 키를 아예 삭제해버리고 싶습니다. 함수가 아니라 '삭제하라'는 명령어를 사용하세요.",
+    "schema": "... user['age']",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "del"
+    ],
+    "hint": "**`del`** 키워드를 변수나 인덱스 앞에 쓰면 해당 대상이 삭제됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_sorted_func",
+    "title": "정렬하기: sorted()",
+    "body": "뒤죽박죽 섞인 리스트 `[3, 1, 2]`를 정렬해서 `[1, 2, 3]`으로 된 **새로운 리스트**를 얻고 싶습니다. (원본 리스트를 바꾸는 `.sort()` 메서드가 아니라, 결과를 반환하는 내장 함수를 사용하세요)",
+    "schema": "new_list = ... ([3, 1, 2])",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "sorted"
+    ],
+    "hint": "**`sorted()`** 함수는 정렬된 새로운 리스트를 반환하며 원본은 건드리지 않습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_bool_cast",
+    "title": "참/거짓 변환: bool()",
+    "body": "빈 리스트 `[]`나 숫자 `0`은 거짓(False) 취급을 받습니다. 어떤 값이 참인지 거짓인지 명확한 `True/False` 값으로 확인하고 싶을 때 쓰는 함수는?",
+    "schema": "is_valid = ... (my_list)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "bool"
+    ],
+    "hint": "**`bool()`** 함수는 값을 Boolean 타입(True 또는 False)으로 변환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_multiline_string",
+    "title": "여러 줄 문자열",
+    "body": "줄바꿈이 포함된 긴 문장을 변수에 담고 싶습니다. 따옴표 한 개로는 에러가 납니다. 따옴표를 몇 개 연속으로 써야 여러 줄을 담을 수 있을까요?",
+    "schema": "msg = ...\nHello\nWorld\n...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "\"\"\"",
+      "'''"
+    ],
+    "hint": "큰따옴표나 작은따옴표를 **3개 연속(`\"\"\"` 또는 `'''`)**으로 쓰면 여러 줄 문자열을 만들 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_is_operator",
+    "title": "객체 식별: is",
+    "body": "변수 `x`가 `None`인지 확인할 때는 `==`보다 권장되는 연산자가 있습니다. 두 객체가 메모리상에서 완전히 '동일한 객체'인지 비교하는 키워드는?",
+    "schema": "if x ... None:",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "is"
+    ],
+    "hint": "`None`을 비교할 때는 항상 **`is`**를 사용하는 것이 Python의 관례입니다. (`if x is None:`)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_variable_naming",
+    "title": "변수 이름 규칙",
+    "body": "변수 이름은 숫자로 시작할 수 없습니다. 다음 중 올바른 변수 이름은 무엇일까요? `1st_place` vs `first_place`",
+    "schema": "... = 'Alice'",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "first_place"
+    ],
+    "hint": "변수명은 **문자나 밑줄(_)**로 시작해야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_set_init",
+    "title": "빈 집합(Set) 만들기",
+    "body": "중복을 허용하지 않는 '세트'를 만들고 싶습니다. 빈 리스트는 `[]`, 빈 딕셔너리는 `{}`입니다. 그렇다면 빈 세트는 어떻게 만들까요? `{}`를 쓰면 딕셔너리가 되어버립니다.",
+    "schema": "my_set = ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "set"
+    ],
+    "hint": "빈 세트를 만들 때는 반드시 **`set()`** 함수를 호출해야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_round_func",
+    "title": "반올림: round()",
+    "body": "소수점이 너무 길어서 보기 싫습니다. `3.14159`를 소수점 둘째 자리까지만 남기고 반올림하려면 어떤 함수를 쓸까요?",
+    "schema": "val = ... (3.14159, 2)",
+    "sample_rows": [
+      "3.14"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "round"
+    ],
+    "hint": "**`round(숫자, 자릿수)`** 함수를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_logic_parens",
+    "title": "연산 순서: 괄호의 중요성",
+    "body": "`(A and B) or C` 와 `A and (B or C)`는 결과가 다를 수 있습니다. 복잡한 조건문에서 연산 순서를 명확하게 지정하기 위해 사용하는 기호는 무엇인가요?",
+    "schema": "if ... x > 0 or y > 0 ... and z > 0:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "(",
+      ")"
+    ],
+    "hint": "수학 시간과 마찬가지로 **소괄호 `()`**를 사용하여 우선순위를 묶어줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_remove",
+    "title": "값으로 삭제하기: remove",
+    "body": "리스트 `nums = [1, 2, 3]`에서 값 `2`를 찾아 삭제하고 싶습니다. 인덱스가 아니라 **값**을 직접 지정해서 지우는 메서드는?",
+    "schema": "nums. ... (2)",
+    "sample_rows": [
+      "[1, 3]"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "remove"
+    ],
+    "hint": "**`.remove(값)`** 메서드는 리스트에서 해당 값을 찾아 첫 번째로 발견된 것만 삭제합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_insert",
+    "title": "끼워넣기: insert",
+    "body": "리스트 `['A', 'C']` 사이에 'B'를 넣고 싶습니다. 맨 뒤에 추가하는 `append`와 달리, 특정 위치(인덱스)를 지정해 넣는 메서드는?",
+    "schema": "my_list. ... (1, 'B')",
+    "sample_rows": [
+      "['A', 'B', 'C']"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "insert"
+    ],
+    "hint": "**`.insert(인덱스, 값)`** 메서드를 사용합니다. 인덱스 1은 두 번째 위치입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_count",
+    "title": "개수 세기: count",
+    "body": "리스트 `votes = ['yes', 'no', 'yes']`에서 'yes'가 몇 번 나왔는지 세고 싶습니다.",
+    "schema": "yes_count = votes. ... ('yes')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "count"
+    ],
+    "hint": "**`.count(값)`** 메서드는 리스트 내에 해당 값이 몇 개 있는지 알려줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_items",
+    "title": "키와 값 동시에: .items()",
+    "body": "딕셔너리의 키와 값을 `for` 문에서 한 번에 꺼내고 싶습니다. `for key, val in user.____():` 빈칸에 들어갈 메서드는?",
+    "schema": "for k, v in my_dict. ... ():",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "items"
+    ],
+    "hint": "**`.items()`**는 (키, 값) 쌍을 튜플 형태로 반환해주어 반복문에서 유용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_get",
+    "title": "안전하게 꺼내기: .get()",
+    "body": "딕셔너리에서 없는 키를 `user['phone']`처럼 찾으면 에러가 납니다. 에러 없이 `None`이나 기본값을 반환받으려면 어떤 메서드를 써야 할까요?",
+    "schema": "phone = user. ... ('phone')",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "get"
+    ],
+    "hint": "**`.get(키)`** 메서드는 키가 없으면 에러 대신 `None`을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_replace",
+    "title": "문자열 교체: replace",
+    "body": "문장 내의 오타 'Aplle'을 'Apple'로 고치고 싶습니다. 찾아 바꾸기 기능을 하는 문자열 메서드는?",
+    "schema": "fixed = text. ... ('Aplle', 'Apple')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "replace"
+    ],
+    "hint": "**`.replace(찾을값, 바꿀값)`** 메서드는 문자열의 일부분을 다른 문자열로 치환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_find",
+    "title": "위치 찾기: find",
+    "body": "문자열에서 특정 단어가 몇 번째 인덱스에 있는지 알고 싶습니다. 만약 단어가 없으면 -1을 반환하는 메서드는?",
+    "schema": "index = text. ... ('World')",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "find"
+    ],
+    "hint": "**`.find(값)`**는 값이 시작되는 인덱스를 반환합니다. (비슷한 `.index()`는 값이 없으면 에러가 납니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_escape_newline",
+    "title": "줄바꿈 문자: \\n",
+    "body": "문자열 안에서 강제로 줄을 바꾸고 싶을 때 사용하는 특수 문자(이스케이프 시퀀스)는 무엇일까요?",
+    "schema": "print('Hello ... World')",
+    "sample_rows": [
+      "Hello\nWorld"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "\\n"
+    ],
+    "hint": "역슬래시와 n을 합친 **`\\n`** (New Line)을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_sum_func",
+    "title": "합계 구하기: sum()",
+    "body": "숫자가 담긴 리스트 `[10, 20, 30]`의 모든 요소를 더한 결과를 알고 싶습니다. `for` 문을 돌리지 않고 한 번에 계산하는 함수는?",
+    "schema": "total = ... ([10, 20, 30])",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "sum"
+    ],
+    "hint": "**`sum()`** 함수는 리스트나 튜플의 모든 요소의 합을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_sorted_reverse",
+    "title": "거꾸로 정렬하기",
+    "body": "숫자 리스트를 큰 수부터 작은 수 순서(내림차순)로 정렬하고 싶습니다. `sorted` 함수 안에 들어갈 옵션 이름은 무엇일까요?",
+    "schema": "sorted(nums, ... =True)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "reverse"
+    ],
+    "hint": "**`reverse=True`** 옵션을 주면 역순으로 정렬합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_range_start_stop",
+    "title": "범위 지정: range(시작, 끝)",
+    "body": "1부터 10까지 숫자를 얻고 싶습니다. `range(10)`은 0부터 9까지니까 안 되고, 시작과 끝(포함 안 됨)을 직접 정해줘야 합니다.",
+    "schema": "for i in range(1, ...):",
+    "sample_rows": [
+      "1, 2, ..., 10"
+    ],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "11"
+    ],
+    "hint": "`range(start, stop)`에서 `stop` 값은 포함되지 않습니다. 10까지 나오게 하려면 **11**을 써야 합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_slice_reverse",
+    "title": "문자열 뒤집기: [::-1]",
+    "body": "문자열 'Python'을 'nohtyP'으로 뒤집고 싶습니다. 슬라이싱의 스텝(step) 기능을 활용하면 아주 간단합니다.",
+    "schema": "reversed_s = s[:: ... ]",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "-1"
+    ],
+    "hint": "슬라이싱 스텝에 **`-1`**을 주면 뒤에서부터 가져옵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_unpacking",
+    "title": "언패킹: 변수 여러 개에 담기",
+    "body": "좌표 `pos = (10, 20)`이 있을 때, `x`와 `y` 변수에 각각 10과 20을 한 줄로 저장하고 싶습니다.",
+    "schema": "x, y ... pos",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "="
+    ],
+    "hint": "`변수1, 변수2 = 튜플` 형태의 **언패킹(Unpacking)** 문법을 사용합니다. 등호 **`=`**만 있으면 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_is_not",
+    "title": "아니다 확인: is not",
+    "body": "변수 `result`가 `None`이 **아닐 때만** 실행하고 싶습니다. `!=`보다 권장되는 식별 연산자는?",
+    "schema": "if result ... None:",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "is not"
+    ],
+    "hint": "객체 식별 비교는 **`is not`**을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_not_in",
+    "title": "없는지 확인: not in",
+    "body": "금지어 리스트 `blocklist`에 내 아이디가 **포함되어 있지 않은지** 확인하는 조건문입니다.",
+    "schema": "if my_id ... blocklist:",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "not in"
+    ],
+    "hint": "`in`의 반대인 **`not in`** 연산자를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_chained_comparison",
+    "title": "연속 비교: 0 < x < 100",
+    "body": "변수 `x`가 0보다 크고 100보다 작은지 확인하려 합니다. `x > 0 and x < 100`이라고 써도 되지만, 수학처럼 한 번에 이어서 쓸 수도 있습니다.",
+    "schema": "if 0 ... x ... 100:",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "<"
+    ],
+    "hint": "Python은 **`0 < x < 100`** 같은 연속된 비교 연산을 지원합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_def_default_arg",
+    "title": "함수 기본값: Default Parameter",
+    "body": "함수를 호출할 때 인자를 안 넣으면 기본적으로 `msg`에 'Hello'가 들어가게 하고 싶습니다.",
+    "schema": "def greet(msg ... 'Hello'):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "="
+    ],
+    "hint": "함수 정의 시 `매개변수 = 기본값` 형태로 **등호 `=`**를 사용해 기본값을 설정합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_return_multiple",
+    "title": "여러 값 반환하기",
+    "body": "함수 하나에서 합과 곱 두 개의 값을 동시에 돌려주고 싶습니다. 콤마로 구분하면 튜플로 묶여서 나갑니다.",
+    "schema": "return sum_val ... mul_val",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ","
+    ],
+    "hint": "**쉼표 `,`**로 값을 나열하면 튜플 형태로 여러 값을 반환할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_cast",
+    "title": "리스트로 변환: list()",
+    "body": "`range(5)`나 문자열 `'abc'`처럼 반복 가능한(iterable) 객체를 진짜 리스트 `[0, 1, 2, 3, 4]` 형태로 바꾸고 싶습니다.",
+    "schema": "nums = ... (range(5))",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "list"
+    ],
+    "hint": "**`list()`** 생성자 함수를 사용하면 다른 자료형을 리스트로 변환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_import_math_pi",
+    "title": "모듈 속성 쓰기: math.pi",
+    "body": "`import math`를 했습니다. 원의 넓이를 구하기 위해 원주율($\\pi$) 값이 필요합니다. `math` 모듈 안에 정의된 파이 변수는?",
+    "schema": "area = r * r * math. ...",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "pi"
+    ],
+    "hint": "`math` 모듈에는 **`pi`**라는 이름으로 원주율 상수가 들어있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_comp_basic",
+    "title": "한 줄 리스트 만들기: List Comprehension",
+    "body": "0부터 4까지의 숫자를 담은 리스트 `[0, 1, 2, 3, 4]`를 한 줄로 만들고 싶습니다. 빈칸에 들어갈 반복문 키워드는?",
+    "schema": "nums = [i ... i in range(5)]",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "for"
+    ],
+    "hint": "`[표현식 for 변수 in 반복가능객체]` 형식을 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_enumerate",
+    "title": "번호와 함께 반복: enumerate",
+    "body": "리스트를 반복할 때, 값뿐만 아니라 **순서(인덱스)**도 같이 필요합니다. `for i, val in ____(my_list):` 처럼 사용하는 함수는?",
+    "schema": "for i, val in ... (['A', 'B']):",
+    "sample_rows": [
+      "0 A",
+      "1 B"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "enumerate"
+    ],
+    "hint": "**`enumerate()`** 함수는 (인덱스, 값) 쌍을 반환해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_zip",
+    "title": "짝지어 반복하기: zip",
+    "body": "이름 리스트 `names`와 나이 리스트 `ages`가 따로 있습니다. 두 리스트를 지퍼 잠그듯 **같은 인덱스끼리 묶어서** 반복하려면?",
+    "schema": "for name, age in ... (names, ages):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "zip"
+    ],
+    "hint": "**`zip()`** 함수는 여러 리스트의 동일한 인덱스 요소들을 묶어줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_with_open",
+    "title": "안전하게 파일 열기: with",
+    "body": "파일을 열고(`open`) 나서 작업을 마친 뒤 자동으로 닫아주는(`close`) 편리한 구문입니다. 파일 처리는 보통 이 키워드로 시작합니다.",
+    "schema": "... open('data.txt') as f:",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "with"
+    ],
+    "hint": "**`with`** 구문을 사용하면 블록이 끝날 때 파일을 자동으로 닫아줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_file_write_mode",
+    "title": "파일 쓰기 모드: 'w'",
+    "body": "파일을 읽는 게 아니라 **쓰기(Write)** 모드로 열고 싶습니다. `open()` 함수의 두 번째 인자에 어떤 문자를 넣어야 할까요?",
+    "schema": "f = open('output.txt', ... )",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "'w'",
+      "\"w\""
+    ],
+    "hint": "Write의 앞글자인 **`'w'`**를 사용합니다. (읽기는 `'r'`, 추가는 `'a'`)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_extend",
+    "title": "리스트 합치기: extend",
+    "body": "리스트 `a`에 리스트 `b`의 **내용물만** 쏙 빼서 뒤에 이어 붙이고 싶습니다. (`append`를 쓰면 리스트 `b` 자체가 통째로 들어갑니다)",
+    "schema": "a. ... (b)",
+    "sample_rows": [
+      "a=[1], b=[2] -> a=[1, 2]"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "extend"
+    ],
+    "hint": "**`.extend(리스트)`**는 리스트를 확장하여 요소를 추가합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_set_add",
+    "title": "집합에 추가하기: add",
+    "body": "리스트에는 `append`가 있다면, 집합(Set)에는 이 메서드가 있습니다. 집합 `s`에 값 5를 추가하세요.",
+    "schema": "s. ... (5)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "add"
+    ],
+    "hint": "**`.add(값)`** 메서드를 사용합니다. (집합은 순서가 없어 '뒤에 붙인다'는 append 개념이 아닙니다)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_tuple_single",
+    "title": "원소가 하나인 튜플",
+    "body": "괄호 안에 숫자 1만 넣으면 `(1)`은 그냥 숫자 1로 인식됩니다. 이게 튜플임을 알리기 위해 숫자 뒤에 꼭 찍어야 하는 기호는?",
+    "schema": "my_tuple = (1 ... )",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      ","
+    ],
+    "hint": "원소가 하나일 때는 **쉼표 `,`**를 찍어주어야 튜플이 됩니다. 예: `(1,)`",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_update",
+    "title": "딕셔너리 합치기: update",
+    "body": "딕셔너리 `A`에 딕셔너리 `B`의 내용을 덮어쓰거나 추가해서 합치고 싶습니다.",
+    "schema": "A. ... (B)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "update"
+    ],
+    "hint": "**`.update()`** 메서드는 다른 딕셔너리의 내용으로 현재 딕셔너리를 갱신합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_format_method",
+    "title": "옛날 방식 포맷팅: .format()",
+    "body": "f-string 이전에는 이 방식을 많이 썼습니다. 문자열 내의 `{}` 자리에 값을 채워 넣는 문자열 메서드는?",
+    "schema": "msg = 'Hello {}'. ... ('World')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "format"
+    ],
+    "hint": "**`.format()`** 메서드를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_isinstance",
+    "title": "타입 확인 정석: isinstance",
+    "body": "`type(x) == int`보다 권장되는 방식입니다. 변수 `x`가 정수(int)인지 확인하는 함수를 완성하세요.",
+    "schema": "if ... (x, int):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "isinstance"
+    ],
+    "hint": "**`isinstance(변수, 타입)`** 함수를 사용하면 상속 관계까지 고려하여 타입을 확인해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_any_func",
+    "title": "하나라도 참이면: any()",
+    "body": "리스트 `[False, False, True]` 처럼 값들 중 **하나라도 참(True)**이 있으면 True를 반환하는 함수는?",
+    "schema": "result = ... ([0, 0, 1])",
+    "sample_rows": [
+      "True"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "any"
+    ],
+    "hint": "**`any()`** 함수는 요소 중 하나만 참이어도 참을 반환합니다. (반대는 `all()`)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_isdigit",
+    "title": "숫자인지 확인: .isdigit()",
+    "body": "사용자 입력값(문자열)이 숫자로만 이루어져 있는지 확인하고 싶습니다. (예: '123' -> True, '12a' -> False)",
+    "schema": "if user_input. ... ():",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "isdigit"
+    ],
+    "hint": "**`.isdigit()`** 메서드는 문자열이 숫자로만 구성되어 있는지 검사합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_startswith",
+    "title": "시작 글자 확인: .startswith()",
+    "body": "파일 이름이 'report'로 시작하는지 확인하고 싶습니다. 슬라이싱 `name[:6] == 'report'`보다 더 읽기 좋은 메서드입니다.",
+    "schema": "if filename. ... ('report'):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "startswith"
+    ],
+    "hint": "**`.startswith()`** (그리고 `.endswith()`) 메서드를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_finally",
+    "title": "무조건 실행: finally",
+    "body": "`try-except` 구문에서 에러가 나든 안 나든 **마지막에 무조건 실행**되어야 하는 코드 블록(예: 파일 닫기)을 정의하는 키워드는?",
+    "schema": "try:\n    ...\n...:\n    print('End')",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "finally"
+    ],
+    "hint": "**`finally`** 블록은 예외 발생 여부와 상관없이 항상 실행됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_args_star",
+    "title": "인자 여러 개 받기: *args",
+    "body": "함수에 입력값이 1개일지 10개일지 모릅니다. 인자를 튜플 형태로 몽땅 받기 위해 매개변수 앞에 붙이는 특수 기호는?",
+    "schema": "def add_all( ... numbers):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "*"
+    ],
+    "hint": "**별표 하나 `*`**를 붙이면 가변 인자(Variable Arguments)가 됩니다. 보통 `*args`라고 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_kwargs_double_star",
+    "title": "키워드 인자 받기: **kwargs",
+    "body": "이번에는 `func(a=1, b=2)` 처럼 이름이 있는 인자들을 딕셔너리 형태로 몽땅 받고 싶습니다. 매개변수 앞에 붙이는 기호는?",
+    "schema": "def func( ... options):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "**"
+    ],
+    "hint": "**별표 두 개 `**`**를 붙이면 키워드 인자(Keyword Arguments)를 딕셔너리로 받습니다. 보통 `**kwargs`라고 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_raise_error",
+    "title": "에러 발생시키기: raise",
+    "body": "치명적인 문제가 발생해서 내가 직접 에러를 강제로 발생시키고 싶습니다. 이때 사용하는 명령어는?",
+    "schema": "if bad_condition:\n    ... ValueError('Invalid')",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "raise"
+    ],
+    "hint": "**`raise`** 키워드를 사용하여 예외(Exception)를 일으킵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_range_step_neg",
+    "title": "거꾸로 숫자 세기: range(-1)",
+    "body": "10부터 1까지 카운트다운(10, 9, ... 1)을 하고 싶습니다. `range`의 세 번째 칸(보폭)에 어떤 숫자를 넣어야 할까요?",
+    "schema": "range(10, 0, ... )",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "-1"
+    ],
+    "hint": "보폭(Step)을 **음수 `-1`**로 설정하면 숫자가 줄어듭니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_title",
+    "title": "제목처럼 바꾸기: .title()",
+    "body": "문자열 'hello world'의 각 단어 첫 글자만 대문자로 바꿔 'Hello World'로 만들고 싶습니다.",
+    "schema": "s = 'hello world'\nprint(s. ... ())",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "title"
+    ],
+    "hint": "**`.title()`** 메서드는 영문 제목 스타일(각 단어 첫 글자 대문자)로 변환해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_slice_omit_start",
+    "title": "처음부터 자르기: [:n]",
+    "body": "리스트 `nums`의 **처음부터** 3번째 인덱스 전까지(`nums[0]`, `nums[1]`, `nums[2]`) 자르고 싶습니다. 시작 인덱스 0은 생략할 수 있습니다.",
+    "schema": "head = nums[ ... :3]",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ""
+    ],
+    "hint": "시작 부분을 비워두면(`[:n]`) 자동으로 0부터 시작합니다. (정답 칸을 비워두거나 공백으로 제출하는 것은 아니므로, 문맥상 콜론 앞을 비운다는 의미입니다. 문제 풀이 시엔 콜론만 신경 쓰세요)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_slice_omit_end",
+    "title": "끝까지 자르기: [n:]",
+    "body": "리스트의 3번째 요소부터 **맨 끝까지** 전부 가져오고 싶습니다. 종료 인덱스를 생략하면 됩니다.",
+    "schema": "tail = nums[3: ... ]",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      ""
+    ],
+    "hint": "끝 부분을 비워두면(`[n:]`) 리스트의 끝까지 포함합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_sort_inplace",
+    "title": "원본 정렬하기: .sort()",
+    "body": "`sorted()` 함수는 원본을 놔두고 새 리스트를 만들지만, 이 메서드는 리스트 **자체(원본)를 정렬**해서 바꿔버립니다.",
+    "schema": "my_list. ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "sort"
+    ],
+    "hint": "**`.sort()`** 메서드는 리스트 자신을 정렬합니다. 반환값은 `None`이니 주의하세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_all_func",
+    "title": "모두 참이어야: all()",
+    "body": "리스트의 모든 값이 `True`(참)일 때만 `True`를 반환하는 함수는? 하나라도 `False`면 `False`가 됩니다. (예: `[1, 1, 0]` -> False)",
+    "schema": "if ... (check_list):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "all"
+    ],
+    "hint": "**`all()`** 함수는 `any()`와 반대입니다. 모두 만족해야 통과합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_random_choice",
+    "title": "무작위 선택: random.choice",
+    "body": "`import random`을 했습니다. 리스트 `menu`에서 메뉴 하나를 **랜덤하게 뽑고** 싶습니다.",
+    "schema": "pick = random. ... (menu)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "choice"
+    ],
+    "hint": "**`random.choice(리스트)`** 함수는 요소 중 하나를 무작위로 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_ternary_if",
+    "title": "한 줄 조건문: 삼항 연산자",
+    "body": "값이 참이면 A, 아니면 B를 변수에 넣고 싶습니다. `val = A ____ condition else B` 형식으로 씁니다.",
+    "schema": "status = 'Pass' ... score >= 60 else 'Fail'",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "if"
+    ],
+    "hint": "Python의 삼항 연산자는 `값1 if 조건 else 값2` 순서로 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_lower",
+    "title": "소문자로 변환: .lower()",
+    "body": "대문자 'STOP'을 소문자 'stop'으로 바꾸고 싶습니다.",
+    "schema": "cmd = 'STOP'\nprint(cmd. ... ())",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "lower"
+    ],
+    "hint": "**`.lower()`** 메서드는 모든 문자를 소문자로 바꿉니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_endswith",
+    "title": "끝 글자 확인: .endswith()",
+    "body": "파일 이름이 '.jpg'로 끝나는 이미지 파일인지 확인하고 싶습니다.",
+    "schema": "if filename. ... ('.jpg'):",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "endswith"
+    ],
+    "hint": "**`.endswith()`** 메서드는 문자열이 특정 접미사로 끝나는지 검사합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_main_guard",
+    "title": "메인 실행 확인: __name__",
+    "body": "파이썬 파일을 직접 실행했을 때만 코드가 돌게 하고, 모듈로 임포트될 때는 실행되지 않게 막고 싶습니다. `if ____ == '__main__':` 구문을 사용합니다.",
+    "schema": "if ... == '__main__':",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "__name__"
+    ],
+    "hint": "**`__name__`** 변수에는 현재 모듈의 이름이 들어있습니다. 직접 실행 시엔 `'__main__'`이 됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_raw_string",
+    "title": "있는 그대로 쓰기: Raw String",
+    "body": "윈도우 파일 경로 `C:\new\table`을 쓸 때 `\n`이나 `\t`가 특수문자로 해석되지 않게 하려면, 따옴표 앞에 어떤 알파벳을 붙여야 할까요?",
+    "schema": "path = ... r\"C:\\new\\table\"",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "r",
+      "R"
+    ],
+    "hint": "**`r`**을 붙이면 Raw String이 되어 백슬래시(`\\`)를 문자로 취급합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_set_union",
+    "title": "집합 합치기: 합집합(|)",
+    "body": "두 개의 세트 `set_a`와 `set_b`를 합쳐서 하나라도 있는 요소들을 모으고 싶습니다. `union()` 메서드 대신 쓸 수 있는 연산자(기호)는?",
+    "schema": "all_items = set_a ... set_b",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "|"
+    ],
+    "hint": "버티컬 바(파이프) **`|`** 기호는 집합의 **합집합(Union)**을 의미합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_set_intersection",
+    "title": "공통 요소 찾기: 교집합(&)",
+    "body": "두 세트에 **동시에 들어있는** 값만 뽑고 싶습니다. `intersection()` 대신 쓸 수 있는 연산자(기호)는?",
+    "schema": "common = set_a ... set_b",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "&"
+    ],
+    "hint": "앤퍼샌드 **`&`** 기호는 집합의 **교집합(Intersection)**을 의미합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_clear",
+    "title": "싹 비우기: clear",
+    "body": "리스트나 딕셔너리의 내용은 다 지우고 빈 껍데기만 남기고 싶습니다. `del`로 변수를 없애는 게 아니라 내용만 비우는 메서드는?",
+    "schema": "my_list. ... ()",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "clear"
+    ],
+    "hint": "**`.clear()`** 메서드는 모든 요소를 제거합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_map_func",
+    "title": "일괄 적용: map()",
+    "body": "문자열 리스트 `['1', '2']`를 정수 리스트 `[1, 2]`로 바꾸기 위해 `int` 함수를 각 요소에 적용하고 싶습니다.",
+    "schema": "nums = list( ... (int, ['1', '2']))",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "map"
+    ],
+    "hint": "**`map(함수, 리스트)`**는 리스트의 각 요소에 함수를 적용해줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_filter_func",
+    "title": "골라내기: filter()",
+    "body": "리스트에서 짝수만 남기고 홀수는 버리고 싶습니다. 조건 함수를 통과하는 요소만 남기는 함수는?",
+    "schema": "evens = list( ... (is_even, nums))",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "filter"
+    ],
+    "hint": "**`filter(함수, 리스트)`**는 함수 결과가 참인 요소만 걸러냅니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_global_keyword",
+    "title": "전역 변수 수정: global",
+    "body": "함수 바깥에 있는 변수 `count`를 함수 **안에서** 수정(대입)하려면, 이 변수가 전역 변수임을 알려줘야 합니다.",
+    "schema": "count = 0\ndef inc():\n    ... count\n    count += 1",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "global"
+    ],
+    "hint": "**`global`** 키워드를 쓰지 않고 함수 내부에서 값을 할당하면 새로운 지역 변수가 생겨버립니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_yield_keyword",
+    "title": "제너레이터 만들기: yield",
+    "body": "함수에서 `return`을 쓰면 끝나버리지만, 값을 하나씩 던져주고 상태를 유지하는 '제너레이터'를 만들 때는 이 키워드를 씁니다.",
+    "schema": "def my_gen():\n    ... 1\n    ... 2",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "yield"
+    ],
+    "hint": "**`yield`**를 사용하면 함수가 제너레이터(Generator)가 되어 `next()`로 값을 하나씩 꺼낼 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_escape_quote",
+    "title": "따옴표 안의 따옴표",
+    "body": "문자열 안에 작은따옴표(`'`)를 표현하고 싶은데 문자열도 작은따옴표로 감싸져 있습니다. 충돌을 막기 위해 앞에 붙이는 기호는?",
+    "schema": "msg = 'It ... 's me'",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "\\"
+    ],
+    "hint": "백슬래시 **`\\`**를 따옴표 앞에 붙이면(`\\'`) 문자로 인식됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_id_func",
+    "title": "주소 확인: id()",
+    "body": "두 변수가 메모리 상에서 같은 객체를 가리키는지 확인하기 위해 고유 주소값(Identity)을 보고 싶습니다.",
+    "schema": "addr = ... (my_var)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "id"
+    ],
+    "hint": "**`id()`** 함수는 객체의 고유 식별자(메모리 주소 등)를 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_help_func",
+    "title": "도움말 보기: help()",
+    "body": "함수나 모듈의 사용법이 기억나지 않을 때, Python 내부에서 바로 설명서를 출력해주는 함수는?",
+    "schema": "... (print)",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "help"
+    ],
+    "hint": "**`help()`** 함수에 객체를 넣으면 문서(Docstring)를 보여줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_swap",
+    "title": "변수 값 맞교환 (Swap)",
+    "body": "임시 변수(temp) 없이 두 변수 `a`와 `b`의 값을 서로 바꾸고 싶습니다. 파이썬만의 강력한 튜플 언패킹 문법을 사용하세요.",
+    "schema": "a, b = ... , a",
+    "sample_rows": [
+      "a=1, b=2 -> a=2, b=1"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "b"
+    ],
+    "hint": "`a, b = b, a` 처럼 작성하면 두 변수의 값이 동시에 교환됩니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_f_string_format",
+    "title": "소수점 자릿수 지정: :.2f",
+    "body": "f-string 안에서 실수를 출력할 때, 소수점 둘째 자리까지만 예쁘게 자르고 싶습니다. 변수 뒤에 콜론을 찍고 포맷 코드를 적어야 합니다.",
+    "schema": "pi = 3.14159\nprint(f'{pi ... }')",
+    "sample_rows": [
+      "3.14"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      ":.2f"
+    ],
+    "hint": "f-string 내부에서 **`:.2f`**는 소수점 2자리까지 고정 소수점으로 표현하라는 의미입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_pop_key",
+    "title": "딕셔너리 삭제 및 반환: .pop()",
+    "body": "딕셔너리에서 특정 키를 삭제함과 동시에 그 값을 변수에 저장하고 싶습니다. `del`은 삭제만 하지만 이 메서드는 값을 돌려줍니다.",
+    "schema": "val = my_dict. ... ('key')",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "pop"
+    ],
+    "hint": "**`.pop(키)`** 메서드는 키를 삭제하고 그에 해당하는 값을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_set_diff",
+    "title": "집합 빼기: 차집합(-)",
+    "body": "`set_a`에는 있지만 `set_b`에는 없는 요소들만 남기고 싶습니다. `difference()` 메서드 대신 사용할 수 있는 연산자는?",
+    "schema": "only_a = set_a ... set_b",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "-"
+    ],
+    "hint": "수학의 뺄셈 기호 **`-`**를 사용하면 차집합을 구할 수 있습니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_default_or",
+    "title": "기본값 할당의 숏컷: or",
+    "body": "사용자 입력 `name`이 비어있으면(빈 문자열) 'Guest'라는 기본값을 쓰고 싶습니다. `if`문 없이 논리 연산자 하나로 해결하세요.",
+    "schema": "display_name = name ... 'Guest'",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "or"
+    ],
+    "hint": "`A or B`에서 A가 거짓(빈 문자열 등)이면 B를 반환합니다. 실무에서 기본값 처리에 매우 자주 쓰입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_slice_copy",
+    "title": "리스트 복사: [:]",
+    "body": "리스트 `a`를 `b`에 복사하려고 합니다. `b = a`라고 하면 같은 주소를 공유하게 됩니다. 값만 복사해서 새로운 리스트를 만들려면 슬라이싱을 어떻게 활용할까요?",
+    "schema": "b = a[ ... ]",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      ":"
+    ],
+    "hint": "**`[:]`**는 처음부터 끝까지라는 뜻으로, 리스트 전체를 얕은 복사(Shallow Copy)합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_pass_class",
+    "title": "나중에 구현하기: pass",
+    "body": "클래스나 함수를 선언만 해두고, 내용은 나중에 채우고 싶을 때 문법 에러를 막기 위해 넣어두는 키워드는?",
+    "schema": "class MyData:\n    ...",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "pass"
+    ],
+    "hint": "**`pass`**는 '아무것도 하지 않음'을 명시하는 문법적으로 필수적인 키워드입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_sorted_key",
+    "title": "정렬 기준 바꾸기: key",
+    "body": "문자열 리스트를 알파벳 순이 아니라 **길이(len)** 순서대로 정렬하고 싶습니다. `sorted` 함수에 넘겨줄 옵션 이름은?",
+    "schema": "sorted(words, ... =len)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "key"
+    ],
+    "hint": "**`key=`** 인자에 정렬 기준이 될 함수(여기선 `len`)를 넘겨줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_docstring",
+    "title": "함수 설명서: Docstring",
+    "body": "함수 바로 아래에 큰따옴표 3개로 설명을 적어두면 `help()`로 볼 수 있습니다. 이를 무엇이라고 부를까요? (코드 작성 문제가 아닌 용어 문제입니다)",
+    "schema": "def func():\n    \"\"\"설명\"\"\"",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "\"\"\"",
+      "'''"
+    ],
+    "hint": "함수 본문 첫 줄에 오는 문자열 리터럴을 **Docstring**이라고 하며, 보통 `\"\"\"...\"\"\"`를 씁니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_assert_msg",
+    "title": "디버깅용 검사: assert",
+    "body": "변수 `x`가 반드시 양수여야 합니다. 만약 아니면 에러를 발생시키고 '음수 불가'라는 메시지를 띄우고 싶습니다.",
+    "schema": "... x > 0, '음수 불가'",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "assert"
+    ],
+    "hint": "**`assert 조건, 메시지`** 형식은 조건이 거짓일 때 `AssertionError`를 발생시킵니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_augmented_mul",
+    "title": "곱해서 저장하기: *=",
+    "body": "변수 `price`를 2배로 만들어 다시 저장하고 싶습니다. `price = price * 2`를 줄여 쓰는 연산자는?",
+    "schema": "price ... 2",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "*="
+    ],
+    "hint": "**`*=`** 연산자를 사용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_implicit_concat",
+    "title": "자동 문자열 연결",
+    "body": "긴 문자열을 여러 줄에 나눠 쓸 때, `+` 기호 없이 따옴표만 나란히 두어도 자동으로 합쳐집니다.",
+    "schema": "text = 'Hello' ... 'World'",
+    "sample_rows": [
+      "HelloWorld"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      ""
+    ],
+    "hint": "Python에서는 `'Str1' 'Str2'` 처럼 공백(또는 줄바꿈)만 두고 나열하면 자동으로 연결됩니다. (정답 칸은 비워두거나 공백)",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_bool_empty",
+    "title": "빈 리스트의 진실",
+    "body": "빈 리스트 `items = []`를 `if` 문에 넣으면 참(True)일까요, 거짓(False)일까요? Python에서 빈 컬렉션은 거짓 취급을 받습니다.",
+    "schema": "if items:\n    print('True')\nelse:\n    print('...')",
+    "sample_rows": [
+      "False"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "False"
+    ],
+    "hint": "빈 리스트, 빈 딕셔너리, 빈 문자열, 0은 모두 Boolean 문맥에서 **False**입니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_list_index",
+    "title": "위치 찾기: .index()",
+    "body": "리스트 `['a', 'b', 'c']`에서 값 'b'가 몇 번째(0부터 시작)에 있는지 숫자로 알고 싶습니다.",
+    "schema": "pos = my_list. ... ('b')",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "index"
+    ],
+    "hint": "**`.index(값)`** 메서드는 해당 값의 인덱스 번호를 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dict_setdefault",
+    "title": "없으면 넣고 있으면 놔두기: setdefault",
+    "body": "딕셔너리에 키가 없으면 기본값을 넣고, 이미 있으면 그 값을 그대로 쓰고 싶습니다. `if`문 없이 한 번에 처리하는 메서드는?",
+    "schema": "counts. ... (word, 0)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "setdefault"
+    ],
+    "hint": "**`.setdefault(키, 기본값)`**은 키가 없을 때만 기본값을 세팅하고 값을 반환합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_join_tuple",
+    "title": "튜플도 합칠 수 있다",
+    "body": "`join` 메서드는 리스트뿐만 아니라 튜플도 연결할 수 있습니다. 튜플 `('010', '1234')`를 하이픈으로 연결해보세요.",
+    "schema": "'-'.join( ... )",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "('010', '1234')"
+    ],
+    "hint": "`join`의 인자로 튜플을 그대로 넣으면 됩니다. 괄호를 잊지 마세요.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_dir_func",
+    "title": "기능 목록 보기: dir()",
+    "body": "어떤 객체가 무슨 메서드를 가지고 있는지 궁금할 때, 해당 객체의 모든 속성과 메서드 이름을 리스트로 보여주는 내장 함수는?",
+    "schema": "... (str)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "dir"
+    ],
+    "hint": "**`dir()`** 함수는 Directory의 약자로, 객체의 내부 구조를 들여다볼 때 유용합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_sum_start",
+    "title": "초기값 지정 합계: sum(..., start)",
+    "body": "리스트 `[1, 2, 3]`을 더하되, 기본값 100에다가 더하고 싶습니다. `sum` 함수의 두 번째 인자를 활용하세요.",
+    "schema": "total = sum([1, 2, 3], ... )",
+    "sample_rows": [
+      "106"
+    ],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "100"
+    ],
+    "hint": "`sum(iterable, start)` 형식으로 쓰면 start 값에 리스트의 합을 더합니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_str_zfill",
+    "title": "0으로 채우기: .zfill()",
+    "body": "문자열 '7'을 '007'처럼 3자리로 만들고 빈칸을 0으로 채우고 싶습니다.",
+    "schema": "s = '7'. ... (3)",
+    "sample_rows": [],
+    "difficulty": "Lv1 입문",
+    "kind": "Python",
+    "expected": [
+      "zfill"
+    ],
+    "hint": "**`.zfill(너비)`** (Zero Fill) 메서드는 문자열 왼쪽에 0을 채워줍니다.",
+    "problem_type": "코딩"
+  },
+  {
+    "pid": "python_syntax_math_alias",
+    "title": "모듈 별칭 사용: import as",
+    "body": "`math` 모듈을 `m`이라는 짧은 이름으로 불러오고 싶습니다. 빈칸을 채우세요.",
+    "schema": "import math ... m",
+    "sample_rows": [],
+    "difficulty": "Lv0 기초",
+    "kind": "Python",
+    "expected": [
+      "as"
+    ],
+    "hint": "**`as`** 키워드를 사용하여 모듈에 별명(Alias)을 붙입니다.",
+    "problem_type": "코딩"
   }
 ]

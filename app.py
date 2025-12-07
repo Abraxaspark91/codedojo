@@ -1,5 +1,6 @@
 import json
 import random
+import re
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
@@ -7,7 +8,7 @@ from typing import Dict, List, Optional, Tuple
 
 import gradio as gr
 import requests
-from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem
+from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem, unique_preserve_order
 
 NOTE_PATH = Path("data/wrong_notes.md")
 NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -157,24 +158,10 @@ def ensure_state(state: Optional[Dict]) -> Dict:
         state = {}
 
     state.setdefault("in_progress", False)
-    state.setdefault("last_run_detail", "")
     state.setdefault("last_feedback", "")
-    state.setdefault("last_improvement", "")
     state.setdefault("filters", normalize_filters(None, None, None))
     state.setdefault("hint_visible", False)
     return state
-
-
-def unique_preserve_order(items: List[str]) -> List[str]:
-    seen = []
-    ordered: List[str] = []
-    for item in items:
-        if item in seen:
-            continue
-        seen.append(item)
-        ordered.append(item)
-    return ordered
-
 
 
 
@@ -573,11 +560,6 @@ def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
     return labels, values
 
 
-def favorite_status_text(pid: str) -> str:
-    return ("⭐ 즐겨찾기에 저장된 문제입니다." if favorite_button_label(
-        pid).startswith("⭐") else "☆ 즐겨찾기에 추가할 수 있습니다.")
-
-
 def call_llm(system_prompt: str, user_prompt: str,
              endpoint: str = LM_STUDIO_ENDPOINT) -> str:
     payload = {
@@ -597,7 +579,6 @@ def call_llm(system_prompt: str, user_prompt: str,
 
         # 일부 모델이 생성하는 <think>...</think> 태그 제거
         # (Gradio Markdown 렌더링 방해 방지)
-        import re
         result = re.sub(r'<think>.*?</think>', '', result, flags=re.DOTALL)
         result = result.strip()
 
@@ -893,9 +874,7 @@ def on_new_problem(difficulty: str,
             "hint": hint,
             "filters": filters,
             "in_progress": False,
-            "last_run_detail": "",
             "last_feedback": "",
-            "last_improvement": "",
         }
     )
     # 오답노트 목록 자동 업데이트 (PID 드롭다운만)
@@ -943,13 +922,6 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()
     result = f"### 💬 LLM 피드백\n{feedback}"
 
     return result, gr.update(), gr.update(value="💡 힌트 보기")
-
-
-def show_hint(state: Dict) -> str:
-    if not state or "problem" not in state:
-        return "문제가 선택되지 않았습니다."
-    problem: Problem = state["problem"]
-    return f"### 💡 문법 힌트\n{problem.hint}"
 
 
 def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:

@@ -1,4 +1,5 @@
 import json
+import os
 import random
 import re
 from dataclasses import dataclass, asdict
@@ -6,6 +7,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
 
+from dotenv import load_dotenv
 import gradio as gr
 import requests
 from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem, unique_preserve_order
@@ -15,13 +17,9 @@ NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
 FAVORITES_PATH = Path("data/favorites.json")
 FAVORITES_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-_env_path = Path(".env")
-_env_text = _env_path.read_text(encoding="utf-8") if _env_path.exists() else ""
-LM_STUDIO_ENDPOINT = (
-    _env_text.split("LM_STUDIO_ENDPOINT=", maxsplit=1)[-1].splitlines()[0].strip()
-    if "LM_STUDIO_ENDPOINT=" in _env_text
-    else "http://127.0.0.1:1234/v1/chat/completions"
-)
+# .env 파일에서 환경변수 로드
+load_dotenv()
+LM_STUDIO_ENDPOINT = os.getenv("LM_STUDIO_ENDPOINT", "http://127.0.0.1:1234/v1/chat/completions")
 
 CUSTOM_THEME = gr.themes.Soft(
     primary_hue="blue",
@@ -691,15 +689,11 @@ def save_to_wrong_notes(
 
     try:
         serialized = serialize_attempt(attempt)
-        # JSON Lines: 기존 내용에 새 라인을 추가
-        current_content = NOTE_PATH.read_text(encoding="utf-8")
-        # 마지막 줄이 개행으로 끝나지 않으면 추가
-        if current_content and not current_content.endswith("\n"):
-            current_content += "\n"
-        NOTE_PATH.write_text(
-            current_content + serialized + "\n",
-            encoding="utf-8"
-        )
+        # JSON Lines: append 모드로 새 라인 추가
+        # 파일이 비어있지 않으면 앞에 개행 추가 (안전하게 줄바꿈 보장)
+        prefix = '\n' if NOTE_PATH.exists() and NOTE_PATH.stat().st_size > 0 else ''
+        with open(NOTE_PATH, 'a', encoding='utf-8') as f:
+            f.write(f'{prefix}{serialized}\n')
         return f"✅ 오답노트에 추가되었습니다! ({format_timestamp_with_weekday()})"
     except ValueError as e:
         print(f"[오류] Attempt 저장 실패: {e}", file=__import__('sys').stderr)

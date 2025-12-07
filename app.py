@@ -40,8 +40,8 @@ CUSTOM_CSS = """
 }
 
 .problem-box {
-    min-height: 300px;
-    max-height: 400px;
+    min-height: 200px;
+    max-height: 500px;
     overflow-y: auto;
 }
 
@@ -52,8 +52,65 @@ CUSTOM_CSS = """
 }
 
 .code-editor-box {
-    min-height: 500px;
+    min-height: 200px;
 }
+
+/* GitHub Dark Dimmed 배경 */
+.code-editor-box .cm-editor,
+.code-editor-box .cm-scroller,
+.code-editor-box .cm-gutters {
+    background-color: #2d333b !important;
+    color: #adbac7 !important;
+}
+
+/* 기본 텍스트 */
+.code-editor-box .cm-content {
+    color: #adbac7 !important;
+}
+
+/* 줄 번호 */
+.code-editor-box .cm-gutters {
+    color: #768390 !important;
+}
+
+/* 커서 */
+.code-editor-box .cm-cursor {
+    border-left: 1px solid #f0f3f6 !important;
+}
+
+/* 선택 활성 라인 */
+.code-editor-box .cm-activeLine {
+    background-color: #39424e !important;
+}
+
+/* ===== Syntax Highlighting ===== */
+
+/* 키워드 - 보라 */
+.code-editor-box .cm-keyword {
+    color: #dcbdfb !important;
+}
+
+/* 문자열 - 파스텔 블루 */
+.code-editor-box .cm-string {
+    color: #96d0ff !important;
+}
+
+/* 숫자/상수 - 따뜻 노랑 */
+.code-editor-box .cm-number {
+    color: #f9c97f !important;
+}
+
+/* 함수/메서드 이름 - 녹색 */
+.code-editor-box .cm-variable,
+.code-editor-box .cm-property {
+    color: #8ddb8c !important;
+}
+
+/* 코멘트 - 푸른 회색 */
+.code-editor-box .cm-comment {
+    color: #6c7986 !important;
+}
+
 
 /* ===== 버튼 그룹 ===== */
 .button-row {
@@ -1069,7 +1126,7 @@ def build_interface() -> gr.Blocks:
                             with gr.Row():
                                 new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
                                 favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
-                            new_favorite_status_md = gr.Markdown("", elem_classes="status-message")
+                            new_favorite_status_md = gr.Markdown("")
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=8):
@@ -1081,9 +1138,10 @@ def build_interface() -> gr.Blocks:
                                 show_label=False,
                                 elem_classes="code-editor-box",
                                 lines=15,
+                                max_lines=50,
                                 container=True
                             )
-                            with gr.Row(elem_classes="button-row"):
+                            with gr.Row():
                                 submit_btn = gr.Button(
                                     "✅ 제출하기",
                                     variant="primary",
@@ -1108,7 +1166,7 @@ def build_interface() -> gr.Blocks:
                                 add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
                             add_notes_status = gr.Markdown("")
                     
-                    # 왼쪽: LLM 피드백
+                    # 오른쪽: LLM 피드백
                     with gr.Column(scale=8):
                         with gr.Group(elem_classes="section-box"):
                             gr.Markdown("### 💬 LLM 피드백")
@@ -1159,7 +1217,7 @@ def build_interface() -> gr.Blocks:
                             )
                             with gr.Row():
                                 note_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
-                            note_favorite_status_md = gr.Markdown("", elem_classes="status-message")
+                            note_favorite_status_md = gr.Markdown("")
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=8):
@@ -1171,9 +1229,10 @@ def build_interface() -> gr.Blocks:
                                 show_label=False,
                                 elem_classes="code-editor-box",
                                 lines=15,
+                                max_lines=50,
                                 container=True
                             )
-                            with gr.Row(elem_classes="button-row"):
+                            with gr.Row():
                                 note_submit_btn = gr.Button(
                                     "✅ 제출하기",
                                     variant="primary",
@@ -1233,9 +1292,10 @@ def build_interface() -> gr.Blocks:
                                 show_label=False,
                                 elem_classes="code-editor-box",
                                 lines=15,
+                                max_lines=50,
                                 container=True
                             )
-                            with gr.Row(elem_classes="button-row"):
+                            with gr.Row():
                                 fav_submit_btn = gr.Button(
                                     "✅ 제출하기",
                                     variant="primary",

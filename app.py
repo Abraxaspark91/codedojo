@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import gradio as gr
 import requests
@@ -550,14 +550,33 @@ def favorite_button_label(pid: str) -> str:
         fav.get("pid") == pid for fav in favorites) else "☆ 즐겨찾기 추가"
 
 
+def _format_dropdown_choices(
+    items: List[Any],
+    label_fn: Callable[[Any], str],
+    value_fn: Callable[[Any], str]
+) -> Tuple[List[str], List[str]]:
+    """드롭다운 선택지를 생성하는 헬퍼 함수.
+
+    Args:
+        items: 데이터 항목 리스트
+        label_fn: 각 항목을 레이블 문자열로 변환하는 함수
+        value_fn: 각 항목에서 값을 추출하는 함수
+
+    Returns:
+        Tuple[List[str], List[str]]: (labels, values)
+    """
+    labels = [label_fn(item) for item in items]
+    values = [value_fn(item) for item in items]
+    return labels, values
+
+
 def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
     favorites = load_favorites()
-    labels = [
-        f"{fav.get('title', '')} | - | {fav.get('difficulty', '')} | {fav.get('kind', '')} | {fav.get('timestamp', '-')}"
-        for fav in favorites
-    ]
-    values = [fav["pid"] for fav in favorites]
-    return labels, values
+    return _format_dropdown_choices(
+        favorites,
+        lambda fav: f"{fav.get('title', '')} | - | {fav.get('difficulty', '')} | {fav.get('kind', '')} | {fav.get('timestamp', '-')}",
+        lambda fav: fav["pid"]
+    )
 
 
 def call_llm(system_prompt: str, user_prompt: str,
@@ -689,12 +708,11 @@ def save_to_wrong_notes(
 
 def refresh_note_choices() -> Tuple[List[str], List[str]]:
     entries = failed_attempts(load_attempts())
-    labels = [
-        f"{a.title} | {a.nickname if a.nickname else '-'} | {a.difficulty} | {a.kind} | {a.timestamp}"
-        for a in entries
-    ]
-    values = [a.pid for a in entries]
-    return labels, values
+    return _format_dropdown_choices(
+        entries,
+        lambda a: f"{a.title} | {a.nickname if a.nickname else '-'} | {a.difficulty} | {a.kind} | {a.timestamp}",
+        lambda a: a.pid
+    )
 
 
 def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
@@ -707,15 +725,18 @@ def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
     """
     entries = failed_attempts(load_attempts())
     # pid별로 첫 번째 항목만 유지 (중복 제거)
-    pid_dict = {}
+    seen_pids = set()
+    unique_entries = []
     for a in entries:
-        if a.pid not in pid_dict:
-            pid_dict[a.pid] = a
+        if a.pid not in seen_pids:
+            seen_pids.add(a.pid)
+            unique_entries.append(a)
 
-    # title, difficulty, kind 표시
-    labels = [f"{a.title} | {a.difficulty} | {a.kind}" for a in pid_dict.values()]
-    values = [a.pid for a in pid_dict.values()]
-    return labels, values
+    return _format_dropdown_choices(
+        unique_entries,
+        lambda a: f"{a.title} | {a.difficulty} | {a.kind}",
+        lambda a: a.pid
+    )
 
 
 def refresh_note_attempt_choices(selected_pid: str) -> Tuple[List[str], List[str]]:
@@ -733,20 +754,13 @@ def refresh_note_attempt_choices(selected_pid: str) -> Tuple[List[str], List[str
         return [], []
 
     entries = failed_attempts(load_attempts())
-    # 선택된 pid만 필터링
     pid_entries = [a for a in entries if a.pid == selected_pid]
 
-    # nickname과 timestamp 표시
-    labels = [
-        f"{a.nickname if a.nickname else '(별명없음)'} | {a.timestamp}"
-        for a in pid_entries
-    ]
-    # 복합 키: pid:nickname:timestamp
-    values = [
-        f"{a.pid}:{a.nickname}:{a.timestamp}"
-        for a in pid_entries
-    ]
-    return labels, values
+    return _format_dropdown_choices(
+        pid_entries,
+        lambda a: f"{a.nickname if a.nickname else '(별명없음)'} | {a.timestamp}",
+        lambda a: f"{a.pid}:{a.nickname}:{a.timestamp}"
+    )
 
 
 def load_from_notes(

@@ -39,7 +39,8 @@ class Problem:
         return parts[1] if len(parts) > 1 else None
 
 
-def _unique_preserve_order(items: Sequence[str]) -> List[str]:
+def unique_preserve_order(items: Sequence[str]) -> List[str]:
+    """순서를 유지하면서 중복을 제거합니다."""
     seen = set()
     ordered: List[str] = []
     for item in items:
@@ -75,4 +76,4 @@ def load_problem_bank(path: Path | str = Path("data/problems.json")) -> List[Pro
 
 
 PROBLEM_BANK: List[Problem] = load_problem_bank()
-DIFFICULTY_OPTIONS: List[str] = _unique_preserve_order([p.difficulty for p in PROBLEM_BANK])
+DIFFICULTY_OPTIONS: List[str] = unique_preserve_order([p.difficulty for p in PROBLEM_BANK])

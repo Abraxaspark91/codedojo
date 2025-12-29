@@ -10,6 +10,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from dotenv import load_dotenv
 import gradio as gr
 import requests
+import problem_bank
 from problem_bank import (
     DIFFICULTY_OPTIONS,
     PROBLEM_BANK,
@@ -530,9 +531,9 @@ def pick_problem(
         return prob, normalize_filters(None, None, []) | {
             "hint": attempt_hint}
 
-    # 신규 문제 탭에서는 항상 PROBLEM_BANK에서만 선택
+    # 신규 문제 탭에서는 항상 PROBLEM_BANK에서만 선택 (모듈 참조로 최신값 사용)
     applied_filters = target_filters
-    full_pool = [(p, "") for p in PROBLEM_BANK]
+    full_pool = [(p, "") for p in problem_bank.PROBLEM_BANK]
     problem, applied_filters = choose_candidate(full_pool)
     hint = applied_filters.pop("hint", "")
     return problem, rechallenge, hint, applied_filters
@@ -886,7 +887,7 @@ def load_from_notes(
             entry.timestamp == timestamp and
             entry.source_file == source_file):
             problem = next(
-                (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+                (p for p in problem_bank.PROBLEM_BANK if p.pid == entry.pid), None)
             if problem:
                 filters = normalize_filters(None, None, None)
                 question = render_question(
@@ -914,7 +915,7 @@ def load_favorite_problem(pid: str, source_file: str = DEFAULT_PROBLEM_FILE) -> 
     # 해당 소스 파일로 PROBLEM_BANK 재로드
     reload_problem_bank(source_file)
 
-    problem = next((p for p in PROBLEM_BANK if p.pid == pid), None)
+    problem = next((p for p in problem_bank.PROBLEM_BANK if p.pid == pid), None)
     if problem:
         filters = normalize_filters(None, None, None)
         question = render_question(problem, False, "", filters)
@@ -1112,7 +1113,7 @@ def build_interface() -> gr.Blocks:
     # kind 값을 정렬하여 계층적으로 표시
     # 결과: ["전체", "Python", "Python.Pyspark", "SQL"]
     language_options = ["전체"] + \
-        sorted(unique_preserve_order([p.kind for p in PROBLEM_BANK]))
+        sorted(unique_preserve_order([p.kind for p in problem_bank.PROBLEM_BANK]))
     # 문제 유형 옵션 (체크박스용)
     problem_type_options = ["코딩", "개념문제", "빈칸채우기"]
 

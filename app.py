@@ -556,7 +556,7 @@ def render_question(
     result = (
         f"### [{banner}] {problem.title}\n"
         f"- 난이도: {problem.difficulty}\n"
-        f"- 언어: {problem.language}{library_info}\n"
+        f"- 유형: {problem.language}{library_info}\n"
         f"{hint_line}\n"
         f"---\n\n"
         f"**📝 문제**\n\n"
@@ -1143,7 +1143,7 @@ def build_interface() -> gr.Blocks:
                         problem_file = gr.Dropdown(
                             choices=available_problem_files,
                             value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
-                            label="📁 문제 파일",
+                            label="📁 문제은행 선택",
                             scale=1
                         )
                         difficulty = gr.Dropdown(
@@ -1155,7 +1155,7 @@ def build_interface() -> gr.Blocks:
                         language = gr.Dropdown(
                             language_options,
                             value=language_options[0],
-                            label="💻 언어",
+                            label="💻 유형",
                             scale=1
                         )
                         problem_types = gr.CheckboxGroup(

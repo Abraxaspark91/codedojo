@@ -8,7 +8,7 @@
       "Alice | 25",
       "Bob | 30"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "hint": "Python에서는 작은따옴표(')와 큰따옴표(\") 중 무엇을 써도 상관없습니다. 시작과 끝만 일치시켜주세요.",
     "problem_type": "코딩"
@@ -22,7 +22,7 @@
       "Alice | 25",
       "Bob | 30"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "SQL",
     "hint": "SQL에서 문자열 값은 반드시 **작은따옴표(')**를 사용해야 합니다. 큰따옴표(\")는 컬럼명 등을 감쌀 때 쓰입니다.",
     "problem_type": "코딩"
@@ -33,7 +33,7 @@
     "body": "PySpark의 다양한 함수(col, lit, sum 등)를 사용하기 위해 `pyspark.sql.functions` 모듈을 import 하려고 합니다. 코드를 간결하게 쓰기 위해 통상적으로 사용하는 별칭(Alias)을 사용하여 import 문을 작성하세요.",
     "schema": "N/A (코드 설정 문제)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pyspark",
     "hint": "`import ... as ...` 구문을 사용합니다. 보통 `F`라는 약어를 많이 사용합니다.",
     "problem_type": "코딩"
@@ -48,7 +48,7 @@
       "Bob | NULL",
       "Charlie | charlie@test.com"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "컬럼 객체 뒤에 `.isNull()` 메서드를 붙여서 확인해야 합니다.",
     "problem_type": "코딩"
@@ -62,7 +62,7 @@
       "Alice | alice@test.com",
       "Bob | NULL"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`컬럼명 IS NULL` 구문을 사용해야 합니다. (`= NULL`은 동작하지 않습니다.)",
     "problem_type": "코딩"
@@ -76,7 +76,7 @@
       "Alice | 25",
       "Bob | 35"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pyspark",
     "hint": "따옴표 앞에 `f`를 붙이고, 변수를 중괄호 `{}` 안에 넣는 **f-string** 문법을 사용해보세요.",
     "problem_type": "코딩"
@@ -91,7 +91,7 @@
       "Beef | Meat",
       "Carrot | Vegetable"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`컬럼명 IN ('값1', '값2')` 형태의 문법을 사용하세요.",
     "problem_type": "코딩"
@@ -104,7 +104,7 @@
     "sample_rows": [
       "Alice | 20"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`F.col(\"컬럼명\")` 함수를 사용하여 문자열을 컬럼 객체로 감싸주세요.",
     "problem_type": "코딩"
@@ -117,7 +117,7 @@
     "sample_rows": [
       "Mouse | 10000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "계산식 뒤에 `AS 새로운이름`을 붙여줍니다.",
     "problem_type": "코딩"
@@ -131,7 +131,7 @@
       "Alice | 25",
       "Bob | 35"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "각 조건을 괄호 `()`로 감싸고, `&` (AND) 또는 `|` (OR) 연산자를 사용하세요.",
     "problem_type": "코딩"
@@ -146,7 +146,7 @@
       "2 | inactive",
       "3 | pending"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "SQL",
     "hint": "표준 SQL에서는 `<>`를 많이 쓰지만, `!=`도 대부분 지원합니다. 둘 중 하나를 사용해보세요.",
     "problem_type": "코딩"
@@ -160,7 +160,7 @@
       "Alice | 20",
       "Bob | 25"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pyspark",
     "hint": "같다는 `==`이고, 다르다는 `!=` 입니다. `F.col('age') != 20` 형태로 작성합니다.",
     "problem_type": "코딩"
@@ -173,7 +173,7 @@
     "sample_rows": [
       "Alice | 20"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.withColumnRenamed('기존이름', '새이름')` 메서드를 사용합니다. `alias`는 select 할 때 쓰고, 이 메서드는 DF 자체를 변환할 때 씁니다.",
     "problem_type": "코딩"
@@ -188,7 +188,7 @@
       "2 | NULL",
       "3 | 102"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`COUNT(*)`는 NULL 포함 전체를 세고, `COUNT(컬럼명)`은 해당 컬럼의 NULL을 제외하고 셉니다.",
     "problem_type": "코딩"
@@ -203,7 +203,7 @@
       "10:00 | Alice",
       "10:01 | Bob"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.dropDuplicates()` 또는 `df.distinct()`를 사용합니다. 실무에서는 특정 컬럼 기준 중복 제거가 가능한 `dropDuplicates()`를 더 자주 씁니다.",
     "problem_type": "코딩"
@@ -218,7 +218,7 @@
       "B | 1500",
       "C | 2500"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`price BETWEEN 1000 AND 2000` 구문을 사용하세요. (시작과 끝 값을 포함합니다)",
     "problem_type": "코딩"
@@ -232,7 +232,7 @@
       "Alice | 50",
       "Bob | 100"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`F.col('score').desc()` 함수를 사용해야 합니다. (`F.desc('score')`도 가능)",
     "problem_type": "코딩"
@@ -246,7 +246,7 @@
       "A | a@naver.com",
       "B | b@gmail.com"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`email LIKE '%@gmail.com'`을 사용하세요. `%`는 '0개 이상의 아무 문자'를 뜻합니다.",
     "problem_type": "코딩"
@@ -260,7 +260,7 @@
       "New Laptop | 100",
       "Old Mouse | 10"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`F.col('name').startswith('New')` 메서드를 사용하세요. 코드가 훨씬 읽기 좋아집니다.",
     "problem_type": "코딩"
@@ -273,7 +273,7 @@
     "sample_rows": [
       "Alice | 12000"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "SQL",
     "hint": "`salary / 12 AS monthly_salary` 처럼 작성하면 됩니다. SQL은 SELECT 절에서 사칙연산이 가능합니다.",
     "problem_type": "코딩"
@@ -286,7 +286,7 @@
     "sample_rows": [
       "1 | a@test.com | Seoul | 010..."
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pyspark",
     "hint": "`df.select('id', 'email')`을 사용하세요. 분석의 첫 단계는 필요한 데이터만 남기는 것입니다.",
     "problem_type": "코딩"
@@ -299,7 +299,7 @@
     "sample_rows": [
       "Alice | \"25\""
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`F.col('age').cast('int')` 또는 `.cast('integer')`를 사용합니다.",
     "problem_type": "코딩"
@@ -313,7 +313,7 @@
       "Alice | 010-1234-5678",
       "Bob | NULL"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`COALESCE(컬럼명, '대체값')` 함수를 사용하세요. NULL이 아니면 원래 값을, NULL이면 뒤의 값을 반환합니다.",
     "problem_type": "코딩"
@@ -327,7 +327,7 @@
       "Mouse | 5000",
       "Keyboard | 15000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`F.when(조건, 값).otherwise(값)` 형태를 사용합니다. 아주 자주 쓰이는 패턴입니다.",
     "problem_type": "코딩"
@@ -341,7 +341,7 @@
       "Alice",
       "Bob"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "단순한 값(숫자, 문자, 불린)을 컬럼으로 넣을 때는 반드시 `F.lit(값)`으로 감싸야 합니다. (Literal의 줄임말)",
     "problem_type": "코딩"
@@ -355,7 +355,7 @@
       "Mouse | Electronics | 5000",
       "Monitor | Computer | 20000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "AND는 OR보다 우선순위가 높습니다. 따라서 OR 조건을 먼저 묶어주려면 반드시 **괄호 `()`**를 사용해야 합니다.",
     "problem_type": "코딩"
@@ -366,7 +366,7 @@
     "body": "데이터를 로드했는데 `age`가 숫자인지 문자인지, `reg_date`가 날짜인지 문자인지 헷갈립니다. 데이터프레임의 컬럼 이름과 데이터 타입을 트리 형태로 예쁘게 출력해서 확인하는 메서드는 무엇일까요?",
     "schema": "N/A (데이터 확인 문제)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pyspark",
     "hint": "`df.printSchema()`를 실행하면 스키마 정보를 눈으로 확인할 수 있습니다. 디버깅할 때 필수입니다.",
     "problem_type": "코딩"
@@ -380,7 +380,7 @@
       "Alice | 5000",
       "Bob | 9000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`MAX(salary)`, `MIN(salary)`를 사용합니다.",
     "problem_type": "코딩"
@@ -391,7 +391,7 @@
     "body": "열심히 필터링하고 컬럼을 추가했습니다. 이제 결과 데이터의 상위 20줄을 화면에 출력해서 제대로 처리되었는지 확인하고 싶습니다. 가장 많이 쓰는 'Action' 메서드는 무엇일까요?",
     "schema": "result_df(name STRING, age INT)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pyspark",
     "hint": "`df.show()`를 사용합니다. 괄호 안에 숫자를 넣어 `df.show(5)` 처럼 줄 수를 지정할 수도 있습니다.",
     "problem_type": "코딩"
@@ -405,7 +405,7 @@
       "1 | 2023-12-31",
       "2 | 2024-01-02"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "SQL 표준 날짜 포맷은 **'YYYY-MM-DD'**입니다. `order_date > '2024-01-01'` 처럼 작은따옴표로 감싸서 비교하면 자동으로 날짜로 인식합니다.",
     "problem_type": "코딩"
@@ -419,7 +419,7 @@
       "Alice | NULL",
       "Bob | 25"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.fillna(0, subset=['age'])` 형태로 사용합니다. 특정 컬럼을 지정하지 않으면 호환되는 모든 컬럼을 채워버리니 주의하세요.",
     "problem_type": "코딩"
@@ -434,7 +434,7 @@
       "2 | 100",
       "3 | 200"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`COUNT(DISTINCT user_id)`를 사용합니다. 중복을 제거한 뒤 개수를 셉니다.",
     "problem_type": "코딩"
@@ -448,7 +448,7 @@
       "Alice | 25 | Seoul",
       "Bob | 15 | Busan"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.filter(조건).select(컬럼)` 처럼 메서드 뒤에 바로 점을 찍어 다음 메서드를 연결하는 방식을 '체이닝'이라고 합니다.",
     "problem_type": "코딩"
@@ -461,7 +461,7 @@
     "sample_rows": [
       "Gildong | Hong"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "데이터베이스마다 다르지만 표준적으로 `CONCAT(first_name, ' ', last_name)`을 쓰거나, `||` 기호를 사용합니다.",
     "problem_type": "코딩"
@@ -477,7 +477,7 @@
       "3 | Books | 15000",
       "4 | Beauty | 25000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`SELECT DISTINCT category`를 사용하여 중복을 제거한 후 정렬하세요.",
     "problem_type": "코딩"
@@ -491,7 +491,7 @@
       "1 | Alice",
       "2 | Bob"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "단순 문자열을 할당하면 에러가 납니다. `df.withColumn('country', F.lit('Korea'))`를 사용하세요.",
     "problem_type": "코딩"
@@ -507,7 +507,7 @@
       "3 | Charlie | ",
       "4 | David | david@example.com"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`WHERE email IS NULL OR email = ''` 조건을 사용하세요. `email = NULL`은 동작하지 않습니다.",
     "problem_type": "코딩"
@@ -522,7 +522,7 @@
       "102 | '15000'",
       "103 | '900'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.withColumn('price', F.col('price').cast('int'))`로 타입을 변경한 후 필터링을 수행하세요.",
     "problem_type": "코딩"
@@ -537,7 +537,7 @@
       "2 | 10000 | 2024-03-01 10:05:00",
       "3 | 30000 | 2024-03-01 09:00:00"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`ORDER BY order_date DESC LIMIT 5` 구문을 사용하세요.",
     "problem_type": "코딩"
@@ -551,7 +551,7 @@
       "1 | 15.50",
       "2 | 20.00"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.select(F.col('product_id'), F.col('product_manufacturing_cost').alias('cost'))`를 사용하세요.",
     "problem_type": "코딩"
@@ -567,7 +567,7 @@
       "3 | John",
       "4 | Robert"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`WHERE name LIKE 'J%'`를 사용하세요. `%J%`와 달리 접두사 검색은 인덱스를 탈 가능성이 높습니다.",
     "problem_type": "코딩"
@@ -581,7 +581,7 @@
       "1 | Alice | 1234 | 111-222",
       "2 | Bob | abcd | 333-444"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.drop('password', 'ssn')`과 같이 여러 컬럼을 한 번에 삭제할 수 있습니다.",
     "problem_type": "코딩"
@@ -595,7 +595,7 @@
       "1 | 10000",
       "2 | 20000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`SELECT product_id, price, price * 1.1 AS final_price FROM products`와 같이 작성하세요.",
     "problem_type": "코딩"
@@ -611,7 +611,7 @@
       "3 | Books",
       "4 | Toys"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.filter(F.col('category').isin(['Electronics', 'Books', 'Garden']))`을 사용하세요.",
     "problem_type": "코딩"
@@ -627,7 +627,7 @@
       "3 | 20 | N",
       "4 | 8 | Y"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`WHERE stock < 10 AND is_discontinued = 'N'` 조건을 사용하세요.",
     "problem_type": "코딩"
@@ -642,7 +642,7 @@
       "Bob | Sales | 6000",
       "Charlie | HR | 4000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.orderBy(F.col('department').asc(), F.col('salary').desc())`와 같이 정렬 기준을 순서대로 나열하세요.",
     "problem_type": "코딩"
@@ -659,7 +659,7 @@
       "4 | David | NULL",
       "5 | Eve | 2024-01-01"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "컬럼을 가공(예: YEAR(signup_date))하면 인덱스를 타지 않을 수 있습니다. `signup_date >= '2024-01-01'`과 같이 원본 컬럼을 그대로 비교하세요.",
     "problem_type": "코딩"
@@ -743,7 +743,7 @@
       "3 | true | 2023-12-10 15:30:00",
       "4 | true | 2024-01-05 09:20:00"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`df.filter((F.col('active') == True) & (F.col('last_login') >= F.lit('2024-01-01')))` 형태로 작성하세요.",
     "problem_type": "코딩"
@@ -897,7 +897,7 @@
       "Mouse | 2023-12-28 | NULL",
       "Keyboard | 2024-02-10 | -5000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`WHERE amount > 0` 조건은 암시적으로 NULL을 배제합니다. 날짜 필터는 `order_date >= '2024-01-01'`을 사용하세요.",
     "problem_type": "코딩"
@@ -972,7 +972,7 @@
       "[1, 2, 3, 4, 5] -> [4, 16]",
       "[10, 11, 12] -> [100, 144]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`[식 for 변수 in 리스트 if 조건]` 형태를 기억하세요. `x % 2 == 0`이 짝수 조건입니다.",
     "problem_type": "코딩"
@@ -985,7 +985,7 @@
     "sample_rows": [
       "['apple', 'cat', 'banana'] -> ['APPLE', 'BANANA']"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "문자열 길이 확인은 `len(w)`, 대문자 변환은 `.upper()`를 사용합니다.",
     "problem_type": "코딩"
@@ -1026,7 +1026,7 @@
       "5 -> 120 (1*2*3*4*5)",
       "3 -> 6"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "초기값을 1로 설정(`result = 1`)하고, 1부터 n까지 반복하며 계속 곱해줍니다.",
     "problem_type": "코딩"
@@ -1118,7 +1118,7 @@
     "sample_rows": [
       "Alice | 25 | Seoul | 010..."
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "함수 인자로 리스트를 바로 넣는 대신, `*리스트이름`을 쓰면 리스트 껍질을 벗겨서 알맹이만 `arg1, arg2, ...` 형태로 전달합니다.",
     "problem_type": "코딩"
@@ -1169,7 +1169,7 @@
     "body": "테이블 이름 `table_name = 'sales_2024'`와 기준 금액 `min_amount = 1000`이 변수로 주어집니다. 파이썬의 f-string을 사용하여 `SELECT * FROM sales_2024 WHERE amount >= 1000` 형태의 쿼리 문자열을 생성하고 `spark.sql()`로 실행하세요.",
     "schema": "N/A (Spark SQL 실행)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "SQL 쿼리도 결국 문자열입니다. 파이썬 변수를 쿼리 중간에 꽂아 넣을 때 f-string이 가장 가독성이 좋습니다.",
     "problem_type": "코딩"
@@ -1206,7 +1206,7 @@
     "sample_rows": [
       "공통 컬럼 -> ['id']"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "리스트를 `set()`으로 변환하면 교집합(`&`), 차집합(`-`), 합집합(`|`)을 매우 쉽게 구할 수 있습니다.",
     "problem_type": "코딩"
@@ -1217,7 +1217,7 @@
     "body": "데이터 가공이 끝난 후, 결과 데이터프레임 `result_df`의 행 개수가 0이면 안 된다는 조건을 걸고 싶습니다. 파이썬의 `assert` 문을 사용하여 행 개수가 0일 때 에러를 발생시키는 코드를 작성하세요.",
     "schema": "result_df(...)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`assert 조건, 에러메시지` 형태입니다. 조건이 False면 프로그램이 즉시 중단되며 에러를 뿜습니다. 데이터 품질 체크에 필수적입니다.",
     "problem_type": "코딩"
@@ -1230,7 +1230,7 @@
     "sample_rows": [
       "1 | Alice"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "문자열 `s.strip()`은 양쪽 공백을 제거합니다. `[c.strip() for c in df.columns]` 패턴은 데이터 로드 직후 국룰입니다.",
     "problem_type": "코딩"
@@ -1294,7 +1294,7 @@
     "sample_rows": [
       "20240101 -> 2024"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "문자열 `s`에서 `s[:4]`는 처음부터 4번째 인덱스 전까지 자릅니다. 파이썬의 가장 강력한 기능 중 하나입니다.",
     "problem_type": "코딩"
@@ -1305,7 +1305,7 @@
     "body": "데이터 처리 중 에러가 발생하여 `error_list`에 에러 메시지가 담겼습니다. 이 리스트가 **비어있지 않을 때만** 경고 로그를 출력하려고 합니다. 파이썬스럽게 조건문을 작성하세요.",
     "schema": "N/A (로직 문제)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`if len(error_list) > 0:` 대신 `if error_list:`를 씁니다. 빈 리스트 `[]`는 False, 내용이 있으면 True로 취급됩니다.",
     "problem_type": "코딩"
@@ -1318,7 +1318,7 @@
     "sample_rows": [
       "['s3n://bucket/a', 's3n://bucket/b']"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "문자열 메서드 `.replace('찾을값', '바꿀값')`을 사용합니다. 단순 치환에 가장 많이 쓰입니다.",
     "problem_type": "코딩"
@@ -1342,7 +1342,7 @@
     "sample_rows": [
       "a@b.com -> b.com"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`s.split('@')`은 리스트 `['user', 'gmail.com']`을 반환합니다. `[1]` 또는 `[-1]`로 뒤쪽 요소를 가져옵니다.",
     "problem_type": "코딩"
@@ -1366,7 +1366,7 @@
     "sample_rows": [
       "1 -> '01', 12 -> '12'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "숫자를 먼저 `str(x)`로 문자로 바꾼 뒤 `.zfill(2)`를 호출하면 앞에 0을 채워줍니다.",
     "problem_type": "코딩"
@@ -1377,7 +1377,7 @@
     "body": "가공 결과가 리스트 `['Seoul', 'Busan', 'Jeju']`로 나왔습니다. 이를 콤마(,)로 구분된 하나의 문자열 \"Seoul,Busan,Jeju\"로 합쳐서 DB에 저장하려고 합니다. 파이썬 문자열 메서드를 사용하세요.",
     "schema": "cities (List[str])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pyspark",
     "hint": "`'구분자'.join(리스트)` 형태입니다. 리스트를 문자열로 직렬화할 때 가장 많이 씁니다.",
     "problem_type": "코딩"
@@ -1414,7 +1414,7 @@
     "sample_rows": [
       "900101-1234567 -> 900101"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "파이썬에서 `문자열[:n]`은 처음부터 n번째 글자 앞까지 자릅니다.",
     "problem_type": "코딩"
@@ -1428,7 +1428,7 @@
       "/data/users.csv -> csv",
       "report.pdf -> pdf"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`x.split('.')`의 결과는 리스트입니다. `[-1]`은 리스트의 마지막 요소를 의미합니다.",
     "problem_type": "코딩"
@@ -1442,7 +1442,7 @@
       "80 -> Pass",
       "50 -> Fail"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`값1 if 조건 else 값2` 형식을 사용합니다. 파이썬에서 가장 자주 쓰이는 숏컷 중 하나입니다.",
     "problem_type": "코딩"
@@ -1455,7 +1455,7 @@
     "sample_rows": [
       "010-1234-5678 -> 01012345678"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`문자열.replace('찾을값', '바꿀값')`을 사용합니다. 바꿀 값에 빈 문자열 `''`을 넣으면 삭제 효과가 납니다.",
     "problem_type": "코딩"
@@ -1468,7 +1468,7 @@
     "sample_rows": [
       "70.5 -> 70.5kg"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`f'{변수}kg'` 형태로 작성하면 변수 값이 문자열 안에 예쁘게 삽입됩니다.",
     "problem_type": "코딩"
@@ -1482,7 +1482,7 @@
       "PySpark -> pyspark",
       "PYTHON -> python"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`x.upper()`는 대문자, `x.lower()`는 소문자로 변환합니다.",
     "problem_type": "코딩"
@@ -1495,7 +1495,7 @@
     "sample_rows": [
       "4.56789 -> 4.57"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`round(숫자, 자릿수)` 함수를 사용합니다. `round(x, 2)`는 둘째 자리까지 반올림합니다.",
     "problem_type": "코딩"
@@ -1509,7 +1509,7 @@
       "Gangnam-gu, Seoul -> True",
       "Busan, Korea -> False"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`'찾을단어' in 문자열변수` 형태로 작성하면 결과는 `True` 또는 `False`가 됩니다.",
     "problem_type": "코딩"
@@ -1523,7 +1523,7 @@
       "\"007\" -> 7",
       "\"100\" -> 100"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`int(x)`는 문자열이나 실수를 정수로 변환해줍니다.",
     "problem_type": "코딩"
@@ -1537,7 +1537,7 @@
       "Alice -> 5",
       "NULL -> 0"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "hint": "`if x is not None`은 파이썬에서 가장 정석적인 NULL 체크 방식입니다. (또는 간단히 `if x:`를 쓰기도 합니다)",
     "problem_type": "코딩"
@@ -1561,7 +1561,7 @@
     "body": "주문 내역(orders)과 회원 정보(users)를 연결해서 조회하려 합니다. 탈퇴했거나 정보가 없는 회원의 주문은 제외하고, '두 테이블 모두에 데이터가 있는 경우'만 남기려면 어떤 JOIN을 써야 할까요?",
     "schema": "orders(user_id), users(user_id)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "양쪽 모두에 매칭되는 데이터만 가져오는 것은 `INNER JOIN`입니다. (그냥 `JOIN`이라고 써도 기본값은 INNER입니다)",
     "problem_type": "코딩"
@@ -1575,7 +1575,7 @@
       "Order 1 | User A",
       "Order 2 | NULL (회원정보 없음)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "왼쪽(기준) 테이블의 모든 행을 유지하고 오른쪽 테이블을 붙이는 것은 `LEFT JOIN`입니다.",
     "problem_type": "코딩"
@@ -1588,7 +1588,7 @@
     "sample_rows": [
       "' Alice ' -> 'Alice'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`TRIM()` 함수는 문자열 양쪽의 공백을 제거합니다. (`LTRIM`, `RTRIM`도 있습니다)",
     "problem_type": "코딩"
@@ -1599,7 +1599,7 @@
     "body": "저장된 데이터는 'Kim', 'kim', 'KIM' 등 제각각입니다. 대소문자 구분 없이 'kim'을 검색하려면 양쪽을 모두 대문자(혹은 소문자)로 맞춰서 비교해야 합니다.",
     "schema": "users(name TEXT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`UPPER(col)` 혹은 `LOWER(col)` 함수를 사용하여 통일한 뒤 비교합니다.",
     "problem_type": "코딩"
@@ -1610,7 +1610,7 @@
     "body": "비밀번호(password) 길이가 8자리 미만인 취약한 계정을 찾으려 합니다. 문자열의 길이를 반환하는 함수를 사용하세요.",
     "schema": "users(password TEXT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "표준은 `LENGTH()`이고, SQL Server 등 일부는 `LEN()`을 사용합니다.",
     "problem_type": "코딩"
@@ -1623,7 +1623,7 @@
     "sample_rows": [
       "'19900101' -> '1990'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`SUBSTRING(컬럼, 시작위치, 길이)` 또는 `LEFT(컬럼, 길이)`를 사용합니다. SQL의 문자열 인덱스는 보통 1부터 시작합니다.",
     "problem_type": "코딩"
@@ -1634,7 +1634,7 @@
     "body": "평균 점수가 85.6점일 때, 이를 반올림하여 86점으로 만들고 싶습니다.",
     "schema": "scores(avg_score DECIMAL)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`ROUND(값, 소수점자리수)`를 씁니다. 정수로 만들려면 자리수에 0을 넣습니다.",
     "problem_type": "코딩"
@@ -1645,7 +1645,7 @@
     "body": "주문일(order_date)이 2023년 1월 1일부터 1월 31일 사이인 데이터를 찾으려 합니다. `>=`와 `<=`를 써도 되지만, 더 가독성 좋은 연산자는 무엇일까요?",
     "schema": "orders(order_date DATE)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`col BETWEEN 시작값 AND 종료값`을 사용합니다. (양쪽 끝값을 포함합니다)",
     "problem_type": "코딩"
@@ -1700,7 +1700,7 @@
     "body": "우리 회사에 존재하는 '부서(dept)'와 '직책(job)'의 모든 고유한 조합을 보고 싶습니다. (예: IT팀-개발자, IT팀-매니저)",
     "schema": "emp(dept, job)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`DISTINCT` 뒤에 여러 컬럼을 적으면 그 컬럼들의 '조합'이 중복되지 않게 가져옵니다.",
     "problem_type": "코딩"
@@ -1713,7 +1713,7 @@
     "sample_rows": [
       "5000 + NULL = ?"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "NULL에 어떤 숫자를 더하거나 빼도 결과는 무조건 NULL입니다. 그래서 `COALESCE(comm, 0)` 처리가 필요합니다.",
     "problem_type": "코딩"
@@ -1735,7 +1735,7 @@
     "body": "DB에 성별이 'M', 'F'로 저장되어 있습니다. 조회할 때는 이를 '남성', '여성'으로 바꿔서 보여주고 싶습니다.",
     "schema": "users(gender CHAR(1))",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`CASE WHEN 조건 THEN 결과 ... END` 구문을 SELECT 절에 사용합니다.",
     "problem_type": "코딩"
@@ -1770,7 +1770,7 @@
     "body": "오늘 날짜로부터 일주일(7일) 뒤의 날짜를 구하고 싶습니다. (함수 이름은 DB마다 조금 다르지만 일반적인 형태)",
     "schema": "N/A",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "MySQL은 `DATE_ADD`, Postgres/Oracle은 `dt + INTERVAL '7' DAY`, SQL Server는 `DATEADD(day, 7, dt)`를 씁니다.",
     "problem_type": "코딩"
@@ -1785,7 +1785,7 @@
       "2 | NULL",
       "3 | b@test.com"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`COUNT(*)`는 NULL 여부와 상관없이 무조건 행의 수를 셉니다. 반면 `COUNT(컬럼명)`은 해당 컬럼이 NULL인 행은 세지 않습니다.",
     "problem_type": "코딩"
@@ -1800,7 +1800,7 @@
       "1",
       "2"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`COUNT(DISTINCT 컬럼명)`을 사용하면 중복된 값을 하나로 쳐서 셉니다.",
     "problem_type": "코딩"
@@ -1813,7 +1813,7 @@
     "sample_rows": [
       "Alice | NULL -> Unknown"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`COALESCE(컬럼, 대체값)`은 컬럼이 NULL일 때 대체값을 반환합니다.",
     "problem_type": "코딩"
@@ -1824,7 +1824,7 @@
     "body": "성적(score)이 높은 순서대로 정렬하되, 성적이 같으면 이름(name)의 가나다(알파벳) 순으로 정렬하세요.",
     "schema": "students(name TEXT, score INT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "콤마(`,`)로 구분하여 순서대로 적습니다. `ORDER BY score DESC, name ASC` (ASC는 생략 가능)",
     "problem_type": "코딩"
@@ -1838,7 +1838,7 @@
       "Kim Chulsu",
       "Lee Younghee"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`WHERE name LIKE 'Kim%'`를 쓰면 Kim으로 시작하는 모든 문자열을 찾습니다.",
     "problem_type": "코딩"
@@ -1885,7 +1885,7 @@
     "body": "프로젝트 시작일(start_date)로부터 오늘(`CURRENT_DATE`)까지 며칠이 지났는지 계산하세요.",
     "schema": "projects(start_date DATE)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "미래(오늘)에서 과거(시작일)를 빼야 양수가 나옵니다. DB에 따라 순서가 `DATEDIFF(end, start)`입니다.",
     "problem_type": "코딩"
@@ -1899,7 +1899,7 @@
       "95 -> A",
       "80 -> B"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`CASE WHEN 조건 THEN 값 ELSE 값 END` 구문을 사용합니다.",
     "problem_type": "코딩"
@@ -1950,7 +1950,7 @@
     "sample_rows": [
       "1등, 1등, ?등"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`RANK`는 앞의 인원수만큼 건너뜁니다. (1, 1 다음은 3). 건너뛰기 싫으면 `DENSE_RANK`를 씁니다.",
     "problem_type": "코딩"
@@ -1961,7 +1961,7 @@
     "body": "`WHERE col = NULL`이나 `WHERE NULL = NULL`은 참(True)일까요? SQL에서 NULL을 찾으려면 어떻게 해야 하는지 다시 확인합니다.",
     "schema": "test(col INT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "SQL에서 NULL과의 모든 연산(`=`, `!=`, `+` 등)은 `Unknown(NULL)`입니다. 반드시 `IS NULL` 혹은 `IS NOT NULL`을 써야 합니다.",
     "problem_type": "코딩"
@@ -1972,7 +1972,7 @@
     "body": "`2025-12-25` 같은 날짜 컬럼에서 '연도(2025)'와 '월(12)'만 숫자로 추출하고 싶습니다.",
     "schema": "orders(order_date DATE)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "대부분의 DB에서 `YEAR()`, `MONTH()` 함수를 지원합니다. (Postgres는 `EXTRACT(YEAR FROM ...)` 사용)",
     "problem_type": "코딩"
@@ -1983,7 +1983,7 @@
     "body": "데이터의 행(Row) 수가 줄어드는 것은 어느 것일까요? 1. `GROUP BY` 집계, 2. `OVER (PARTITION BY)` 윈도우 집계",
     "schema": "N/A",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`GROUP BY`는 그룹당 한 행으로 요약(압축)하지만, 윈도우 함수는 원래 행을 그대로 유지하면서 옆에 계산 결과만 붙입니다.",
     "problem_type": "코딩"
@@ -1996,7 +1996,7 @@
     "sample_rows": [
       "Gildong | Hong -> Hong Gildong"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "MySQL은 `CONCAT(last_name, ' ', first_name)`, 표준 SQL이나 Oracle/Postgres는 `last_name || ' ' || first_name`을 씁니다.",
     "problem_type": "코딩"
@@ -2007,7 +2007,7 @@
     "body": "status가 'Pending', 'Processing', 'Shipped' 중 하나인 주문을 찾을 때 `OR`를 3번 쓰는 대신 사용하는 연산자는?",
     "schema": "orders(status TEXT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`status IN ('A', 'B', 'C')` 형태로 씁니다.",
     "problem_type": "코딩"
@@ -2081,7 +2081,7 @@
     "body": "커뮤니티에서 작성자 이름을 보여줄 때 닉네임, 실명, 유저ID 순으로 존재하는 값을 보여주려 합니다. 3단계 우선순위를 `COALESCE`로 처리하세요. ID는 숫자기 때문에 문자열 변환이 필요할 수 있습니다.",
     "schema": "users(id INT, real_name TEXT, nickname TEXT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "데이터 타입이 다르면(문자와 숫자) 에러가 날 수 있으니 `CAST(id AS CHAR)` 등으로 타입을 맞춰 `COALESCE`에 넣습니다.",
     "problem_type": "코딩"
@@ -2117,7 +2117,7 @@
     "body": "성적이 낮은 순서대로 3명을 뽑고 싶습니다. 오름차순/내림차순 정렬만 바꾸면 `RANK` 함수로 간단히 해결됩니다.",
     "schema": "scores(student_id INT, score INT)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`RANK() OVER (ORDER BY score ASC)`를 쓰면 점수가 낮은 사람이 1등이 됩니다.",
     "problem_type": "코딩"
@@ -2768,7 +2768,7 @@
     "body": "1등이 3명일 때, 그 다음 사람의 등수가 `4등`이 되는 함수와 `2등`이 되는 함수를 순서대로 나열하세요.",
     "schema": "N/A (개념 문제)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`RANK`는 1, 1, 1 다음 4 (건너뜀), `DENSE_RANK`는 1, 1, 1 다음 2 (빽빽함)입니다.",
     "problem_type": "코딩"
@@ -2797,7 +2797,7 @@
       "3000 | NULL -> 3000",
       "4000 | 500 -> 4500"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "SQL에서 `숫자 + NULL`은 `NULL`입니다. 반드시 `COALESCE(bonus, 0)`으로 NULL을 0으로 바꿔준 뒤 더해야 합니다.",
     "problem_type": "코딩"
@@ -2921,7 +2921,7 @@
     "body": "오늘 날짜(NOW() 혹은 CURRENT_DATE)를 기준으로, 최근 30일 이내에 가입한 유저만 조회하는 WHERE 절을 `DATEDIFF`를 사용하여 작성하세요.",
     "schema": "users(id INT, join_date DATE)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "`DATEDIFF(CURRENT_DATE, join_date) BETWEEN 0 AND 30` 처럼 작성하여 미래 날짜는 제외하고 과거 30일만 가져옵니다.",
     "problem_type": "코딩"
@@ -3032,7 +3032,7 @@
       "Terminator | Arnold",
       "NULL | NULL"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "COALESCE(컬럼1, 컬럼2, '기본값') 순서로 나열하면, 앞에서부터 순서대로 NULL이 아닌 첫 번째 값을 반환합니다.",
     "problem_type": "코딩"
@@ -3046,7 +3046,7 @@
       "1 | 2023-01-01 | 2023-01-05",
       "2 | 2023-01-10 | 2023-01-11"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "DB 종류에 따라 다르지만 보통 `DATEDIFF(종료일, 시작일)` 혹은 `DATEDIFF(단위, 시작일, 종료일)` 형식을 씁니다. 여기서는 `DATEDIFF(delivered_date, order_date)` 로직을 생각해보세요.",
     "problem_type": "코딩"
@@ -3263,7 +3263,7 @@
     "sample_rows": [
       "NULL | 010-... | 02-..."
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "SQL",
     "hint": "인자를 여러 개 넣으면 됩니다. `COALESCE(home, mobile, office)`.",
     "problem_type": "코딩"
@@ -3298,7 +3298,7 @@
     "sample_rows": [
       "[1, 2, 3]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "[",
@@ -3315,7 +3315,7 @@
     "sample_rows": [
       "{'name': 'Alice', 'age': 25}"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "{",
@@ -3330,7 +3330,7 @@
     "body": "인사말을 출력하는 함수 `greet()`를 정의하려고 합니다. 함수 정의(`def`) 줄의 맨 끝에 반드시 찍어야 하는 문장 부호는 무엇일까요?",
     "schema": "def greet() ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ":"
@@ -3344,7 +3344,7 @@
     "body": "다음 `if` 문 안에 있는 `print` 코드가 실행되려면 앞부분을 비워둬야 합니다. Python에서 종속된 코드 블록임을 나타내기 위해 사용하는 공백 규칙은 무엇인가요?",
     "schema": "if True:\n    print('Hello')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "    ",
@@ -3359,7 +3359,7 @@
     "body": "변수 `x`에 10을 **저장**하고 싶습니다. 수학에서의 '같다'와 혼동하지 말고, 값을 대입할 때 쓰는 연산자를 사용하세요.",
     "schema": "x ... 10",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "="
@@ -3376,7 +3376,7 @@
       "'Hello Python'",
       "\"Hello Python\""
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "'",
@@ -3391,7 +3391,7 @@
     "body": "코드 내에 설명문을 적고 싶지만, 프로그램이 실행할 때는 무시하게 하고 싶습니다. 문장 앞에 어떤 특수문자를 붙여야 주석처리가 될까요?",
     "schema": "... 이 코드는 실행되지 않습니다.",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "#"
@@ -3405,7 +3405,7 @@
     "body": "리스트 `my_list`에 새로운 값 5를 추가(`append`)하고 싶습니다. 객체(리스트)가 가진 함수(메서드)를 불러올 때, 객체와 함수 사이에 찍는 기호는 무엇인가요?",
     "schema": "my_list ... append(5)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "."
@@ -3419,7 +3419,7 @@
     "body": "함수 `print()`를 사용하여 'Hello'와 'World' 두 단어를 출력하되, 함수 안에 두 개의 값을 전달하려고 합니다. 값과 값 사이를 구분해주는 기호는 무엇인가요?",
     "schema": "print('Hello' ... 'World')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ","
@@ -3433,7 +3433,7 @@
     "body": "변수 `name = 'Alice'`가 있을 때, `My name is Alice`라고 출력하고 싶습니다. 문자열 앞에 붙여서 중괄호 `{}` 안에 변수를 쓸 수 있게 해주는 알파벳은 무엇일까요?",
     "schema": "name = 'Alice'\nmsg = ...\"My name is {name}\"",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "f"
@@ -3450,7 +3450,7 @@
       "True",
       "False"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "True",
@@ -3465,7 +3465,7 @@
     "body": "`greet`라는 이름의 함수가 이미 정의되어 있습니다. 이 함수를 지금 바로 **실행(호출)**하려면 이름 뒤에 무엇을 붙여야 할까요?",
     "schema": "greet ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "()"
@@ -3481,7 +3481,7 @@
     "sample_rows": [
       "None"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "None"
@@ -3495,7 +3495,7 @@
     "body": "리스트 `items = ['a', 'b', 'c']`에서 첫 번째 값 'a'를 가져오고 싶습니다. 순서 번호(인덱스)를 지정할 때 사용하는 괄호는 무엇일까요?",
     "schema": "items ... 0 ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "[",
@@ -3510,7 +3510,7 @@
     "body": "이름 없이 한 줄로 작성하는 간단한 함수를 만들고 싶습니다. `def` 대신 사용하는 키워드는 무엇일까요?",
     "schema": "plus_one = ... x: x + 1",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "lambda"
@@ -3524,7 +3524,7 @@
     "body": "함수 위에 붙여서 추가 기능을 부여하는 '데코레이터(Decorator)'를 사용하려고 합니다. 함수 정의 바로 윗줄에 쓰는 특수 기호는 무엇일까요?",
     "schema": "... app.route('/')\ndef home(): ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "@"
@@ -3538,7 +3538,7 @@
     "body": "수학 관련 기능이 들어있는 `math` 모듈을 사용하고 싶습니다. 다른 파일이나 라이브러리를 내 코드로 가져올 때 쓰는 키워드는 무엇일까요?",
     "schema": "... math",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "import"
@@ -3552,7 +3552,7 @@
     "body": "함수나 if문의 뼈대만 만들어두고, 실제 코드는 나중에 작성하고 싶습니다. 비워두면 에러가 나기 때문에 '아무 일도 하지 않고 넘어감'을 뜻하는 키워드를 적어둬야 합니다.",
     "schema": "def later():\n    ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "pass"
@@ -3566,7 +3566,7 @@
     "body": "2의 3승(2^3 = 8)을 계산하고 싶습니다. 곱하기(`*`)와 헷갈리지 않게 주의하여 거듭제곱 연산자를 사용하세요.",
     "schema": "2 ... 3",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "**"
@@ -3580,7 +3580,7 @@
     "body": "0부터 9까지의 숫자를 만들어내서 반복문을 돌리고 싶습니다. 연속된 숫자를 생성해주는 Python 내장 함수의 이름은 무엇일까요?",
     "schema": "for i in ... (10):",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "range"
@@ -3596,7 +3596,7 @@
     "sample_rows": [
       "Hello, Alice!"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "f",
@@ -3613,7 +3613,7 @@
     "sample_rows": [
       "I am 20 years old."
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "{",
@@ -3630,7 +3630,7 @@
     "sample_rows": [
       "Next year: 21"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "age + 1"
@@ -3644,7 +3644,7 @@
     "body": "리스트 `colors = ['red', 'blue']`에서 첫 번째 값 'red'를 꺼내려 합니다. 인덱스 번호(0)를 감싸는 괄호를 작성하세요.",
     "schema": "first = colors ... 0 ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "[",
@@ -3659,7 +3659,7 @@
     "body": "딕셔너리 `user = {'name': 'Bob'}`을 만들 때는 중괄호 `{}`를 썼습니다. 하지만 키('name')를 이용해 값을 꺼낼 때는 어떤 괄호를 써야 할까요?",
     "schema": "name = user ... 'name' ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "[",
@@ -3674,7 +3674,7 @@
     "body": "수정할 수 없는 목록인 '튜플'을 만들려고 합니다. 리스트의 `[]` 대신 사용하는 둥근 괄호는 무엇인가요?",
     "schema": "coords = ... 10, 20 ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "(",
@@ -3689,7 +3689,7 @@
     "body": "순서가 없고 중복을 허용하지 않는 '집합(Set)'을 만들려고 합니다. 딕셔너리와 똑같이 생겼지만 키:값 쌍이 아닌 값만 나열할 때 쓰는 괄호는 무엇일까요?",
     "schema": "unique_nums = ... 1, 2, 3 ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "{",
@@ -3704,7 +3704,7 @@
     "body": "리스트 `menu` 안에 'Pizza'가 들어있는지 확인하는 조건문을 작성하세요.",
     "schema": "if 'Pizza' ... menu:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "in"
@@ -3718,7 +3718,7 @@
     "body": "변수 `is_closed`가 `True`일 때, '닫히지 않았으면(False이면)' 실행하라는 조건문을 만들고 싶습니다. `!` 대신 사용하는 Python 키워드는?",
     "schema": "if ... is_closed:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "not"
@@ -3732,7 +3732,7 @@
     "body": "무한 루프 `while True:`를 돌다가 특정 조건이 되면 반복문을 즉시 종료하고 싶습니다.",
     "schema": "if condition:\n    ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "break"
@@ -3746,7 +3746,7 @@
     "body": "반복문에서 아래 코드를 실행하지 않고, 즉시 다음 순번(반복)으로 넘어가게 하는 키워드는 무엇일까요?",
     "schema": "for i in range(10):\n    if i % 2 == 0:\n        ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "continue"
@@ -3760,7 +3760,7 @@
     "body": "코드를 실행해보고(`try`), 에러가 발생했을 때 멈추지 않고 대처 코드를 실행하게 하는 짝꿍 키워드는 무엇일까요?",
     "schema": "try:\n    1 / 0\n... ZeroDivisionError:\n    print('Error!')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "except"
@@ -3774,7 +3774,7 @@
     "body": "객체를 찍어낼 틀인 '클래스'를 정의하려고 합니다. `def`는 함수를 만들 때 쓰고, 클래스를 만들 때 쓰는 키워드는 무엇일까요?",
     "schema": "... Car:",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "class"
@@ -3788,7 +3788,7 @@
     "body": "클래스에서 객체가 처음 만들어질 때 자동으로 실행되는 초기화 메서드의 이름은 무엇일까요? 밑줄(_) 개수에 주의하세요.",
     "schema": "def ... (self):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "__init__"
@@ -3802,7 +3802,7 @@
     "body": "클래스 내부의 메서드(함수)들은 첫 번째 인자로 '객체 자기 자신'을 받아야 합니다. 관례적으로 사용하는 이 첫 번째 매개변수의 이름은?",
     "schema": "def introduce( ... ):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "self"
@@ -3816,7 +3816,7 @@
     "body": "함수 안에서 계산한 값을 함수를 호출한 곳으로 반환하고 함수를 종료시키는 키워드는?",
     "schema": "def add(a, b):\n    ... a + b",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "return"
@@ -3830,7 +3830,7 @@
     "body": "`math` 모듈 전체를 가져오는 게 아니라, 그 안의 `sqrt` 함수 하나만 가져오고 싶습니다. `import` 앞에 써야 하는 키워드는?",
     "schema": "... math import sqrt",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "from"
@@ -3844,7 +3844,7 @@
     "body": "`import pandas`를 할 때 매번 `pandas`라고 치기 귀찮아서 `pd`라는 짧은 별명으로 부르고 싶습니다.",
     "schema": "import pandas ... pd",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "as"
@@ -3858,7 +3858,7 @@
     "body": "숫자 123을 문자열 \"123\"으로 바꾸고 싶습니다. 타입을 변환해주는 함수는 무엇일까요?",
     "schema": "s = ... (123)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "str"
@@ -3872,7 +3872,7 @@
     "body": "리스트에 아이템이 몇 개 있는지, 혹은 문자열이 몇 글자인지 길이를 알고 싶을 때 쓰는 필수 내장 함수는?",
     "schema": "count = ... (my_list)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "len"
@@ -3886,7 +3886,7 @@
     "body": "리스트 `nums = [0, 1, 2, 3, 4]`에서 앞의 3개 `[0, 1, 2]`만 잘라내고 싶습니다. 숫자 범위 사이에 들어가는 문장 부호는 무엇일까요?",
     "schema": "sub_list = nums[0 ... 3]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ":"
@@ -3900,7 +3900,7 @@
     "body": "짝수인지 홀수인지 판별하기 위해 숫자를 2로 나눈 **나머지**를 구하려고 합니다. 나눗셈(`/`) 말고 나머지만 구하는 기호는 무엇인가요?",
     "schema": "remainder = number ... 2",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "%"
@@ -3914,7 +3914,7 @@
     "body": "나눗셈 결과에서 소수점을 버리고 **정수 몫**만 취하고 싶습니다. (예: `7` 나누기 `2`는 `3.5`가 아니라 `3`). 슬래시를 두 번 써야 합니다.",
     "schema": "result = 7 ... 2",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "//"
@@ -3928,7 +3928,7 @@
     "body": "문장 `'Hello World'`를 공백 기준으로 쪼개서 `['Hello', 'World']` 리스트로 만들고 싶습니다. 문자열이 가진 메서드를 사용하세요.",
     "schema": "words = 'Hello World'....()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "split"
@@ -3942,7 +3942,7 @@
     "body": "리스트 `['A', 'B', 'C']`를 하이픈(`-`)으로 연결해 `'A-B-C'`라는 문자열로 만들고 싶습니다. `split`의 반대 역할을 하는 메서드입니다.",
     "schema": "result = '-'. ... (['A', 'B', 'C'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "join"
@@ -3956,7 +3956,7 @@
     "body": "빈 리스트 `cart = []`에 'Apple'이라는 아이템을 담으려 합니다. 리스트의 맨 뒤에 값을 추가하는 메서드는 무엇일까요?",
     "schema": "cart. ... ('Apple')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "append"
@@ -3970,7 +3970,7 @@
     "body": "리스트의 길이가 얼마인지 몰라도, 무조건 **맨 마지막** 아이템을 가져오고 싶습니다. 0부터 세지 말고 뒤에서부터 세는 인덱스 번호를 쓰세요.",
     "schema": "last_item = my_list[ ... ]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "-1"
@@ -3987,7 +3987,7 @@
       "<class 'int'>",
       "<class 'str'>"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "type"
@@ -4001,7 +4001,7 @@
     "body": "프로그램 실행 중에 사용자가 키보드로 값을 입력하게 하고 싶습니다. 엔터를 칠 때까지 기다렸다가 입력값을 문자열로 돌려주는 함수는?",
     "schema": "name = ... ('이름을 입력하세요: ')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "input"
@@ -4015,7 +4015,7 @@
     "body": "`input()`으로 받은 값은 항상 문자열입니다. 나이 계산을 위해 문자열 `'20'`을 숫자 `20`으로 바꿔야 합니다.",
     "schema": "age = ... ('20')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "int"
@@ -4029,7 +4029,7 @@
     "body": "변수 `count`의 값을 1 증가시키고 싶습니다. `count = count + 1`을 줄여서 쓰는 연산자는 무엇일까요?",
     "schema": "count ... 1",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "+="
@@ -4043,7 +4043,7 @@
     "body": "조건문에서 '나이가 20 이상' **이고** '신분증이 있음'을 모두 만족해야 할 때, 두 조건을 연결하는 키워드는?",
     "schema": "if age >= 20 ... has_id:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "and"
@@ -4057,7 +4057,7 @@
     "body": "쿠폰이 있거나(**OR**) 회원이면 할인해주려고 합니다. 둘 중 하나만 만족해도 될 때 사용하는 키워드는?",
     "schema": "if has_coupon ... is_member:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "or"
@@ -4071,7 +4071,7 @@
     "body": "성적이 60점 **이상**(크거나 같다)인지 비교하고 싶습니다. 부등호의 순서에 주의하세요.",
     "schema": "if score ... 60:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ">="
@@ -4085,7 +4085,7 @@
     "body": "딕셔너리 `user = {'name': 'Kim', 'age': 20}`에서 값은 빼고 키('name', 'age')들만 리스트처럼 가져오고 싶습니다.",
     "schema": "k_list = user. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "keys"
@@ -4099,7 +4099,7 @@
     "body": "이번에는 키는 무시하고, 딕셔너리에 저장된 값들('Kim', 20)만 가져오고 싶습니다.",
     "schema": "v_list = user. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "values"
@@ -4113,7 +4113,7 @@
     "body": "소문자로 입력된 'python'을 대문자 'PYTHON'으로 바꾸고 싶습니다.",
     "schema": "s = 'python'\nprint(s. ... ())",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "upper"
@@ -4127,7 +4127,7 @@
     "body": "사용자가 입력한 아이디 앞뒤에 불필요한 공백이 포함되었습니다(`'  user1 '`). 이를 깨끗하게 지우는 문자열 메서드는?",
     "schema": "clean_id = user_id. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "strip"
@@ -4141,7 +4141,7 @@
     "body": "0부터 10까지 2씩 증가하는 숫자(0, 2, 4, 6...)를 만들고 싶습니다. `range` 함수의 세 번째 칸에 들어갈 숫자는?",
     "schema": "for i in range(0, 10, ...):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "2"
@@ -4155,7 +4155,7 @@
     "body": "리스트에서 마지막 요소를 가져오면서 동시에 리스트에서 삭제하고 싶습니다. `append`의 반대 개념입니다.",
     "schema": "last_item = my_list. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "pop"
@@ -4171,7 +4171,7 @@
     "sample_rows": [
       "HelloWorld"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "+"
@@ -4185,7 +4185,7 @@
     "body": "문자열 'Ha'를 5번 반복해서 'HaHaHaHaHa'를 만들고 싶습니다. 반복을 위해 사용하는 연산자는 무엇일까요?",
     "schema": "laugh = 'Ha' ... 5",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "*"
@@ -4201,7 +4201,7 @@
     "sample_rows": [
       "[99, 2, 3]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "="
@@ -4215,7 +4215,7 @@
     "body": "`if` 조건이 거짓일 때, 바로 `else`로 넘어가지 않고 다른 조건을 한 번 더 확인하고 싶습니다. Python에서 'else if'를 줄여 쓴 키워드는?",
     "schema": "if score >= 90:\n    print('A')\n... score >= 80:\n    print('B')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "elif"
@@ -4229,7 +4229,7 @@
     "body": "비밀번호가 기존 비밀번호와 **다를 때만** 변경하고 싶습니다. 같다는 `==`인데, 다르다는 비교 연산자는 무엇일까요?",
     "schema": "if new_pw ... old_pw:\n    update()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "!="
@@ -4243,7 +4243,7 @@
     "body": "문자열 \"3.14\"를 숫자 계산에 쓰기 위해 소수점이 있는 실수형(Float)으로 바꾸려 합니다. `int()`는 정수로 바꾸느라 소수점을 날려버립니다. 실수를 유지하는 함수는?",
     "schema": "pi = ... ('3.14')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "float"
@@ -4257,7 +4257,7 @@
     "body": "리스트 `scores = [80, 90, 50]` 중에서 가장 높은 점수를 찾고 싶습니다. 루프를 돌릴 필요 없이 한 번에 찾아주는 내장 함수는?",
     "schema": "best = ... (scores)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "max"
@@ -4271,7 +4271,7 @@
     "body": "이번에는 리스트에서 가장 낮은 점수를 찾고 싶습니다.",
     "schema": "worst = ... (scores)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "min"
@@ -4285,7 +4285,7 @@
     "body": "숫자가 음수(-10)이든 양수(10)이든 상관없이 양수(10)로 통일하고 싶습니다. 수학의 절댓값 기호 `|x|` 역할을 하는 함수는?",
     "schema": "positive_val = ... (-10)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "abs"
@@ -4299,7 +4299,7 @@
     "body": "`for` 문은 리스트 개수만큼 돌지만, 이 반복문은 조건이 `True`인 동안 계속 돕니다. '배터리가 0보다 큰 동안' 계속 실행하려면 어떤 키워드를 쓸까요?",
     "schema": "... battery > 0:\n    run()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "while"
@@ -4313,7 +4313,7 @@
     "body": "딕셔너리 `user = {}`에 새로운 키 'email'과 값 'a@test.com'을 추가하고 싶습니다. 리스트와 달리 `append`를 쓰지 않고 대괄호를 사용합니다.",
     "schema": "user['email'] ... 'a@test.com'",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "="
@@ -4327,7 +4327,7 @@
     "body": "리스트의 특정 요소나 딕셔너리의 특정 키를 아예 삭제해버리고 싶습니다. 함수가 아니라 '삭제하라'는 명령어를 사용하세요.",
     "schema": "... user['age']",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "del"
@@ -4341,7 +4341,7 @@
     "body": "뒤죽박죽 섞인 리스트 `[3, 1, 2]`를 정렬해서 `[1, 2, 3]`으로 된 **새로운 리스트**를 얻고 싶습니다. (원본 리스트를 바꾸는 `.sort()` 메서드가 아니라, 결과를 반환하는 내장 함수를 사용하세요)",
     "schema": "new_list = ... ([3, 1, 2])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "sorted"
@@ -4355,7 +4355,7 @@
     "body": "빈 리스트 `[]`나 숫자 `0`은 거짓(False) 취급을 받습니다. 어떤 값이 참인지 거짓인지 명확한 `True/False` 값으로 확인하고 싶을 때 쓰는 함수는?",
     "schema": "is_valid = ... (my_list)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "bool"
@@ -4369,7 +4369,7 @@
     "body": "줄바꿈이 포함된 긴 문장을 변수에 담고 싶습니다. 따옴표 한 개로는 에러가 납니다. 따옴표를 몇 개 연속으로 써야 여러 줄을 담을 수 있을까요?",
     "schema": "msg = ...\nHello\nWorld\n...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "\"\"\"",
@@ -4384,7 +4384,7 @@
     "body": "변수 `x`가 `None`인지 확인할 때는 `==`보다 권장되는 연산자가 있습니다. 두 객체가 메모리상에서 완전히 '동일한 객체'인지 비교하는 키워드는?",
     "schema": "if x ... None:",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "is"
@@ -4398,7 +4398,7 @@
     "body": "변수 이름은 숫자로 시작할 수 없습니다. 다음 중 올바른 변수 이름은 무엇일까요? `1st_place` vs `first_place`",
     "schema": "... = 'Alice'",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "first_place"
@@ -4412,7 +4412,7 @@
     "body": "중복을 허용하지 않는 '세트'를 만들고 싶습니다. 빈 리스트는 `[]`, 빈 딕셔너리는 `{}`입니다. 그렇다면 빈 세트는 어떻게 만들까요? `{}`를 쓰면 딕셔너리가 되어버립니다.",
     "schema": "my_set = ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "set"
@@ -4428,7 +4428,7 @@
     "sample_rows": [
       "3.14"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "round"
@@ -4442,7 +4442,7 @@
     "body": "`(A and B) or C` 와 `A and (B or C)`는 결과가 다를 수 있습니다. 복잡한 조건문에서 연산 순서를 명확하게 지정하기 위해 사용하는 기호는 무엇인가요?",
     "schema": "if ... x > 0 or y > 0 ... and z > 0:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "(",
@@ -4459,7 +4459,7 @@
     "sample_rows": [
       "[1, 3]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "remove"
@@ -4475,7 +4475,7 @@
     "sample_rows": [
       "['A', 'B', 'C']"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "insert"
@@ -4489,7 +4489,7 @@
     "body": "리스트 `votes = ['yes', 'no', 'yes']`에서 'yes'가 몇 번 나왔는지 세고 싶습니다.",
     "schema": "yes_count = votes. ... ('yes')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "count"
@@ -4503,7 +4503,7 @@
     "body": "딕셔너리의 키와 값을 `for` 문에서 한 번에 꺼내고 싶습니다. `for key, val in user.____():` 빈칸에 들어갈 메서드는?",
     "schema": "for k, v in my_dict. ... ():",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "items"
@@ -4517,7 +4517,7 @@
     "body": "딕셔너리에서 없는 키를 `user['phone']`처럼 찾으면 에러가 납니다. 에러 없이 `None`이나 기본값을 반환받으려면 어떤 메서드를 써야 할까요?",
     "schema": "phone = user. ... ('phone')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "get"
@@ -4531,7 +4531,7 @@
     "body": "문장 내의 오타 'Aplle'을 'Apple'로 고치고 싶습니다. 찾아 바꾸기 기능을 하는 문자열 메서드는?",
     "schema": "fixed = text. ... ('Aplle', 'Apple')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "replace"
@@ -4545,7 +4545,7 @@
     "body": "문자열에서 특정 단어가 몇 번째 인덱스에 있는지 알고 싶습니다. 만약 단어가 없으면 -1을 반환하는 메서드는?",
     "schema": "index = text. ... ('World')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "find"
@@ -4561,7 +4561,7 @@
     "sample_rows": [
       "Hello\nWorld"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "\\n"
@@ -4575,7 +4575,7 @@
     "body": "숫자가 담긴 리스트 `[10, 20, 30]`의 모든 요소를 더한 결과를 알고 싶습니다. `for` 문을 돌리지 않고 한 번에 계산하는 함수는?",
     "schema": "total = ... ([10, 20, 30])",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "sum"
@@ -4589,7 +4589,7 @@
     "body": "숫자 리스트를 큰 수부터 작은 수 순서(내림차순)로 정렬하고 싶습니다. `sorted` 함수 안에 들어갈 옵션 이름은 무엇일까요?",
     "schema": "sorted(nums, ... =True)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "reverse"
@@ -4605,7 +4605,7 @@
     "sample_rows": [
       "1, 2, ..., 10"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "11"
@@ -4619,7 +4619,7 @@
     "body": "문자열 'Python'을 'nohtyP'으로 뒤집고 싶습니다. 슬라이싱의 스텝(step) 기능을 활용하면 아주 간단합니다.",
     "schema": "reversed_s = s[:: ... ]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "-1"
@@ -4633,7 +4633,7 @@
     "body": "좌표 `pos = (10, 20)`이 있을 때, `x`와 `y` 변수에 각각 10과 20을 한 줄로 저장하고 싶습니다.",
     "schema": "x, y ... pos",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "="
@@ -4647,7 +4647,7 @@
     "body": "변수 `result`가 `None`이 **아닐 때만** 실행하고 싶습니다. `!=`보다 권장되는 식별 연산자는?",
     "schema": "if result ... None:",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "is not"
@@ -4661,7 +4661,7 @@
     "body": "금지어 리스트 `blocklist`에 내 아이디가 **포함되어 있지 않은지** 확인하는 조건문입니다.",
     "schema": "if my_id ... blocklist:",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "not in"
@@ -4675,7 +4675,7 @@
     "body": "변수 `x`가 0보다 크고 100보다 작은지 확인하려 합니다. `x > 0 and x < 100`이라고 써도 되지만, 수학처럼 한 번에 이어서 쓸 수도 있습니다.",
     "schema": "if 0 ... x ... 100:",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "<"
@@ -4689,7 +4689,7 @@
     "body": "함수를 호출할 때 인자를 안 넣으면 기본적으로 `msg`에 'Hello'가 들어가게 하고 싶습니다.",
     "schema": "def greet(msg ... 'Hello'):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "="
@@ -4703,7 +4703,7 @@
     "body": "함수 하나에서 합과 곱 두 개의 값을 동시에 돌려주고 싶습니다. 콤마로 구분하면 튜플로 묶여서 나갑니다.",
     "schema": "return sum_val ... mul_val",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ","
@@ -4717,7 +4717,7 @@
     "body": "`range(5)`나 문자열 `'abc'`처럼 반복 가능한(iterable) 객체를 진짜 리스트 `[0, 1, 2, 3, 4]` 형태로 바꾸고 싶습니다.",
     "schema": "nums = ... (range(5))",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "list"
@@ -4731,7 +4731,7 @@
     "body": "`import math`를 했습니다. 원의 넓이를 구하기 위해 원주율($\\pi$) 값이 필요합니다. `math` 모듈 안에 정의된 파이 변수는?",
     "schema": "area = r * r * math. ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "pi"
@@ -4745,7 +4745,7 @@
     "body": "0부터 4까지의 숫자를 담은 리스트 `[0, 1, 2, 3, 4]`를 한 줄로 만들고 싶습니다. 빈칸에 들어갈 반복문 키워드는?",
     "schema": "nums = [i ... i in range(5)]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "for"
@@ -4762,7 +4762,7 @@
       "0 A",
       "1 B"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "enumerate"
@@ -4776,7 +4776,7 @@
     "body": "이름 리스트 `names`와 나이 리스트 `ages`가 따로 있습니다. 두 리스트를 지퍼 잠그듯 **같은 인덱스끼리 묶어서** 반복하려면?",
     "schema": "for name, age in ... (names, ages):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "zip"
@@ -4790,7 +4790,7 @@
     "body": "파일을 열고(`open`) 나서 작업을 마친 뒤 자동으로 닫아주는(`close`) 편리한 구문입니다. 파일 처리는 보통 이 키워드로 시작합니다.",
     "schema": "... open('data.txt') as f:",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "with"
@@ -4804,7 +4804,7 @@
     "body": "파일을 읽는 게 아니라 **쓰기(Write)** 모드로 열고 싶습니다. `open()` 함수의 두 번째 인자에 어떤 문자를 넣어야 할까요?",
     "schema": "f = open('output.txt', ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "'w'",
@@ -4821,7 +4821,7 @@
     "sample_rows": [
       "a=[1], b=[2] -> a=[1, 2]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "extend"
@@ -4835,7 +4835,7 @@
     "body": "리스트에는 `append`가 있다면, 집합(Set)에는 이 메서드가 있습니다. 집합 `s`에 값 5를 추가하세요.",
     "schema": "s. ... (5)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "add"
@@ -4849,7 +4849,7 @@
     "body": "괄호 안에 숫자 1만 넣으면 `(1)`은 그냥 숫자 1로 인식됩니다. 이게 튜플임을 알리기 위해 숫자 뒤에 꼭 찍어야 하는 기호는?",
     "schema": "my_tuple = (1 ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       ","
@@ -4863,7 +4863,7 @@
     "body": "딕셔너리 `A`에 딕셔너리 `B`의 내용을 덮어쓰거나 추가해서 합치고 싶습니다.",
     "schema": "A. ... (B)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "update"
@@ -4877,7 +4877,7 @@
     "body": "f-string 이전에는 이 방식을 많이 썼습니다. 문자열 내의 `{}` 자리에 값을 채워 넣는 문자열 메서드는?",
     "schema": "msg = 'Hello {}'. ... ('World')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "format"
@@ -4891,7 +4891,7 @@
     "body": "`type(x) == int`보다 권장되는 방식입니다. 변수 `x`가 정수(int)인지 확인하는 함수를 완성하세요.",
     "schema": "if ... (x, int):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "isinstance"
@@ -4907,7 +4907,7 @@
     "sample_rows": [
       "True"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "any"
@@ -4921,7 +4921,7 @@
     "body": "사용자 입력값(문자열)이 숫자로만 이루어져 있는지 확인하고 싶습니다. (예: '123' -> True, '12a' -> False)",
     "schema": "if user_input. ... ():",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "isdigit"
@@ -4935,7 +4935,7 @@
     "body": "파일 이름이 'report'로 시작하는지 확인하고 싶습니다. 슬라이싱 `name[:6] == 'report'`보다 더 읽기 좋은 메서드입니다.",
     "schema": "if filename. ... ('report'):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "startswith"
@@ -4949,7 +4949,7 @@
     "body": "`try-except` 구문에서 에러가 나든 안 나든 **마지막에 무조건 실행**되어야 하는 코드 블록(예: 파일 닫기)을 정의하는 키워드는?",
     "schema": "try:\n    ...\n...:\n    print('End')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "finally"
@@ -4963,7 +4963,7 @@
     "body": "함수에 입력값이 1개일지 10개일지 모릅니다. 인자를 튜플 형태로 몽땅 받기 위해 매개변수 앞에 붙이는 특수 기호는?",
     "schema": "def add_all( ... numbers):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "*"
@@ -4977,7 +4977,7 @@
     "body": "이번에는 `func(a=1, b=2)` 처럼 이름이 있는 인자들을 딕셔너리 형태로 몽땅 받고 싶습니다. 매개변수 앞에 붙이는 기호는?",
     "schema": "def func( ... options):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "**"
@@ -4991,7 +4991,7 @@
     "body": "치명적인 문제가 발생해서 내가 직접 에러를 강제로 발생시키고 싶습니다. 이때 사용하는 명령어는?",
     "schema": "if bad_condition:\n    ... ValueError('Invalid')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "raise"
@@ -5005,7 +5005,7 @@
     "body": "10부터 1까지 카운트다운(10, 9, ... 1)을 하고 싶습니다. `range`의 세 번째 칸(보폭)에 어떤 숫자를 넣어야 할까요?",
     "schema": "range(10, 0, ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "-1"
@@ -5019,7 +5019,7 @@
     "body": "문자열 'hello world'의 각 단어 첫 글자만 대문자로 바꿔 'Hello World'로 만들고 싶습니다.",
     "schema": "s = 'hello world'\nprint(s. ... ())",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "title"
@@ -5033,7 +5033,7 @@
     "body": "리스트 `nums`의 **처음부터** 3번째 인덱스 전까지(`nums[0]`, `nums[1]`, `nums[2]`) 자르고 싶습니다. 시작 인덱스 0은 생략할 수 있습니다.",
     "schema": "head = nums[ ... :3]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ""
@@ -5047,7 +5047,7 @@
     "body": "리스트의 3번째 요소부터 **맨 끝까지** 전부 가져오고 싶습니다. 종료 인덱스를 생략하면 됩니다.",
     "schema": "tail = nums[3: ... ]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       ""
@@ -5061,7 +5061,7 @@
     "body": "`sorted()` 함수는 원본을 놔두고 새 리스트를 만들지만, 이 메서드는 리스트 **자체(원본)를 정렬**해서 바꿔버립니다.",
     "schema": "my_list. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "sort"
@@ -5075,7 +5075,7 @@
     "body": "리스트의 모든 값이 `True`(참)일 때만 `True`를 반환하는 함수는? 하나라도 `False`면 `False`가 됩니다. (예: `[1, 1, 0]` -> False)",
     "schema": "if ... (check_list):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "all"
@@ -5089,7 +5089,7 @@
     "body": "`import random`을 했습니다. 리스트 `menu`에서 메뉴 하나를 **랜덤하게 뽑고** 싶습니다.",
     "schema": "pick = random. ... (menu)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "choice"
@@ -5103,7 +5103,7 @@
     "body": "값이 참이면 A, 아니면 B를 변수에 넣고 싶습니다. `val = A ____ condition else B` 형식으로 씁니다.",
     "schema": "status = 'Pass' ... score >= 60 else 'Fail'",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "if"
@@ -5117,7 +5117,7 @@
     "body": "대문자 'STOP'을 소문자 'stop'으로 바꾸고 싶습니다.",
     "schema": "cmd = 'STOP'\nprint(cmd. ... ())",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "lower"
@@ -5131,7 +5131,7 @@
     "body": "파일 이름이 '.jpg'로 끝나는 이미지 파일인지 확인하고 싶습니다.",
     "schema": "if filename. ... ('.jpg'):",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "endswith"
@@ -5145,7 +5145,7 @@
     "body": "파이썬 파일을 직접 실행했을 때만 코드가 돌게 하고, 모듈로 임포트될 때는 실행되지 않게 막고 싶습니다. `if ____ == '__main__':` 구문을 사용합니다.",
     "schema": "if ... == '__main__':",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "__name__"
@@ -5159,7 +5159,7 @@
     "body": "윈도우 파일 경로 `C:\new\table`을 쓸 때 `\n`이나 `\t`가 특수문자로 해석되지 않게 하려면, 따옴표 앞에 어떤 알파벳을 붙여야 할까요?",
     "schema": "path = ... r\"C:\\new\\table\"",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "r",
@@ -5174,7 +5174,7 @@
     "body": "두 개의 세트 `set_a`와 `set_b`를 합쳐서 하나라도 있는 요소들을 모으고 싶습니다. `union()` 메서드 대신 쓸 수 있는 연산자(기호)는?",
     "schema": "all_items = set_a ... set_b",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "|"
@@ -5188,7 +5188,7 @@
     "body": "두 세트에 **동시에 들어있는** 값만 뽑고 싶습니다. `intersection()` 대신 쓸 수 있는 연산자(기호)는?",
     "schema": "common = set_a ... set_b",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "&"
@@ -5202,7 +5202,7 @@
     "body": "리스트나 딕셔너리의 내용은 다 지우고 빈 껍데기만 남기고 싶습니다. `del`로 변수를 없애는 게 아니라 내용만 비우는 메서드는?",
     "schema": "my_list. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "clear"
@@ -5216,7 +5216,7 @@
     "body": "문자열 리스트 `['1', '2']`를 정수 리스트 `[1, 2]`로 바꾸기 위해 `int` 함수를 각 요소에 적용하고 싶습니다.",
     "schema": "nums = list( ... (int, ['1', '2']))",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "map"
@@ -5230,7 +5230,7 @@
     "body": "리스트에서 짝수만 남기고 홀수는 버리고 싶습니다. 조건 함수를 통과하는 요소만 남기는 함수는?",
     "schema": "evens = list( ... (is_even, nums))",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "filter"
@@ -5244,7 +5244,7 @@
     "body": "함수 바깥에 있는 변수 `count`를 함수 **안에서** 수정(대입)하려면, 이 변수가 전역 변수임을 알려줘야 합니다.",
     "schema": "count = 0\ndef inc():\n    ... count\n    count += 1",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "global"
@@ -5258,7 +5258,7 @@
     "body": "함수에서 `return`을 쓰면 끝나버리지만, 값을 하나씩 던져주고 상태를 유지하는 '제너레이터'를 만들 때는 이 키워드를 씁니다.",
     "schema": "def my_gen():\n    ... 1\n    ... 2",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "yield"
@@ -5272,7 +5272,7 @@
     "body": "문자열 안에 작은따옴표(`'`)를 표현하고 싶은데 문자열도 작은따옴표로 감싸져 있습니다. 충돌을 막기 위해 앞에 붙이는 기호는?",
     "schema": "msg = 'It ... 's me'",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "\\"
@@ -5286,7 +5286,7 @@
     "body": "두 변수가 메모리 상에서 같은 객체를 가리키는지 확인하기 위해 고유 주소값(Identity)을 보고 싶습니다.",
     "schema": "addr = ... (my_var)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "id"
@@ -5300,7 +5300,7 @@
     "body": "함수나 모듈의 사용법이 기억나지 않을 때, Python 내부에서 바로 설명서를 출력해주는 함수는?",
     "schema": "... (print)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "help"
@@ -5316,7 +5316,7 @@
     "sample_rows": [
       "a=1, b=2 -> a=2, b=1"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "b"
@@ -5332,7 +5332,7 @@
     "sample_rows": [
       "3.14"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       ":.2f"
@@ -5346,7 +5346,7 @@
     "body": "딕셔너리에서 특정 키를 삭제함과 동시에 그 값을 변수에 저장하고 싶습니다. `del`은 삭제만 하지만 이 메서드는 값을 돌려줍니다.",
     "schema": "val = my_dict. ... ('key')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "pop"
@@ -5360,7 +5360,7 @@
     "body": "`set_a`에는 있지만 `set_b`에는 없는 요소들만 남기고 싶습니다. `difference()` 메서드 대신 사용할 수 있는 연산자는?",
     "schema": "only_a = set_a ... set_b",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "-"
@@ -5374,7 +5374,7 @@
     "body": "사용자 입력 `name`이 비어있으면(빈 문자열) 'Guest'라는 기본값을 쓰고 싶습니다. `if`문 없이 논리 연산자 하나로 해결하세요.",
     "schema": "display_name = name ... 'Guest'",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "or"
@@ -5388,7 +5388,7 @@
     "body": "리스트 `a`를 `b`에 복사하려고 합니다. `b = a`라고 하면 같은 주소를 공유하게 됩니다. 값만 복사해서 새로운 리스트를 만들려면 슬라이싱을 어떻게 활용할까요?",
     "schema": "b = a[ ... ]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       ":"
@@ -5402,7 +5402,7 @@
     "body": "클래스나 함수를 선언만 해두고, 내용은 나중에 채우고 싶을 때 문법 에러를 막기 위해 넣어두는 키워드는?",
     "schema": "class MyData:\n    ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "pass"
@@ -5416,7 +5416,7 @@
     "body": "문자열 리스트를 알파벳 순이 아니라 **길이(len)** 순서대로 정렬하고 싶습니다. `sorted` 함수에 넘겨줄 옵션 이름은?",
     "schema": "sorted(words, ... =len)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "key"
@@ -5430,7 +5430,7 @@
     "body": "함수 바로 아래에 큰따옴표 3개로 설명을 적어두면 `help()`로 볼 수 있습니다. 이를 무엇이라고 부를까요? (코드 작성 문제가 아닌 용어 문제입니다)",
     "schema": "def func():\n    \"\"\"설명\"\"\"",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "\"\"\"",
@@ -5445,7 +5445,7 @@
     "body": "변수 `x`가 반드시 양수여야 합니다. 만약 아니면 에러를 발생시키고 '음수 불가'라는 메시지를 띄우고 싶습니다.",
     "schema": "... x > 0, '음수 불가'",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "assert"
@@ -5459,7 +5459,7 @@
     "body": "변수 `price`를 2배로 만들어 다시 저장하고 싶습니다. `price = price * 2`를 줄여 쓰는 연산자는?",
     "schema": "price ... 2",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "*="
@@ -5475,7 +5475,7 @@
     "sample_rows": [
       "HelloWorld"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       ""
@@ -5491,7 +5491,7 @@
     "sample_rows": [
       "False"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "False"
@@ -5505,7 +5505,7 @@
     "body": "리스트 `['a', 'b', 'c']`에서 값 'b'가 몇 번째(0부터 시작)에 있는지 숫자로 알고 싶습니다.",
     "schema": "pos = my_list. ... ('b')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "index"
@@ -5519,7 +5519,7 @@
     "body": "딕셔너리에 키가 없으면 기본값을 넣고, 이미 있으면 그 값을 그대로 쓰고 싶습니다. `if`문 없이 한 번에 처리하는 메서드는?",
     "schema": "counts. ... (word, 0)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "setdefault"
@@ -5533,7 +5533,7 @@
     "body": "`join` 메서드는 리스트뿐만 아니라 튜플도 연결할 수 있습니다. 튜플 `('010', '1234')`를 하이픈으로 연결해보세요.",
     "schema": "'-'.join( ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "('010', '1234')"
@@ -5547,7 +5547,7 @@
     "body": "어떤 객체가 무슨 메서드를 가지고 있는지 궁금할 때, 해당 객체의 모든 속성과 메서드 이름을 리스트로 보여주는 내장 함수는?",
     "schema": "... (str)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "dir"
@@ -5563,7 +5563,7 @@
     "sample_rows": [
       "106"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "100"
@@ -5577,7 +5577,7 @@
     "body": "문자열 '7'을 '007'처럼 3자리로 만들고 빈칸을 0으로 채우고 싶습니다.",
     "schema": "s = '7'. ... (3)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python",
     "expected": [
       "zfill"
@@ -5591,7 +5591,7 @@
     "body": "`math` 모듈을 `m`이라는 짧은 이름으로 불러오고 싶습니다. 빈칸을 채우세요.",
     "schema": "import math ... m",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python",
     "expected": [
       "as"
@@ -5605,7 +5605,7 @@
     "body": "Python에서 NumPy 라이브러리를 사용할 때는 매번 `numpy`라고 다 쓰는 대신, 관례적으로 줄임말을 사용합니다. `import numpy ... np` 구문을 완성하세요.",
     "schema": "import numpy ... np",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "라이브러리에 별명을 붙여서 불러올 때는 **`as`** 키워드를 사용합니다. (예: import pandas as pd)",
     "problem_type": "코딩"
@@ -5618,7 +5618,7 @@
     "sample_rows": [
       "[1, 2, 3] -> array([1, 2, 3])"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "배열을 뜻하는 영어 단어 **`array`**를 함수로 사용합니다. `np.array()` 형태입니다.",
     "problem_type": "코딩"
@@ -5629,7 +5629,7 @@
     "body": "`np.array` 함수를 호출할 때는 인자로 리스트를 넘겨야 합니다. 따라서 소괄호 `()` 안에 리스트를 뜻하는 **대괄호**가 또 들어가야 합니다. 빈칸을 채우세요.",
     "schema": "arr = np.array( ... 1, 2, 3 ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "함수 호출은 `()`이지만, 데이터 목록은 리스트인 **`[]`**로 감싸서 전달해야 합니다. 즉 `np.array([1, 2, 3])` 모양이 됩니다.",
     "problem_type": "코딩"
@@ -5643,7 +5643,7 @@
       "array([1, 2]) -> 1",
       "array([[1, 2]]) -> 2"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Number of Dimensions의 약자인 **`ndim`**을 사용합니다. 함수가 아니므로 괄호 `()` 없이 `arr.ndim`으로 씁니다.",
     "problem_type": "코딩"
@@ -5654,7 +5654,7 @@
     "body": "배열이 몇 행 몇 열로 생겼는지 구체적인 형태를 알고 싶습니다. (예: `(2, 3)`). 배열의 모양을 나타내는 속성은?",
     "schema": "s = arr. ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`shape`** 속성을 사용하면 튜플 형태로 크기를 알려줍니다.",
     "problem_type": "코딩"
@@ -5668,7 +5668,7 @@
       "dtype('int64')",
       "dtype('float32')"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Data Type의 줄임말인 **`dtype`**을 사용합니다. NumPy 배열은 하나의 타입만 가질 수 있습니다.",
     "problem_type": "코딩"
@@ -5681,7 +5681,7 @@
     "sample_rows": [
       "array([0., 0., 0., 0., 0.])"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`zeros`** 함수를 사용합니다. 기본적으로 실수형(float) 0.을 생성합니다.",
     "problem_type": "코딩"
@@ -5694,7 +5694,7 @@
     "sample_rows": [
       "array([1., 1., 1.])"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "숫자 1(One)의 복수형인 **`ones`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -5707,7 +5707,7 @@
     "sample_rows": [
       "array([0, 1, ..., 9])"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`arange`** 함수를 사용합니다. (철자에 주의하세요. `arrange`가 아니라 `a-range`입니다.)",
     "problem_type": "코딩"
@@ -5718,7 +5718,7 @@
     "body": "0부터 5까지 들어있는 1차원 배열(길이 6)을, 2행 3열짜리 2차원 배열로 구조를 변경하고 싶습니다. '모양을 다시 잡는다'는 뜻의 메서드는?",
     "schema": "grid = nums. ... ((2, 3))",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`reshape`** 메서드를 사용합니다. 요소의 개수(6개)가 맞아야 에러가 나지 않습니다.",
     "problem_type": "코딩"
@@ -5729,7 +5729,7 @@
     "body": "2차원 배열 `grid`에서 0번째 행, 1번째 열에 있는 값을 꺼내고 싶습니다. 파이썬 리스트처럼 `grid[0][1]`로도 되지만, NumPy에서는 **콤마**를 이용해 더 간단히 쓸 수 있습니다.",
     "schema": "val = grid[0 ... 1]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "NumPy에서는 대괄호 안에 **콤마 `,`**를 사용하여 `[행, 열]` 순서로 좌표를 찍을 수 있습니다.",
     "problem_type": "코딩"
@@ -5742,7 +5742,7 @@
     "sample_rows": [
       "arr[:3]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "시작과 끝 사이를 **콜론 `:`**으로 연결합니다. 앞을 비우면 처음부터라는 뜻입니다.",
     "problem_type": "코딩"
@@ -5755,7 +5755,7 @@
     "sample_rows": [
       "[1, 2] + 10 -> [11, 12]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "수학처럼 더하기 기호 **`+`**를 쓰면, NumPy가 알아서 모든 요소에 10을 더해줍니다(Broadcasting).",
     "problem_type": "코딩"
@@ -5768,7 +5768,7 @@
     "sample_rows": [
       "[1, 2] * [3, 4] -> [3, 8]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "NumPy의 기본 사칙연산(`+`, `-`, `*`, `/`)은 모두 요소별(Element-wise) 연산입니다. 별표 **`*`**를 사용하세요.",
     "problem_type": "코딩"
@@ -5779,7 +5779,7 @@
     "body": "배열 `arr`에 있는 모든 숫자를 더한 총합을 구하고 싶습니다. `np.sum(arr)`이라고 써도 되지만, 객체 지향적으로 점을 찍어 호출하는 메서드 방식도 있습니다.",
     "schema": "total = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.sum()`** 메서드를 사용하면 배열 내부의 모든 값을 더해줍니다.",
     "problem_type": "코딩"
@@ -5790,7 +5790,7 @@
     "body": "이번에는 배열 값들의 평균(Mean)을 구하고 싶습니다.",
     "schema": "avg = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.mean()`** 메서드를 사용합니다. (average가 아님에 주의하세요)",
     "problem_type": "코딩"
@@ -5801,7 +5801,7 @@
     "body": "배열에서 가장 큰 값이 무엇인지 찾고 싶습니다.",
     "schema": "highest = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.max()`** 메서드를 사용합니다. (`np.max(arr)`와 같습니다)",
     "problem_type": "코딩"
@@ -5812,7 +5812,7 @@
     "body": "배열 `arr`에서 값이 5보다 큰 요소들만 골라내고 싶습니다. 대괄호 안에 조건식 `arr > 5`를 바로 넣을 수 있는데, 이를 불리언 인덱싱이라고 합니다.",
     "schema": "big_nums = arr[arr ... 5]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "크다(초과)를 의미하는 부등호 **`>`**를 사용합니다. `arr[arr > 5]` 형태입니다.",
     "problem_type": "코딩"
@@ -5825,7 +5825,7 @@
     "sample_rows": [
       "0, 2.5, 5.0, 7.5, 10.0"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Linear Space(선형 공간)의 줄임말인 **`linspace`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -5838,7 +5838,7 @@
     "sample_rows": [
       "[1.5, 2.7] -> [1, 2]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.astype()`** 메서드를 사용하면 배열의 데이터 타입을 안전하게 변환할 수 있습니다.",
     "problem_type": "코딩"
@@ -5851,7 +5851,7 @@
     "sample_rows": [
       "array([0.12, 0.54, 0.99, ...])"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "무작위라는 뜻의 'rand'를 사용합니다. `np.random.rand()` 형태입니다.",
     "problem_type": "코딩"
@@ -5864,7 +5864,7 @@
     "sample_rows": [
       "42"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Random Integer의 줄임말인 **`randint`**를 사용합니다.",
     "problem_type": "코딩"
@@ -5875,7 +5875,7 @@
     "body": "랜덤 함수를 쓰지만, 실행할 때마다 똑같은 숫자가 나오게(재현 가능하게) 고정하고 싶습니다. 난수 생성기의 초기값을 설정하는 함수는?",
     "schema": "np.random. ... (42)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "씨앗(**`seed`**)을 심으면 항상 같은 열매가 열린다고 생각하세요. 머신러닝 실험에서 필수입니다.",
     "problem_type": "코딩"
@@ -5886,7 +5886,7 @@
     "body": "2행 3열짜리 배열을 3행 2열로 뒤집고(Transpose) 싶습니다. 함수(`transpose()`)를 써도 되지만, 아주 짧은 속성(Attribute) 하나로 해결할 수 있습니다.",
     "schema": "flipped = arr. ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Transpose의 대문자 약자인 **`T`**를 사용합니다. 괄호 없이 `arr.T`라고 씁니다.",
     "problem_type": "코딩"
@@ -5897,7 +5897,7 @@
     "body": "두 행렬의 내적(Matrix Multiplication)을 구하려고 합니다. 요소끼리 곱하는 `*` 말고, 행렬 곱셈을 위한 전용 연산자(기호)는 무엇일까요?",
     "schema": "result = A ... B",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "이메일 주소에 쓰는 골뱅이 **`@`** 기호를 사용합니다. (Python 3.5+ 이상 지원)",
     "problem_type": "코딩"
@@ -5908,7 +5908,7 @@
     "body": "`@` 연산자와 똑같은 기능을 하는 함수입니다. 점(Dot) 곱이라고도 부르는 이 연산을 수행하는 메서드는?",
     "schema": "result = np. ... (A, B)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`dot`** 함수를 사용합니다. 선형대수학의 기본 연산입니다.",
     "problem_type": "코딩"
@@ -5921,7 +5921,7 @@
     "sample_rows": [
       "[[1., 0., 0.], [0., 1., 0.], [0., 0., 1.]]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Identity의 'I'와 발음이 같은 **`eye`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -5934,7 +5934,7 @@
     "sample_rows": [
       "[[1, 2], [3, 4]] -> [1, 2, 3, 4]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`.flatten()`** 메서드를 사용합니다. 복사본을 반환하므로 원본은 안전합니다.",
     "problem_type": "코딩"
@@ -5945,7 +5945,7 @@
     "body": "배열에서 값이 0보다 크면 'Positive', 아니면 'Negative'를 넣고 싶습니다. 엑셀의 IF 함수처럼 `조건, 참일때값, 거짓일때값`을 넣는 함수는?",
     "schema": "res = np. ... (arr > 0, 'Positive', 'Negative')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`where`** 함수를 사용합니다. 조건이 '어디'에 맞는지 확인하여 값을 바꿉니다.",
     "problem_type": "코딩"
@@ -5958,7 +5958,7 @@
     "sample_rows": [
       "[10, 50, 30] -> 1 (50이 있는 인덱스)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Argument of Max의 약자인 **`.argmax()`**를 사용합니다.",
     "problem_type": "코딩"
@@ -5969,7 +5969,7 @@
     "body": "두 개의 배열 `a`와 `b`를 수직(Vertical) 방향으로 쌓아서 합치고 싶습니다.",
     "schema": "ab = np. ... ([a, b])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Vertical Stack의 줄임말인 **`vstack`** 함수를 사용합니다. 합칠 배열들을 리스트 `[]`나 튜플로 묶어서 넣어줘야 합니다.",
     "problem_type": "코딩"
@@ -5980,7 +5980,7 @@
     "body": "이번에는 두 배열을 수평(Horizontal) 방향, 즉 옆으로 나란히 붙이고 싶습니다.",
     "schema": "ab = np. ... ((a, b))",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Horizontal Stack의 줄임말인 **`hstack`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -5993,7 +5993,7 @@
     "sample_rows": [
       "[1, 1, 2, 3, 3] -> [1, 2, 3]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`unique`** 함수를 사용합니다. SQL의 DISTINCT와 비슷합니다.",
     "problem_type": "코딩"
@@ -6004,7 +6004,7 @@
     "body": "뒤죽박죽 섞인 배열을 오름차순(작은 수부터 큰 수)으로 정렬하고 싶습니다.",
     "schema": "sorted_arr = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "리스트와 마찬가지로 **`sort`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6017,7 +6017,7 @@
     "sample_rows": [
       "[-1, -2] -> [1, 2]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "파이썬 내장 함수와 이름이 같은 **`abs`** (또는 `absolute`)를 사용합니다.",
     "problem_type": "코딩"
@@ -6028,7 +6028,7 @@
     "body": "배열의 각 요소에 루트($\\sqrt{x}$)를 씌운 값을 구하고 싶습니다. 4는 2로, 9는 3으로 변환됩니다.",
     "schema": "roots = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Square Root의 약자인 **`sqrt`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6041,7 +6041,7 @@
     "sample_rows": [
       "3.14159 -> 3.14"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "둥글게 만든다는 뜻의 **`round`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6052,7 +6052,7 @@
     "body": "자연상수 $e$의 거듭제곱($e^x$)을 구하는 함수입니다. 로그 함수의 반대 역할을 합니다.",
     "schema": "e_x = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Exponential의 약자인 **`exp`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6063,7 +6063,7 @@
     "body": "`b = a`라고 하면 `b`를 바꿀 때 `a`도 같이 바뀝니다(참조). 원본 `a`를 보호하기 위해 완전히 별개의 복사본을 만드는 메서드는?",
     "schema": "b = a. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.copy()`** 메서드를 사용하면 깊은 복사(Deep Copy)와 유사하게 데이터를 새로 복제합니다.",
     "problem_type": "코딩"
@@ -6074,7 +6074,7 @@
     "body": "불리언 배열에서 `True`가 하나라도 있는지 검사하고 싶습니다. (예: `[False, False, True] -> True`)",
     "schema": "has_true = bool_arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.any()`** 메서드는 요소 중 하나라도 참이면 True를 반환합니다. (반대는 `.all()`)",
     "problem_type": "코딩"
@@ -6087,7 +6087,7 @@
     "sample_rows": [
       "[1, 100, 2] -> 2 (평균은 34.3이지만 중앙값은 2)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Median(중앙)이라는 단어 그대로 **`median`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6098,7 +6098,7 @@
     "body": "데이터가 평균으로부터 얼마나 퍼져있는지(산포도)를 나타내는 '표준편차'를 구하고 싶습니다.",
     "schema": "s = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Standard Deviation의 약자인 **`.std()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6109,7 +6109,7 @@
     "body": "표준편차의 제곱인 '분산(Variance)'을 구하는 메서드입니다.",
     "schema": "v = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Variance의 앞 글자를 딴 **`.var()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6120,7 +6120,7 @@
     "body": "성적 상위 10% 커트라인을 알고 싶습니다. 데이터를 100등분 했을 때 특정 위치(90번째)의 값을 구하는 함수는?",
     "schema": "cut = np. ... (scores, 90)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`percentile`** 함수를 사용합니다. 두 번째 인자로 0~100 사이의 숫자를 넣습니다.",
     "problem_type": "코딩"
@@ -6133,7 +6133,7 @@
     "sample_rows": [
       "[1, 2, 3] -> [1, 3, 6]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Cumulative Sum의 줄임말인 **`.cumsum()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6146,7 +6146,7 @@
     "sample_rows": [
       "[10, 30, 20] -> [0, 2, 1] (0번이 제일 작고, 그 다음 2번...)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Argument Sort의 약자인 **`argsort`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6157,7 +6157,7 @@
     "body": "힘들게 전처리한 배열 데이터를 나중에 쓰기 위해 `.npy` 파일로 저장하려고 합니다.",
     "schema": "np. ... ('data.npy', my_arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`save`** 함수를 사용하면 바이너리 형태로 빠르게 저장됩니다.",
     "problem_type": "코딩"
@@ -6168,7 +6168,7 @@
     "body": "저장해둔 `'data.npy'` 파일을 읽어서 다시 변수에 담고 싶습니다.",
     "schema": "arr = np. ... ('data.npy')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`load`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6179,7 +6179,7 @@
     "body": "데이터에 빈 값(Missing Value)이 있음을 표시하기 위해 '숫자가 아님(Not a Number)'이라는 특수한 상수를 넣으려 합니다.",
     "schema": "arr[0] = np. ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`nan`** 상수를 사용합니다. (주의: 정수형 배열에는 넣을 수 없고 실수형 배열에만 가능합니다)",
     "problem_type": "코딩"
@@ -6190,7 +6190,7 @@
     "body": "어떤 수를 0으로 나누거나 발산할 때 나오는 '무한대(Infinity)'를 표현하는 상수입니다.",
     "schema": "limit = np. ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`inf`** 상수를 사용합니다.",
     "problem_type": "코딩"
@@ -6227,7 +6227,7 @@
     "sample_rows": [
       "[-5, 5, 15] -> [0, 5, 10]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "종이 등을 클립으로 집듯이 범위를 고정하는 **`.clip()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6251,7 +6251,7 @@
     "body": "소수점을 그냥 버리는 게 아니라, 무조건 윗 정수로 올림(Ceiling)하고 싶습니다. (예: 2.1 -> 3.0)",
     "schema": "up = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "천장을 뜻하는 **`ceil`** 함수를 사용합니다. (반대로 바닥은 `floor`입니다)",
     "problem_type": "코딩"
@@ -6275,7 +6275,7 @@
     "sample_rows": [
       "[10, 15, 12] -> [5, -3]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Difference의 줄임말인 **`diff`** 함수를 사용합니다. 결과 배열의 길이는 원본보다 1 작아집니다.",
     "problem_type": "코딩"
@@ -6288,7 +6288,7 @@
     "sample_rows": [
       "[1, 2] -> [1, 1, 1, 2, 2, 2]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`repeat`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6323,7 +6323,7 @@
     "sample_rows": [
       "[[7, 7, 7], ...]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "가득 찼다는 뜻의 **`full`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6334,7 +6334,7 @@
     "body": "배열에서 가장 작은 값을 찾고 싶습니다. `max()`의 반대 함수입니다.",
     "schema": "lowest = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "Minimum의 줄임말인 **`.min()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6345,7 +6345,7 @@
     "body": "가장 작은 값이 몇 번째 인덱스에 있는지 알고 싶습니다. (예: `[10, 1, 5]` -> 1번째)",
     "schema": "idx = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Argument of Min의 약자인 **`.argmin()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6356,7 +6356,7 @@
     "body": "배열의 모든 요소가 조건에 맞는지(True인지) 검사하고 싶습니다. 하나라도 False면 False가 됩니다. `any()`의 반대입니다.",
     "schema": "is_perfect = bool_arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`.all()`** 메서드는 모든 요소가 참일 때만 True를 반환합니다.",
     "problem_type": "코딩"
@@ -6367,7 +6367,7 @@
     "body": "데이터의 스케일을 줄이기 위해 자연로그($\\ln x$)를 취하고 싶습니다. 지수 함수 `exp()`의 역함수입니다.",
     "schema": "logs = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`log`** 함수를 사용합니다. (상용로그는 `log10`을 씁니다)",
     "problem_type": "코딩"
@@ -6378,7 +6378,7 @@
     "body": "소수점을 무조건 아래 정수로 내리고 싶습니다. (예: 3.9 -> 3.0). 천장을 뜻하는 `ceil`의 반대말입니다.",
     "schema": "down = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "바닥을 뜻하는 **`floor`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6391,7 +6391,7 @@
     "sample_rows": [
       "[[1, 2], [3, 4]] -> [1, 4]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`diag`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6402,7 +6402,7 @@
     "body": "데이터 개수는 아는데 정확한 행/열 개수 계산이 귀찮습니다. `reshape`를 할 때 한쪽 차원에 **-1**을 넣으면 NumPy가 알아서 크기를 맞춰줍니다. 12개짜리 데이터를 3행 자동 열로 바꿔보세요.",
     "schema": "arr = arr.reshape(3, ...)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`-1`**을 넣으면 '나머지는 알아서 계산해'라는 뜻이 됩니다.",
     "problem_type": "코딩"
@@ -6413,7 +6413,7 @@
     "body": "로또 번호 추첨처럼 배열에서 3개의 숫자를 무작위로 뽑고(샘플링) 싶습니다.",
     "schema": "picks = np.random. ... (arr, 3)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "선택한다는 뜻의 **`choice`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6424,7 +6424,7 @@
     "body": "카드 덱을 섞듯이 배열의 순서를 무작위로 뒤섞고 싶습니다. 이 함수는 반환값 없이 원본을 직접 바꿉니다(In-place).",
     "schema": "np.random. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "셔플 댄스처럼 데이터를 섞는 **`shuffle`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6435,7 +6435,7 @@
     "body": "여러 개의 값(`[1, 3, 5]`)이 배열 안에 들어있는지 한 번에 확인하여 True/False 배열을 얻고 싶습니다. 파이썬의 `in` 연산자 배열 버전입니다.",
     "schema": "mask = np. ... (arr, [1, 3, 5])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "is in을 붙여 쓴 **`isin`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6448,7 +6448,7 @@
     "sample_rows": [
       "[1, 2, 3] -> [3, 2, 1]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`[::-1]`** 패턴은 '처음부터 끝까지 역순으로'라는 뜻의 국룰 슬라이싱입니다.",
     "problem_type": "코딩"
@@ -6459,7 +6459,7 @@
     "body": "배열에서 0이 아닌 값(혹은 True인 값)이 몇 개인지 세고 싶습니다. 조건 만족 개수를 셀 때 `sum()`과 함께 자주 쓰입니다.",
     "schema": "cnt = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`count_nonzero`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6472,7 +6472,7 @@
     "sample_rows": [
       "[1, NaN, 3] -> 2.0"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "`nan`이 붙은 함수인 **`nanmean`**을 사용합니다. (`nansum`, `nanmax` 등도 있습니다)",
     "problem_type": "코딩"
@@ -6483,7 +6483,7 @@
     "body": "배열을 만들 때 처음부터 데이터 타입을 지정하고 싶습니다. 정수 리스트지만 실수형(float) 배열로 만들려면 `array()` 함수 안에 어떤 옵션을 줘야 할까요?",
     "schema": "arr = np.array([1, 2], ... ='float')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`dtype`** 파라미터를 사용합니다. (예: `dtype='float'` 또는 `dtype=np.float32`)",
     "problem_type": "코딩"
@@ -6494,7 +6494,7 @@
     "body": "다차원 배열을 1차원으로 펼치되, 메모리 복사 없이 원본을 참조하는 '뷰(View)'를 만들고 싶습니다. `flatten`보다 빠릅니다.",
     "schema": "flat = arr. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "실타래를 푼다는 뜻의 **`ravel`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6507,7 +6507,7 @@
     "sample_rows": [
       "[2, 3] -> [4, 9]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`square`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6518,7 +6518,7 @@
     "body": "매우 큰 배열을 만들 때, 0이나 1로 채우는 시간조차 아까울 때가 있습니다. 메모리 공간만 잡아두고 값은 초기화하지 않는(쓰레기 값이 들어있을 수 있음) 함수는?",
     "schema": "fast_arr = np. ... ((1000, 1000))",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`empty`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6529,7 +6529,7 @@
     "body": "배열의 길이를 몰라도 맨 마지막 값을 가져오고 싶습니다. 파이썬 리스트와 똑같은 음수 인덱스를 사용하세요.",
     "schema": "last_val = arr[ ... ]",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`-1`**은 끝에서 첫 번째 요소를 의미합니다.",
     "problem_type": "코딩"
@@ -6540,7 +6540,7 @@
     "body": "두 배열의 모양(shape)과 요소 값이 완전히 똑같은지 확인하여 True/False 하나만 받고 싶습니다. `==` 연산자는 배열을 반환하므로 이 함수를 써야 합니다.",
     "schema": "same = np. ... (arr1, arr2)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`array_equal`** 함수를 사용합니다. 두 배열이 완전히 같은지 판별할 때 씁니다.",
     "problem_type": "코딩"
@@ -6551,7 +6551,7 @@
     "body": "수학 계산에 필요한 원주율($\\pi$)을 직접 3.14159...로 치지 않고 NumPy에 내장된 상수로 불러오고 싶습니다.",
     "schema": "area = r * r * np. ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`pi`** 속성을 사용합니다. (함수가 아니므로 괄호가 없습니다)",
     "problem_type": "코딩"
@@ -6562,7 +6562,7 @@
     "body": "각도(라디안) 배열에 대해 사인(Sine) 값을 구하고 싶습니다. 코사인(`cos`), 탄젠트(`tan`)도 사용법이 같습니다.",
     "schema": "y = np. ... (angles)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.NumPy",
     "hint": "**`sin`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6575,7 +6575,7 @@
     "sample_rows": [
       "[[1, 2], [3, 4]] -> [4, 6] (1+3, 2+4)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "첫 번째 축인 **`0`**을 지정하면 행 방향(세로)으로 연산이 수행됩니다.",
     "problem_type": "코딩"
@@ -6588,7 +6588,7 @@
     "sample_rows": [
       "[[1, 2], [3, 4]] -> [3, 7] (1+2, 3+4)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "두 번째 축인 **`1`**을 지정하면 열 방향(가로)으로 연산이 수행됩니다.",
     "problem_type": "코딩"
@@ -6601,7 +6601,7 @@
     "sample_rows": [
       "max([1, 5], [2, 3]) -> [2, 5]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`maximum`** 함수는 두 배열의 요소를 1:1로 비교하여 큰 쪽을 취합니다. (작은 쪽은 `minimum`)",
     "problem_type": "코딩"
@@ -6612,7 +6612,7 @@
     "body": "배열 내에 `NaN`(Not a Number)이 어디에 있는지 True/False로 확인하고 싶습니다. `== np.nan`으로는 비교가 안 되므로 전용 함수를 써야 합니다.",
     "schema": "mask = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`isnan`** 함수를 사용합니다. 데이터 전처리의 필수 함수입니다.",
     "problem_type": "코딩"
@@ -6623,7 +6623,7 @@
     "body": "이미 있는 배열 `arr`와 크기(shape)는 똑같지만, 내용은 모두 0으로 채운 새 배열을 만들고 싶습니다. `zeros(arr.shape)`를 줄여 쓰는 함수는?",
     "schema": "z = np. ... (arr)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "~와 닮았다는 뜻의 접미사를 붙여 **`zeros_like`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6636,7 +6636,7 @@
     "sample_rows": [
       "[1, 10, 5] -> 9 (10 - 1)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Peak to Peak의 약자인 **`ptp`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6647,7 +6647,7 @@
     "body": "배열 `arr`에서 '5보다 크고(AND) 10보다 작은' 값만 찾고 싶습니다. 파이썬의 `and`는 배열에 쓸 수 없으므로 비트 연산자를 써야 합니다.",
     "schema": "mask = (arr > 5) ... (arr < 10)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "앤퍼샌드 **`&`** 기호를 사용합니다. (각 조건은 괄호로 묶어주는 것이 안전합니다)",
     "problem_type": "코딩"
@@ -6658,7 +6658,7 @@
     "body": "배열 `arr`에서 '0보다 작거나(OR) 100보다 큰' 이상치들을 찾고 싶습니다.",
     "schema": "mask = (arr < 0) ... (arr > 100)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "버티컬 바(파이프) **`|`** 기호를 사용합니다.",
     "problem_type": "코딩"
@@ -6669,7 +6669,7 @@
     "body": "불리언 배열(True/False)의 값을 반대로 뒤집고 싶습니다. (True -> False). 파이썬의 `not` 대신 사용하는 물결 기호는?",
     "schema": "not_mask = ... mask",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "물결표 **`~`** (Tilde)를 변수 앞에 붙입니다.",
     "problem_type": "코딩"
@@ -6680,7 +6680,7 @@
     "body": "두 배열 `A`와 `B`가 있을 때, `A`에는 있지만 `B`에는 없는 요소만 남기고 싶습니다. (A - B)",
     "schema": "diff = np. ... (A, B)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Set Difference 1D(1차원)의 줄임말인 **`setdiff1d`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6691,7 +6691,7 @@
     "body": "두 배열 `A`와 `B`에 **공통으로 들어있는** 요소만 찾고 싶습니다.",
     "schema": "common = np. ... (A, B)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Intersection(교집합)을 뜻하는 **`intersect1d`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6704,7 +6704,7 @@
     "sample_rows": [
       "[1, 2] -> [1, 2, 1, 2]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "타일을 깐다는 뜻의 **`tile`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6715,7 +6715,7 @@
     "body": "이미지 처리(CNN) 등에서 자주 쓰이는 기법으로, 배열의 테두리에 0을 둘러싸서(Padding) 크기를 키우고 싶습니다.",
     "schema": "padded = np. ... (arr, pad_width=1)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "패딩을 뜻하는 **`pad`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6728,7 +6728,7 @@
     "sample_rows": [
       "[-5, 0, 3] -> [-1, 0, 1]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`sign`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6739,7 +6739,7 @@
     "body": "배열의 특정 인덱스에 있는 값을 지운 **새로운 배열**을 만들고 싶습니다. (원본은 변하지 않습니다)",
     "schema": "new_arr = np. ... (arr, [0, 2])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`delete`** 함수를 사용합니다. 두 번째 인자로 삭제할 인덱스를 넘깁니다.",
     "problem_type": "코딩"
@@ -6752,7 +6752,7 @@
     "sample_rows": [
       "[1, 3]에 인덱스 1 위치에 99 삽입 -> [1, 99, 3]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`insert`** 함수를 사용합니다. (인덱스, 값 순서)",
     "problem_type": "코딩"
@@ -6763,7 +6763,7 @@
     "body": "배열에서 0이 아닌 값들의 좌표(인덱스)를 모두 찾고 싶습니다. `where`와 비슷하지만 결과 포맷이 좌표 리스트 형태입니다.",
     "schema": "coords = np. ... (arr > 0)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`argwhere`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6774,7 +6774,7 @@
     "body": "`linspace(0, 10, 5)`를 하면 10이 포함됩니다. 10을 제외하고 0부터 10 직전까지 5개 구간을 나누려면 어떤 옵션을 꺼야 할까요?",
     "schema": "x = np.linspace(0, 10, 5, ... =False)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "끝점을 뜻하는 **`endpoint`** 옵션을 False로 설정합니다.",
     "problem_type": "코딩"
@@ -6787,7 +6787,7 @@
     "sample_rows": [
       "[1, NaN, 2] -> [1, 0, 2]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "조건문 자리에 `isnan` 함수를 넣으면 True인 위치(결측치)만 선택됩니다. `np.isnan(arr)`을 사용하세요.",
     "problem_type": "코딩"
@@ -6809,7 +6809,7 @@
     "body": "원점에서 점 $(x, y)$까지의 거리(유클리드 거리)를 구하고 싶습니다. 피타고라스 정리를 직접 구현하지 말고 선형대수 패키지의 함수를 사용하세요.",
     "schema": "dist = np.linalg. ... (point)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "벡터의 크기를 뜻하는 **`norm`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6822,7 +6822,7 @@
     "sample_rows": [
       "[1, 1, 2] -> vals=[1, 2], counts=[2, 1]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`return_counts`** 옵션을 True로 설정하면 개수도 함께 반환합니다.",
     "problem_type": "코딩"
@@ -6846,7 +6846,7 @@
     "sample_rows": [
       "[1, 2, 3] -> [1, 2, 6]"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "Cumulative Product의 약자인 **`.cumprod()`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -6859,7 +6859,7 @@
     "sample_rows": [
       "3.14(pi) -> 180.0"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`degrees`** 함수를 사용합니다. (반대는 `radians`)",
     "problem_type": "코딩"
@@ -6881,7 +6881,7 @@
     "body": "하나의 긴 배열을 똑같은 크기의 3개 배열로 토막 내고 싶습니다.",
     "schema": "parts = np. ... (arr, 3)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`split`** 함수를 사용합니다. (가로로 자르는 `hsplit`, 세로 `vsplit`도 있습니다)",
     "problem_type": "코딩"
@@ -6903,7 +6903,7 @@
     "body": "콤마(,)로 구분된 숫자 데이터 파일 `data.csv`를 읽어서 배열로 만들고 싶습니다.",
     "schema": "data = np. ... ('data.csv', delimiter=',')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`loadtxt`** 함수를 사용하면 간단한 텍스트 데이터를 배열로 불러올 수 있습니다.",
     "problem_type": "코딩"
@@ -6925,7 +6925,7 @@
     "body": "연속적인 점수 데이터를 '수, 우, 미, 양, 가' 처럼 특정 구간(Bins)에 따라 등급 번호로 매핑하고 싶습니다.",
     "schema": "grades = np. ... (scores, bins)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "숫자화한다는 의미의 **`digitize`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6947,7 +6947,7 @@
     "body": "`dot`과 유사하지만 차원이 높아지면 동작이 조금 다른 내적 함수입니다. 1차원 벡터 두 개에 대해서는 `dot`과 동일하게 동작합니다.",
     "schema": "prod = np. ... (a, b)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`inner`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6969,7 +6969,7 @@
     "body": "`allclose`는 전체가 같은지 보지만, 이 함수는 각 요소별로 비슷한지(True/False) 배열을 반환합니다. 부동소수점 비교에 필수입니다.",
     "schema": "mask = np. ... (arr1, arr2)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`isclose`** 함수를 사용합니다.",
     "problem_type": "코딩"
@@ -6991,7 +6991,7 @@
     "body": "데이터의 분포를 그리기 위해, 구간별 도수(빈도)를 계산하고 싶습니다. (그래프를 그리는 게 아니라 수치 데이터만 얻습니다)",
     "schema": "hist, bins = np. ... (arr, bins=10)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.NumPy",
     "hint": "**`histogram`** 함수를 사용합니다. (반환값이 2개입니다)",
     "problem_type": "코딩"
@@ -7245,7 +7245,7 @@
     "body": "Python에서 Pandas 라이브러리를 사용하려면 먼저 불러와야 합니다. 매번 'pandas'라고 치기 귀찮아서 전 세계 개발자들은 'pd'라는 두 글자로 줄여서 부릅니다. 빈칸을 채워보세요.",
     "schema": "import pandas ... pd",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`import 라이브러리 as 별명` 구문을 사용합니다. `as`는 '~로서'라는 뜻을 가집니다.",
     "problem_type": "코딩"
@@ -7260,7 +7260,7 @@
       "0  철수",
       "1  영희"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "함수를 실행하려면 **소괄호 `()`**를 써야 합니다. `pd.DataFrame(data)`처럼 딕셔너리 변수를 괄호 안에 넣어주세요.",
     "problem_type": "코딩"
@@ -7271,7 +7271,7 @@
     "body": "컴퓨터에 저장된 'data.csv' 파일을 읽어오려고 합니다. 파일 이름은 문자열이므로 반드시 따옴표로 감싸야 합니다.",
     "schema": "df = pd.read_csv( ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "괄호 안에 `'data.csv'` 또는 `\"data.csv\"` 처럼 파일명을 따옴표로 감싸서 넣어주세요.",
     "problem_type": "코딩"
@@ -7284,7 +7284,7 @@
     "sample_rows": [
       "상위 5개 행 출력"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "함수나 메서드를 '실행'할 때는 뒤에 반드시 **소괄호 `()`**를 붙여야 합니다. `df.head()`가 맞습니다.",
     "problem_type": "코딩"
@@ -7297,7 +7297,7 @@
     "sample_rows": [
       "(100, 5)"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "속성(attribute)에 접근할 때는 괄호 없이 점(`.`)만 찍습니다. `df.shape` 뒤에 `()`를 붙이지 않도록 주의하세요.",
     "problem_type": "코딩"
@@ -7311,7 +7311,7 @@
       "0  20",
       "1  25"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "무언가를 선택하거나 꺼낼 때는 **대괄호 `[]`**를 씁니다. 컬럼 이름은 문자열이니 따옴표도 잊지 마세요. `df['age']`",
     "problem_type": "코딩"
@@ -7322,7 +7322,7 @@
     "body": "컬럼 이름이 'age'처럼 단순한 영어 단어라면, 대괄호 대신 점(`.`)을 찍어서 더 쉽게 가져올 수도 있습니다.",
     "schema": "ages = df ... age",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`df.age` 처럼 작성합니다. 단, 컬럼명에 공백이나 특수문자가 있으면 이 방식은 쓸 수 없습니다.",
     "problem_type": "코딩"
@@ -7333,7 +7333,7 @@
     "body": "'name'과 'age' 두 개의 컬럼을 동시에 선택해서 작은 표를 만들고 싶습니다. 리스트 `['name', 'age']`를 선택 기호 `[]` 안에 넣어야 하므로 대괄호가 두 겹이 됩니다.",
     "schema": "subset = df ... 'name', 'age' ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "바깥쪽 `[]`는 선택을 위한 것이고, 안쪽 `[]`는 리스트를 만들기 위한 것입니다. `df[['name', 'age']]` 형태가 됩니다.",
     "problem_type": "코딩"
@@ -7346,7 +7346,7 @@
     "sample_rows": [
       "<class 'pandas.core.frame.DataFrame'>..."
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "정보를 보여주는 기능을 실행합니다. `()`를 붙여 `df.info()`라고 씁니다.",
     "problem_type": "코딩"
@@ -7359,7 +7359,7 @@
     "sample_rows": [
       "count, mean, std, min..."
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`describe`** 메서드는 기술 통계량을 계산해줍니다. `df.describe()`",
     "problem_type": "코딩"
@@ -7370,7 +7370,7 @@
     "body": "'price' 컬럼을 기준으로 데이터를 정렬(sort)하려고 합니다. `sort_values` 메서드 안에 '무엇을 기준으로(by)' 할지 알려줘야 합니다.",
     "schema": "df.sort_values( ... ='price')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`by`라는 키워드 인자를 사용합니다. `df.sort_values(by='price')` 형태입니다.",
     "problem_type": "코딩"
@@ -7381,7 +7381,7 @@
     "body": "가격이 높은 순서(내림차순)로 정렬하고 싶습니다. `ascending`(오름차순) 옵션을 켜야 할까요, 꺼야 할까요? Python의 거짓(False) 표기법에 주의하세요.",
     "schema": "df.sort_values(by='price', ascending= ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "오름차순이 아니어야 하므로 **`False`**를 넣습니다. 첫 글자 **F**는 반드시 대문자여야 합니다.",
     "problem_type": "코딩"
@@ -7395,7 +7395,7 @@
       "0  True",
       "1  False"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "수학 부등호 **`>`**를 사용합니다. `df['age'] > 20`",
     "problem_type": "코딩"
@@ -7406,7 +7406,7 @@
     "body": "나이가 20보다 큰 행만 뽑고 싶습니다. `df` 뒤에 대괄호 `[]`를 열고, 그 안에 조건식을 넣으면 필터링이 됩니다.",
     "schema": "adults = df ... df['age'] > 20 ...",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`df[ 조건식 ]` 형태입니다. `df[df['age'] > 20]` 처럼 조건식을 대괄호 안에 넣어주세요.",
     "problem_type": "코딩"
@@ -7419,7 +7419,7 @@
     "sample_rows": [
       "country 컬럼이 생성됨"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`df['새컬럼명'] = 값` 형식을 사용합니다. 없는 컬럼 이름을 대괄호에 넣고 값을 할당하면 새로 생깁니다.",
     "problem_type": "코딩"
@@ -7430,7 +7430,7 @@
     "body": "필요 없는 'temp' 컬럼을 삭제하려고 합니다. `drop` 메서드를 사용하되, `columns`라는 인자에 삭제할 컬럼명을 리스트로 전달하세요.",
     "schema": "df = df.drop( ... =['temp'])",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`columns=['temp']`라고 명시해주는 것이 가장 안전하고 명확한 방법입니다.",
     "problem_type": "코딩"
@@ -7444,7 +7444,7 @@
       "True (비어있음)",
       "False (값 있음)"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`isnull`** 메서드를 사용합니다. `isna()`를 써도 똑같습니다.",
     "problem_type": "코딩"
@@ -7455,7 +7455,7 @@
     "body": "비어있는 점수(NaN)를 모두 0점으로 채워 넣고 싶습니다. '채우다(fill)'와 'N/A'를 합친 메서드 이름을 생각해보세요.",
     "schema": "df = df. ... (0)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`fillna(채울값)`** 메서드를 사용합니다. `df.fillna(0)`",
     "problem_type": "코딩"
@@ -7466,7 +7466,7 @@
     "body": "컬럼 이름 'nm'을 'name'으로 바꾸고 싶습니다. `rename` 메서드 안에 `{'옛이름': '새이름'}` 형태의 딕셔너리를 `columns` 인자로 전달하세요.",
     "schema": "df.rename(columns ... {'nm': 'name'} ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "`columns={'nm': 'name'}`와 같이 딕셔너리(`{}`) 대신 등호(`=`)를 사용하여 인자를 전달합니다.",
     "problem_type": "코딩"
@@ -7477,7 +7477,7 @@
     "body": "가공한 데이터를 'result.csv'로 저장하려는데, 불필요한 행 번호(index)는 저장하고 싶지 않습니다. `index` 옵션을 꺼주세요(False).",
     "schema": "df.to_csv('result.csv', index= ... )",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "인덱스를 저장하지 않으려면 **`False`**를 줍니다. `index=False`",
     "problem_type": "코딩"
@@ -7490,7 +7490,7 @@
     "sample_rows": [
       "<class 'pandas.core.series.Series'>"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "Python 내장 함수인 `type()` 안에 확인하고 싶은 변수를 넣으면 됩니다.",
     "problem_type": "코딩"
@@ -7504,7 +7504,7 @@
       "100 -> 200",
       "200 -> 300"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "그냥 숫자 더하듯이 **`+`** 기호를 사용하면 알아서 모든 행에 더해집니다.",
     "problem_type": "코딩"
@@ -7518,7 +7518,7 @@
       "A    10",
       "B    5"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`value_counts`** 메서드는 고유 값의 개수를 세서 내림차순으로 보여줍니다.",
     "problem_type": "코딩"
@@ -7531,7 +7531,7 @@
     "sample_rows": [
       "['Seoul', 'Busan', 'Jeju']"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`unique`** 메서드를 사용합니다. 괄호 `()`를 잊지 마세요.",
     "problem_type": "코딩"
@@ -7542,7 +7542,7 @@
     "body": "행(Row)과 열(Column)의 **이름(Label)**으로 데이터를 콕 집어 가져오고 싶습니다. 인덱스가 'user1'인 행의 'age' 컬럼 값을 가져오세요. 주의: 함수가 아니므로 대괄호를 씁니다.",
     "schema": "val = df.loc['user1', 'age' ... ",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "`loc`은 메서드가 아니라 인덱서(Indexer) 속성이라서 **대괄호 `[]`**로 닫아야 합니다. `df.loc[행, 열]` 순서입니다.",
     "problem_type": "코딩"
@@ -7553,7 +7553,7 @@
     "body": "이번에는 이름이 아니라 **순서(Integer Position)**로 데이터를 찾습니다. 0번째 행, 1번째 열에 있는 값을 가져오세요.",
     "schema": "val = df.iloc[0, 1 ... ",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "`iloc`도 `loc`처럼 **대괄호 `]`**로 닫아야 합니다. (index location의 약자)",
     "problem_type": "코딩"
@@ -7567,7 +7567,7 @@
       "A반: 80",
       "B반: 90"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "평균을 구하는 메서드는 **`mean`**입니다. `groupby(...).mean()` 처럼 점으로 연결합니다.",
     "problem_type": "코딩"
@@ -7578,7 +7578,7 @@
     "body": "Pandas 컬럼(시리즈)의 문자열을 다룰 때는 바로 함수를 쓸 수 없고, '나는 문자열 기능을 쓸 거야'라고 선언해주는 접근자가 필요합니다. 'name' 컬럼을 대문자로 바꿀 때 중간에 들어갈 키워드는?",
     "schema": "df['name']. ... .upper()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "문자열(String)을 뜻하는 **`str`**을 중간에 점으로 찍어줘야 합니다. `df['col'].str.upper()`",
     "problem_type": "코딩"
@@ -7592,7 +7592,7 @@
       "0 True",
       "1 False"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`contains`** 메서드는 해당 문자열이 포함되어 있으면 True를 반환합니다.",
     "problem_type": "코딩"
@@ -7603,7 +7603,7 @@
     "body": "날짜가 문자열('2024-01-01')로 저장되어 있으면 날짜 계산이 안 됩니다. 이를 진짜 날짜 타입(Datetime)으로 바꿔주는 Pandas 내장 함수는?",
     "schema": "df['date'] = pd. ... (df['date'])",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`to_datetime`** 함수를 사용하면 문자열을 시계열 데이터로 변환해줍니다.",
     "problem_type": "코딩"
@@ -7616,7 +7616,7 @@
     "sample_rows": [
       "2024"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Datetime의 약자인 **`dt`** 접근자를 사용합니다. `df['date'].dt.month` 처럼 씁니다.",
     "problem_type": "코딩"
@@ -7627,7 +7627,7 @@
     "body": "'review' 컬럼에 적힌 글자 수(길이)를 세고 싶습니다. Python의 `len` 함수를 컬럼의 모든 행에 '적용'해주는 메서드는?",
     "schema": "df['len'] = df['review']. ... (len)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`apply`** 메서드는 괄호 안에 함수 이름(여기선 `len`)을 넣으면 알아서 모든 데이터에 적용해줍니다.",
     "problem_type": "코딩"
@@ -7638,7 +7638,7 @@
     "body": "데이터를 합치다 보니 완전히 똑같은 행이 여러 개 생겼습니다. 중복된 행을 하나만 남기고 제거하는 메서드는?",
     "schema": "df = df. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`drop_duplicates`** 메서드를 사용합니다. (이름이 매우 직관적입니다)",
     "problem_type": "코딩"
@@ -7649,7 +7649,7 @@
     "body": "0, 1, 2... 같은 기본 번호 대신, 유니크한 'id' 컬럼을 이 데이터프레임의 인덱스(행 이름)로 지정하고 싶습니다.",
     "schema": "df = df. ... ('id')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`set_index`** 메서드를 사용하면 컬럼을 인덱스로 밀어넣을 수 있습니다.",
     "problem_type": "코딩"
@@ -7660,7 +7660,7 @@
     "body": "인덱스로 설정된 'id'를 다시 일반 컬럼으로 되돌리고, 행 번호는 다시 0부터 시작하게 만들고 싶습니다.",
     "schema": "df = df. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`reset_index`** 메서드는 인덱스를 리셋하여 컬럼으로 복귀시킵니다.",
     "problem_type": "코딩"
@@ -7671,7 +7671,7 @@
     "body": "두 개의 데이터프레임 `df1`과 `df2`를 공통된 컬럼 'id'를 기준으로 병합(Join)하고 싶습니다. SQL의 Join과 같은 기능을 하는 함수는?",
     "schema": "merged = pd. ... (df1, df2, on='id')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`merge`** 함수를 사용합니다. `pd.merge()`는 두 표를 옆으로 붙일 때 가장 많이 씁니다.",
     "problem_type": "코딩"
@@ -7682,7 +7682,7 @@
     "body": "이번에는 두 데이터프레임 `df1`, `df2`를 위아래로(수직으로) 단순하게 이어 붙이고 싶습니다. 리스트 `[]` 안에 합칠 표들을 넣어서 전달해야 합니다.",
     "schema": "result = pd. ... ([df1, df2])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`concat`** 함수를 사용합니다. `concatenate`(연쇄하다)의 줄임말입니다.",
     "problem_type": "코딩"
@@ -7695,7 +7695,7 @@
     "sample_rows": [
       "(그래프 출력)"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`plot`** 메서드를 호출하면 기본 선 그래프가 그려집니다.",
     "problem_type": "코딩"
@@ -7706,7 +7706,7 @@
     "body": "나이가 20 이상 **이고(AND)** 성별이 'F'인 사람을 찾으려 합니다. Pandas에서 두 조건을 연결할 때 `and` 대신 쓰는 기호는 무엇일까요? (주의: 각 조건은 반드시 괄호 `()`로 감싸야 합니다)",
     "schema": "df[(df['age'] >= 20) ... (df['sex'] == 'F')]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Python의 `and` 대신 앰퍼샌드 **`&`** 기호를 사용합니다.",
     "problem_type": "코딩"
@@ -7720,7 +7720,7 @@
       "M -> 0",
       "F -> 1"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`map`** 메서드는 시리즈의 각 값을 딕셔너리의 키에 맞춰 값으로 변환해줍니다.",
     "problem_type": "코딩"
@@ -7733,7 +7733,7 @@
     "sample_rows": [
       "하위 5개 행 출력"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "꼬리를 뜻하는 영어 단어 **`tail`**을 사용합니다. 메서드니까 괄호 `()`를 꼭 붙여주세요.",
     "problem_type": "코딩"
@@ -7746,7 +7746,7 @@
     "sample_rows": [
       "Index(['name', 'age', ...], dtype='object')"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`columns`** 속성을 호출합니다. `df.columns` 뒤에 `()`를 붙이면 에러가 납니다.",
     "problem_type": "코딩"
@@ -7759,7 +7759,7 @@
     "sample_rows": [
       "'1000' -> 1000"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`astype`** 메서드를 사용합니다. 괄호 안에 변환할 타입 이름 `'int'`나 `'float'`를 넣습니다.",
     "problem_type": "코딩"
@@ -7770,7 +7770,7 @@
     "body": "'sales' 컬럼의 총매출(합계)을 알고 싶습니다. Python 내장 함수 `sum()`을 써도 되지만, Pandas 전용 메서드를 쓰는 게 훨씬 빠릅니다.",
     "schema": "total = df['sales']. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`sum`** 메서드를 사용합니다. `df['col'].sum()`",
     "problem_type": "코딩"
@@ -7781,7 +7781,7 @@
     "body": "도시가 'Seoul'이거나 'Busan'인 데이터만 뽑고 싶습니다. `OR` 연산자를 여러 번 쓰는 대신, 리스트에 '포함되어 있는지(is inside)' 확인하는 메서드를 쓰세요.",
     "schema": "cond = df['city']. ... (['Seoul', 'Busan'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`isin`** 메서드는 괄호 안에 **리스트 `[]`**를 받습니다. `isin(['A', 'B'])` 형태가 됩니다.",
     "problem_type": "코딩"
@@ -7792,7 +7792,7 @@
     "body": "이번에는 도시가 'Seoul'이 **아닌** 사람만 뽑고 싶습니다. 앞서 만든 조건식(`cond`) 앞에 '반대(Not)'를 의미하는 Pandas 전용 기호를 붙여보세요.",
     "schema": "not_seoul = df[ ... cond]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Python 기본 문법의 `not`이나 `!` 대신, Pandas(Numpy)에서는 물결표 **`~`** (Tilde)를 사용합니다.",
     "problem_type": "코딩"
@@ -7803,7 +7803,7 @@
     "body": "데이터가 너무 많아서 딱 5개만 랜덤으로 뽑아서 확인하고 싶습니다. `head()`는 앞부분만 보여주지만 이 메서드는 무작위로 섞어서 뽑아줍니다.",
     "schema": "random_rows = df. ... (5)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`sample`** 메서드를 사용합니다. `n=5` 옵션을 주거나 그냥 숫자 5를 넣으면 됩니다.",
     "problem_type": "코딩"
@@ -7816,7 +7816,7 @@
     "sample_rows": [
       "RangeIndex(start=0, stop=100, step=1)"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`index`** 속성을 호출합니다. `df.index`",
     "problem_type": "코딩"
@@ -7827,7 +7827,7 @@
     "body": "값(`sort_values`)이 아니라, 뒤죽박죽된 행 번호(인덱스)를 기준으로 다시 차례대로 정렬하고 싶습니다.",
     "schema": "df = df. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`sort_index`** 메서드를 사용합니다. 기본값은 오름차순입니다.",
     "problem_type": "코딩"
@@ -7838,7 +7838,7 @@
     "body": "평균(`mean`)은 아주 큰 값 하나 때문에 왜곡될 수 있습니다. 데이터를 줄 세웠을 때 정확히 가운데에 있는 값(중위수)을 구하는 메서드는?",
     "schema": "mid_val = df['income']. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`median`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -7851,7 +7851,7 @@
     "sample_rows": [
       "'1,000' -> '1000'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`replace`** 메서드를 사용합니다. `str.replace('찾을거', '바꿀거')` 순서입니다.",
     "problem_type": "코딩"
@@ -7864,7 +7864,7 @@
     "sample_rows": [
       "'20240101' -> '2024'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`slice`** 메서드를 쓰거나 `str[0:4]` 처럼 대괄호를 쓸 수도 있습니다. 여기서는 메서드 이름 `slice`를 맞춰보세요.",
     "problem_type": "코딩"
@@ -7877,7 +7877,7 @@
     "sample_rows": [
       "2024-01-01 -> Monday"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`day_name`** 메서드는 요일 이름을 문자열로 반환합니다.",
     "problem_type": "코딩"
@@ -7892,7 +7892,7 @@
       "height    1.0     0.8",
       "weight    0.8     1.0"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Correlation의 약자인 **`corr`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -7903,7 +7903,7 @@
     "body": "엑셀의 꽃, 피벗 테이블입니다. 'date'를 행(index)으로, 'category'를 열(columns)로 하여 'price'의 합계(sum)를 표로 재구성하세요.",
     "schema": "pt = df. ... (index='date', columns='category', values='price', aggfunc='sum')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`pivot_table`** 메서드를 사용합니다. 인자가 많지만 엑셀 피벗 설정과 논리가 같습니다.",
     "problem_type": "코딩"
@@ -7916,7 +7916,7 @@
     "sample_rows": [
       "가장 큰 값이 있는 인덱스 반환"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Index of Max라는 뜻의 **`idxmax`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -7927,7 +7927,7 @@
     "body": "데이터를 가공하기 전에 원본을 보존하기 위해 똑같은 복사본을 따로 만들고 싶습니다. 단순 대입(`=`)은 원본도 같이 바뀌니 이 메서드를 써야 합니다.",
     "schema": "df_new = df. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`copy`** 메서드는 데이터프레임을 깊은 복사(Deep Copy)하여 독립된 객체로 만듭니다.",
     "problem_type": "코딩"
@@ -7938,7 +7938,7 @@
     "body": "CSV 말고 엑셀 파일(.xlsx)로 결과를 저장해서 팀장님께 보내드려야 합니다. `to_csv`와 형제인 이 메서드는?",
     "schema": "df. ... ('report.xlsx')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`to_excel`** 메서드를 사용합니다. (실행하려면 `openpyxl` 라이브러리가 설치되어 있어야 합니다)",
     "problem_type": "코딩"
@@ -7949,7 +7949,7 @@
     "body": "데이터프레임의 행과 열을 맞바꾸고(전치, Transpose) 싶습니다. 메서드가 아니라 아주 짧은 대문자 속성 하나로 가능합니다.",
     "schema": "df_flipped = df. ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Transpose의 앞글자 **`T`** 속성을 사용합니다. `df.T` (괄호 없음)",
     "problem_type": "코딩"
@@ -7960,7 +7960,7 @@
     "body": "가장 비싼 가격(`max`)에서 가장 싼 가격(`min`)을 뺀 '가격 차이'를 계산해보세요. 각 메서드를 호출해서 뺄셈 연산을 하면 됩니다.",
     "schema": "diff = df['price'].max() - df['price']. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "최솟값을 구하는 메서드 **`min`**을 사용합니다. 괄호를 꼭 붙여주세요.",
     "problem_type": "코딩"
@@ -7971,7 +7971,7 @@
     "body": "가장 낮은 점수가 몇 점인지 알고 싶습니다. `max()`가 최댓값이라면, 최솟값을 구하는 메서드는 무엇일까요?",
     "schema": "lowest = df['score']. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "Minimum의 줄임말인 **`min`** 메서드를 사용합니다. 괄호 `()`를 잊지 마세요.",
     "problem_type": "코딩"
@@ -7982,7 +7982,7 @@
     "body": "데이터가 평균을 중심으로 얼마나 퍼져있는지(표준편차) 알고 싶습니다. 통계 분석의 기초가 되는 이 메서드는?",
     "schema": "deviation = df['score']. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "Standard Deviation의 약자인 **`std`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -7995,7 +7995,7 @@
     "sample_rows": [
       "10 (명)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Number of Unique의 줄임말인 **`nunique`** 메서드를 사용합니다. 데이터 분석에서 정말 자주 쓰입니다.",
     "problem_type": "코딩"
@@ -8006,7 +8006,7 @@
     "body": "점수가 가장 높은 3명을 뽑고 싶습니다. `sort_values`로 정렬하고 `head`로 자르는 과정을 한 번에 해주는 편리한 메서드입니다.",
     "schema": "top3 = df. ... (3, 'score')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`nlargest`** 메서드를 사용합니다. `nlargest(개수, 기준컬럼)` 순서로 씁니다.",
     "problem_type": "코딩"
@@ -8017,7 +8017,7 @@
     "body": "반대로 점수가 가장 낮은 3명을 뽑으려면 어떤 메서드를 써야 할까요?",
     "schema": "bottom3 = df. ... (3, 'score')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`nsmallest`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8030,7 +8030,7 @@
     "sample_rows": [
       "'Man' -> 'Male'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`replace`** 메서드를 사용합니다. `str.replace`와 달리 값 전체가 일치해야 바뀝니다.",
     "problem_type": "코딩"
@@ -8044,7 +8044,7 @@
       "오늘: 100 | 어제: NaN",
       "오늘: 200 | 어제: 100"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`shift`** 메서드를 사용합니다. 시계열 데이터 분석의 필수템입니다.",
     "problem_type": "코딩"
@@ -8058,7 +8058,7 @@
       "100 -> NaN",
       "120 -> 20"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Difference의 줄임말인 **`diff`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8072,7 +8072,7 @@
       "100 -> NaN",
       "110 -> 0.1 (10%)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Percentage Change의 약자인 **`pct_change`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8087,7 +8087,7 @@
       "20 -> 30",
       "30 -> 60"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`cumsum`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8098,7 +8098,7 @@
     "body": "수익률을 계산했더니 소수점이 너무 깁니다(0.33333...). 소수점 2자리까지만 남기고 반올림하는 메서드는?",
     "schema": "df['return'] = df['return']. ... (2)",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`round`** 메서드를 사용합니다. Python 내장 함수 `round()`와 사용법이 같습니다.",
     "problem_type": "코딩"
@@ -8109,7 +8109,7 @@
     "body": "컬럼을 지울 때는 `columns=`를 썼지만, 특정 행(인덱스 0번)을 지울 때는 축(axis)을 지정해야 합니다. 행을 뜻하는 축 번호 0을 사용해보세요.",
     "schema": "df = df.drop(0, axis= ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Pandas에서 **`axis=0`**은 행(Row), `axis=1`은 열(Column) 방향을 의미합니다. (숫자 **0**을 넣으세요)",
     "problem_type": "코딩"
@@ -8120,7 +8120,7 @@
     "body": "데이터의 10번째 행부터 20번째 행까지 자르고 싶습니다. Python 리스트 슬라이싱 문법(`:`)을 `iloc` 안에서 사용해보세요.",
     "schema": "subset = df.iloc[10 ... 21]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`:`** 콜론을 사용합니다. `10:21`이라고 쓰면 10번부터 20번까지(21번 제외) 선택됩니다.",
     "problem_type": "코딩"
@@ -8131,7 +8131,7 @@
     "body": "카테고리가 'Fruit' 이거나(**OR**) 'Vegetable'인 상품을 찾고 싶습니다. Pandas에서 OR를 뜻하는 버티컬 바(Vertical Bar) 기호는?",
     "schema": "df[(df['cat'] == 'Fruit') ... (df['cat'] == 'Vegetable')]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Shift + 원화(₩) 키를 누르면 나오는 **`|`** (파이프) 기호를 사용합니다.",
     "problem_type": "코딩"
@@ -8145,7 +8145,7 @@
       "-5 -> 0",
       "200 -> 100"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`clip`** 메서드는 값을 특정 범위(lower, upper) 내로 제한합니다.",
     "problem_type": "코딩"
@@ -8156,7 +8156,7 @@
     "body": "피벗 테이블의 반대입니다. 가로로 넓은 데이터(Wide)를 세로로 긴 데이터(Long)로 재구조화하는 메서드입니다. 컬럼 헤더들을 데이터 값으로 녹여내리는 개념입니다.",
     "schema": "melted = df. ... (id_vars=['date'], value_vars=['A', 'B'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`melt`** 메서드를 사용합니다. 데이터를 깔끔한(Tidy) 형태로 만들 때 필수입니다.",
     "problem_type": "코딩"
@@ -8170,7 +8170,7 @@
       "col1  400 bytes",
       "col2  800 bytes"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`memory_usage`** 메서드를 사용합니다. `deep=True` 옵션을 주면 더 정확합니다.",
     "problem_type": "코딩"
@@ -8181,7 +8181,7 @@
     "body": "모든 값에 1을 더하고 싶습니다. `def`로 함수를 따로 만들지 않고, `apply` 안에서 한 줄짜리 **익명 함수**를 정의해서 바로 쓰세요.",
     "schema": "df['val'].apply( ... x: x + 1)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Python의 익명 함수 키워드 **`lambda`**를 사용합니다.",
     "problem_type": "코딩"
@@ -8194,7 +8194,7 @@
     "sample_rows": [
       "100점 -> 1.0"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`rank`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8205,7 +8205,7 @@
     "body": "`df['new'] = ...` 방식도 좋지만, 메서드 체이닝(점 찍고 계속 연결하기) 중에 새로운 컬럼을 추가하려면 이 메서드가 필요합니다.",
     "schema": "df = df. ... (tax = df['price'] * 0.1)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "할당하다(Assign)라는 뜻의 **`assign`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8218,7 +8218,7 @@
     "sample_rows": [
       "100"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "리스트의 길이를 잴 때와 똑같이 **`len`** 함수에 데이터프레임을 넣으면 행의 개수가 나옵니다.",
     "problem_type": "코딩"
@@ -8231,7 +8231,7 @@
     "sample_rows": [
       "[[1, 'A'], [2, 'B']]"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`values`** 속성을 사용합니다. `df.values`",
     "problem_type": "코딩"
@@ -8244,7 +8244,7 @@
     "sample_rows": [
       "['Alice', 'Bob']"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`tolist`** 메서드를 사용합니다. Numpy 배열이나 시리즈를 리스트로 바꿀 때 씁니다.",
     "problem_type": "코딩"
@@ -8255,7 +8255,7 @@
     "body": "데이터에 빈 값(NaN)이 하나라도 포함된 행은 분석에서 아예 제외해버리고(삭제하고) 싶습니다.",
     "schema": "df_clean = df. ... ()",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`dropna`** 메서드는 결측치가 있는 행(기본값)을 삭제합니다.",
     "problem_type": "코딩"
@@ -8269,7 +8269,7 @@
       "10 -> 10",
       "NaN -> 10 (Copy)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Forward Fill의 약자인 **`'ffill'`**을 사용합니다.",
     "problem_type": "코딩"
@@ -8280,7 +8280,7 @@
     "body": "수많은 컬럼 중 계산 가능한 숫자형(int, float) 컬럼만 쏙 뽑아서 상관관계를 보고 싶습니다.",
     "schema": "num_df = df. ... (include='number')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`select_dtypes`** 메서드를 사용합니다. 타입을 선택한다는 뜻입니다.",
     "problem_type": "코딩"
@@ -8291,7 +8291,7 @@
     "body": "먼저 '부서(dept)'별로 정렬하고, 같은 부서 내에서는 '연봉(salary)' 순으로 정렬하고 싶습니다. 정렬 기준(`by`)에 리스트를 넣으세요.",
     "schema": "df.sort_values(by=[ ... , 'salary'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`'dept'`**와 `'salary'`를 리스트 `[]` 안에 순서대로 적어줍니다.",
     "problem_type": "코딩"
@@ -8302,7 +8302,7 @@
     "body": "'Kevin, 25' 처럼 콤마로 합쳐진 데이터를 쪼개서(split), 각각 별도의 컬럼으로 만들고 싶습니다. `expand=True` 옵션이 핵심입니다.",
     "schema": "df[['name', 'age']] = df['info'].str.split(',', expand= ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`True`**를 넣어주면 분리된 리스트가 데이터프레임(컬럼들)으로 확장됩니다.",
     "problem_type": "코딩"
@@ -8315,7 +8315,7 @@
     "sample_rows": [
       "'  A ' -> 'A'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`strip`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8329,7 +8329,7 @@
       "'-' -> NaN",
       "'5' -> 5"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`to_numeric`** 함수를 사용합니다. 데이터 전처리할 때 구세주 같은 함수입니다.",
     "problem_type": "코딩"
@@ -8340,7 +8340,7 @@
     "body": "부서별 매출액을 막대 그래프(Bar Chart)로 시각화하고 싶습니다. `plot` 메서드의 `kind` 옵션을 설정하세요.",
     "schema": "df.plot(kind= ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "막대를 뜻하는 **`'bar'`**를 문자열로 넣어줍니다.",
     "problem_type": "코딩"
@@ -8351,7 +8351,7 @@
     "body": "점수 데이터가 어떤 분포를 보이는지(예: 80점대가 몇 명인지) 히스토그램으로 보고 싶습니다.",
     "schema": "df['score'].plot(kind= ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "Histogram의 줄임말인 **`'hist'`**를 사용합니다.",
     "problem_type": "코딩"
@@ -8362,7 +8362,7 @@
     "body": "두 데이터프레임의 행 개수가 같아서, 그냥 옆으로 나란히 붙이고(열 결합) 싶습니다. `concat` 함수에서 축(axis)을 열 방향으로 설정하세요.",
     "schema": "df = pd.concat([df1, df2], axis= ... )",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "행은 0, 열은 **`1`**입니다. `axis=1`을 기억하세요.",
     "problem_type": "코딩"
@@ -8376,7 +8376,7 @@
       "A: 10",
       "B: 12"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`size`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8387,7 +8387,7 @@
     "body": "매출의 '합계(sum)'와 '평균(mean)'을 동시에 구하고 싶습니다. `agg` 메서드에 함수 이름들을 리스트로 전달하세요.",
     "schema": "df.groupby('dept')['sales'].agg([ ... , 'mean'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "리스트 안에 **`'sum'`**을 추가합니다. `agg(['sum', 'mean'])`",
     "problem_type": "코딩"
@@ -8398,7 +8398,7 @@
     "body": "점수가 60점 미만인 사람들의 결과를 'Fail'로 바꾸고 싶습니다. `df.loc[조건, 컬럼] = 값` 패턴을 사용합니다.",
     "schema": "df.loc[df['score'] < 60, 'result'] ... 'Fail'",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "값을 할당(대입)해야 하므로 등호 **`=`**를 사용합니다.",
     "problem_type": "코딩"
@@ -8409,7 +8409,7 @@
     "body": "데이터를 웹 개발자와 공유하기 위해 JSON 포맷으로 저장하려고 합니다. CSV 저장과 메서드 이름 패턴이 같습니다.",
     "schema": "df. ... ('data.json')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`to_json`** 메서드를 사용합니다.",
     "problem_type": "코딩"
@@ -8420,7 +8420,7 @@
     "body": "1월 1일부터 1월 31일까지의 날짜 리스트를 자동으로 생성해서 테스트 데이터를 만들고 싶습니다. 시작일과 기간(periods)을 주면 됩니다.",
     "schema": "dates = pd. ... (start='2024-01-01', periods=31)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`date_range`** 함수는 연속된 날짜(DatetimeIndex)를 생성해줍니다.",
     "problem_type": "코딩"
@@ -8433,7 +8433,7 @@
     "sample_rows": [
       "[A, B] -> Row A, Row B"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "폭발하다(Explode)라는 뜻의 **`explode`** 메서드를 사용하면 리스트 요소를 행으로 분리합니다.",
     "problem_type": "코딩"
@@ -8444,7 +8444,7 @@
     "body": "필터링 결과 데이터가 하나도 없는지(텅 비었는지) 확인해서, 비었으면 '데이터 없음'을 출력하려고 합니다. 괄호 없는 속성입니다.",
     "schema": "if df. ... : print('No Data')",
     "sample_rows": [],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`empty`** 속성은 데이터프레임이 비어있으면 `True`를 반환합니다.",
     "problem_type": "코딩"
@@ -8482,7 +8482,7 @@
     "sample_rows": [
       "100행 * 5열 = 500"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`size`** 속성은 데이터의 총 원소 개수를 반환합니다.",
     "problem_type": "코딩"
@@ -8517,7 +8517,7 @@
     "body": "컬럼 이름을 하나하나 바꾸지 않고, 전체 컬럼명을 `['A', 'B', 'C']`로 통째로 덮어쓰고 싶습니다. `rename` 대신 속성에 직접 할당하세요.",
     "schema": "df. ... = ['A', 'B', 'C']",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`columns`** 속성에 리스트를 대입(`=`)하면 이름이 싹 바뀝니다. 개수가 딱 맞아야 합니다.",
     "problem_type": "코딩"
@@ -8586,7 +8586,7 @@
       "0 False",
       "1 True (중복됨)"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`duplicated`** 메서드는 중복 여부를 불리언 시리즈로 반환합니다.",
     "problem_type": "코딩"
@@ -8622,7 +8622,7 @@
       "age: int64",
       "name: object"
     ],
-    "difficulty": "Lv0 기초",
+    "difficulty": "Lv0 입문",
     "kind": "Python.Pandas",
     "hint": "**`dtypes`** 속성을 사용합니다. (괄호 없음)",
     "problem_type": "코딩"
@@ -8657,7 +8657,7 @@
     "body": "모든 컬럼을 다 보지 말고, 오직 'price' 컬럼이 비어있는 행만 골라서 삭제하고 싶습니다. `subset` 옵션을 사용하세요.",
     "schema": "df.dropna( ... =['price'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`subset`** 인자에 검사할 컬럼명 리스트를 넣습니다.",
     "problem_type": "코딩"
@@ -8720,7 +8720,7 @@
     "sample_rows": [
       "Kim, Min -> Kim Min"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "문자열 컬럼끼리는 **`+`** 연산자로 직관적으로 연결할 수 있습니다.",
     "problem_type": "코딩"
@@ -8733,7 +8733,7 @@
     "sample_rows": [
       "'Apple' -> 5"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`len`** 메서드를 문자열 접근자(`.str`) 뒤에 사용합니다.",
     "problem_type": "코딩"
@@ -8746,7 +8746,7 @@
     "sample_rows": [
       "'2024-01' -> '202'"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "처음부터 3개까지라면 **`:3`**을 대괄호 안에 넣습니다.",
     "problem_type": "코딩"
@@ -8772,7 +8772,7 @@
     "sample_rows": [
       "A: 0.5, B: 0.3..."
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "정규화(Normalize)를 뜻하는 **`normalize`** 옵션을 True로 합니다.",
     "problem_type": "코딩"
@@ -8783,7 +8783,7 @@
     "body": "전체 컬럼이 다 같을 때가 아니라, 오직 'user_id' 컬럼이 중복일 때만 제거하고 싶습니다. 엑셀에서 중복 제거 기준 열을 선택하는 것과 같습니다.",
     "schema": "df.drop_duplicates( ... =['user_id'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`subset`** 인자에 기준이 될 컬럼명을 리스트로 넣습니다.",
     "problem_type": "코딩"
@@ -8796,7 +8796,7 @@
     "sample_rows": [
       "10.5 -> 10"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`astype`** 메서드로 타입을 변경합니다.",
     "problem_type": "코딩"
@@ -8818,7 +8818,7 @@
     "body": "먼저 'Team'으로 정렬하고, 같은 팀 내에서는 'Name'으로 정렬하고 싶습니다. 정렬 기준에 리스트를 넣으세요.",
     "schema": "df.sort_values(by=[ ... , 'Name'])",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "첫 번째 기준인 **`'Team'`**과 두 번째 기준을 리스트 `[]`로 묶습니다.",
     "problem_type": "코딩"
@@ -8840,7 +8840,7 @@
     "body": "C열에 `=A2 * B2` 수식을 넣고 아래로 쭉 끄는(Fill) 작업을 Pandas에서는 어떻게 할까요? 반복문(`for`)을 쓰면 엑셀보다 느려집니다. 그냥 컬럼끼리 곱하세요.",
     "schema": "df['Total'] = df['Price'] ... df['Quantity']",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "곱하기 연산자 **`*`**를 사용하면 모든 행에 대해 동시에 계산됩니다(Vectorization).",
     "problem_type": "코딩"
@@ -8851,7 +8851,7 @@
     "body": "컬럼 이름 'Unnamed: 0'을 'ID'로 바꾸고 싶습니다. 엑셀에서 셀을 더블클릭해서 이름을 바꾸는 것과 같습니다.",
     "schema": "df. ... (columns={'Unnamed: 0': 'ID'})",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`rename`** 메서드를 사용하여 컬럼명을 변경 매핑합니다.",
     "problem_type": "코딩"
@@ -8873,7 +8873,7 @@
     "body": "복사해서 '행/열 바꿈'으로 붙여넣기 하는 기능입니다. 데이터프레임을 가로세로 뒤집으려면?",
     "schema": "df_transposed = df. ...",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`T`** 속성을 사용합니다. (Transpose의 약자)",
     "problem_type": "코딩"
@@ -8898,7 +8898,7 @@
     "body": "주소 컬럼에서 'Gangnam'이라는 글자가 들어간 행만 필터링하고 싶습니다. 엑셀의 '텍스트 필터 > 포함' 기능입니다.",
     "schema": "df[df['Address'].str. ... ('Gangnam')]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`contains`** 메서드는 특정 문자열이 포함되어 있는지 확인합니다.",
     "problem_type": "코딩"
@@ -8920,7 +8920,7 @@
     "body": "엑셀에서 스크롤할 때 '이름' 컬럼을 고정하고 싶은 것처럼, Pandas에서 'Name' 컬럼을 행의 대표 ID(인덱스)로 설정하여 데이터를 조회하고 싶습니다.",
     "schema": "df = df. ... ('Name')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`set_index`** 메서드를 사용하면 특정 컬럼이 인덱스(행 레이블)가 됩니다.",
     "problem_type": "코딩"
@@ -8946,7 +8946,7 @@
     "sample_rows": [
       "5 days -> 5"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`days`** 속성을 사용하면 `timedelta` 객체에서 정수형 일수를 꺼냅니다.",
     "problem_type": "코딩"
@@ -8971,7 +8971,7 @@
       "A:NaN, B:10 -> 10",
       "A:5, B:10 -> 5"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`combine_first`** 메서드는 우선순위 컬럼의 결측치를 다른 컬럼의 값으로 메꿉니다.",
     "problem_type": "코딩"
@@ -8993,7 +8993,7 @@
     "body": "전체 데이터 중 상위 10%(0.9 분위수)에 해당하는 커트라인 점수를 알고 싶습니다.",
     "schema": "cutoff = df['score']. ... (0.9)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`quantile`** 메서드는 0~1 사이의 비율을 받아 해당 분위수를 계산합니다.",
     "problem_type": "코딩"
@@ -9015,7 +9015,7 @@
     "body": "엑셀의 검색(Ctrl+F)처럼 대소문자 상관없이 'apple'이 포함된 데이터를 찾고 싶습니다. `case=False` 옵션을 사용하세요.",
     "schema": "df[df['text'].str.contains('apple', ... =False)]",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "대소문자 구분을 뜻하는 **`case`** 옵션을 False로 끕니다.",
     "problem_type": "코딩"
@@ -9028,7 +9028,7 @@
     "sample_rows": [
       "'없음' -> NaN"
     ],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`errors`** 파라미터에 `'coerce'`를 넣으면 강제 변환(Coerce)을 수행합니다.",
     "problem_type": "코딩"
@@ -9061,7 +9061,7 @@
     "body": "사원번호가 '1', '25' 처럼 되어있는데, 이를 '001', '025' 처럼 3자리로 맞추고 앞을 0으로 채우고 싶습니다.",
     "schema": "df['id_str'] = df['id'].astype(str).str. ... (3)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`zfill`** (Zero Fill) 메서드는 지정한 너비만큼 0을 채웁니다.",
     "problem_type": "코딩"
@@ -9116,7 +9116,7 @@
     "body": "로그 데이터에서 중복된 항목이 있다면, 가장 나중에 들어온(최신) 데이터만 남기고 싶습니다.",
     "schema": "df.drop_duplicates(subset='id', ... ='last')",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`keep`** 파라미터를 `'last'`로 설정하면 마지막 행을 유지합니다. (기본값은 `'first'`)",
     "problem_type": "코딩"
@@ -9138,7 +9138,7 @@
     "body": "데이터프레임을 출력했더니 컬럼이 너무 많아서 중간이 `...`으로 생략됩니다. 모든 컬럼을 다 보여달라고 설정을 바꾸고 싶습니다.",
     "schema": "pd. ... ('display.max_columns', None)",
     "sample_rows": [],
-    "difficulty": "Lv1 입문",
+    "difficulty": "Lv1 기초",
     "kind": "Python.Pandas",
     "hint": "**`set_option`** 함수로 Pandas의 표시 설정을 변경할 수 있습니다.",
     "problem_type": "코딩"

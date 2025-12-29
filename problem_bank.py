@@ -5,6 +5,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Sequence
 
+# 제외할 파일 목록 (문제 파일이 아닌 JSON 파일들)
+EXCLUDED_FILES = {"favorites.json"}
+DEFAULT_PROBLEM_FILE = "problems.json"
+
 
 @dataclass
 class Problem:
@@ -77,3 +81,54 @@ def load_problem_bank(path: Path | str = Path("data/problems.json")) -> List[Pro
 
 PROBLEM_BANK: List[Problem] = load_problem_bank()
 DIFFICULTY_OPTIONS: List[str] = unique_preserve_order([p.difficulty for p in PROBLEM_BANK])
+
+
+def get_available_problem_files(data_dir: Path | str = Path("data")) -> List[str]:
+    """data 폴더에서 사용 가능한 문제 파일 목록을 반환합니다.
+
+    favorites.json 등 제외 파일을 제외한 모든 .json 파일을 반환합니다.
+
+    Args:
+        data_dir: 데이터 디렉토리 경로
+
+    Returns:
+        List[str]: 문제 파일명 목록 (예: ["problems.json", "problems_advanced.json"])
+    """
+    data_path = Path(data_dir)
+    if not data_path.exists():
+        return [DEFAULT_PROBLEM_FILE]
+
+    files = [
+        f.name for f in data_path.glob("*.json")
+        if f.name not in EXCLUDED_FILES
+    ]
+
+    # 기본 파일이 맨 앞에 오도록 정렬
+    if DEFAULT_PROBLEM_FILE in files:
+        files.remove(DEFAULT_PROBLEM_FILE)
+        files = [DEFAULT_PROBLEM_FILE] + sorted(files)
+    else:
+        files = sorted(files)
+
+    return files if files else [DEFAULT_PROBLEM_FILE]
+
+
+def reload_problem_bank(filename: str = DEFAULT_PROBLEM_FILE) -> tuple[List[Problem], List[str], List[str]]:
+    """문제 은행을 지정된 파일로 재로드합니다.
+
+    Args:
+        filename: 문제 파일명 (예: "problems.json")
+
+    Returns:
+        tuple: (PROBLEM_BANK, DIFFICULTY_OPTIONS, LANGUAGE_OPTIONS)
+    """
+    global PROBLEM_BANK, DIFFICULTY_OPTIONS
+
+    file_path = Path("data") / filename
+    PROBLEM_BANK = load_problem_bank(file_path)
+    DIFFICULTY_OPTIONS = unique_preserve_order([p.difficulty for p in PROBLEM_BANK])
+
+    # 언어 옵션도 함께 반환
+    language_options = ["전체"] + sorted(unique_preserve_order([p.kind for p in PROBLEM_BANK]))
+
+    return PROBLEM_BANK, DIFFICULTY_OPTIONS, language_options

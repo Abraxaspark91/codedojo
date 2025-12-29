@@ -10,7 +10,15 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from dotenv import load_dotenv
 import gradio as gr
 import requests
-from problem_bank import DIFFICULTY_OPTIONS, PROBLEM_BANK, Problem, unique_preserve_order
+from problem_bank import (
+    DIFFICULTY_OPTIONS,
+    PROBLEM_BANK,
+    Problem,
+    unique_preserve_order,
+    get_available_problem_files,
+    reload_problem_bank,
+    DEFAULT_PROBLEM_FILE,
+)
 
 NOTE_PATH = Path("data/wrong_notes.md")
 NOTE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -190,6 +198,7 @@ class Attempt:
         timestamp: 제출 시간 (형식: "YYYY-MM-DD HH:MM (요일)")
         rechallenge_hint: 재도전 시 참고할 힌트
         nickname: 문제 별명 (사용자 지정)
+        source_file: 문제 출처 파일 (예: "problems.json")
     """
     pid: str
     title: str
@@ -206,6 +215,7 @@ class Attempt:
     timestamp: str
     rechallenge_hint: str = ""
     nickname: str = ""
+    source_file: str = "problems.json"  # 하위 호환성을 위한 기본값
 
 
 def ensure_state(state: Optional[Dict]) -> Dict:
@@ -414,6 +424,10 @@ def load_attempts() -> List[Attempt]:
                 log_parse_error(line_idx, line, ValueError("JSON 파싱 불가"))
                 continue
 
+            # 하위 호환성: source_file 필드가 없으면 기본값 추가
+            if "source_file" not in data:
+                data["source_file"] = DEFAULT_PROBLEM_FILE
+
             # Attempt 객체 생성
             entry = Attempt(**data)
             entries.append(entry)
@@ -579,12 +593,17 @@ def load_favorites() -> List[Dict]:
 
 
 def save_favorites(favorites: List[Dict]) -> None:
+    """즐겨찾기를 저장합니다. source_file + pid 조합으로 중복 제거."""
     deduped = {}
     for fav in favorites:
         pid = fav.get("pid")
+        source_file = fav.get("source_file", DEFAULT_PROBLEM_FILE)
         if pid:
-            deduped[pid] = {
+            # source_file + pid 조합을 키로 사용하여 중복 제거
+            key = f"{source_file}:{pid}"
+            deduped[key] = {
                 "pid": pid,
+                "source_file": source_file,
                 "title": fav.get("title", ""),
                 "difficulty": fav.get("difficulty", ""),
                 "kind": fav.get("kind", ""),
@@ -599,10 +618,14 @@ def save_favorites(favorites: List[Dict]) -> None:
         encoding="utf-8")
 
 
-def favorite_button_label(pid: str) -> str:
+def favorite_button_label(pid: str, source_file: str = DEFAULT_PROBLEM_FILE) -> str:
+    """즐겨찾기 버튼 레이블을 반환합니다. source_file + pid로 확인."""
     favorites = load_favorites()
-    return "⭐ 즐겨찾기 해제" if any(
-        fav.get("pid") == pid for fav in favorites) else "☆ 즐겨찾기 추가"
+    is_favorite = any(
+        fav.get("pid") == pid and fav.get("source_file", DEFAULT_PROBLEM_FILE) == source_file
+        for fav in favorites
+    )
+    return "⭐ 즐겨찾기 해제" if is_favorite else "☆ 즐겨찾기 추가"
 
 
 def _format_dropdown_choices(
@@ -626,11 +649,12 @@ def _format_dropdown_choices(
 
 
 def refresh_favorite_choices() -> Tuple[List[str], List[str]]:
+    """즐겨찾기 드롭다운 선택지를 반환합니다. 값은 'source_file:pid' 형식입니다."""
     favorites = load_favorites()
     return _format_dropdown_choices(
         favorites,
-        lambda fav: f"{fav.get('title', '')} | - | {fav.get('difficulty', '')} | {fav.get('kind', '')} | {fav.get('timestamp', '-')}",
-        lambda fav: fav["pid"]
+        lambda fav: f"{fav.get('title', '')} | {fav.get('source_file', DEFAULT_PROBLEM_FILE)} | {fav.get('difficulty', '')} | {fav.get('kind', '')}",
+        lambda fav: f"{fav.get('source_file', DEFAULT_PROBLEM_FILE)}:{fav['pid']}"
     )
 
 
@@ -720,7 +744,8 @@ def save_to_wrong_notes(
     code: str,
     feedback: str,
     nickname: str,
-    rechallenge_hint: str
+    rechallenge_hint: str,
+    source_file: str = DEFAULT_PROBLEM_FILE
 ) -> str:
     """수동으로 오답노트에 저장합니다."""
     ensure_note_file()
@@ -742,6 +767,7 @@ def save_to_wrong_notes(
         timestamp=format_timestamp_with_weekday(),
         rechallenge_hint=rechallenge_hint,
         nickname=nickname,
+        source_file=source_file,
     )
 
     try:
@@ -767,50 +793,58 @@ def refresh_note_choices() -> Tuple[List[str], List[str]]:
 
 
 def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
-    """고유한 PID 목록을 반환합니다 (중복 제거).
+    """고유한 source_file + PID 목록을 반환합니다 (중복 제거).
 
     Returns:
         Tuple[List[str], List[str]]: (labels, values)
-            - labels: "title | difficulty | kind" 형식
-            - values: pid 문자열
+            - labels: "title | source_file | difficulty | kind" 형식
+            - values: "source_file:pid" 문자열
     """
     entries = failed_attempts(load_attempts())
-    # pid별로 첫 번째 항목만 유지 (중복 제거)
-    seen_pids = set()
+    # source_file + pid 조합별로 첫 번째 항목만 유지 (중복 제거)
+    seen_keys = set()
     unique_entries = []
     for a in entries:
-        if a.pid not in seen_pids:
-            seen_pids.add(a.pid)
+        key = f"{a.source_file}:{a.pid}"
+        if key not in seen_keys:
+            seen_keys.add(key)
             unique_entries.append(a)
 
     return _format_dropdown_choices(
         unique_entries,
-        lambda a: f"{a.title} | {a.difficulty} | {a.kind}",
-        lambda a: a.pid
+        lambda a: f"{a.title} | {a.source_file} | {a.difficulty} | {a.kind}",
+        lambda a: f"{a.source_file}:{a.pid}"
     )
 
 
-def refresh_note_attempt_choices(selected_pid: str) -> Tuple[List[str], List[str]]:
-    """특정 PID의 모든 시도 목록을 반환합니다.
+def refresh_note_attempt_choices(selected_key: str) -> Tuple[List[str], List[str]]:
+    """특정 source_file + PID의 모든 시도 목록을 반환합니다.
 
     Args:
-        selected_pid: 선택된 문제 ID
+        selected_key: 선택된 키 ("source_file:pid" 형식)
 
     Returns:
         Tuple[List[str], List[str]]: (labels, values)
             - labels: "nickname | timestamp" 형식
-            - values: "pid:nickname:timestamp" 복합 키
+            - values: "source_file:pid:nickname:timestamp" 복합 키
     """
-    if not selected_pid:
+    if not selected_key:
         return [], []
 
+    # source_file:pid 파싱
+    parts = selected_key.split(":", 1)
+    if len(parts) == 2:
+        source_file, pid = parts
+    else:
+        source_file, pid = DEFAULT_PROBLEM_FILE, selected_key
+
     entries = failed_attempts(load_attempts())
-    pid_entries = [a for a in entries if a.pid == selected_pid]
+    pid_entries = [a for a in entries if a.pid == pid and a.source_file == source_file]
 
     return _format_dropdown_choices(
         pid_entries,
         lambda a: f"{a.nickname if a.nickname else '(별명없음)'} | {a.timestamp}",
-        lambda a: f"{a.pid}:{a.nickname}:{a.timestamp}"
+        lambda a: f"{a.source_file}:{a.pid}:{a.nickname}:{a.timestamp}"
     )
 
 
@@ -819,7 +853,7 @@ def load_from_notes(
     """오답노트에서 문제를 로드합니다.
 
     Args:
-        selected_key: PID 또는 복합 키 (pid:nickname:timestamp)
+        selected_key: 복합 키 (source_file:pid:nickname:timestamp)
 
     Returns:
         Tuple[str, Dict, gr.update, str, str]: (question, state, code_update, fav_button, status)
@@ -829,65 +863,57 @@ def load_from_notes(
 
     entries = failed_attempts(load_attempts())
 
-    # 복합 키인지 확인 (pid:nickname:timestamp 형식)
-    if ":" in selected_key:
-        # 복합 키 파싱: maxsplit=2로 nickname이나 timestamp에 ":"가 있어도 처리
-        parts = selected_key.split(":", 2)
-        if len(parts) == 3:
-            pid, nickname, timestamp = parts
-            # 모든 조건으로 정확히 매칭
-            for entry in entries:
-                if (entry.pid == pid and
-                    entry.nickname == nickname and
-                    entry.timestamp == timestamp):
-                    problem = next(
-                        (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
-                    if problem:
-                        filters = normalize_filters(None, None, None)
-                        question = render_question(
-                            problem, True, entry.rechallenge_hint, filters)
-                        return (
-                            question,
-                            {
-                                "problem": problem,
-                                "rechallenge": True,
-                                "hint": entry.rechallenge_hint,
-                                "filters": filters,
-                                "in_progress": False,
-                            },
-                            gr.update(value="", language=problem.language),
-                            favorite_button_label(problem.pid),
-                            "",
-                        )
-        return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
+    # 복합 키 파싱: source_file:pid:nickname:timestamp
+    # maxsplit=3으로 timestamp에 ":"가 있어도 처리
+    parts = selected_key.split(":", 3)
+
+    if len(parts) == 4:
+        source_file, pid, nickname, timestamp = parts
+    elif len(parts) == 3:
+        # 하위 호환성: pid:nickname:timestamp (source_file 없음)
+        source_file = DEFAULT_PROBLEM_FILE
+        pid, nickname, timestamp = parts
     else:
-        # 기존 방식: pid만으로 검색 (하위 호환성)
-        selected_pid = selected_key
-        for entry in entries:
-            if entry.pid == selected_pid:
-                problem = next(
-                    (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
-                if problem:
-                    filters = normalize_filters(None, None, None)
-                    question = render_question(
-                        problem, True, entry.rechallenge_hint, filters)
-                    return (
-                        question,
-                        {
-                            "problem": problem,
-                            "rechallenge": True,
-                            "hint": entry.rechallenge_hint,
-                            "filters": filters,
-                            "in_progress": False,
-                        },
-                        gr.update(value="", language=problem.language),
-                        favorite_button_label(problem.pid),
-                        "",
-                    )
         return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
 
+    # 해당 source_file로 PROBLEM_BANK 재로드
+    reload_problem_bank(source_file)
 
-def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.update]:
+    # 모든 조건으로 정확히 매칭
+    for entry in entries:
+        if (entry.pid == pid and
+            entry.nickname == nickname and
+            entry.timestamp == timestamp and
+            entry.source_file == source_file):
+            problem = next(
+                (p for p in PROBLEM_BANK if p.pid == entry.pid), None)
+            if problem:
+                filters = normalize_filters(None, None, None)
+                question = render_question(
+                    problem, True, entry.rechallenge_hint, filters)
+                return (
+                    question,
+                    {
+                        "problem": problem,
+                        "rechallenge": True,
+                        "hint": entry.rechallenge_hint,
+                        "filters": filters,
+                        "in_progress": False,
+                        "source_file": source_file,  # source_file 저장
+                    },
+                    gr.update(value="", language=problem.language),
+                    favorite_button_label(problem.pid, source_file),
+                    "",
+                )
+
+    return "선택한 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", ""
+
+
+def load_favorite_problem(pid: str, source_file: str = DEFAULT_PROBLEM_FILE) -> Tuple[str, Dict, gr.update, str, str, gr.update]:
+    """즐겨찾기에서 문제를 로드합니다. source_file에서 PROBLEM_BANK를 재로드합니다."""
+    # 해당 소스 파일로 PROBLEM_BANK 재로드
+    reload_problem_bank(source_file)
+
     problem = next((p for p in PROBLEM_BANK if p.pid == pid), None)
     if problem:
         filters = normalize_filters(None, None, None)
@@ -898,19 +924,21 @@ def load_favorite_problem(pid: str) -> Tuple[str, Dict, gr.update, str, str, gr.
             "hint": "",
             "filters": filters,
             "in_progress": False,
+            "source_file": source_file,  # source_file 저장
         })
         return (
             question,
             state,
             gr.update(value="", language=problem.language),
-            favorite_button_label(problem.pid),
+            favorite_button_label(problem.pid, source_file),
             "",
             gr.update(value="💡 힌트 보기"),
         )
     return "선택한 즐겨찾기 문제가 없습니다.", {}, gr.update(), "☆ 즐겨찾기 추가", "", gr.update(value="💡 힌트 보기")
 
 
-def on_new_problem(difficulty: str,
+def on_new_problem(problem_file: str,
+                   difficulty: str,
                    language: str,
                    problem_types: List[str]) -> Tuple[str,
                                                       Dict,
@@ -922,6 +950,9 @@ def on_new_problem(difficulty: str,
                                                       str,
                                                       str]:
     """새 문제를 출제합니다. problem_types는 체크박스로 선택된 리스트입니다."""
+    # 선택된 문제 파일로 PROBLEM_BANK 재로드 (필요시)
+    reload_problem_bank(problem_file)
+
     filters = normalize_filters(difficulty, language, problem_types)
     problem, rechallenge, hint, applied_filters = pick_problem(
         difficulty, language, problem_types)
@@ -940,6 +971,7 @@ def on_new_problem(difficulty: str,
             "filters": filters,
             "in_progress": False,
             "last_feedback": "",
+            "source_file": problem_file,  # 현재 문제 파일 저장
         }
     )
     # 오답노트 목록 자동 업데이트 (PID 드롭다운만)
@@ -950,7 +982,7 @@ def on_new_problem(difficulty: str,
         question,
         state,
         gr.update(value="", language=problem.language),
-        favorite_button_label(problem.pid),
+        favorite_button_label(problem.pid, problem_file),
         "",  # exec_result 초기화
         gr.update(choices=pid_choices, value=None),  # note_pid_dropdown 업데이트
         gr.update(value="💡 힌트 보기"),  # hint_btn 초기화
@@ -1034,17 +1066,28 @@ def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
             choices=list(zip(labels, values)), value=None)
 
     problem: Problem = state["problem"]
+    source_file = state.get("source_file", DEFAULT_PROBLEM_FILE)
     favorites = load_favorites()
-    exists = any(fav.get("pid") == problem.pid for fav in favorites)
+
+    # source_file + pid 조합으로 존재 여부 확인
+    exists = any(
+        fav.get("pid") == problem.pid and fav.get("source_file", DEFAULT_PROBLEM_FILE) == source_file
+        for fav in favorites
+    )
 
     if exists:
-        favorites = [fav for fav in favorites if fav.get("pid") != problem.pid]
+        # source_file + pid 조합으로 제거
+        favorites = [
+            fav for fav in favorites
+            if not (fav.get("pid") == problem.pid and fav.get("source_file", DEFAULT_PROBLEM_FILE) == source_file)
+        ]
         message = "즐겨찾기에서 제거했습니다."
         new_value = None
     else:
         favorites.append(
             {
                 "pid": problem.pid,
+                "source_file": source_file,
                 "title": problem.title,
                 "difficulty": problem.difficulty,
                 "kind": problem.kind,
@@ -1056,13 +1099,16 @@ def toggle_favorite(state: Dict) -> Tuple[gr.update, str, gr.update]:
     save_favorites(favorites)
     labels, values = refresh_favorite_choices()
     return (
-        gr.update(value=favorite_button_label(problem.pid)),
+        gr.update(value=favorite_button_label(problem.pid, source_file)),
         message,
         gr.update(choices=list(zip(labels, values)), value=new_value),
     )
 
 
 def build_interface() -> gr.Blocks:
+    # 사용 가능한 문제 파일 목록
+    available_problem_files = get_available_problem_files()
+
     # kind 값을 정렬하여 계층적으로 표시
     # 결과: ["전체", "Python", "Python.Pyspark", "SQL"]
     language_options = ["전체"] + \
@@ -1093,6 +1139,12 @@ def build_interface() -> gr.Blocks:
                 with gr.Group():
                     gr.Markdown("### 📋 출제 옵션")
                     with gr.Row():
+                        problem_file = gr.Dropdown(
+                            choices=available_problem_files,
+                            value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
+                            label="📁 문제 파일",
+                            scale=1
+                        )
                         difficulty = gr.Dropdown(
                             DIFFICULTY_OPTIONS,
                             value=DIFFICULTY_OPTIONS[0],
@@ -1315,9 +1367,25 @@ def build_interface() -> gr.Blocks:
 
 
         # ===== 이벤트 핸들러 - 신규 문제 탭 =====
+
+        # 문제 파일 선택 시 난이도/언어 드롭다운 옵션 업데이트
+        def on_problem_file_change(selected_file):
+            """문제 파일 변경 시 난이도/언어 옵션 업데이트"""
+            _, new_difficulty_options, new_language_options = reload_problem_bank(selected_file)
+            return (
+                gr.update(choices=new_difficulty_options, value=new_difficulty_options[0] if new_difficulty_options else None),
+                gr.update(choices=new_language_options, value=new_language_options[0] if new_language_options else "전체"),
+            )
+
+        problem_file.change(
+            on_problem_file_change,
+            inputs=[problem_file],
+            outputs=[difficulty, language],
+        )
+
         new_btn.click(
             on_new_problem,
-            inputs=[difficulty, language, problem_types],
+            inputs=[problem_file, difficulty, language, problem_types],
             outputs=[question_md, new_state, code_box, favorite_btn, exec_result, note_pid_dropdown, hint_btn, add_notes_status, nickname_input],
         )
 
@@ -1345,7 +1413,8 @@ def build_interface() -> gr.Blocks:
                 gr.update: 버튼 업데이트 객체
             """
             if state_dict and "problem" in state_dict:
-                return gr.update(value=favorite_button_label(state_dict["problem"].pid))
+                source_file = state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                return gr.update(value=favorite_button_label(state_dict["problem"].pid, source_file))
             return gr.update()  # state 없으면 변경 안 함
 
         # 신규 문제 탭의 즐겨찾기 버튼 (버튼만 동기화, 메시지는 현재 탭만)
@@ -1370,12 +1439,14 @@ def build_interface() -> gr.Blocks:
 
             # 다른 탭의 버튼 레이블 계산
             if new_state_dict and "problem" in new_state_dict:
-                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+                source_file = new_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                new_btn = favorite_button_label(new_state_dict["problem"].pid, source_file)
             else:
                 new_btn = "☆ 즐겨찾기 추가"
 
             if note_state_dict and "problem" in note_state_dict:
-                note_btn = favorite_button_label(note_state_dict["problem"].pid)
+                source_file = note_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                note_btn = favorite_button_label(note_state_dict["problem"].pid, source_file)
             else:
                 note_btn = "☆ 즐겨찾기 추가"
 
@@ -1398,8 +1469,9 @@ def build_interface() -> gr.Blocks:
             outputs=[favorite_choices, fav_state, fav_question_md, fav_code_box, fav_exec_result, fav_hint_btn, fav_favorite_btn, fav_favorite_status_md, note_favorite_btn, favorite_btn]
         )
 
-        def load_favorite_selection(pid, new_state_dict, note_state_dict, fav_state_dict):
-            if not pid:
+        def load_favorite_selection(composite_key, new_state_dict, note_state_dict, fav_state_dict):
+            """즐겨찾기에서 문제를 불러옵니다. composite_key는 'source_file:pid' 형식입니다."""
+            if not composite_key:
                 return (
                     gr.update(),
                     {},
@@ -1411,18 +1483,28 @@ def build_interface() -> gr.Blocks:
                     "☆ 즐겨찾기 추가",
                     "☆ 즐겨찾기 추가",
                 )
-            question, state_val, code_update, btn_label, status_text, hint_update = load_favorite_problem(pid)
+
+            # 복합 키 파싱: source_file:pid
+            parts = composite_key.split(":", 1)
+            if len(parts) == 2:
+                source_file, pid = parts
+            else:
+                source_file, pid = DEFAULT_PROBLEM_FILE, composite_key
+
+            question, state_val, code_update, btn_label, status_text, hint_update = load_favorite_problem(pid, source_file)
 
             # 각 탭의 버튼 레이블을 개별적으로 계산
             fav_btn = btn_label  # 현재 불러온 문제
 
             if new_state_dict and "problem" in new_state_dict:
-                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+                new_source = new_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                new_btn = favorite_button_label(new_state_dict["problem"].pid, new_source)
             else:
                 new_btn = "☆ 즐겨찾기 추가"
 
             if note_state_dict and "problem" in note_state_dict:
-                note_btn = favorite_button_label(note_state_dict["problem"].pid)
+                note_source = note_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                note_btn = favorite_button_label(note_state_dict["problem"].pid, note_source)
             else:
                 note_btn = "☆ 즐겨찾기 추가"
 
@@ -1477,11 +1559,14 @@ def build_interface() -> gr.Blocks:
                 return "⚠️ 먼저 코드를 제출하여 피드백을 받으세요.", gr.update()
 
             problem = state_dict["problem"]
+            source_file = state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
 
-            # 중복 저장 체크: 같은 pid와 nickname으로 이미 저장되었는지 확인
+            # 중복 저장 체크: 같은 source_file + pid + nickname 조합으로 이미 저장되었는지 확인
             existing_attempts = load_attempts()
             if any(
-                attempt.pid == problem.pid and attempt.nickname == nickname
+                attempt.pid == problem.pid
+                and attempt.nickname == nickname
+                and attempt.source_file == source_file
                 for attempt in existing_attempts
             ):
                 return "⚠️ 같은 별명으로 이미 저장된 문제입니다.", gr.update()
@@ -1493,7 +1578,7 @@ def build_interface() -> gr.Blocks:
             hint_summary = generate_hint_summary(problem, code, feedback, LM_STUDIO_ENDPOINT)
 
             progress(0.8, desc="오답노트에 저장 중...")
-            result = save_to_wrong_notes(problem, code, feedback, nickname, hint_summary)
+            result = save_to_wrong_notes(problem, code, feedback, nickname, hint_summary, source_file)
 
             progress(0.9, desc="오답노트 목록 갱신 중...")
             # 오답노트 목록 갱신 (PID 드롭다운만)
@@ -1533,12 +1618,14 @@ def build_interface() -> gr.Blocks:
 
             # 다른 탭의 버튼 레이블 계산
             if new_state_dict and "problem" in new_state_dict:
-                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+                new_source = new_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                new_btn = favorite_button_label(new_state_dict["problem"].pid, new_source)
             else:
                 new_btn = "☆ 즐겨찾기 추가"
 
             if fav_state_dict and "problem" in fav_state_dict:
-                fav_btn = favorite_button_label(fav_state_dict["problem"].pid)
+                fav_source = fav_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                fav_btn = favorite_button_label(fav_state_dict["problem"].pid, fav_source)
             else:
                 fav_btn = "☆ 즐겨찾기 추가"
 
@@ -1572,12 +1659,14 @@ def build_interface() -> gr.Blocks:
 
             # 다른 탭의 버튼 레이블 계산
             if new_state_dict and "problem" in new_state_dict:
-                new_btn = favorite_button_label(new_state_dict["problem"].pid)
+                new_source = new_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                new_btn = favorite_button_label(new_state_dict["problem"].pid, new_source)
             else:
                 new_btn = "☆ 즐겨찾기 추가"
 
             if fav_state_dict and "problem" in fav_state_dict:
-                fav_btn = favorite_button_label(fav_state_dict["problem"].pid)
+                fav_source = fav_state_dict.get("source_file", DEFAULT_PROBLEM_FILE)
+                fav_btn = favorite_button_label(fav_state_dict["problem"].pid, fav_source)
             else:
                 fav_btn = "☆ 즐겨찾기 추가"
 

@@ -497,46 +497,26 @@ def normalize_filters(
 
 def pick_problem(
     difficulty: str, language: str, problem_types: List[str]
-) -> Tuple[Problem, bool, str, Dict]:
-    """체크박스로 선택된 problem_types 중에서 문제를 선택합니다."""
+) -> Tuple[Problem | None, bool, str, Dict]:
+    """체크박스로 선택된 problem_types 중에서 문제를 선택합니다. 엄격한 필터링으로 매칭 실패 시 None을 반환합니다."""
     rechallenge = False
     hint = ""
     target_filters = normalize_filters(difficulty, language, problem_types)
 
-    # 필터 우선순위 (problem_types는 리스트로 유지)
-    filter_priority = [
-        (difficulty, language, problem_types),
-        (difficulty, language, []),
-        (difficulty, None, problem_types),
-        (difficulty, None, []),
-        (None, language, problem_types),
-        (None, language, []),
-        (None, None, problem_types),
-        (None, None, []),
+    # 엄격한 필터링: 요청한 조건에 정확히 맞는 문제만 선택
+    full_pool = [(p, "") for p in problem_bank.PROBLEM_BANK]
+    candidates = [
+        (prob, attempt_hint)
+        for prob, attempt_hint in full_pool
+        if matches_filters(prob, difficulty, language, problem_types)
     ]
 
-    def choose_candidate(
-            pool: List[Tuple[Problem, str]]) -> Tuple[Problem, Dict]:
-        for diff_opt, lang_opt, types_opt in filter_priority:
-            candidates = [
-                (prob, attempt_hint)
-                for prob, attempt_hint in pool
-                if matches_filters(prob, diff_opt, lang_opt, types_opt)
-            ]
-            if candidates:
-                prob, attempt_hint = random.choice(candidates)
-                return prob, normalize_filters(diff_opt, lang_opt, types_opt) | {
-                    "hint": attempt_hint}
-        prob, attempt_hint = random.choice(pool)
-        return prob, normalize_filters(None, None, []) | {
-            "hint": attempt_hint}
+    if not candidates:
+        # 매칭되는 문제가 없으면 None 반환
+        return None, rechallenge, hint, target_filters
 
-    # 신규 문제 탭에서는 항상 PROBLEM_BANK에서만 선택 (모듈 참조로 최신값 사용)
-    applied_filters = target_filters
-    full_pool = [(p, "") for p in problem_bank.PROBLEM_BANK]
-    problem, applied_filters = choose_candidate(full_pool)
-    hint = applied_filters.pop("hint", "")
-    return problem, rechallenge, hint, applied_filters
+    prob, attempt_hint = random.choice(candidates)
+    return prob, rechallenge, hint, target_filters
 
 
 def render_question(
@@ -902,7 +882,7 @@ def load_from_notes(
                         "in_progress": False,
                         "source_file": source_file,  # source_file 저장
                     },
-                    gr.update(value="", language=problem.language),
+                    gr.update(value="", language=problem.safe_language),
                     favorite_button_label(problem.pid, source_file),
                     "",
                 )
@@ -930,7 +910,7 @@ def load_favorite_problem(pid: str, source_file: str = DEFAULT_PROBLEM_FILE) -> 
         return (
             question,
             state,
-            gr.update(value="", language=problem.language),
+            gr.update(value="", language=problem.safe_language),
             favorite_button_label(problem.pid, source_file),
             "",
             gr.update(value="💡 힌트 보기"),
@@ -957,6 +937,37 @@ def on_new_problem(problem_file: str,
     filters = normalize_filters(difficulty, language, problem_types)
     problem, rechallenge, hint, applied_filters = pick_problem(
         difficulty, language, problem_types)
+
+    # 엄격한 필터링으로 매칭되는 문제가 없는 경우
+    if problem is None:
+        # 필터 조건을 명확히 표시
+        filter_desc = []
+        if difficulty and difficulty != "전체":
+            filter_desc.append(f"난이도: {difficulty}")
+        if language and language != "전체":
+            filter_desc.append(f"유형: {language}")
+        if problem_types:
+            filter_desc.append(f"문제 형태: {', '.join(problem_types)}")
+
+        filter_msg = " / ".join(filter_desc) if filter_desc else "선택한 조건"
+        error_msg = f"### ⚠️ 해당하는 문제가 없습니다\n\n**{filter_msg}**에 맞는 문제가 `{problem_file}`에 존재하지 않습니다.\n\n다른 조건을 선택해주세요."
+
+        pid_labels, pid_values = refresh_note_pid_choices()
+        pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
+
+        return (
+            error_msg,
+            {},
+            gr.update(value=""),
+            "☆ 즐겨찾기 추가",
+            "",
+            "",
+            gr.update(choices=pid_choices, value=None),
+            gr.update(value="💡 힌트 보기"),
+            "",
+            "",
+        )
+
     question = render_question(
         problem,
         rechallenge,
@@ -982,7 +993,7 @@ def on_new_problem(problem_file: str,
     return (
         question,
         state,
-        gr.update(value="", language=problem.language),
+        gr.update(value="", language=problem.safe_language),
         favorite_button_label(problem.pid, problem_file),
         "",  # exec_result 초기화
         gr.update(choices=pid_choices, value=None),  # note_pid_dropdown 업데이트

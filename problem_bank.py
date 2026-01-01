@@ -9,6 +9,13 @@ from typing import List, Sequence
 EXCLUDED_FILES = {"favorites.json"}
 DEFAULT_PROBLEM_FILE = "problems.json"
 
+# Gradio Code 컴포넌트가 지원하는 언어 목록
+GRADIO_SUPPORTED_LANGUAGES = {
+    "python", "c", "cpp", "markdown", "latex", "json",
+    "html", "css", "javascript", "jinja2", "typescript",
+    "yaml", "dockerfile", "shell", "r", "sql"
+}
+
 
 @dataclass
 class Problem:
@@ -41,6 +48,14 @@ class Problem:
         """
         parts = self.kind.split('.')
         return parts[1] if len(parts) > 1 else None
+
+    @property
+    def safe_language(self) -> str | None:
+        """
+        Gradio가 지원하지 않는 언어는 None으로 fallback하여 일반 텍스트로 표시합니다.
+        """
+        lang = self.language
+        return lang if lang in GRADIO_SUPPORTED_LANGUAGES else None
 
 
 def unique_preserve_order(items: Sequence[str]) -> List[str]:

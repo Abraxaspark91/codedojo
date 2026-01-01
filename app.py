@@ -926,7 +926,7 @@ def on_new_problem(problem_file: str,
                                                       gr.update,
                                                       str,
                                                       str,
-                                                      str,
+                                                      gr.update,
                                                       gr.update,
                                                       str,
                                                       str]:
@@ -950,23 +950,10 @@ def on_new_problem(problem_file: str,
             filter_desc.append(f"문제 형태: {', '.join(problem_types)}")
 
         filter_msg = " / ".join(filter_desc) if filter_desc else "선택한 조건"
-        error_msg = f"### ⚠️ 해당하는 문제가 없습니다\n\n**{filter_msg}**에 맞는 문제가 `{problem_file}`에 존재하지 않습니다.\n\n다른 조건을 선택해주세요."
+        error_msg = f"⚠️ 해당하는 문제가 없습니다\n\n**{filter_msg}**에 맞는 문제가 `{problem_file}`에 존재하지 않습니다.\n\n다른 조건을 선택해주세요."
 
-        pid_labels, pid_values = refresh_note_pid_choices()
-        pid_choices = list(zip(pid_labels, pid_values)) if pid_labels else []
-
-        return (
-            error_msg,
-            {},
-            gr.update(value=""),
-            "☆ 즐겨찾기 추가",
-            "",
-            "",
-            gr.update(choices=pid_choices, value=None),
-            gr.update(value="💡 힌트 보기"),
-            "",
-            "",
-        )
+        # Gradio Error를 raise하여 사용자에게 오류 메시지 표시
+        raise gr.Error(error_msg)
 
     question = render_question(
         problem,

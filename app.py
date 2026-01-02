@@ -36,22 +36,7 @@ def build_theme() -> gr.themes.Base:
         primary_hue="blue",
         neutral_hue="slate",
     )
-    major_version = int(gr.__version__.split(".")[0])
-    if major_version >= 5:
-        return base_theme.set(
-            body_background_fill="*neutral_50",
-            body_background_fill_dark="*neutral_950",
-            block_background_fill="*neutral_0",
-            block_background_fill_dark="*neutral_900",
-            block_border_color="*neutral_200",
-            block_border_color_dark="*neutral_700",
-            body_text_color="*neutral_900",
-            body_text_color_dark="*neutral_100",
-            body_text_color_subdued="*neutral_600",
-            body_text_color_subdued_dark="*neutral_400",
-            color_accent="*primary_500",
-            color_accent_dark="*primary_400",
-        )
+    # 버전에 관계없이 모든 Gradio 버전에서 작동하는 토큰만 사용
     return base_theme.set(
         body_background_fill="*neutral_50",
         body_background_fill_dark="*neutral_950",
@@ -59,8 +44,10 @@ def build_theme() -> gr.themes.Base:
         background_fill_primary_dark="*neutral_900",
         background_fill_secondary="*neutral_100",
         background_fill_secondary_dark="*neutral_800",
-        border_color_primary="*neutral_200",
-        border_color_primary_dark="*neutral_700",
+        block_background_fill="*neutral_0",
+        block_background_fill_dark="*neutral_900",
+        input_border_color="*neutral_200",
+        input_border_color_dark="*neutral_700",
         body_text_color="*neutral_900",
         body_text_color_dark="*neutral_100",
         body_text_color_subdued="*neutral_600",

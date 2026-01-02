@@ -222,10 +222,6 @@ function() {
     }
 
     // 버튼 텍스트 업데이트
-    updateThemeButton();
-}
-
-function updateThemeButton() {
     const isDark = document.body.classList.contains('dark');
     const btn = document.querySelector('#theme-toggle-btn');
     if (btn) {

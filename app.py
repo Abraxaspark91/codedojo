@@ -53,7 +53,6 @@ def build_theme() -> gr.themes.Base:
         body_text_color_subdued="*neutral_600",
         body_text_color_subdued_dark="*neutral_400",
         color_accent="*primary_500",
-        color_accent_dark="*primary_400",
     )
 
 

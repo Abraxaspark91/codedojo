@@ -1270,7 +1270,7 @@ def build_interface() -> gr.Blocks:
                             choices=available_problem_files,
                             value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
                             label="📁 문제은행 선택",
-                            scale=3.5,
+                            scale=3.3,
                             min_width=320
                         )
                         difficulty = gr.Dropdown(

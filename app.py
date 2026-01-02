@@ -31,33 +31,54 @@ FAVORITES_PATH.parent.mkdir(parents=True, exist_ok=True)
 load_dotenv()
 LM_STUDIO_ENDPOINT = os.getenv("LM_STUDIO_ENDPOINT", "http://127.0.0.1:1234/v1/chat/completions")
 
-CUSTOM_THEME = gr.themes.Soft(
-    primary_hue="blue",
-    neutral_hue="slate",
-).set(
-    body_background_fill="*neutral_50",
-    body_background_fill_dark="*neutral_950",
-    background_fill_primary="*neutral_0",
-    background_fill_primary_dark="*neutral_900",
-    background_fill_secondary="*neutral_100",
-    background_fill_secondary_dark="*neutral_800",
-    border_color_primary="*neutral_200",
-    border_color_primary_dark="*neutral_700",
-    body_text_color="*neutral_900",
-    body_text_color_dark="*neutral_100",
-    body_text_color_subdued="*neutral_600",
-    body_text_color_subdued_dark="*neutral_400",
-    color_accent="*primary_500",
-    color_accent_dark="*primary_400",
-)
+def build_theme() -> gr.themes.Base:
+    base_theme = gr.themes.Soft(
+        primary_hue="blue",
+        neutral_hue="slate",
+    )
+    major_version = int(gr.__version__.split(".")[0])
+    if major_version >= 5:
+        return base_theme.set(
+            body_background_fill="*neutral_50",
+            body_background_fill_dark="*neutral_950",
+            block_background_fill="*neutral_0",
+            block_background_fill_dark="*neutral_900",
+            block_border_color="*neutral_200",
+            block_border_color_dark="*neutral_700",
+            body_text_color="*neutral_900",
+            body_text_color_dark="*neutral_100",
+            body_text_color_subdued="*neutral_600",
+            body_text_color_subdued_dark="*neutral_400",
+            color_accent="*primary_500",
+            color_accent_dark="*primary_400",
+        )
+    return base_theme.set(
+        body_background_fill="*neutral_50",
+        body_background_fill_dark="*neutral_950",
+        background_fill_primary="*neutral_0",
+        background_fill_primary_dark="*neutral_900",
+        background_fill_secondary="*neutral_100",
+        background_fill_secondary_dark="*neutral_800",
+        border_color_primary="*neutral_200",
+        border_color_primary_dark="*neutral_700",
+        body_text_color="*neutral_900",
+        body_text_color_dark="*neutral_100",
+        body_text_color_subdued="*neutral_600",
+        body_text_color_subdued_dark="*neutral_400",
+        color_accent="*primary_500",
+        color_accent_dark="*primary_400",
+    )
+
+
+CUSTOM_THEME = build_theme()
 
 CUSTOM_CSS = """
 /* ===== 영역 구분 스타일 ===== */
 .section-box {
     padding: 1.5rem;
     border-radius: 0.75rem;
-    border: 1px solid var(--border-color-primary);
-    background: var(--background-fill-secondary);
+    border: 1px solid var(--block-border-color, var(--border-color-primary));
+    background: var(--block-background-fill, var(--background-fill-secondary));
     margin-bottom: 1rem;
 }
 
@@ -75,11 +96,11 @@ CUSTOM_CSS = """
 
 .code-editor-box {
     min-height: 200px;
-    --code-editor-bg: var(--background-fill-secondary);
+    --code-editor-bg: var(--block-background-fill, var(--background-fill-secondary));
     --code-editor-fg: var(--body-text-color);
     --code-editor-gutter: var(--body-text-color-subdued);
     --code-editor-cursor: var(--body-text-color);
-    --code-editor-active-line: var(--background-fill-primary);
+    --code-editor-active-line: var(--block-background-fill, var(--background-fill-primary));
     --code-editor-keyword: var(--color-accent);
     --code-editor-string: var(--body-text-color);
     --code-editor-number: var(--body-text-color);
@@ -154,8 +175,8 @@ CUSTOM_CSS = """
 .bottom-panel {
     padding: 1rem;
     border-radius: 0.75rem;
-    border: 1px solid var(--border-color-primary);
-    background: var(--background-fill-secondary);
+    border: 1px solid var(--block-border-color, var(--border-color-primary));
+    background: var(--block-background-fill, var(--background-fill-secondary));
 }
 
 /* ===== 상태 메시지 ===== */
@@ -177,7 +198,7 @@ CUSTOM_CSS = """
 
 .problem-box::-webkit-scrollbar-thumb,
 .feedback-box::-webkit-scrollbar-thumb {
-    background: var(--border-color-primary);
+    background: var(--block-border-color, var(--border-color-primary));
     border-radius: 3px;
 }
 

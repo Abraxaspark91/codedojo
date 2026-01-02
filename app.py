@@ -1270,29 +1270,29 @@ def build_interface() -> gr.Blocks:
                             choices=available_problem_files,
                             value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
                             label="📁 문제은행 선택",
-                            scale=2,
-                            min_width=180
+                            scale=3.5,
+                            min_width=320
                         )
                         difficulty = gr.Dropdown(
                             DIFFICULTY_OPTIONS,
                             value=DIFFICULTY_OPTIONS[0],
                             label="📊 난이도",
-                            scale=1,
-                            min_width=120
+                            scale=3,
+                            min_width=160
                         )
                         language = gr.Dropdown(
                             language_options,
                             value=language_options[0],
                             label="💻 유형",
-                            scale=1,
-                            min_width=120
+                            scale=3,
+                            min_width=160
                         )
                         problem_types = gr.CheckboxGroup(
                             choices=problem_type_options,
                             value=problem_type_options,  # 기본적으로 모두 선택
                             label="🏷️ 문제 유형",
-                            scale=2,
-                            min_width=180
+                            scale=3,
+                            min_width=160
                         )
 
                 # 2단: 메인 콘텐츠 영역 - 헤더

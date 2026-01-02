@@ -62,62 +62,71 @@ CUSTOM_CSS = """
 
 .code-editor-box {
     min-height: 200px;
+    --code-editor-bg: var(--background-fill-secondary);
+    --code-editor-fg: var(--body-text-color);
+    --code-editor-gutter: var(--body-text-color-subdued);
+    --code-editor-cursor: var(--body-text-color);
+    --code-editor-active-line: var(--background-fill-primary);
+    --code-editor-keyword: var(--color-accent);
+    --code-editor-string: var(--body-text-color);
+    --code-editor-number: var(--body-text-color);
+    --code-editor-variable: var(--body-text-color);
+    --code-editor-comment: var(--body-text-color-subdued);
 }
 
-/* GitHub Dark Dimmed 배경 */
 .code-editor-box .cm-editor,
 .code-editor-box .cm-scroller,
 .code-editor-box .cm-gutters {
-    background-color: #2d333b !important;
-    color: #adbac7 !important;
+    background-color: var(--code-editor-bg) !important;
+    color: var(--code-editor-fg) !important;
 }
 
 /* 기본 텍스트 */
 .code-editor-box .cm-content {
-    color: #adbac7 !important;
+    color: var(--code-editor-fg) !important;
 }
 
 /* 줄 번호 */
 .code-editor-box .cm-gutters {
-    color: #768390 !important;
+    color: var(--code-editor-gutter) !important;
 }
 
 /* 커서 */
 .code-editor-box .cm-cursor {
-    border-left: 1px solid #f0f3f6 !important;
+    border-left: 1px solid var(--code-editor-cursor) !important;
 }
 
 /* 선택 활성 라인 */
 .code-editor-box .cm-activeLine {
-    background-color: #39424e !important;
+    background-color: var(--code-editor-active-line) !important;
 }
 
 /* ===== Syntax Highlighting ===== */
 
 /* 키워드 - 보라 */
 .code-editor-box .cm-keyword {
-    color: #dcbdfb !important;
+    color: var(--code-editor-keyword) !important;
 }
 
 /* 문자열 - 파스텔 블루 */
 .code-editor-box .cm-string {
-    color: #96d0ff !important;
+    color: var(--code-editor-string) !important;
 }
 
 /* 숫자/상수 - 따뜻 노랑 */
 .code-editor-box .cm-number {
-    color: #f9c97f !important;
+    color: var(--code-editor-number) !important;
 }
 
 /* 함수/메서드 이름 - 녹색 */
 .code-editor-box .cm-variable,
 .code-editor-box .cm-property {
-    color: #8ddb8c !important;
+    color: var(--code-editor-variable) !important;
 }
 
 /* 코멘트 - 푸른 회색 */
 .code-editor-box .cm-comment {
-    color: #6c7986 !important;
+    color: var(--code-editor-comment) !important;
 }
 
 

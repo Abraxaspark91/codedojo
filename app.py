@@ -208,6 +208,52 @@ CUSTOM_CSS = """
 }
 """
 
+# ===== Dark Mode Toggle JavaScript =====
+DARK_MODE_INIT_JS = """
+function() {
+    // 페이지 로드 시 저장된 테마 설정 불러오기
+    const savedTheme = localStorage.getItem('gradio-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // 저장된 설정이 있으면 사용, 없으면 시스템 설정 사용
+    const shouldBeDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+
+    if (shouldBeDark) {
+        document.body.classList.add('dark');
+    }
+
+    // 버튼 텍스트 업데이트
+    updateThemeButton();
+}
+
+function updateThemeButton() {
+    const isDark = document.body.classList.contains('dark');
+    const btn = document.querySelector('#theme-toggle-btn');
+    if (btn) {
+        btn.textContent = isDark ? '☀️ 라이트모드' : '🌙 다크모드';
+    }
+}
+"""
+
+DARK_MODE_TOGGLE_JS = """
+function() {
+    // dark 클래스 토글
+    document.body.classList.toggle('dark');
+
+    // 현재 상태를 localStorage에 저장
+    const isDark = document.body.classList.contains('dark');
+    localStorage.setItem('gradio-theme', isDark ? 'dark' : 'light');
+
+    // 버튼 텍스트 업데이트
+    const btn = document.querySelector('#theme-toggle-btn');
+    if (btn) {
+        btn.textContent = isDark ? '☀️ 라이트모드' : '🌙 다크모드';
+    }
+
+    return null;
+}
+"""
+
 
 @dataclass
 class Attempt:
@@ -1158,7 +1204,8 @@ def build_interface() -> gr.Blocks:
         # ===== 헤더 =====
         with gr.Group():
             with gr.Row(variant='panel'):
-                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>")
+                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>", scale=10)
+                theme_toggle_btn = gr.Button("🌙 다크모드", elem_id="theme-toggle-btn", size="sm", scale=1)
 
         # ===== 탭 구조 =====
         with gr.Tabs():
@@ -1745,6 +1792,13 @@ def build_interface() -> gr.Blocks:
             inputs=[note_state, new_state, fav_state],
             outputs=[note_favorite_btn, note_favorite_status_md, favorite_choices, favorite_btn, new_favorite_status_md, fav_favorite_btn, fav_favorite_status_md],
         )
+
+        # ===== 이벤트 핸들러 - Dark Mode Toggle =====
+        # 페이지 로드 시 초기화
+        demo.load(None, None, None, js=DARK_MODE_INIT_JS)
+
+        # 버튼 클릭 시 토글
+        theme_toggle_btn.click(None, None, None, js=DARK_MODE_TOGGLE_JS)
 
     return demo
 

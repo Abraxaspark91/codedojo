@@ -1263,7 +1263,8 @@ def build_interface() -> gr.Blocks:
         with gr.Tabs():
             # ========== 탭 1: 신규 문제 ==========
             with gr.Tab("🆕 신규 문제"):
-                # 1단: 제어 패널 (접을 수 있는 Accordion)
+                
+                # [1단] 제어 패널
                 with gr.Accordion("⚙️ 출제 설정", open=True):
                     with gr.Row():
                         problem_file = gr.Dropdown(
@@ -1289,20 +1290,20 @@ def build_interface() -> gr.Blocks:
                         )
                         problem_types = gr.CheckboxGroup(
                             choices=problem_type_options,
-                            value=problem_type_options,  # 기본적으로 모두 선택
+                            value=problem_type_options,
                             label="🏷️ 문제 유형",
                             scale=3,
                             min_width=160
                         )
 
-                # 2단: 메인 콘텐츠 영역 - 헤더
+                # [2단] 메인 콘텐츠 영역 - 헤더
                 with gr.Row():
                     with gr.Column(scale=3, min_width=320):
                         gr.Markdown("### 📋 문제")
                     with gr.Column(scale=8, min_width=480):
                         gr.Markdown("### 💻 답변 작성칸")
 
-                # 2단: 메인 콘텐츠 영역 - 컨텐츠
+                # [2단] 메인 콘텐츠 영역 - 컨텐츠
                 with gr.Row(equal_height=True):
                     # 왼쪽: 문제 영역
                     with gr.Column(scale=3, min_width=320, variant="panel"):
@@ -1336,11 +1337,17 @@ def build_interface() -> gr.Blocks:
                             )
                             hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
-                # 3단: 피드백 영역 (액션 + LLM 피드백)
-                with gr.Row(equal_height=False):
-                    # 왼쪽: 오답노트 추가 섹션
-                    with gr.Column(scale=3, min_width=280, variant="compact"):
+                # [3단] 피드백 영역 - 헤더 (레이아웃 일관성을 위해 추가)
+                with gr.Row():
+                    with gr.Column(scale=3, min_width=320):
                         gr.Markdown("### 📝 오답노트에 추가")
+                    with gr.Column(scale=8, min_width=480):
+                        gr.Markdown("### 💬 LLM 피드백")
+
+                # [3단] 피드백 영역 - 컨텐츠
+                with gr.Row(equal_height=False):
+                    # 왼쪽: 오답노트 추가 섹션 (2단 왼쪽과 동일한 scale=3, min_width=320 적용)
+                    with gr.Column(scale=3, min_width=320, variant="compact"):
                         nickname_input = gr.Textbox(
                             label="문제 별명 (선택사항)",
                             placeholder="예: 복잡한 조인 문제",
@@ -1349,9 +1356,8 @@ def build_interface() -> gr.Blocks:
                         add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
                         add_notes_status = gr.Markdown("")
 
-                    # 오른쪽: LLM 피드백
+                    # 오른쪽: LLM 피드백 (2단 오른쪽과 동일한 scale=8, min_width=480 적용)
                     with gr.Column(scale=8, min_width=480, variant="panel"):
-                        gr.Markdown("### 💬 LLM 피드백")
                         exec_result = gr.Markdown(
                             value="",
                             elem_classes="feedback-box",

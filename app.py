@@ -72,15 +72,7 @@ def build_theme() -> gr.themes.Base:
 CUSTOM_THEME = build_theme()
 
 CUSTOM_CSS = """
-/* ===== 영역 구분 스타일 ===== */
-.section-box {
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    border: 1px solid var(--block-border-color, var(--border-color-primary));
-    background: var(--block-background-fill, var(--background-fill-secondary));
-    margin-bottom: 1rem;
-}
-
+/* ===== 콘텐츠 영역 스타일 (스크롤 제어) ===== */
 .problem-box {
     min-height: 200px;
     max-height: 500px;
@@ -162,27 +154,6 @@ CUSTOM_CSS = """
     color: var(--code-editor-comment) !important;
 }
 
-
-/* ===== 버튼 그룹 ===== */
-.button-row {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1rem;
-}
-
-/* ===== 하단 섹션 ===== */
-.bottom-panel {
-    padding: 1rem;
-    border-radius: 0.75rem;
-    border: 1px solid var(--block-border-color, var(--border-color-primary));
-    background: var(--block-background-fill, var(--background-fill-secondary));
-}
-
-/* ===== 상태 메시지 ===== */
-.status-message {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
 
 /* ===== 스크롤바 커스터마이징 ===== */
 .problem-box::-webkit-scrollbar,
@@ -1283,116 +1254,112 @@ def build_interface() -> gr.Blocks:
         fav_state = gr.State({})    # 즐겨찾기 탭 전용
 
         # ===== 헤더 =====
-        with gr.Group():
-            with gr.Row(variant='panel'):
-                gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>")
-            with gr.Row():
-                theme_toggle_btn = gr.Button("🌙 다크모드", elem_id="theme-toggle-btn", size="sm", scale=1)
+        with gr.Row(variant='panel'):
+            gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>")
+        with gr.Row():
+            theme_toggle_btn = gr.Button("🌙 다크모드", elem_id="theme-toggle-btn", size="sm", scale=1)
 
         # ===== 탭 구조 =====
         with gr.Tabs():
             # ========== 탭 1: 신규 문제 ==========
             with gr.Tab("🆕 신규 문제"):
-                # 필터 섹션
-                with gr.Group():
-                    gr.Markdown("### 📋 출제 옵션")
+                # 1단: 제어 패널 (접을 수 있는 Accordion)
+                with gr.Accordion("⚙️ 출제 설정", open=True):
                     with gr.Row():
                         problem_file = gr.Dropdown(
                             choices=available_problem_files,
                             value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
                             label="📁 문제은행 선택",
-                            scale=1
+                            scale=2,
+                            min_width=200
                         )
                         difficulty = gr.Dropdown(
                             DIFFICULTY_OPTIONS,
                             value=DIFFICULTY_OPTIONS[0],
                             label="📊 난이도",
-                            scale=1
+                            scale=1,
+                            min_width=150
                         )
+                    with gr.Row():
                         language = gr.Dropdown(
                             language_options,
                             value=language_options[0],
                             label="💻 유형",
-                            scale=1
+                            scale=1,
+                            min_width=150
                         )
                         problem_types = gr.CheckboxGroup(
                             choices=problem_type_options,
                             value=problem_type_options,  # 기본적으로 모두 선택
                             label="🏷️ 문제 유형 (체크된 유형만 출제)",
-                            scale=1
+                            scale=2,
+                            min_width=200
                         )
 
-                # 메인 콘텐츠 영역
-                with gr.Row():
-                    # 왼쪽: 문제
-                    with gr.Column(scale=3):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 📋 문제")
-                            question_md = gr.Markdown(
-                                "새 문제 버튼을 눌러 시작하세요.",
-                                container=True,
-                                elem_classes="problem-box"
-                            )
-                            with gr.Row():
-                                new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
-                                favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
-                            new_favorite_status_md = gr.Markdown("")
+                # 2단: 메인 콘텐츠 영역 (문제 + 코드)
+                with gr.Row(equal_height=True):
+                    # 왼쪽: 문제 영역
+                    with gr.Column(scale=3, min_width=320, variant="panel"):
+                        gr.Markdown("### 📋 문제")
+                        question_md = gr.Markdown(
+                            "새 문제 버튼을 눌러 시작하세요.",
+                            container=True,
+                            elem_classes="problem-box"
+                        )
+                        with gr.Row():
+                            new_btn = gr.Button("🔄 새 문제 출제", variant="primary", size="md", scale=1)
+                            favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                        new_favorite_status_md = gr.Markdown("")
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=8):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 💻 답변 작성칸")
-                            code_box = gr.Code(
-                                value="",
-                                language="python",
-                                show_label=False,
-                                elem_classes="code-editor-box",
-                                lines=15,
-                                max_lines=50,
-                                container=True
+                    with gr.Column(scale=8, min_width=480, variant="panel"):
+                        gr.Markdown("### 💻 답변 작성칸")
+                        code_box = gr.Code(
+                            value="",
+                            language="python",
+                            show_label=False,
+                            elem_classes="code-editor-box",
+                            lines=15,
+                            max_lines=50,
+                            container=True
+                        )
+                        with gr.Row():
+                            submit_btn = gr.Button(
+                                "✅ 제출하기",
+                                variant="primary",
+                                size="md",
+                                scale=8
                             )
-                            with gr.Row():
-                                submit_btn = gr.Button(
-                                    "✅ 제출하기",
-                                    variant="primary",
-                                    size="md",
-                                    scale=8
-                                )
-                                hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
+                            hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
-                # 피드백 영역
-                with gr.Row():
-                    # 왼쪽 : 오답노트 추가 섹션
-                    with gr.Column(scale=3):
-                        with gr.Group(elem_classes="bottom-panel"):
-                            gr.Markdown("### 📝 오답노트에 추가")
-                            with gr.Row():
-                                nickname_input = gr.Textbox(
-                                    label="문제 별명 (선택사항)",
-                                    placeholder="예: 복잡한 조인 문제",
-                                    scale=1
-                                    )
-                            with gr.Row():
-                                add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
-                            add_notes_status = gr.Markdown("")
-                    
+                # 3단: 피드백 영역 (액션 + LLM 피드백)
+                with gr.Row(equal_height=False):
+                    # 왼쪽: 오답노트 추가 섹션
+                    with gr.Column(scale=3, min_width=280, variant="compact"):
+                        gr.Markdown("### 📝 오답노트에 추가")
+                        nickname_input = gr.Textbox(
+                            label="문제 별명 (선택사항)",
+                            placeholder="예: 복잡한 조인 문제",
+                            scale=1
+                        )
+                        add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
+                        add_notes_status = gr.Markdown("")
+
                     # 오른쪽: LLM 피드백
-                    with gr.Column(scale=8):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 💬 LLM 피드백")
-                            exec_result = gr.Markdown(
-                                value="",
-                                elem_classes="feedback-box",
-                                container=True
-                            )
+                    with gr.Column(scale=8, min_width=480, variant="panel"):
+                        gr.Markdown("### 💬 LLM 피드백")
+                        exec_result = gr.Markdown(
+                            value="",
+                            elem_classes="feedback-box",
+                            container=True
+                        )
 
 
 
             # ========== 탭 2: 오답노트 ==========
             with gr.Tab("📝 오답노트"):
-                # 오답노트 목록
-                with gr.Group():
-                    gr.Markdown("### 📝 오답노트 재도전")
+                # 1단: 제어 패널 (접을 수 있는 Accordion)
+                with gr.Accordion("📝 오답노트 재도전", open=True):
                     # 2단계 드롭다운: 1) PID 선택 → 2) 시도 선택
                     with gr.Row():
                         # 드롭다운 1: PID 선택
@@ -1401,58 +1368,58 @@ def build_interface() -> gr.Blocks:
                         note_pid_dropdown = gr.Dropdown(
                             choices=pid_choices,
                             label="문제 선택",
-                            scale=1
+                            scale=2,
+                            min_width=200
                         )
                         # 드롭다운 2: 시도 선택 (드롭다운 1 선택 후 활성화)
                         note_attempt_dropdown = gr.Dropdown(
                             choices=[],
                             label="시도 선택",
-                            scale=2,
+                            scale=3,
+                            min_width=250,
                             interactive=True
                         )
                     with gr.Row():
                         refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
                         load_note_btn = gr.Button("🎯 문제 불러오기", size="sm", scale=1)
 
-                # 메인 콘텐츠 영역
-                with gr.Row():
-                    # 왼쪽: 문제
-                    with gr.Column(scale=3):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 📋 문제")
-                            note_question_md = gr.Markdown(
-                                "오답노트에서 문제를 선택하세요.",
-                                container=True,
-                                elem_classes="problem-box"
-                            )
-                            with gr.Row():
-                                note_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
-                            note_favorite_status_md = gr.Markdown("")
+                # 2단: 메인 콘텐츠 영역 (문제 + 코드)
+                with gr.Row(equal_height=True):
+                    # 왼쪽: 문제 영역
+                    with gr.Column(scale=3, min_width=320, variant="panel"):
+                        gr.Markdown("### 📋 문제")
+                        note_question_md = gr.Markdown(
+                            "오답노트에서 문제를 선택하세요.",
+                            container=True,
+                            elem_classes="problem-box"
+                        )
+                        with gr.Row():
+                            note_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                        note_favorite_status_md = gr.Markdown("")
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=8):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 💻 답변 작성칸")
-                            note_code_box = gr.Code(
-                                value="",
-                                language="python",
-                                show_label=False,
-                                elem_classes="code-editor-box",
-                                lines=15,
-                                max_lines=50,
-                                container=True
+                    with gr.Column(scale=8, min_width=480, variant="panel"):
+                        gr.Markdown("### 💻 답변 작성칸")
+                        note_code_box = gr.Code(
+                            value="",
+                            language="python",
+                            show_label=False,
+                            elem_classes="code-editor-box",
+                            lines=15,
+                            max_lines=50,
+                            container=True
+                        )
+                        with gr.Row():
+                            note_submit_btn = gr.Button(
+                                "✅ 제출하기",
+                                variant="primary",
+                                size="md",
+                                scale=8
                             )
-                            with gr.Row():
-                                note_submit_btn = gr.Button(
-                                    "✅ 제출하기",
-                                    variant="primary",
-                                    size="md",
-                                    scale=8
-                                )
-                                note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
-                
-                # 피드백 영역
-                with gr.Group(elem_classes="section-box"):
+                            note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
+
+                # 3단: 피드백 영역
+                with gr.Column(variant="panel"):
                     gr.Markdown("### 💬 LLM 피드백")
                     note_exec_result = gr.Markdown(
                         value="",
@@ -1462,9 +1429,8 @@ def build_interface() -> gr.Blocks:
                     
             # ========== 탭 3: 즐겨찾기 ==========
             with gr.Tab("⭐ 즐겨찾기"):
-                # 즐겨찾기 섹션
-                with gr.Group(elem_classes="bottom-panel"):
-                    gr.Markdown("### ⭐ 즐겨찾기")
+                # 1단: 제어 패널 (접을 수 있는 Accordion)
+                with gr.Accordion("⭐ 즐겨찾기 목록", open=True):
                     fav_labels, fav_values = refresh_favorite_choices()
                     fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
                     favorite_choices = gr.Dropdown(
@@ -1477,45 +1443,43 @@ def build_interface() -> gr.Blocks:
                         load_fav_btn = gr.Button("📖 문제 열기", size="sm", scale=1)
                     fav_status_md = gr.Markdown("")
 
-                # 메인 콘텐츠 영역
-                with gr.Row():
-                    # 왼쪽: 문제
-                    with gr.Column(scale=3):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 📋 문제")
-                            fav_question_md = gr.Markdown(
-                                "즐겨찾기 목록에서 문제를 선택하세요.",
-                                container=True,
-                                elem_classes="problem-box"
-                            )
-                            with gr.Row():
-                                fav_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
-                            fav_favorite_status_md = gr.Markdown("", elem_classes="status-message")
+                # 2단: 메인 콘텐츠 영역 (문제 + 코드)
+                with gr.Row(equal_height=True):
+                    # 왼쪽: 문제 영역
+                    with gr.Column(scale=3, min_width=320, variant="panel"):
+                        gr.Markdown("### 📋 문제")
+                        fav_question_md = gr.Markdown(
+                            "즐겨찾기 목록에서 문제를 선택하세요.",
+                            container=True,
+                            elem_classes="problem-box"
+                        )
+                        with gr.Row():
+                            fav_favorite_btn = gr.Button("⭐ 즐겨찾기 추가", size="md", scale=1)
+                        fav_favorite_status_md = gr.Markdown("")
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=8):
-                        with gr.Group(elem_classes="section-box"):
-                            gr.Markdown("### 💻 답변 작성칸")
-                            fav_code_box = gr.Code(
-                                value="",
-                                language="python",
-                                show_label=False,
-                                elem_classes="code-editor-box",
-                                lines=15,
-                                max_lines=50,
-                                container=True
+                    with gr.Column(scale=8, min_width=480, variant="panel"):
+                        gr.Markdown("### 💻 답변 작성칸")
+                        fav_code_box = gr.Code(
+                            value="",
+                            language="python",
+                            show_label=False,
+                            elem_classes="code-editor-box",
+                            lines=15,
+                            max_lines=50,
+                            container=True
+                        )
+                        with gr.Row():
+                            fav_submit_btn = gr.Button(
+                                "✅ 제출하기",
+                                variant="primary",
+                                size="md",
+                                scale=8
                             )
-                            with gr.Row():
-                                fav_submit_btn = gr.Button(
-                                    "✅ 제출하기",
-                                    variant="primary",
-                                    size="md",
-                                    scale=8
-                                )
-                                fav_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
+                            fav_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
-                # 피드백 영역
-                with gr.Group(elem_classes="section-box"):
+                # 3단: 피드백 영역
+                with gr.Column(variant="panel"):
                     gr.Markdown("### 💬 LLM 피드백")
                     fav_exec_result = gr.Markdown(
                         value="",

@@ -1271,36 +1271,41 @@ def build_interface() -> gr.Blocks:
                             value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
                             label="📁 문제은행 선택",
                             scale=2,
-                            min_width=200
+                            min_width=180
                         )
                         difficulty = gr.Dropdown(
                             DIFFICULTY_OPTIONS,
                             value=DIFFICULTY_OPTIONS[0],
                             label="📊 난이도",
                             scale=1,
-                            min_width=150
+                            min_width=120
                         )
-                    with gr.Row():
                         language = gr.Dropdown(
                             language_options,
                             value=language_options[0],
                             label="💻 유형",
                             scale=1,
-                            min_width=150
+                            min_width=120
                         )
                         problem_types = gr.CheckboxGroup(
                             choices=problem_type_options,
                             value=problem_type_options,  # 기본적으로 모두 선택
-                            label="🏷️ 문제 유형 (체크된 유형만 출제)",
+                            label="🏷️ 문제 유형",
                             scale=2,
-                            min_width=200
+                            min_width=180
                         )
 
-                # 2단: 메인 콘텐츠 영역 (문제 + 코드)
+                # 2단: 메인 콘텐츠 영역 - 헤더
+                with gr.Row():
+                    with gr.Column(scale=3, min_width=320):
+                        gr.Markdown("### 📋 문제")
+                    with gr.Column(scale=8, min_width=480):
+                        gr.Markdown("### 💻 답변 작성칸")
+
+                # 2단: 메인 콘텐츠 영역 - 컨텐츠
                 with gr.Row(equal_height=True):
                     # 왼쪽: 문제 영역
                     with gr.Column(scale=3, min_width=320, variant="panel"):
-                        gr.Markdown("### 📋 문제")
                         question_md = gr.Markdown(
                             "새 문제 버튼을 눌러 시작하세요.",
                             container=True,
@@ -1313,7 +1318,6 @@ def build_interface() -> gr.Blocks:
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=8, min_width=480, variant="panel"):
-                        gr.Markdown("### 💻 답변 작성칸")
                         code_box = gr.Code(
                             value="",
                             language="python",
@@ -1383,11 +1387,17 @@ def build_interface() -> gr.Blocks:
                         refresh_btn = gr.Button("🔄 새로고침", size="sm", scale=1)
                         load_note_btn = gr.Button("🎯 문제 불러오기", size="sm", scale=1)
 
-                # 2단: 메인 콘텐츠 영역 (문제 + 코드)
+                # 2단: 메인 콘텐츠 영역 - 헤더
+                with gr.Row():
+                    with gr.Column(scale=3, min_width=320):
+                        gr.Markdown("### 📋 문제")
+                    with gr.Column(scale=8, min_width=480):
+                        gr.Markdown("### 💻 답변 작성칸")
+
+                # 2단: 메인 콘텐츠 영역 - 컨텐츠
                 with gr.Row(equal_height=True):
                     # 왼쪽: 문제 영역
                     with gr.Column(scale=3, min_width=320, variant="panel"):
-                        gr.Markdown("### 📋 문제")
                         note_question_md = gr.Markdown(
                             "오답노트에서 문제를 선택하세요.",
                             container=True,
@@ -1399,7 +1409,6 @@ def build_interface() -> gr.Blocks:
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=8, min_width=480, variant="panel"):
-                        gr.Markdown("### 💻 답변 작성칸")
                         note_code_box = gr.Code(
                             value="",
                             language="python",
@@ -1443,11 +1452,17 @@ def build_interface() -> gr.Blocks:
                         load_fav_btn = gr.Button("📖 문제 열기", size="sm", scale=1)
                     fav_status_md = gr.Markdown("")
 
-                # 2단: 메인 콘텐츠 영역 (문제 + 코드)
+                # 2단: 메인 콘텐츠 영역 - 헤더
+                with gr.Row():
+                    with gr.Column(scale=3, min_width=320):
+                        gr.Markdown("### 📋 문제")
+                    with gr.Column(scale=8, min_width=480):
+                        gr.Markdown("### 💻 답변 작성칸")
+
+                # 2단: 메인 콘텐츠 영역 - 컨텐츠
                 with gr.Row(equal_height=True):
                     # 왼쪽: 문제 영역
                     with gr.Column(scale=3, min_width=320, variant="panel"):
-                        gr.Markdown("### 📋 문제")
                         fav_question_md = gr.Markdown(
                             "즐겨찾기 목록에서 문제를 선택하세요.",
                             container=True,
@@ -1459,7 +1474,6 @@ def build_interface() -> gr.Blocks:
 
                     # 오른쪽: 코드 에디터
                     with gr.Column(scale=8, min_width=480, variant="panel"):
-                        gr.Markdown("### 💻 답변 작성칸")
                         fav_code_box = gr.Code(
                             value="",
                             language="python",

@@ -243,12 +243,11 @@ CUSTOM_CSS = """
 .dark .cm-content {
     font-family: 'JetBrains Mono', monospace !important;
     line-height: 1.6 !important;
-    font-size: 16px !important;
-    color: #e2e8f0 !important; /* 코드: 밝은 회색 */
+    color: #e2e8f0 !important;
 }
+
 /* 코드 줄번호 영역 */
 .dark .cm-gutters {
-    background-color: #0f172a !important;
     border-right: 1px solid #1e293b !important;
     color: #475569 !important;
 }

@@ -1337,32 +1337,34 @@ def build_interface() -> gr.Blocks:
                             )
                             hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
-                # [3단] 피드백 영역 - 헤더 (레이아웃 일관성을 위해 추가)
-                with gr.Row():
-                    with gr.Column(scale=3, min_width=320):
-                        gr.Markdown("### 📝 오답노트에 추가")
-                    with gr.Column(scale=8, min_width=480):
-                        gr.Markdown("### 💬 LLM 피드백")
+                # [3단] 피드백 영역 (접을 수 있는 Accordion)
+                with gr.Accordion("💬 LLM 피드백 및 오답노트 추가", open=False):
+                    # 헤더 Row (scale 정렬)
+                    with gr.Row():
+                        with gr.Column(scale=3, min_width=320):
+                            gr.Markdown("### 📝 오답노트에 추가")
+                        with gr.Column(scale=8, min_width=480):
+                            gr.Markdown("### 💬 LLM 피드백")
 
-                # [3단] 피드백 영역 - 컨텐츠
-                with gr.Row(equal_height=False):
-                    # 왼쪽: 오답노트 추가 섹션 (2단 왼쪽과 동일한 scale=3, min_width=320 적용)
-                    with gr.Column(scale=3, min_width=320, variant="compact"):
-                        nickname_input = gr.Textbox(
-                            label="문제 별명 (선택사항)",
-                            placeholder="예: 복잡한 조인 문제",
-                            scale=1
-                        )
-                        add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
-                        add_notes_status = gr.Markdown("")
+                    # 컨텐츠 Row (scale 정렬)
+                    with gr.Row(equal_height=False):
+                        # 왼쪽: 오답노트 추가 섹션 (2단 왼쪽과 동일한 scale=3, min_width=320 적용)
+                        with gr.Column(scale=3, min_width=320, variant="compact"):
+                            nickname_input = gr.Textbox(
+                                label="문제 별명 (선택사항)",
+                                placeholder="예: 복잡한 조인 문제",
+                                scale=1
+                            )
+                            add_to_notes_btn = gr.Button("➕ 오답노트에 추가", variant="secondary", size="lg", scale=1)
+                            add_notes_status = gr.Markdown("")
 
-                    # 오른쪽: LLM 피드백 (2단 오른쪽과 동일한 scale=8, min_width=480 적용)
-                    with gr.Column(scale=8, min_width=480, variant="panel"):
-                        exec_result = gr.Markdown(
-                            value="",
-                            elem_classes="feedback-box",
-                            container=True
-                        )
+                        # 오른쪽: LLM 피드백 (2단 오른쪽과 동일한 scale=8, min_width=480 적용)
+                        with gr.Column(scale=8, min_width=480, variant="panel"):
+                            exec_result = gr.Markdown(
+                                value="",
+                                elem_classes="feedback-box",
+                                container=True
+                            )
 
 
 
@@ -1433,9 +1435,8 @@ def build_interface() -> gr.Blocks:
                             )
                             note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
-                # 3단: 피드백 영역
-                with gr.Column(variant="panel"):
-                    gr.Markdown("### 💬 LLM 피드백")
+                # [3단] 피드백 영역 (접을 수 있는 Accordion)
+                with gr.Accordion("💬 LLM 피드백", open=False):
                     note_exec_result = gr.Markdown(
                         value="",
                         elem_classes="feedback-box",
@@ -1498,9 +1499,8 @@ def build_interface() -> gr.Blocks:
                             )
                             fav_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
-                # 3단: 피드백 영역
-                with gr.Column(variant="panel"):
-                    gr.Markdown("### 💬 LLM 피드백")
+                # [3단] 피드백 영역 (접을 수 있는 Accordion)
+                with gr.Accordion("💬 LLM 피드백", open=False):
                     fav_exec_result = gr.Markdown(
                         value="",
                         elem_classes="feedback-box",

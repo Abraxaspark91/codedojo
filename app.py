@@ -33,28 +33,41 @@ LM_STUDIO_ENDPOINT = os.getenv("LM_STUDIO_ENDPOINT", "http://127.0.0.1:1234/v1/c
 
 def build_theme() -> gr.themes.Base:
     base_theme = gr.themes.Soft(
-        primary_hue="blue",
+        primary_hue="slate",
         neutral_hue="slate",
+        # 일반 텍스트용 폰트 (UI 등)
+        font=[gr.themes.GoogleFont("Inter"), "ui-sans-serif", "system-ui", "sans-serif"],
+        # 코드용 폰트 (여기가 핵심입니다)
+        font_mono=[gr.themes.GoogleFont("JetBrains Mono"), "ui-monospace", "Consolas", "monospace"],
     )
-    # 버전에 관계없이 모든 Gradio 버전에서 작동하는 토큰만 사용
+    
     return base_theme.set(
+        # --- [배경] 아주 깊은 어둠 (완전 검정 X, 깊은 남색 O) ---
         body_background_fill="*neutral_50",
-        body_background_fill_dark="*neutral_950",
-        background_fill_primary="*neutral_0",
-        background_fill_primary_dark="*neutral_900",
-        background_fill_secondary="*neutral_100",
-        background_fill_secondary_dark="*neutral_800",
-        block_background_fill="*neutral_0",
-        block_background_fill_dark="*neutral_900",
-        input_border_color="*neutral_200",
-        input_border_color_dark="*neutral_700",
-        body_text_color="*neutral_900",
-        body_text_color_dark="*neutral_100",
-        body_text_color_subdued="*neutral_600",
-        body_text_color_subdued_dark="*neutral_400",
-        color_accent="*primary_500",
+        body_background_fill_dark="#020617",     # Slate-950 (가장 어두운 배경)
+        
+        block_background_fill_dark="#0f172a",    # Slate-900 (컨텐츠 박스 배경)
+        background_fill_secondary_dark="#0f172a",# 보조 배경 통일
+        
+        # --- [테두리] 은은한 경계선 ---
+        border_color_primary_dark="#1e293b",     # Slate-800 (아주 미세한 테두리)
+        block_border_color_dark="#1e293b",
+        input_border_color_dark="#334155",       # Slate-700 (입력창은 조금 더 보이게)
+        
+        # --- [포커스] 입력 중일 때 ---
+        input_border_color_focus_dark="#475569", # Slate-600 (입력 중일 때도 은은하게)
+        
+        # --- [텍스트] ---
+        body_text_color_dark="#e2e8f0",          # Slate-200 (읽기 편한 밝은 회색)
+        body_text_color_subdued_dark="#94a3b8",  # Slate-400 (설명 텍스트는 톤다운)
+        block_label_text_color_dark="#64748b",   # 라벨은 더 어둡게
+        block_label_background_fill_dark="#0f172a", # 라벨 배경 = 박스 배경 (일체감)
+        
+        # --- [버튼] 기본 버튼 톤다운 ---
+        button_primary_background_fill_dark="#1e293b", # Slate-800 (제출 버튼 기본색)
+        button_primary_text_color_dark="#f8fafc",      # Slate-50
+        button_primary_border_color_dark="#334155",    # 테두리로 살짝 강조
     )
-
 
 CUSTOM_THEME = build_theme()
 
@@ -205,6 +218,79 @@ CUSTOM_CSS = """
         min-height: 250px;
     }
 }
+
+/* ===== [다크모드 전용 디자인] ===== */
+
+/* 1. 탭(Tab) 스타일 개선: 가독성 확보 + 톤다운 */
+.dark .tab-nav button {
+    color: #64748b !important; /* 선택 안 된 탭: 어두운 회색 */
+    border: none !important;
+    background: transparent !important;
+}
+
+.dark .tab-nav button.selected {
+    color: #f1f5f9 !important; /* 선택 된 탭: 밝은 흰색 */
+    background-color: #1e293b !important; /* 배경을 약간 밝게(Slate-800) */
+    border-top: 2px solid #94a3b8 !important; /* 상단에 은은한 바 */
+    border-radius: 6px 6px 0 0;
+    font-weight: bold;
+}
+
+/* 2. 버튼 스타일: '제출' 버튼 등 */
+/* Primary 버튼 (제출 등): 눈부신 파랑 대신 '차분한 남색' */
+.dark button.primary {
+    background-color: #334155 !important; /* Slate-700 */
+    border: 1px solid #475569 !important;
+    color: #e2e8f0 !important;
+    transition: background-color 0.2s;
+}
+.dark button.primary:hover {
+    background-color: #475569 !important; /* 호버 시 약간 밝아짐 */
+}
+
+/* Secondary 버튼 (새로고침, 힌트 등): 배경색과 비슷하게 */
+.dark button.secondary, .dark button:not(.primary) {
+    background-color: #0f172a !important; /* 배경색과 동일 */
+    border: 1px solid #1e293b !important; /* 아주 희미한 테두리 */
+    color: #94a3b8 !important;
+}
+.dark button.secondary:hover {
+    border-color: #475569 !important;
+    color: #cbd5e1 !important;
+}
+
+/* 3. 입력창(Textbox, Dropdown) 디자인 */
+.dark .gradio-dropdown, .dark .gradio-textbox label {
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
+}
+.dark .gradio-dropdown:hover, .dark .gradio-textbox:hover {
+    border-color: #334155 !important; /* 호버 시에만 테두리 인식 가능 */
+}
+
+/* 4. 코드 에디터 가독성 */
+.dark .cm-content {
+    font-family: 'JetBrains Mono', monospace !important;
+    line-height: 1.6 !important;
+    font-size: 16px !important;
+    color: #e2e8f0 !important; /* 코드: 밝은 회색 */
+}
+/* 코드 줄번호 영역 */
+.dark .cm-gutters {
+    background-color: #0f172a !important;
+    border-right: 1px solid #1e293b !important;
+    color: #475569 !important;
+}
+
+/* 5. 오답노트/피드백 박스 스크롤바 */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* 폰트 렌더링 */
+body { -webkit-font-smoothing: antialiased; }
+
 """
 
 # ===== Dark Mode Toggle JavaScript =====

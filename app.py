@@ -1,3 +1,4 @@
+import inspect
 import json
 import os
 import random
@@ -36,6 +37,18 @@ CUSTOM_THEME = gr.themes.Soft(
 ).set(
     body_background_fill="*neutral_50",
     body_background_fill_dark="*neutral_950",
+    background_fill_primary="*neutral_0",
+    background_fill_primary_dark="*neutral_900",
+    background_fill_secondary="*neutral_100",
+    background_fill_secondary_dark="*neutral_800",
+    border_color_primary="*neutral_200",
+    border_color_primary_dark="*neutral_700",
+    body_text_color="*neutral_900",
+    body_text_color_dark="*neutral_100",
+    body_text_color_subdued="*neutral_600",
+    body_text_color_subdued_dark="*neutral_400",
+    color_accent="*primary_500",
+    color_accent_dark="*primary_400",
 )
 
 CUSTOM_CSS = """
@@ -1731,4 +1744,7 @@ def build_interface() -> gr.Blocks:
 app = build_interface()
 
 if __name__ == "__main__":
-    app.launch(theme=CUSTOM_THEME, css=CUSTOM_CSS)
+    launch_kwargs = {"theme": CUSTOM_THEME, "css": CUSTOM_CSS}
+    if "theme_mode" in inspect.signature(app.launch).parameters:
+        launch_kwargs["theme_mode"] = "light"
+    app.launch(**launch_kwargs)

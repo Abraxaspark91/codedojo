@@ -771,7 +771,8 @@ def render_question(
     result = (
         f"### [{banner}] {problem.title}\n"
         f"- 난이도: {problem.difficulty}\n"
-        f"- 유형: {problem.language}{library_info}\n"
+        f"- 영역: {problem.language}{library_info}\n"
+        f"- 유형: {problem.problem_type}\n"
         f"{hint_line}\n"
         f"---\n\n"
         f"**📝 문제**\n\n"
@@ -1395,7 +1396,7 @@ def build_interface() -> gr.Blocks:
                         language = gr.Dropdown(
                             language_options,
                             value=language_options[0],
-                            label="💻 유형",
+                            label="💻 영역",
                             scale=3
                         )
                         problem_types = gr.CheckboxGroup(

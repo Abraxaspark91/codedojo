@@ -110,7 +110,7 @@ CUSTOM_CSS = """
 
 /* ===== 콘텐츠 영역 스타일 (스크롤 제어) ===== */
 .problem-box {
-    min-height: 800px;
+    min-height: 600px;
     overflow-y: auto;
 }
 
@@ -131,7 +131,7 @@ CUSTOM_CSS = """
 }
 
 .code-editor-box {
-    min-height: 850px;
+    min-height: 650px;
     --code-editor-bg: var(--block-background-fill, var(--background-fill-secondary));
     --code-editor-fg: var(--body-text-color);
     --code-editor-gutter: var(--body-text-color-subdued);

@@ -906,26 +906,42 @@ def call_llm(system_prompt: str, user_prompt: str,
             f"네트워크를 확인하거나 나중에 다시 시도하세요. ({exc})"
         )
 
-
-
-
 def build_feedback(
     problem: Problem, code: str, endpoint: str
 ) -> str:
     """LLM을 사용하여 코드에 대한 피드백을 생성합니다."""
-    system_prompt = (
-        "당신은 SQL, Python, Pseudocode, Technical Decomp문제의 채점을 돕는 조교입니다. "
-        "제출된 코드를 분석하여 피드백을 제공하세요. "
-        "정답 여부, 놓친 부분, 작성자의 의도 추정 및 약점분석, 효율/논리 개선안을 포함합니다.")
-    user_prompt = (
-        f"문제: {problem.body}\n"
-        f"스키마: {problem.schema}\n"
-        f"코드:```{code}\n```\n"
-        "다음 사항을 포함하여 피드백을 제공하세요:\n"
-        "- 1) 코드 분석 및 평가\n"
-        "- 2) 보완이 필요한 부분\n"
-        "- 3) 작성자의 의도 추측 및 약점분석\n"
-        "- 4) 더 효율적이거나 간결한 방법")
+    
+    # 빈칸채우기 또는 개념문제인 경우 다른 프롬프트 사용
+    if problem.problem_type in ["빈칸채우기", "개념문제"]:
+        system_prompt = (
+            "당신은 학생들의 학습을 돕는 친절한 교육 조교입니다. "
+            "문제를 맞췄는지 판단하고, 더 깊이 있는 설명을 제공해주세요. "
+            "핵심 개념, 주요 키워드, 관련된 개념들, 실제 적용 사례를 포함합니다.")
+        user_prompt = (
+            f"문제: {problem.body}\n"
+            f"학생 답변: {code}\n\n"
+            "다음 사항을 포함하여 설명해주세요:\n"
+            "- 1) 핵심 개념 설명(이 개념을 무시하면 어떤 문제가 발생하는지 포함)\n"
+            "- 2) 주요 키워드 및 정의\n"
+            "- 3) 관련 개념(헷갈리기 쉬운 유사개념, 반대개념)과 해당 개념이 정의된 체계\n"
+            "- 4) 실제 적용 사례 또는 예시")
+    else:
+        # 일반 코딩 문제
+        system_prompt = (
+            "당신은 주어진 코딩 및 외국어 문제의 채점을 돕는 조교입니다. "
+            "제출된 답변을 분석하여 피드백을 제공하세요. "
+            "정답 여부, 놓친 부분, 작성자의 의도 추정 및 약점분석, 효율/논리 개선안을 포함합니다.")
+        user_prompt = (
+            f"문제: {problem.body}\n"
+            f"스키마: {problem.schema}\n"
+            f"샘플데이터: {problem.sample_rows}\n"
+            f"코드:```{code}\n```\n"
+            "다음 사항을 포함하여 피드백을 제공하세요:\n"
+            "- 1) 코드 분석 및 평가\n"
+            "- 2) 보완이 필요한 부분\n"
+            "- 3) 작성자의 의도 추측 및 약점분석\n"
+            "- 4) 더 효율적이거나 간결한 방법")
+    
     llm_reply = call_llm(system_prompt, user_prompt, endpoint)
     return llm_reply
 

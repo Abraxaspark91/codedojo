@@ -128,6 +128,7 @@ CUSTOM_CSS = """
 .input-panel {
     border: 1px solid #475569
     height: 200px;
+    max-height: 200px;
 }
 
 .code-editor-box {

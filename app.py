@@ -32,61 +32,106 @@ load_dotenv()
 LM_STUDIO_ENDPOINT = os.getenv("LM_STUDIO_ENDPOINT", "http://127.0.0.1:1234/v1/chat/completions")
 
 def build_theme() -> gr.themes.Base:
+    # 색상/토큰 중복만 제거 (값/디테일 유지)
+    SLATE_950 = "#020617"
+    SLATE_900 = "#0f172a"
+    SLATE_800 = "#1e293b"
+    SLATE_700 = "#334155"
+    SLATE_600 = "#475569"
+    SLATE_500 = "#64748b"
+    SLATE_400 = "#94a3b8"
+    SLATE_50  = "#f8fafc"
+
     base_theme = gr.themes.Soft(
         primary_hue="slate",
         neutral_hue="slate",
         # 일반 텍스트용 폰트 (UI 등)
         font=[gr.themes.GoogleFont("Inter"), "ui-sans-serif", "system-ui", "sans-serif"],
-        # 코드용 폰트 (여기가 핵심입니다)
+        # 코드용 폰트
         font_mono=[gr.themes.GoogleFont("JetBrains Mono"), "ui-monospace", "Consolas", "monospace"],
     )
-    
+
     return base_theme.set(
-        # --- [배경] 아주 깊은 어둠 (완전 검정 X, 깊은 남색 O) ---
+
+        # ----------------------------------------------------------------
+        # [라이트 모드 설정] - 테두리를 진하게 하여 잘 보이게 함
+        # ----------------------------------------------------------------
         body_background_fill="*neutral_50",
-        body_background_fill_dark="#020617",     # Slate-950 (가장 어두운 배경)
         
-        block_background_fill_dark="#0f172a",    # Slate-900 (컨텐츠 박스 배경)
-        background_fill_secondary_dark="#0f172a",# 보조 배경 통일
-        
-        # --- [테두리] 은은한 경계선 ---
-        border_color_primary_dark="#1e293b",     # Slate-800 (아주 미세한 테두리)
-        block_border_color_dark="#1e293b",
-        input_border_color_dark="#334155",       # Slate-700 (입력창은 조금 더 보이게)
-        
+        # 테두리를 진한 회색(SLATE_400)으로 설정 (기존 Soft 테마는 매우 연함)
+        border_color_primary=SLATE_400,
+        block_border_color=SLATE_400,
+        input_border_color=SLATE_400,       # 입력창 테두리도 진하게
+
+        # ----------------------------------------------------------------
+        # [다크 모드 설정] - 테두리를 배경색과 똑같이 하여 안 보이게 함
+        # ----------------------------------------------------------------
+
+        # --- [배경] 아주 깊은 어둠 (완전 검정 X, 깊은 남색 O) ---
+        body_background_fill_dark=SLATE_950,          # Slate-950
+
+        block_background_fill_dark=SLATE_900,         # Slate-900
+        background_fill_secondary_dark=SLATE_900,     # 보조 배경 통일
+
+        # --- [테두리] 경계선 없음 ---
+        border_color_primary_dark=SLATE_900,          # Slate-800
+        block_border_color_dark=SLATE_900,
+        input_border_color_dark=SLATE_700,            # Slate-700
+
         # --- [포커스] 입력 중일 때 ---
-        input_border_color_focus_dark="#475569", # Slate-600 (입력 중일 때도 은은하게)
-        
+        input_border_color_focus_dark=SLATE_600,      # Slate-600
+
         # --- [텍스트] ---
-        body_text_color_dark="#e2e8f0",          # Slate-200 (읽기 편한 밝은 회색)
-        body_text_color_subdued_dark="#94a3b8",  # Slate-400 (설명 텍스트는 톤다운)
-        block_label_text_color_dark="#64748b",   # 라벨은 더 어둡게
-        block_label_background_fill_dark="#0f172a", # 라벨 배경 = 박스 배경 (일체감)
-        
+        body_text_color_dark=SLATE_400,                # Slate-50
+        body_text_color_subdued_dark=SLATE_400,       # Slate-400
+        block_label_text_color_dark=SLATE_500,        # 라벨은 더 어둡게
+        block_label_background_fill_dark=SLATE_900,   # 라벨 배경 = 박스 배경
+
         # --- [버튼] 기본 버튼 톤다운 ---
-        button_primary_background_fill_dark="#1e293b", # Slate-800 (제출 버튼 기본색)
-        button_primary_text_color_dark="#f8fafc",      # Slate-50
-        button_primary_border_color_dark="#334155",    # 테두리로 살짝 강조
+        button_primary_background_fill_dark=SLATE_800, # Slate-800
+        button_primary_text_color_dark=SLATE_500,      # (원본 값 유지)
+        button_primary_border_color_dark=SLATE_700,    # Slate-700
     )
 
 CUSTOM_THEME = build_theme()
 
 CUSTOM_CSS = """
+/* ===== 공통 토큰 (중복 제거용) ===== */
+:root {
+    --radius-lg: 8px;
+    --radius-sm: 4px;
+
+    /* 스크롤바(기본) */
+    --scrollbar-width: 6px;
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: var(--block-border-color, var(--border-color-primary));
+    --scrollbar-thumb-hover: var(--color-accent);
+}
+
 /* ===== 콘텐츠 영역 스타일 (스크롤 제어) ===== */
 .problem-box {
-    min-height: 200px;
-    max-height: 500px;
+    min-height: 800px;
     overflow-y: auto;
+}
+
+/* 박스 공통(중복 제거) */
+.feedback-box,
+.input-panel {
+    background-color: var(--block-background-fill);
 }
 
 .feedback-box {
-    min-height: 250px;
-    max-height: 350px;
+    min-height: 200px;
     overflow-y: auto;
 }
 
+.input-panel {
+    border: 1px solid #475569
+    height: 200px;
+}
+
 .code-editor-box {
-    min-height: 200px;
+    min-height: 850px;
     --code-editor-bg: var(--block-background-fill, var(--background-fill-secondary));
     --code-editor-fg: var(--body-text-color);
     --code-editor-gutter: var(--body-text-color-subdued);
@@ -154,27 +199,30 @@ CUSTOM_CSS = """
     color: var(--code-editor-comment) !important;
 }
 
-
-/* ===== 스크롤바 커스터마이징 ===== */
+/* ===== 스크롤바 커스터마이징 (중복 통합) ===== */
+::-webkit-scrollbar,
 .problem-box::-webkit-scrollbar,
 .feedback-box::-webkit-scrollbar {
-    width: 6px;
+    width: var(--scrollbar-width);
 }
 
+::-webkit-scrollbar-track,
 .problem-box::-webkit-scrollbar-track,
 .feedback-box::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--scrollbar-track);
 }
 
+::-webkit-scrollbar-thumb,
 .problem-box::-webkit-scrollbar-thumb,
 .feedback-box::-webkit-scrollbar-thumb {
-    background: var(--block-border-color, var(--border-color-primary));
-    border-radius: 3px;
+    background: var(--scrollbar-thumb);
+    border-radius: calc(var(--scrollbar-width) / 2);
 }
 
+::-webkit-scrollbar-thumb:hover,
 .problem-box::-webkit-scrollbar-thumb:hover,
 .feedback-box::-webkit-scrollbar-thumb:hover {
-    background: var(--color-accent);
+    background: var(--scrollbar-thumb-hover);
 }
 
 /* ===== 모바일 반응형 ===== */
@@ -191,76 +239,136 @@ CUSTOM_CSS = """
 }
 
 /* ===== [다크모드 전용 디자인] ===== */
+/* (색상 디테일은 그대로, hex만 토큰화해서 중복 제거) */
+.dark {
+    --slate-950: #020617;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --slate-300: #cbd5e1;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50:  #f8fafc;
+
+    /* 다크모드 스크롤바 기본값(원본 유지: width 8, thumb/hover 색상) */
+    --scrollbar-width: 8px;
+    --scrollbar-thumb: var(--slate-700);
+    --scrollbar-thumb-hover: var(--slate-600);
+}
+
+/* 아코디언 전체 테두리 제거 */
+
+.dark .gradio-accordion {
+    border-color: transparent !important;
+    background-color: var(--slate-900) !important;
+    box-shadow: none !important; /* 그림자로 인한 경계선 효과 제거 */
+}
+
+/* 아코디언 헤더(제목 부분) 밑줄 제거 */
+.dark .gradio-accordion .label-wrap {
+    border-color: transparent !important;
+    background-color: var(--slate-900) !important;
+}
+
+/* 아코디언 내부 컨텐츠 영역 테두리 제거 */
+.dark .gradio-accordion > .view-content {
+    border-color: transparent !important;
+    background-color: var(--slate-900) !important;
+    box-shadow: none !important;
+}
+
+/* 문제박스, 오답노트 및 피드백 박스 배경 및 텍스트 색상 조정 */
+
+.dark .problem-box {
+    box-shadow: none;
+    color: var(--slate-50) !important;             /* #f8fafc (여기만 밝게!) */
+}
+
+.dark .feedback-box {
+    background-color: var(--slate-800) !important; /* #1e293b */
+    box-shadow: none;
+    color: var(--slate-50) !important;             /* #f8fafc (여기만 밝게!) */
+}
+
+/* 박스 내부의 마크다운 헤더(h1~h6), 본문(p), 리스트(li) 등도 강제로 밝은 색 상속 */
+.dark .problem-box *, 
+.dark .feedback-box * {
+    color: inherit !important;
+}
 
 /* 1. 탭(Tab) 스타일 개선: 가독성 확보 + 톤다운 */
 .dark .tab-nav button {
-    color: #64748b !important; /* 선택 안 된 탭: 어두운 회색 */
+    color: var(--slate-500) !important; /* #64748b */
     border: none !important;
     background: transparent !important;
 }
 
 .dark .tab-nav button.selected {
-    color: #f1f5f9 !important; /* 선택 된 탭: 밝은 흰색 */
-    background-color: #1e293b !important; /* 배경을 약간 밝게(Slate-800) */
-    border-top: 2px solid #94a3b8 !important; /* 상단에 은은한 바 */
+    color: var(--slate-100) !important;            /* #f1f5f9 */
+    background-color: var(--slate-800) !important; /* #1e293b */
+    border-top: 2px solid var(--slate-400) !important; /* #94a3b8 */
     border-radius: 6px 6px 0 0;
     font-weight: bold;
 }
 
 /* 2. 버튼 스타일: '제출' 버튼 등 */
-/* Primary 버튼 (제출 등): 눈부신 파랑 대신 '차분한 남색' */
 .dark button.primary {
-    background-color: #334155 !important; /* Slate-700 */
-    border: 1px solid #475569 !important;
-    color: #e2e8f0 !important;
+    background-color: var(--slate-700) !important; /* #334155 */
+    border: 1px solid var(--slate-600) !important; /* #475569 */
+    color: var(--slate-200) !important;            /* #e2e8f0 */
     transition: background-color 0.2s;
 }
 .dark button.primary:hover {
-    background-color: #475569 !important; /* 호버 시 약간 밝아짐 */
+    background-color: var(--slate-600) !important; /* #475569 */
 }
 
-/* Secondary 버튼 (새로고침, 힌트 등): 배경색과 비슷하게 */
-.dark button.secondary, .dark button:not(.primary) {
-    background-color: #0f172a !important; /* 배경색과 동일 */
-    border: 1px solid #1e293b !important; /* 아주 희미한 테두리 */
-    color: #94a3b8 !important;
+/* Secondary 버튼 (새로고침, 힌트 등) */
+.dark button.secondary,
+.dark button:not(.primary) {
+    background-color: var(--slate-900) !important; /* #0f172a */
+    border: 1px solid var(--slate-800) !important; /* #1e293b */
+    color: var(--slate-400) !important;            /* #94a3b8 */
 }
 .dark button.secondary:hover {
-    border-color: #475569 !important;
-    color: #cbd5e1 !important;
+    border-color: var(--slate-600) !important;     /* #475569 */
+    color: var(--slate-300) !important;            /* #cbd5e1 */
 }
 
 /* 3. 입력창(Textbox, Dropdown) 디자인 */
-.dark .gradio-dropdown, .dark .gradio-textbox label {
-    background-color: #0f172a !important;
-    border-color: #1e293b !important;
+.dark .gradio-dropdown,
+.dark .gradio-textbox label {
+    background-color: var(--slate-900) !important; /* #0f172a */
+    border-color: var(--slate-800) !important;     /* #1e293b */
 }
-.dark .gradio-dropdown:hover, .dark .gradio-textbox:hover {
-    border-color: #334155 !important; /* 호버 시에만 테두리 인식 가능 */
+.dark .gradio-dropdown:hover,
+.dark .gradio-textbox:hover {
+    border-color: var(--slate-700) !important;     /* #334155 */
 }
 
 /* 4. 코드 에디터 가독성 */
 .dark .cm-content {
     font-family: 'JetBrains Mono', monospace !important;
     line-height: 1.6 !important;
-    color: #e2e8f0 !important;
+    color: var(--slate-200) !important;            /* #e2e8f0 */
 }
 
 /* 코드 줄번호 영역 */
 .dark .cm-gutters {
-    border-right: 1px solid #1e293b !important;
-    color: #475569 !important;
+    border-right: 1px solid var(--slate-800) !important; /* #1e293b */
+    color: var(--slate-600) !important;                 /* #475569 */
 }
 
-/* 5. 오답노트/피드백 박스 스크롤바 */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #475569; }
+/* 다크모드에서 problem/feedback 스크롤바 hover는 원본대로 accent 유지 */
+.dark .problem-box,
+.dark .feedback-box {
+    --scrollbar-thumb-hover: var(--color-accent);
+}
 
 /* 폰트 렌더링 */
 body { -webkit-font-smoothing: antialiased; }
-
 """
 
 # ===== Dark Mode Toggle JavaScript =====
@@ -1142,7 +1250,7 @@ def on_submit(state: Dict, code: str, progress=gr.Progress()
     })
 
     # LLM 피드백만 반환
-    result = f"### 💬 LLM 피드백\n{feedback}"
+    result = f"{feedback}"
 
     return result, gr.update(), gr.update(value="💡 힌트 보기")
 
@@ -1169,7 +1277,7 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
 
         # LLM 응답이 있으면 함께 표시 (LLM 응답 유지 + 힌트 추가)
         if llm_feedback:
-            result = f"### 💬 LLM 피드백\n{llm_feedback}\n\n{hint_text}"
+            result = f"{llm_feedback}\n\n{hint_text}"
         else:
             result = hint_text
     else:
@@ -1178,7 +1286,7 @@ def toggle_hint(state: Dict) -> Tuple[str, gr.update, Dict]:
 
         # LLM 응답이 있으면 유지
         if llm_feedback:
-            result = f"### 💬 LLM 피드백\n{llm_feedback}"
+            result = f"{llm_feedback}"
         else:
             result = ""
 
@@ -1254,9 +1362,15 @@ def build_interface() -> gr.Blocks:
 
         # ===== 헤더 =====
         with gr.Row(variant='panel'):
-            gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>")
-        with gr.Row():
-            theme_toggle_btn = gr.Button("🌙 다크모드", elem_id="theme-toggle-btn", size="sm", scale=1)
+            # gr.Markdown("# <center>🐉🐉🐉🐉🐉CODE🥋DOJO🐉🐉🐉🐉🐉</center>")
+            gr.Image(
+                value="CodeDojo.jpg",  # 프로젝트 루트에 있는 이미지 파일명 (확장자 포함)
+                show_label=False,          # 'Image' 라벨 숨기기
+                container=False,           # 테두리 및 배경 컨테이너 제거 (깔끔하게 보임)
+                interactive=False,         # 사용자가 이미지를 수정/업로드 하지 못하도록 설정
+                
+            )
+
 
         # ===== 탭 구조 =====
         with gr.Tabs():
@@ -1264,48 +1378,44 @@ def build_interface() -> gr.Blocks:
             with gr.Tab("🆕 신규 문제"):
                 
                 # [1단] 제어 패널
-                with gr.Accordion("⚙️ 출제 설정", open=True):
+                with gr.Accordion("출제 설정", open=True, elem_classes="gradio-accordion"):
                     with gr.Row():
                         problem_file = gr.Dropdown(
                             choices=available_problem_files,
                             value=available_problem_files[0] if available_problem_files else DEFAULT_PROBLEM_FILE,
                             label="📁 문제은행 선택",
-                            scale=3.3,
-                            min_width=320
+                            scale=3
                         )
                         difficulty = gr.Dropdown(
                             DIFFICULTY_OPTIONS,
                             value=DIFFICULTY_OPTIONS[0],
                             label="📊 난이도",
-                            scale=3,
-                            min_width=160
+                            scale=3
                         )
                         language = gr.Dropdown(
                             language_options,
                             value=language_options[0],
                             label="💻 유형",
-                            scale=3,
-                            min_width=160
+                            scale=3
                         )
                         problem_types = gr.CheckboxGroup(
                             choices=problem_type_options,
                             value=problem_type_options,
                             label="🏷️ 문제 유형",
-                            scale=3,
-                            min_width=160
+                            scale=3
                         )
 
                 # [2단] 메인 콘텐츠 영역 - 헤더
                 with gr.Row():
-                    with gr.Column(scale=3, min_width=320):
+                    with gr.Column(scale=3):
                         gr.Markdown("### 📋 문제")
-                    with gr.Column(scale=8, min_width=480):
+                    with gr.Column(scale=8):
                         gr.Markdown("### 💻 답변 작성칸")
 
                 # [2단] 메인 콘텐츠 영역 - 컨텐츠
                 with gr.Row(equal_height=True):
                     # 왼쪽: 문제 영역
-                    with gr.Column(scale=3, min_width=320, variant="panel"):
+                    with gr.Column(scale=3, variant="panel"):
                         question_md = gr.Markdown(
                             "새 문제 버튼을 눌러 시작하세요.",
                             container=True,
@@ -1317,7 +1427,7 @@ def build_interface() -> gr.Blocks:
                         new_favorite_status_md = gr.Markdown("")
 
                     # 오른쪽: 코드 에디터
-                    with gr.Column(scale=8, min_width=480, variant="panel"):
+                    with gr.Column(scale=8, variant="panel"):
                         code_box = gr.Code(
                             value="",
                             language="python",
@@ -1337,18 +1447,18 @@ def build_interface() -> gr.Blocks:
                             hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
                 # [3단] 피드백 영역 (접을 수 있는 Accordion)
-                with gr.Accordion("💬 LLM 피드백 및 오답노트 추가", open=False):
+                with gr.Accordion("LLM 피드백 및 오답노트 추가", open=True, elem_classes="gradio-accordion"):
                     # 헤더 Row (scale 정렬)
                     with gr.Row():
-                        with gr.Column(scale=3, min_width=320):
+                        with gr.Column(scale=3):
                             gr.Markdown("### 📝 오답노트에 추가")
-                        with gr.Column(scale=8, min_width=480):
+                        with gr.Column(scale=8):
                             gr.Markdown("### 💬 LLM 피드백")
 
                     # 컨텐츠 Row (scale 정렬)
-                    with gr.Row(equal_height=False):
+                    with gr.Row(equal_height=True):
                         # 왼쪽: 오답노트 추가 섹션 (2단 왼쪽과 동일한 scale=3, min_width=320 적용)
-                        with gr.Column(scale=3, min_width=320, variant="compact"):
+                        with gr.Column(scale=3,variant="compact", elem_classes="input-panel"):
                             nickname_input = gr.Textbox(
                                 label="문제 별명 (선택사항)",
                                 placeholder="예: 복잡한 조인 문제",
@@ -1358,7 +1468,7 @@ def build_interface() -> gr.Blocks:
                             add_notes_status = gr.Markdown("")
 
                         # 오른쪽: LLM 피드백 (2단 오른쪽과 동일한 scale=8, min_width=480 적용)
-                        with gr.Column(scale=8, min_width=480, variant="panel"):
+                        with gr.Column(scale=8, min_width=480, variant="compact"):
                             exec_result = gr.Markdown(
                                 value="",
                                 elem_classes="feedback-box",
@@ -1370,7 +1480,7 @@ def build_interface() -> gr.Blocks:
             # ========== 탭 2: 오답노트 ==========
             with gr.Tab("📝 오답노트"):
                 # 1단: 제어 패널 (접을 수 있는 Accordion)
-                with gr.Accordion("📝 오답노트 재도전", open=True):
+                with gr.Accordion("📝 오답노트 재도전", open=True, elem_classes="gradio-accordion"):
                     # 2단계 드롭다운: 1) PID 선택 → 2) 시도 선택
                     with gr.Row():
                         # 드롭다운 1: PID 선택
@@ -1435,7 +1545,8 @@ def build_interface() -> gr.Blocks:
                             note_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
                 # [3단] 피드백 영역 (접을 수 있는 Accordion)
-                with gr.Accordion("💬 LLM 피드백", open=False):
+                with gr.Accordion("LLM 피드백", open=True, elem_classes="gradio-accordion"):
+                    gr.Markdown("### 💬 LLM 피드백")
                     note_exec_result = gr.Markdown(
                         value="",
                         elem_classes="feedback-box",
@@ -1445,7 +1556,7 @@ def build_interface() -> gr.Blocks:
             # ========== 탭 3: 즐겨찾기 ==========
             with gr.Tab("⭐ 즐겨찾기"):
                 # 1단: 제어 패널 (접을 수 있는 Accordion)
-                with gr.Accordion("⭐ 즐겨찾기 목록", open=True):
+                with gr.Accordion("⭐ 즐겨찾기 목록", open=True, elem_classes="gradio-accordion"):
                     fav_labels, fav_values = refresh_favorite_choices()
                     fav_choices = list(zip(fav_labels, fav_values)) if fav_labels else []
                     favorite_choices = gr.Dropdown(
@@ -1499,12 +1610,16 @@ def build_interface() -> gr.Blocks:
                             fav_hint_btn = gr.Button("💡 힌트 보기", size="md", scale=1)
 
                 # [3단] 피드백 영역 (접을 수 있는 Accordion)
-                with gr.Accordion("💬 LLM 피드백", open=False):
+                with gr.Accordion("LLM 피드백", open=True, elem_classes="gradio-accordion"):
+                    gr.Markdown("### 💬 LLM 피드백")
                     fav_exec_result = gr.Markdown(
                         value="",
                         elem_classes="feedback-box",
                         container=True
                     )
+
+        with gr.Row():
+            theme_toggle_btn = gr.Button("🌙 다크모드", elem_id="theme-toggle-btn", size="sm", scale=1)
 
 
         # ===== 이벤트 핸들러 - 신규 문제 탭 =====

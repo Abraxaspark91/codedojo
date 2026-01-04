@@ -2,6 +2,9 @@
 data/
 !data/problems.json
 
+# Node module files
+node_modules/
+
 # Python cache files
 __pycache__/
 *.pyc

@@ -144,7 +144,27 @@ async function lmsServerStart() {
     });
 
     lmsServerProcess.stderr.on('data', (data) => {
-      console.error(`LMS Error: ${data}`);
+      const msg = data.toString().trim();
+      
+      // 소문자로 변환하여 키워드 검사 (대소문자 무시)
+      const lowerMsg = msg.toLowerCase();
+
+      // '진짜 에러'라고 판단할 키워드 정의
+      const isRealError = lowerMsg.includes('error') || 
+                          lowerMsg.includes('failed') || 
+                          lowerMsg.includes('exception') ||
+                          lowerMsg.includes('fatal');
+
+      if (isRealError) {
+        // 진짜 에러인 경우만 Error로 출력
+        console.error(`LMS Error: ${msg}`);
+        // 필요하다면 UI로도 전송
+        // sendError(`LMS: ${msg}`); 
+      } else {
+        // 그 외(Success, Info, Running 등)는 일반 로그로 출력
+        console.log(`LMS Log: ${msg}`);
+        
+      }
     });
 
     lmsServerProcess.on('error', (err) => {
@@ -319,6 +339,8 @@ async function startGradio() {
         // Gradio UI로 전환
         if (mainWindow) {
           mainWindow.loadURL('http://127.0.0.1:7860');
+          mainWindow.setResizable(true);
+          mainWindow.maximize();
         }
 
         resolve(true);

@@ -2005,7 +2005,13 @@ def build_interface() -> gr.Blocks:
 app = build_interface()
 
 if __name__ == "__main__":
-    launch_kwargs = {"theme": CUSTOM_THEME, "css": CUSTOM_CSS}
+    launch_kwargs = {
+        "theme": CUSTOM_THEME,
+        "css": CUSTOM_CSS,
+        "inbrowser": False,  # Electron에서 열 것이므로 브라우저 자동 오픈 비활성화
+        "server_name": "127.0.0.1",
+        "server_port": 7860
+    }
     if "theme_mode" in inspect.signature(app.launch).parameters:
         launch_kwargs["theme_mode"] = "light"
     app.launch(**launch_kwargs)

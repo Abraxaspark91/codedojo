@@ -2,8 +2,9 @@
 data/
 !data/problems.json
 
-# Node module files
+# Electron files
 node_modules/
+dist/
 
 # Python cache files
 __pycache__/

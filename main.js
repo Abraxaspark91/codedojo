@@ -59,7 +59,7 @@ function runCommand(command, args) {
 async function lmsListModels() {
   try {
     sendStatus('● 모델 리스트 불러오는 중...');
-    const output = await runCommand('lms', ['ls', '--json']);
+    const output = await runCommand('lms', ['ls', '--json', '--llm']);
 
     // JSON 파싱
     let modelsData;
@@ -71,12 +71,28 @@ async function lmsListModels() {
       return [];
     }
 
-    // identifier만 추출
+    // modelKey, displayName, sizeBytes를 추출하여 객체 배열로 변환
     const models = Array.isArray(modelsData)
       ? modelsData.map(m => {
-          // lms ls --json의 정확한 구조에 맞춰 identifier 추출
-          if (typeof m === 'string') return m;
-          return m.identifier || m.id || m.name || m.path;
+          // modelKey가 lms load에 전달할 identifier
+          const modelKey = m.modelKey || m.identifier || m.id || m.name || m.path;
+          if (!modelKey) return null;
+          
+          // sizeBytes를 GB로 변환
+          const sizeGB = m.sizeBytes 
+            ? (m.sizeBytes / (1024 ** 3)).toFixed(2)
+            : 'Unknown';
+          
+          // displayName (없으면 modelKey 사용)
+          const displayName = m.displayName || modelKey;
+          
+          // Dropdown에 보여줄 텍스트
+          const displayText = `${displayName} (${sizeGB}GB)`;
+          
+          return {
+            key: modelKey,      // lms load에 전달
+            display: displayText // UI에 표시
+          };
         }).filter(Boolean)
       : [];
 
@@ -149,45 +165,93 @@ async function lmsServerStart() {
   });
 }
 
-// LMS 모델 로드
-async function lmsLoadModel(modelIdentifier) {
+// 모델 로딩 완료 확인 헬퍼
+async function checkModelLoaded(modelIdentifier, maxRetries = 60) {
   return new Promise((resolve, reject) => {
-    sendStatus(`● 모델 로딩 중: ${modelIdentifier}...`);
+    let attempts = 0;
 
-    // identifier만 전달 (다른 argument 없음)
-    const proc = spawn('lms', ['load', modelIdentifier]);
+    const check = () => {
+      attempts++;
+      // LM Studio는 OpenAI 호환 API를 제공하므로 /v1/models로 확인 가능
+      http.get('http://127.0.0.1:1234/v1/models', (res) => {
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => {
+          try {
+            const json = JSON.parse(data);
+            // data 배열 안에 해당 모델 id가 있는지 확인
+            const isLoaded = json.data && json.data.some(m => m.id === modelIdentifier);
+            
+            if (isLoaded) {
+              resolve(true);
+            } else {
+              if (attempts >= maxRetries) {
+                reject(new Error('모델 로딩 시간 초과 (API 확인 실패)'));
+              } else {
+                // 아직 로드 안됨, 1초 후 재시도
+                sendStatus(`● 모델 로딩 확인 중... (${attempts}/${maxRetries})`);
+                setTimeout(check, 1000); 
+              }
+            }
+          } catch (e) {
+            console.error('JSON 파싱 에러:', e);
+            setTimeout(check, 1000);
+          }
+        });
+      }).on('error', (err) => {
+        console.error('API 연결 에러:', err);
+        setTimeout(check, 1000);
+      });
+    };
 
-    let lastProgress = '';
+    check();
+  });
+}
+
+// [수정] LMS 모델 로드 함수
+async function lmsLoadModel(modelIdentifier) {
+  return new Promise(async (resolve, reject) => {
+    sendStatus(`● 모델 로딩 명령 전송: ${modelIdentifier}...`);
+
+    // 1. 로드 명령 실행 (결과를 기다리지 않고 프로세스 실행만 함)
+    const proc = spawn('lms', ['load', modelIdentifier], { encoding: 'utf8' });
 
     proc.stdout.on('data', (data) => {
-      const msg = data.toString();
-      // 퍼센티지 진행률은 한 줄로 업데이트 (append 방지)
-      if (msg.includes('%')) {
-        lastProgress = msg.trim();
-        // 콘솔에만 출력 (UI에는 append 안 함)
-        process.stdout.write('\r' + lastProgress);
-      } else if (msg.trim()) {
-        console.log(msg.trim());
+      const msg = data.toString().trim();
+      // 진행률 표시 (UI 업데이트)
+      if (msg.includes('%') || msg.includes('[')) {
+        process.stdout.write('\r' + msg); 
+      } else if (msg) {
+        console.log(`LMS CLI: ${msg}`);
       }
     });
 
     proc.stderr.on('data', (data) => {
-      console.error(`LMS Load Error: ${data}`);
+      console.log(`LMS CLI(Info): ${data.toString().trim()}`);
     });
 
-    proc.on('close', (code) => {
-      if (code === 0) {
+    // 프로세스가 닫힐 때(성공이든, "Client disconnected"든 상관없이)
+    // 실제 서버 상태를 확인하는 단계로 넘어갑니다.
+    proc.on('close', async (code) => {
+      console.log(`LMS CLI 프로세스 종료 (Code: ${code}). 서버 상태 확인 시작.`);
+      
+      try {
+        // 2. 프로세스 종료 후, 실제 API를 찔러서 로딩이 완료될 때까지 기다림
+        await checkModelLoaded(modelIdentifier);
+        
         currentModel = modelIdentifier;
+        console.log('✓ API 모델 로딩 최종 확인됨');
         sendStatus('✓ 모델 로딩 완료');
         resolve(true);
-      } else {
-        sendError('모델 로딩 실패');
-        reject(new Error('Model loading failed'));
+      } catch (error) {
+        sendError(`모델 로딩 실패: ${error.message}`);
+        reject(error);
       }
     });
 
     proc.on('error', (err) => {
-      sendError(`모델 로딩 실패: ${err.message}`);
+      // spawn 자체가 실패했을 때만 에러 처리
+      sendError(`모델 로딩 프로세스 에러: ${err.message}`);
       reject(err);
     });
   });
@@ -223,9 +287,6 @@ async function startGradio() {
       reject(new Error('app.py not found'));
       return;
     }
-
-    sendStatus(`  Python: ${pythonPath}`);
-    sendStatus(`  App: ${appPath}`);
 
     gradioProcess = spawn(pythonPath, [appPath], {
       cwd: process.cwd()
@@ -274,23 +335,22 @@ function waitForServer(url, timeout = 30000) {
   return new Promise((resolve, reject) => {
     const startTime = Date.now();
 
-    function check() {
-      http.get(url, (res) => {
-        if (res.statusCode === 200) {
-          resolve();
-        } else if (Date.now() - startTime < timeout) {
-          setTimeout(check, 500);
-        } else {
-          reject(new Error('Timeout waiting for server'));
-        }
-      }).on('error', (err) => {
-        if (Date.now() - startTime < timeout) {
-          setTimeout(check, 500);
-        } else {
-          reject(new Error('Timeout waiting for server'));
-        }
-      });
+  function check() {
+    if (Date.now() - startTime >= timeout) {
+      reject(new Error('Timeout waiting for server'));
+      return;
     }
+    
+    http.get(url, (res) => {
+      if (res.statusCode === 200) {
+        resolve();
+      } else {
+        setTimeout(check, 500);
+      }
+    }).on('error', (err) => {
+      setTimeout(check, 500);
+    });
+  }
 
     check();
   });
@@ -383,7 +443,7 @@ const selectionHTML = `
         return;
       }
       modelSelect.innerHTML = models.map(m =>
-        '<option value="' + m + '">' + m + '</option>'
+        '<option value="' + m.key + '">' + m.display + '</option>'
       ).join('');
       modelSelect.disabled = false;
       startBtn.disabled = false;
@@ -436,15 +496,25 @@ function createWindow() {
 // 초기화 플로우
 async function initialize() {
   try {
-    // 1. AI 서버 초기화 (기존 프로세스 정리)
-    sendStatus('● AI 서버 초기화 중...');
-    await lmsServerStop();
-    await lmsUnloadAll();
+    sendStatus('● 서버 상태 확인 중...');
+    
+    // 1. 서버가 이미 살아있는지 체크 (Health Check)
+    let isServerRunning = false;
+    try {
+      await waitForServer('http://127.0.0.1:1234/v1/models', 2000); // 2초만 대기
+      isServerRunning = true;
+      sendStatus('✓ 기존 LMS 서버가 이미 실행 중입니다.');
+    } catch (e) {
+      isServerRunning = false;
+    }
 
-    // 2. LMS 서버 시작
-    await lmsServerStart();
+    // 2. 서버가 안 켜져 있을 때만 시작 절차 수행
+    if (!isServerRunning) {
+      await lmsServerStart();
+    }
+    // (서버가 이미 실행 중이면 그대로 사용)
 
-    // 3. 모델 리스트 가져오기
+    // 3. 모델 리스트 가져오기 (여기부터는 기존과 동일)
     const models = await lmsListModels();
 
     // 4. 모델 리스트를 UI에 전송

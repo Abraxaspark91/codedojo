@@ -1018,15 +1018,6 @@ def save_to_wrong_notes(
         return f"❌ 저장 실패: {str(e)}"
 
 
-def refresh_note_choices() -> Tuple[List[str], List[str]]:
-    entries = failed_attempts(load_attempts())
-    return _format_dropdown_choices(
-        entries,
-        lambda a: f"{a.title} | {a.nickname if a.nickname else '-'} | {a.difficulty} | {a.kind} | {a.timestamp}",
-        lambda a: a.pid
-    )
-
-
 def refresh_note_pid_choices() -> Tuple[List[str], List[str]]:
     """고유한 source_file + PID 목록을 반환합니다 (중복 제거).
 

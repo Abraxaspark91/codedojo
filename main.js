@@ -214,7 +214,7 @@ async function lmsLoadModel(modelIdentifier) {
     sendStatus(`● 모델 로딩 명령 전송: ${modelIdentifier}...`);
 
     // 1. 로드 명령 실행 (결과를 기다리지 않고 프로세스 실행만 함)
-    const proc = spawn('lms', ['load', modelIdentifier], { encoding: 'utf8' });
+    const proc = spawn('lms', ['load', modelIdentifier], { encoding: 'ANSI' });
 
     proc.stdout.on('data', (data) => {
       const msg = data.toString().trim();
@@ -554,7 +554,7 @@ app.on('ready', () => {
   createWindow();
 
   // 창이 준비되면 초기화 시작
-  mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.webContents.once('did-finish-load', () => {
     initialize();
   });
 });

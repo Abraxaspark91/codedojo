@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { spawn } = require('child_process');
 const http = require('http');
+const path = require('path');
+const fs = require('fs');
 
 // 전역 변수
 let mainWindow = null;
@@ -57,9 +59,27 @@ function runCommand(command, args) {
 async function lmsListModels() {
   try {
     sendStatus('● 모델 리스트 불러오는 중...');
-    const output = await runCommand('lms', ['ls']);
-    // lms ls의 출력을 파싱 (줄 단위로 모델 이름)
-    const models = output.trim().split('\n').filter(line => line.trim());
+    const output = await runCommand('lms', ['ls', '--json']);
+
+    // JSON 파싱
+    let modelsData;
+    try {
+      modelsData = JSON.parse(output.trim());
+    } catch (parseError) {
+      sendError('모델 리스트 JSON 파싱 실패');
+      console.error('JSON parse error:', output);
+      return [];
+    }
+
+    // identifier만 추출
+    const models = Array.isArray(modelsData)
+      ? modelsData.map(m => {
+          // lms ls --json의 정확한 구조에 맞춰 identifier 추출
+          if (typeof m === 'string') return m;
+          return m.identifier || m.id || m.name || m.path;
+        }).filter(Boolean)
+      : [];
+
     sendStatus(`✓ ${models.length}개 모델 발견`);
     return models;
   } catch (error) {
@@ -130,16 +150,24 @@ async function lmsServerStart() {
 }
 
 // LMS 모델 로드
-async function lmsLoadModel(modelPath) {
+async function lmsLoadModel(modelIdentifier) {
   return new Promise((resolve, reject) => {
-    sendStatus(`● 모델 로딩 중: ${modelPath}...`);
+    sendStatus(`● 모델 로딩 중: ${modelIdentifier}...`);
 
-    const proc = spawn('lms', ['load', modelPath]);
+    // identifier만 전달 (다른 argument 없음)
+    const proc = spawn('lms', ['load', modelIdentifier]);
+
+    let lastProgress = '';
 
     proc.stdout.on('data', (data) => {
-      const msg = data.toString().trim();
-      if (msg) {
-        sendStatus(`  ${msg}`);
+      const msg = data.toString();
+      // 퍼센티지 진행률은 한 줄로 업데이트 (append 방지)
+      if (msg.includes('%')) {
+        lastProgress = msg.trim();
+        // 콘솔에만 출력 (UI에는 append 안 함)
+        process.stdout.write('\r' + lastProgress);
+      } else if (msg.trim()) {
+        console.log(msg.trim());
       }
     });
 
@@ -149,7 +177,7 @@ async function lmsLoadModel(modelPath) {
 
     proc.on('close', (code) => {
       if (code === 0) {
-        currentModel = modelPath;
+        currentModel = modelIdentifier;
         sendStatus('✓ 모델 로딩 완료');
         resolve(true);
       } else {
@@ -165,12 +193,43 @@ async function lmsLoadModel(modelPath) {
   });
 }
 
+// Python 경로 찾기 (.venv 우선)
+function getPythonPath() {
+  const isWindows = process.platform === 'win32';
+  const venvPython = isWindows
+    ? path.join(process.cwd(), '.venv', 'Scripts', 'python.exe')
+    : path.join(process.cwd(), '.venv', 'bin', 'python');
+
+  // .venv가 있으면 사용
+  if (fs.existsSync(venvPython)) {
+    return venvPython;
+  }
+
+  // .venv가 없으면 시스템 python 사용
+  return isWindows ? 'python.exe' : 'python3';
+}
+
 // Gradio 서버 시작
 async function startGradio() {
   return new Promise((resolve, reject) => {
     sendStatus('● Gradio 서버 시작 중...');
 
-    gradioProcess = spawn('python', ['app.py']);
+    const pythonPath = getPythonPath();
+    const appPath = path.join(process.cwd(), 'app.py');
+
+    // app.py 존재 확인
+    if (!fs.existsSync(appPath)) {
+      sendError(`app.py를 찾을 수 없습니다: ${appPath}`);
+      reject(new Error('app.py not found'));
+      return;
+    }
+
+    sendStatus(`  Python: ${pythonPath}`);
+    sendStatus(`  App: ${appPath}`);
+
+    gradioProcess = spawn(pythonPath, [appPath], {
+      cwd: process.cwd()
+    });
 
     gradioProcess.stdout.on('data', (data) => {
       const msg = data.toString();

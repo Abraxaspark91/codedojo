@@ -58,7 +58,7 @@ function runCommand(command, args) {
 // LMS 모델 리스트 가져오기
 async function lmsListModels() {
   try {
-    sendStatus('● 모델 리스트 불러오는 중...');
+    sendStatus('● AI모델 리스트 불러오는 중...');
     const output = await runCommand('lms', ['ls', '--json', '--llm']);
 
     // JSON 파싱
@@ -66,7 +66,7 @@ async function lmsListModels() {
     try {
       modelsData = JSON.parse(output.trim());
     } catch (parseError) {
-      sendError('모델 리스트 JSON 파싱 실패');
+      sendError('AI모델 리스트 JSON 파싱 실패');
       console.error('JSON parse error:', output);
       return [];
     }
@@ -96,10 +96,10 @@ async function lmsListModels() {
         }).filter(Boolean)
       : [];
 
-    sendStatus(`✓ ${models.length}개 모델 발견`);
+    sendStatus(`✓ ${models.length}개 AI모델 발견`);
     return models;
   } catch (error) {
-    sendError(`모델 리스트 불러오기 실패: ${error.message}`);
+    sendError(`AI모델 리스트 불러오기 실패: ${error.message}`);
     return [];
   }
 }
@@ -107,13 +107,13 @@ async function lmsListModels() {
 // LMS 서버 중지
 async function lmsServerStop() {
   try {
-    sendStatus('● LMS 서버 중지 중...');
+    sendStatus('● AI 서버 중지 중...');
     await runCommand('lms', ['server', 'stop']);
-    sendStatus('✓ LMS 서버 중지 완료');
+    sendStatus('✓ AI 서버 중지 완료');
     return true;
   } catch (error) {
     // 서버가 이미 중지된 경우 무시
-    sendStatus('✓ LMS 서버 중지 (이미 중지됨)');
+    sendStatus('✓ AI 서버가 이미 중지되어 있습니다.');
     return true;
   }
 }
@@ -121,13 +121,13 @@ async function lmsServerStop() {
 // LMS 모델 언로드
 async function lmsUnloadAll() {
   try {
-    sendStatus('● 메모리 초기화 중 (모델 언로드)...');
+    sendStatus('● AI모델 언로드 중(메모리 비우기)...');
     await runCommand('lms', ['unload', '--all']);
-    sendStatus('✓ 모델 언로드 완료');
+    sendStatus('✓ AI모델 언로드 완료');
     return true;
   } catch (error) {
     // 모델이 없는 경우 무시
-    sendStatus('✓ 모델 언로드 (이미 언로드됨)');
+    sendStatus('✓ 로딩돼있는 AI모델이 없습니다');
     return true;
   }
 }
@@ -164,22 +164,23 @@ async function lmsServerStart() {
         // 그 외(Success, Info, Running 등)는 일반 로그로 출력
         console.log(`LMS Log: ${msg}`);
         
+        // (선택사항) 만약 'success'나 'running' 같은 특정 단어가 있으면 상태창에도 띄워줄 수 있음
+        // if (lowerMsg.includes('running')) sendStatus('LMS 서버 가동 중...');
       }
     });
-
     lmsServerProcess.on('error', (err) => {
-      sendError(`LMS 서버 시작 실패: ${err.message}`);
+      sendError(`AI 서버 시작 실패: ${err.message}`);
       reject(err);
     });
 
     // Health check로 서버 ready 확인
     waitForServer('http://127.0.0.1:1234/v1/models', 30000)
       .then(() => {
-        sendStatus('✓ LMS 서버 시작 완료');
+        sendStatus('✓ AI 서버 시작 완료');
         resolve(true);
       })
       .catch((err) => {
-        sendError(`LMS 서버 응답 없음: ${err.message}`);
+        sendError(`AI 서버 응답 없음: ${err.message}`);
         reject(err);
       });
   });
@@ -206,7 +207,7 @@ async function checkModelLoaded(modelIdentifier, maxRetries = 60) {
               resolve(true);
             } else {
               if (attempts >= maxRetries) {
-                reject(new Error('모델 로딩 시간 초과 (API 확인 실패)'));
+                reject(new Error('AI모델 로딩 시간 초과 (API 확인 실패)'));
               } else {
                 // 아직 로드 안됨, 1초 후 재시도
                 sendStatus(`● 모델 로딩 확인 중... (${attempts}/${maxRetries})`);
@@ -260,18 +261,18 @@ async function lmsLoadModel(modelIdentifier) {
         await checkModelLoaded(modelIdentifier);
         
         currentModel = modelIdentifier;
-        console.log('✓ API 모델 로딩 최종 확인됨');
-        sendStatus('✓ 모델 로딩 완료');
+        console.log('✓ API로 AI모델 로딩 최종 확인됨');
+        sendStatus('✓ AI모델 로딩 완료');
         resolve(true);
       } catch (error) {
-        sendError(`모델 로딩 실패: ${error.message}`);
+        sendError(`AI모델 로딩 실패: ${error.message}`);
         reject(error);
       }
     });
 
     proc.on('error', (err) => {
       // spawn 자체가 실패했을 때만 에러 처리
-      sendError(`모델 로딩 프로세스 에러: ${err.message}`);
+      sendError(`AI모델 로딩 중 에러가 발생했습니다(LMS): ${err.message}`);
       reject(err);
     });
   });
@@ -334,7 +335,7 @@ async function startGradio() {
     // Health check로 Gradio ready 확인
     waitForServer('http://127.0.0.1:7860', 30000)
       .then(() => {
-        sendStatus('✓ 모든 준비 완료! UI로 전환합니다...');
+        sendStatus('✓ 모든 준비 완료! 코딩 도장으로 진입합니다...');
 
         // Gradio UI로 전환
         if (mainWindow) {
@@ -518,14 +519,14 @@ function createWindow() {
 // 초기화 플로우
 async function initialize() {
   try {
-    sendStatus('● 서버 상태 확인 중...');
+    sendStatus('● AI 서버 상태 확인 중...');
     
     // 1. 서버가 이미 살아있는지 체크 (Health Check)
     let isServerRunning = false;
     try {
       await waitForServer('http://127.0.0.1:1234/v1/models', 2000); // 2초만 대기
       isServerRunning = true;
-      sendStatus('✓ 기존 LMS 서버가 이미 실행 중입니다.');
+      sendStatus('✓ 기존 AI 서버가 이미 실행 중입니다.');
     } catch (e) {
       isServerRunning = false;
     }
@@ -541,7 +542,7 @@ async function initialize() {
 
     // 4. 모델 리스트를 UI에 전송
     if (models.length === 0) {
-      sendError('사용 가능한 모델이 없습니다. LM Studio에서 모델을 다운로드해주세요.');
+      sendError('사용 가능한 AI모델이 없습니다. LM Studio에서 모델을 다운로드해주세요.');
       return;
     }
 
@@ -601,7 +602,7 @@ async function cleanup() {
 
     // 4. LMS 서버 프로세스 종료
     if (lmsServerProcess) {
-      console.log('LMS 서버 프로세스 종료 중...');
+      console.log('AI 서버 프로세스 종료 중...');
       lmsServerProcess.kill();
       lmsServerProcess = null;
     }

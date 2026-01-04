@@ -135,7 +135,7 @@ async function lmsUnloadAll() {
 // LMS 서버 시작
 async function lmsServerStart() {
   return new Promise((resolve, reject) => {
-    sendStatus('● LMS 서버 시작 중...');
+    sendStatus('● AI 서버 시작 중...');
 
     lmsServerProcess = spawn('lms', ['server', 'start']);
 

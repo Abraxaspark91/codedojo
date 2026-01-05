@@ -48,9 +48,19 @@ npm start
 
 ### 5. AI 모델 준비
 
-**처음 사용하는 경우**: LM Studio를 열고 추천 모델(예: Llama 3, Mistral 등)을 다운로드합니다. 모델 선택 후 서버를 시작하세요.
+**처음 사용하는 경우**: LM Studio를 열고 추천 모델을 다운로드합니다. 모델 선택 후 서버를 시작하세요.
 
 **모델이 이미 있는 경우**: LM Studio에서 원하는 모델을 선택하고 로컬 서버를 시작합니다. 기본 엔드포인트는 `http://127.0.0.1:1234`입니다.
+
+** VRAM/시스템RAM별 추천 모델 **
+! GPU가 있으면 없을 때보다 15배정도 빨라요. 아래 모델들은 CPU로도 채점에 2분정도 걸리는 모델들이에요.
+- 2GB~4GB : Qwen3-4B-Instruct-2507 Q4_K_M
+- 4GB~6GB : Qwen3-4B-Instruct-2507 Q6_K
+- 6GB~14GB : Qwen3-4B-Instruct-2507 Q8_0
+- 14GB~20GB : GPT-OSS-20B MXFP4
+- 20GB~24GB : Qwen3-30B-A3B Q4_K_M
+- 24GB~30GB :  Qwen3-30B-A3B Q5_K_M
+- 30GB~ : Qwen3-30B-A3B Q6_K
 
 ## 주요 기능
 
